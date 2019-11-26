@@ -32,19 +32,6 @@ export function router(
   app.get('/robots.txt', (_, res) => res.status(HTTPStatus.OK).sendFile('robots.txt', options));
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
 
-  app.post('/api/register/:user', rateLimiterMiddleware, controllers.registerOnlyEmailOfNewUser);
-  app.post('/api/register/:user/continue', rateLimiterMiddleware, controllers.registrationContinue);
-
-  app.get('/api/profile/:user/status', rateLimiterMiddleware, identity.validateToken, controllers.getUserProfileStatus);
-  app.put('/api/profile/:user/upgrade/payment', rateLimiterMiddleware, identity.validateToken, controllers.activatePaymentUserProfile);
-  app.get('/api/profile/:user', rateLimiterMiddleware, identity.validateToken, controllers.getUserProfile);
-  app.put('/api/profile/:user', rateLimiterMiddleware, identity.validateToken, controllers.updateUserProfileGeneralInfo);
-
-  app.get('/api/profile/:user/cars', rateLimiterMiddleware, identity.validateToken, controllers.getUserCars);
-  app.put('/api/profile/:user/cars', rateLimiterMiddleware, identity.validateToken, controllers.updateUserCar);
-  app.post('/api/profile/:user/cars', rateLimiterMiddleware, identity.validateToken, controllers.createUserCar);
-  app.patch('/api/profile/:user/cars', rateLimiterMiddleware, identity.validateToken, controllers.toggleUserCar);
-
   // contact message
   app.post('/api/guest/send/message', rateLimiterMiddleware, controllers.sendMailToAdmins);
 
