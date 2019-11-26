@@ -1,0 +1,8 @@
+{
+  "mails": {
+    "from": "Site administration",
+    "subject": {
+      "newUserRegistration": "Registration confirmation"
+    }
+  }
+}

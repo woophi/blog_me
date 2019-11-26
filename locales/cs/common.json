@@ -1,0 +1,90 @@
+{
+  "subscribe": {
+    "emailBtn": "E-mail",
+    "placeholder": "Zadejte Vas email",
+    "label": "Přihlaste se a získejte první informace o novém obraze"
+  },
+  "footer": {
+    "rights": "Všechna práva vyhrazena",
+    "developed": "Developed by",
+    "KM": "Konstantin Mikheev"
+  },
+  "contact": {
+    "title": "Být v kontaktu",
+    "orders": "Vaše objednávky"
+  },
+  "photo": {
+    "title": "Foto galerie"
+  },
+  "video": {
+    "title": "Video",
+    "online": {
+      "title": "Živé vysílání",
+      "atelier": "Online atelier"
+    },
+    "youtube": {
+      "title": "Youtube Video"
+    },
+    "noVideos": "Žadná videa"
+  },
+  "watch": "sledovat",
+  "AA": "Akay Akaev",
+  "gallery": {
+    "title": "Galerie",
+    "comments": "Komentáře",
+    "addComments": "Přidat komentář"
+  },
+  "about": {
+    "title": "O mně",
+    "subTitle": "Životopis"
+  },
+  "navigation": {
+    "about": "Životopis",
+    "gallery": "Galerie",
+    "online": "Online",
+    "youtube": "Youtube",
+    "video": "Video",
+    "photo": "Foto",
+    "contact": "Kontakt"
+  },
+  "login": {
+    "title": "Přihlašovací formulář"
+  },
+
+
+  "forms": {
+    "field": {
+      "required": "Povinné",
+      "invalid": "Neplatný format"
+    },
+    "name": "Jméno",
+    "email": "E-mail",
+    "message": "Zpráva",
+    "password": "Heslo"
+  },
+
+  "unsub": {
+    "title": "Zrušit odběr všech e-mailových oznámení",
+    "invalid": "Odkaz je neplatný",
+    "content": "Kliknutím na tlačítko odhlásit přestanete dostávat všechna e-mailová upozornění z tohoto webu.",
+    "verySorry": "Je nám velmi líto, že jste se odhlásili. Pokud chcete dostávat e-mailová upozornění, budete muset odeslat zprávu prostřednictvím koncipovaného formuláře."
+  },
+
+  "buttons": {
+    "send": "Odeslat",
+    "cancel": "Zrušit",
+    "add": "Přidat",
+    "login": "Přihlásit se",
+    "save": "Ulozit",
+    "unsub": "Odhlásit se",
+    "home": "Jít na domovskou stránku"
+  },
+
+  "errors": {
+    "404": "Stránka nenalezena",
+    "404Sub": "Nic jsme nenašli.",
+    "others": "Jejda! Něco se pokazilo..."
+  },
+  "typeHere": "Pište zde..."
+
+}

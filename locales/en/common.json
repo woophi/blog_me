@@ -1,0 +1,90 @@
+{
+  "subscribe": {
+    "emailBtn": "E-mail",
+    "placeholder": "Enter your email address",
+    "label": "Sign up to be the first to know about the new painting"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "developed": "Developed by",
+    "KM": "Konstantin Mikheev"
+  },
+  "contact": {
+    "title": "Contact form",
+    "orders": "Your orders"
+  },
+  "photo": {
+    "title": "Photo gallery"
+  },
+  "video": {
+    "title": "Video",
+    "online": {
+      "title": "Online stream",
+      "atelier": "Online Atelier"
+    },
+    "youtube": {
+      "title": "Youtube Video"
+    },
+    "noVideos": "No videos"
+  },
+  "watch": "watch",
+  "AA": "Akai Akaev",
+  "gallery": {
+    "title": "Gallery",
+    "comments": "Comments",
+    "addComments": "Add comment"
+  },
+  "about": {
+    "title": "About me",
+    "subTitle": "Biography"
+  },
+  "navigation": {
+    "about": "Biography",
+    "gallery": "Gallery",
+    "online": "Online",
+    "youtube": "Youtube",
+    "video": "Video",
+    "photo": "Photo",
+    "contact": "Contact"
+  },
+  "login": {
+    "title": "Sign in form"
+  },
+
+  "forms": {
+    "field": {
+      "required": "Please, fill this field",
+      "invalid": "Field is invalid"
+    },
+    "name": "Name",
+    "email": "E-mail",
+    "message": "Message",
+    "password": "Password"
+  },
+
+  "unsub": {
+    "title": "Unsubscribe from all e-mail notifications",
+    "invalid": "Link is invalid",
+    "content": "By clicking on button unsubscribe You will stop receiving all e-mail notifications from this web-site.",
+    "verySorry": "We are very sorry, that You unsubscribed. If you want to get e-mail notifications, You will need to send a message through conatct form."
+  },
+
+  "buttons": {
+    "send": "Send",
+    "cancel": "Cancel",
+    "add": "Add",
+    "login": "Sign in",
+    "save": "Save",
+    "unsub": "Unsubscribe",
+    "home": "Go to homepage"
+  },
+
+  "errors": {
+    "404": "Page not found",
+    "404Sub": "We could not find anything.",
+    "others": "Oops... something went wrong..."
+  },
+
+  "typeHere": "Type here..."
+
+}

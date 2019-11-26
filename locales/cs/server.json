@@ -1,0 +1,8 @@
+{
+  "mails": {
+    "from": "Rektorát webu",
+    "subject": {
+      "newUserRegistration": "Potvrzení registrace"
+    }
+  }
+}

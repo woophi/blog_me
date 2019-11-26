@@ -1,0 +1,7 @@
+cache/
+node_modules/
+.next
+yarn-error.log
+dist
+server/logger/log/**
+.env
