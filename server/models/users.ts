@@ -22,6 +22,10 @@ export const UsersSchema = new mongoose.Schema(
     comments: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.COMMENT
+    }],
+    likes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: SchemaNames.LIKES
     }]
   },
 	{ collection: SchemaNames.USERS }

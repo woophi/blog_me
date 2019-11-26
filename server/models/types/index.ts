@@ -10,3 +10,4 @@ export * from './links';
 export * from './files';
 export * from './gdpr';
 export * from './shortLinks';
+export * from './blogs';

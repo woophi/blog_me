@@ -16,7 +16,7 @@ export const BlackListSchema = new mongoose.Schema(
     },
     level: {
       type: String,
-      enum : ['comment','request', 'all'],
+      enum : ['comment','view', 'all'],
       required: true
     }
   },

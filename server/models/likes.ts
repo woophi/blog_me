@@ -7,6 +7,10 @@ export const LikesSchema = new mongoose.Schema(
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.USERS
+    },
+		blog: {
+			type: mongoose.Schema.Types.ObjectId,
+      ref: SchemaNames.BLOGS
     }
   },
 	{ collection: SchemaNames.LIKES }

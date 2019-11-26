@@ -11,6 +11,6 @@ export type BanModel = {
 
 export enum BanLevel {
   COMMENT = 'comment',
-  REQUEST = 'request',
+  VIEW = 'view',
   ALL = 'all'
 }

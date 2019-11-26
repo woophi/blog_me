@@ -50,8 +50,6 @@ export function router(
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);
 
-  app.post('/api/admin/new/user', identity.authorizedForSuperAdmin, controllers.createUser);
-
   app.post('/api/admin/new/language', identity.authorizedForAdmin, controllers.createNewLanguage);
   app.patch('/api/admin/toggle/language', identity.authorizedForAdmin, controllers.toggleActivationLanguage);
 

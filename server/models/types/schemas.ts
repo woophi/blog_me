@@ -7,6 +7,7 @@ export enum SchemaNames {
   USERS = 'users',
   LIKES = 'likes',
   LINKS = 'links',
+  BLOGS = 'blogs',
 
   GDPR = 'gdprs',
 
