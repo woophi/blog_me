@@ -11,7 +11,7 @@ export type BlogsModelGeneral = {
   coverPhotoUrl: string;
   body: string;
   publishedDate: Date;
-  deleted: Date;
+  deleted?: Date;
 };
 
 export type BlogsModel = BlogsModelGeneral & {

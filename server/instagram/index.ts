@@ -1,9 +1,9 @@
 import { IgApiClient } from 'instagram-private-api';
-import { EventBus } from '../lib/events';
+import { EventBus, BusEvents } from '../lib/events';
 import { Logger } from '../logger';
 import config from '../config';
-import * as models from '../models/types';
-import { IgEventParams, IgEvents } from './types';
+import { IgEventParams } from './types';
+import { getBlogCaptionData } from 'server/operations';
 const Jimp = require('jimp');
 
 export const ig = new IgApiClient();
@@ -26,13 +26,12 @@ const loginToIg = async () => {
 };
 
 export const postToInstagram = async ({ blogId, done }: IgEventParams) => {
-  // TODO: get from nlog adv data
-
   try {
+    const { coverPhotoUrl, title } = await getBlogCaptionData(blogId);
     const ig = await loginToIg();
     if (!ig) throw Error('failed login to instagram');
 
-    const jimpInit = await Jimp.read('');
+    const jimpInit = await Jimp.read(coverPhotoUrl);
     jimpInit.contain(igPerfectResolution, igPerfectResolution, async (e, v) => {
       if (e) {
         Logger.info(e);
@@ -43,7 +42,7 @@ export const postToInstagram = async ({ blogId, done }: IgEventParams) => {
       Logger.debug('got buff');
       await ig.publish.photo({
         file: buffData,
-        caption: ''
+        caption: title
       });
       Logger.debug('ig photo published');
     });
@@ -57,7 +56,7 @@ export const postToInstagram = async ({ blogId, done }: IgEventParams) => {
 
 export const registerInstagramEvents = () => {
   Logger.debug('Register Instagram Events');
-  EventBus.on(IgEvents.INSTAGRAM_ASK, postToInstagram);
+  EventBus.on(BusEvents.NEW_BLOG, postToInstagram);
 };
 
 const igPerfectResolution = 1080;

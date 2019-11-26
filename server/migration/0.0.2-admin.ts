@@ -2,7 +2,7 @@ import UserModel from '../models/users';
 import { Logger } from '../logger';
 import * as identity from '../identity';
 import * as async from 'async';
-import { Locales, AccountStatus } from 'server/models/types';
+import { Locales } from 'server/models/types';
 import { getLanguageIdByLocaleId } from 'server/operations';
 
 const createAdminUser = (done) => {
@@ -60,8 +60,7 @@ const createAdminUser = (done) => {
       const language = await getLanguageIdByLocaleId(Locales.EN);
       const newUser = new UserModel({
         ...userData,
-        language,
-        status: AccountStatus.ACTIVE
+        language
       });
       return newUser.save(err => {
         if (err) {
