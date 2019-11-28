@@ -30,5 +30,9 @@ export default {
 
   // google
   G_CLIENT_ID: process.env.G_CLIENT_ID,
-  G_CLIENT_SECRET: process.env.G_CLIENT_SECRET
-}
+  G_CLIENT_SECRET: process.env.G_CLIENT_SECRET,
+
+  // vk
+  VK_CLIENT_ID: process.env.VK_CLIENT_ID,
+  VK_CLIENT_SECRET: process.env.VK_CLIENT_SECRET
+};

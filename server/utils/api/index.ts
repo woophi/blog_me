@@ -43,6 +43,7 @@ export const callApi = async (
       }
       return {};
     }
+    Logger.info(result?.status);
     return result?.data;
   } catch (error) {
     Logger.error('fetch api error', error);

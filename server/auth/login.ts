@@ -7,6 +7,7 @@ import { ExternalLogin } from './types';
 import { googleAuthFirstStep, processGoogleLogin } from 'server/google';
 import { HTTPStatus } from 'server/lib/models';
 import { fbAuthFirstStep, processFbLogin } from 'server/facebook';
+import { vKAuthFirstStep, processVKLogin } from 'server/vk';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const validate = new kia.Validator(req, res, next);
@@ -57,6 +58,9 @@ export const externalLogin = (req: Request, res: Response, next: NextFunction) =
   if (type === 'fb') {
     return fbAuthFirstStep(req, res, next);
   }
+  if (type === 'vk') {
+    return vKAuthFirstStep(req, res, next);
+  }
   return res.sendStatus(HTTPStatus.OK);
 };
 export const externalLoginComplete = (req: Request, res: Response, next: NextFunction) => {
@@ -66,6 +70,9 @@ export const externalLoginComplete = (req: Request, res: Response, next: NextFun
   }
   if (type === 'fb') {
     return processFbLogin(req, res, next);
+  }
+  if (type === 'vk') {
+    return processVKLogin(req, res, next);
   }
   return res.sendStatus(HTTPStatus.OK);
 };
