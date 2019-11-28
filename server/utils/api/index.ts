@@ -1,22 +1,15 @@
 import * as axios from 'axios';
-import { FB_API_VERSION } from './constants';
-import { Logger } from '../logger';
-import { HTTPMethod, IDictionary, HTTPStatus } from 'server/lib/models';
-import { buildQueryString } from 'server/utils/api';
+import { HTTPMethod, HTTPStatus } from 'server/lib/models';
+import { Logger } from 'server/logger';
+export * from './helpers';
 
-export const callFbApi = async (
+export const callApi = async (
   method: HTTPMethod,
-  action: string,
-  parameters: IDictionary<string>[],
+  url: string,
   payload: object = null
 ) => {
   try {
-
-    const url = `https://graph.facebook.com/${FB_API_VERSION}/${action}${buildQueryString(
-      parameters
-    )}`;
-
-    Logger.debug('FB url ' + url)
+    Logger.debug('Api url ' + url);
 
     const payloadString = payload != null ? JSON.stringify(payload) : null;
 
@@ -37,12 +30,10 @@ export const callFbApi = async (
       data?: any;
       status: HTTPStatus;
       error?: any;
-    } = await axios
-      .default(rc)
-      .then(
-        r => ({ data: r.data, status: r.status }),
-        e => ({ status: e.response.status, error: e.response.data.error })
-      );
+    } = await axios.default(rc).then(
+      r => ({ data: r.data, status: r.status }),
+      e => ({ status: e.response.status, error: e.response.data.error })
+    );
 
     if (result.status === HTTPStatus.BadRequest) {
       const errMessage = result.error.message;
@@ -50,10 +41,11 @@ export const callFbApi = async (
         Logger.error(errMessage);
         return {};
       }
+      return {};
     }
-    return result.data;
+    return result?.data;
   } catch (error) {
-    Logger.error('Fb fetch api error', error);
+    Logger.error('fetch api error', error);
     return {};
   }
 };

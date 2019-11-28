@@ -1,6 +1,7 @@
 export enum HTTPStatus {
   OK = 200,
   Empty = 204,
+  Redirect = 302,
   BadRequest = 400,
   Unauthorized = 401,
   PaymentRequired = 402,

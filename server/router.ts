@@ -11,7 +11,7 @@ const Agendash = require('agendash');
 import { UrlWithParsedQuery } from 'url';
 import Server from 'next/dist/next-server/server/next-server';
 import { agenda } from './lib/agenda';
-
+import { processGoogleLogin } from './google';
 const options = {
   root: join(__dirname, '../assets')
 };
@@ -31,6 +31,10 @@ export function router(
 
   app.get('/robots.txt', (_, res) => res.status(HTTPStatus.OK).sendFile('robots.txt', options));
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
+
+  // TODO: should be open in separate window
+  app.get('/auth/:external/go', auth.externalLogin);
+  app.get('/login/google/complete', processGoogleLogin);
 
   // contact message
   app.post('/api/guest/send/message', rateLimiterMiddleware, controllers.sendMailToAdmins);

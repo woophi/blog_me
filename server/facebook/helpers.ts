@@ -1,6 +1,6 @@
 import { FB_API_VERSION } from './constants';
 import config from '../config';
-import { IDictionary } from 'server/lib/models';
+import { buildQueryString } from 'server/utils/api';
 
 export const getLoginUrl = (
   redirectUrl: string,
@@ -18,13 +18,3 @@ export const getLoginUrl = (
   );
   return url;
 };
-
-export function buildQueryString(items: IDictionary<string>[]) {
-  const joined = items
-    .map(it => {
-      const key = Object.keys(it)[0];
-      return `${key}=${encodeURI(it[key])}`;
-    })
-    .join('&');
-  return joined.length > 0 ? '?' + joined : '';
-}

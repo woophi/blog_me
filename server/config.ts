@@ -26,5 +26,9 @@ export default {
 
   //faceebook
   FB_APP_ID: process.env.FB_APP_ID,
-  FB_APP_SECRET: process.env.FB_APP_SECRET
+  FB_APP_SECRET: process.env.FB_APP_SECRET,
+
+  // google
+  G_CLIENT_ID: process.env.G_CLIENT_ID,
+  G_CLIENT_SECRET: process.env.G_CLIENT_SECRET
 }

@@ -2,8 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { Logger } from '../logger';
 import * as kia from '../validator';
 import * as identity from '../identity';
-import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
+import { ExternalLogin } from './types';
+import { googleAuthFirstStep } from 'server/google';
+import { HTTPStatus } from 'server/lib/models';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const validate = new kia.Validator(req, res, next);
@@ -36,13 +38,21 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     return res.status(HTTPStatus.BadRequest).send({ error: error.message });
   };
 
-  Logger.debug(`init auth controller ${new Date().toLocaleTimeString()}`);
-  const auth = new identity.Auth(userData, req, res, onSuccess, onFail);
+  return await identity.authUser(
+    req,
+    res,
+    userData.email,
+    userData.password,
+    onSuccess,
+    onFail
+  );
+};
 
-  Logger.debug(`proceed with signin ${new Date().toLocaleTimeString()}`);
-  try {
-    await auth.signin();
-  } catch {
-    return onFail(auth.generalError);
+export const externalLogin = (req: Request, res: Response, next: NextFunction) => {
+  const type = req.params.external as ExternalLogin;
+  if (type === 'google') {
+    googleAuthFirstStep(req, res, next);
+    return;
   }
+  return res.sendStatus(HTTPStatus.OK);
 };

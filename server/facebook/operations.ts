@@ -1,4 +1,4 @@
-import { callApi } from './api';
+import { callFbApi } from './api';
 import config from '../config';
 import { Page } from './types';
 import { Logger } from '../logger';
@@ -6,7 +6,7 @@ import FBIModel from '../models/facebookPages';
 import { FacebookModel, FacebookPage } from '../models/types';
 
 export const getAccessToken = async (code: string): Promise<string> => {
-  const { access_token } = await callApi('get', 'oauth/access_token', [
+  const { access_token } = await callFbApi('get', 'oauth/access_token', [
     { client_id: config.FB_APP_ID },
     { client_secret: config.FB_APP_SECRET },
     { redirect_uri: config.SITE_URI + 'processLogin/fb/at' },
@@ -17,7 +17,7 @@ export const getAccessToken = async (code: string): Promise<string> => {
 };
 
 export const getPagesData = async (accessToken: string): Promise<Page[]> => {
-  const result = await callApi('get', 'me/accounts', [
+  const result = await callFbApi('get', 'me/accounts', [
     { access_token: accessToken }
   ]);
 
@@ -34,7 +34,7 @@ export const getPagesData = async (accessToken: string): Promise<Page[]> => {
 };
 
 export const getLongLivedToken = async (accessToken: string) => {
-  const result = await callApi('post', 'oauth/access_token', [
+  const result = await callFbApi('post', 'oauth/access_token', [
     { client_id: config.FB_APP_ID },
     { client_secret: config.FB_APP_SECRET },
     { fb_exchange_token: accessToken },
@@ -48,7 +48,7 @@ const subscribeAndSavePage = async (
   page: Page,
   longLiveToken: string
 ) => {
-  const result = await callApi('post', `${page.id}/subscribed_apps`, [
+  const result = await callFbApi('post', `${page.id}/subscribed_apps`, [
     { access_token: longLiveToken },
     { subscribed_fields: 'publisher_subscriptions, feed' }
   ]);
@@ -113,7 +113,7 @@ export const createImgPost = async (linkOfPost: string, message: string, pageId:
     if (!page.longLiveToken) {
       return;
     }
-    await callApi('post', `${pageId}/feed`, [
+    await callFbApi('post', `${pageId}/feed`, [
       {link: linkOfPost},
       {message},
       {access_token: page.longLiveToken}
@@ -124,7 +124,7 @@ export const createImgPost = async (linkOfPost: string, message: string, pageId:
 }
 
 const getLongLivedTokenValidation = async (longLiveToken: string, accessToken: string) => {
-  const result = await callApi('get', 'debug_token/', [
+  const result = await callFbApi('get', 'debug_token/', [
     { input_token: longLiveToken },
     { access_token: accessToken }
   ]);
