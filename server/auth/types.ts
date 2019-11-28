@@ -1,1 +1,1 @@
-export type ExternalLogin = 'google';
+export type ExternalLogin = 'google' | 'fb';

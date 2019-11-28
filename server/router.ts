@@ -34,7 +34,7 @@ export function router(
 
   // TODO: should be open in separate window
   app.get('/auth/:external/go', auth.externalLogin);
-  app.get('/login/google/complete', processGoogleLogin);
+  app.get('/login/:external/complete', auth.externalLoginComplete);
 
   // contact message
   app.post('/api/guest/send/message', rateLimiterMiddleware, controllers.sendMailToAdmins);

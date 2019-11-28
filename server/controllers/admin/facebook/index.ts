@@ -23,7 +23,10 @@ export const processLogin = async (
   next: NextFunction
 ) => {
   const code = req.query['code'] || '';
-  const accessToken = await FB.getAccessToken(formatString(code));
+  const accessToken = await FB.getAccessToken(
+    formatString(code),
+    'processLogin/fb/at'
+  );
   const pages = await FB.getPagesData(accessToken);
   if (req.session.user) {
     async.forEach(pages, FB.subscribePage);
