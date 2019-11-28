@@ -5,6 +5,7 @@ import { Logger } from 'server/logger';
 import * as kia from 'server/validator';
 import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
+import moment from 'moment';
 
 export const createNewLanguage = async (
   req: Request,
@@ -75,7 +76,7 @@ export const toggleActivationLanguage = async (
     }).exec();
     if (!language) return res.sendStatus(HTTPStatus.NotFound);
 
-    const deleted = language.deleted ? undefined : Date.now();
+    const deleted = language.deleted ? undefined : moment().toDate();
     await language.set('deleted', deleted).save();
     return res.sendStatus(HTTPStatus.OK);
   } catch (error) {

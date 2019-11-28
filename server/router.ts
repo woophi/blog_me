@@ -11,7 +11,6 @@ const Agendash = require('agendash');
 import { UrlWithParsedQuery } from 'url';
 import Server from 'next/dist/next-server/server/next-server';
 import { agenda } from './lib/agenda';
-import { processGoogleLogin } from './google';
 const options = {
   root: join(__dirname, '../assets')
 };
@@ -55,6 +54,10 @@ export function router(
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);
 
   app.post('/api/admin/create/blog', identity.authorizedForAdmin, controllers.createBlog);
+  app.get('/api/admin/get/blog', identity.authorizedForAdmin, controllers.getBlog);
+  app.post('/api/admin/get/blogs', identity.authorizedForAdmin, controllers.getBlogs);
+  app.put('/api/admin/update/blog', identity.authorizedForAdmin, controllers.updateBlog);
+  app.delete('/api/admin/delete/blogs', identity.authorizedForAdmin, controllers.deleteBlogs);
 
   app.post('/api/admin/new/language', identity.authorizedForAdmin, controllers.createNewLanguage);
   app.patch('/api/admin/toggle/language', identity.authorizedForAdmin, controllers.toggleActivationLanguage);
