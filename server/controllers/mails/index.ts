@@ -16,7 +16,7 @@ export const sendMailToAdmins = async (
   res: Response,
   next: NextFunction
 ) => {
-  const validate = new kia.Validator(req, res, next);
+  const validate = new kia.Validator(req, res);
 
   const message = {
     name: req.body.name,

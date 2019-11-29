@@ -31,6 +31,11 @@ export function router(
   app.get('/robots.txt', (_, res) => res.status(HTTPStatus.OK).sendFile('robots.txt', options));
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
 
+  // guest blogs
+  app.get('/api/guest/blogs', controllers.getGuestBlogs);
+  app.get('/api/guest/blog', controllers.getGuestBlog);
+  app.post('/api/guest/blog/like', controllers.guestLikeBlog);
+
   // TODO: should be open in separate window
   app.get('/auth/:external/go', auth.externalLogin);
   app.get('/login/:external/complete', auth.externalLoginComplete);
@@ -49,6 +54,8 @@ export function router(
   app.post('/api/app/user/login', rateLimiterMiddleware, auth.login);
   app.post('/api/app/user/logout', rateLimiterMiddleware, identity.validateToken, auth.logout);
   app.post('/api/app/user/check', auth.checkUser);
+
+  app.patch('/api/app/user/likes', identity.validateToken, controllers.syncUserLikes);
 
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);

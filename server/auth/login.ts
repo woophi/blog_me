@@ -10,7 +10,7 @@ import { fbAuthFirstStep, processFbLogin } from 'server/facebook';
 import { vKAuthFirstStep, processVKLogin } from 'server/vk';
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  const validate = new kia.Validator(req, res, next);
+  const validate = new kia.Validator(req, res);
 
   Logger.debug(`starting authenticate user ${new Date().toLocaleTimeString()}`);
 

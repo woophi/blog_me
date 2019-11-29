@@ -16,7 +16,7 @@ export const createBlog = async (
   next: NextFunction
 ) => {
   try {
-    const validator = new Validator(req, res, next);
+    const validator = new Validator(req, res);
     const data = {
       body: req.body.body,
       coverPhotoUrl: req.body.coverPhotoUrl,
@@ -24,7 +24,7 @@ export const createBlog = async (
       publishedDate: req.body.publishedDate,
       title: req.body.title,
       language: req.body.language,
-      draft: req.body.draft
+      draft: req.body.draft ?? false
     };
     await validator.check(
       {
@@ -44,7 +44,8 @@ export const createBlog = async (
         publishedBy: formator.formatString,
         publishedDate: formator.formatDate,
         title: formator.formatString,
-        language: formator.formatString
+        language: formator.formatString,
+        draft: formator.formatBoolean
       },
       data
     );
@@ -76,7 +77,7 @@ export const updateBlog = async (
   next: NextFunction
 ) => {
   try {
-    const validator = new Validator(req, res, next);
+    const validator = new Validator(req, res);
     const data = {
       body: req.body.body,
       coverPhotoUrl: req.body.coverPhotoUrl,
@@ -139,7 +140,7 @@ export const deleteBlogs = async (
   next: NextFunction
 ) => {
   try {
-    const validator = new Validator(req, res, next);
+    const validator = new Validator(req, res);
     const data = {
       blogIds: req.body.blogIds as number[]
     };

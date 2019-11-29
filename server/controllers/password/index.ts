@@ -16,7 +16,7 @@ export const resetPassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  const validate = new kia.Validator(req, res, next);
+  const validate = new kia.Validator(req, res);
 
   const data = {
     email: req.body.email
@@ -73,7 +73,7 @@ export const updatePassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  const validate = new kia.Validator(req, res, next);
+  const validate = new kia.Validator(req, res);
 
   const data = {
     password: req.body.password,

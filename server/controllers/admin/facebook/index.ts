@@ -41,7 +41,7 @@ export const checkTokenValidation = async (
   next: NextFunction
 ) => {
   const pageId = formatNumber(req.body.pageId);
-  const validator = new kia.Validator(req, res, next);
+  const validator = new kia.Validator(req, res);
 
   await validator.check(
     {

@@ -3,14 +3,12 @@ import { HTTPStatus } from 'server/lib/models';
 import { Types } from 'mongoose';
 
 export class Validator {
-  constructor(req?: Request, res?: Response, next?: NextFunction) {
+  constructor(req?: Request, res?: Response) {
     this.req = req;
     this.res = res;
-    this.next = next;
   }
   req: Request = null;
   res: Response = null;
-  next: NextFunction = null;
 
   check = async (
     requires: {
@@ -38,9 +36,6 @@ export class Validator {
   private Exception = <T>(error: T, code: HTTPStatus) => {
     if (error && this.res) {
       return this.res.status(code).send({ error: error });
-    }
-    if (this.next && !error) {
-      return this.next();
     }
     return error;
   };
