@@ -14,6 +14,12 @@ export const UsersSchema = new mongoose.Schema(
     password: String,
     refreshToken: String,
     resetId: String,
+    notifications: {
+      email: {
+        type: Boolean,
+        default: true
+      }
+    },
     language: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.LANGUAGE,

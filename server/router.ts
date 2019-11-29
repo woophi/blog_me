@@ -47,8 +47,8 @@ export function router(
   app.post('/api/guest/password/reset', rateLimiterMiddleware, controllers.resetPassword);
   app.patch('/api/guest/password/update', controllers.updatePassword);
   // unsub
-  app.get('/api/guest/unsub/state', rateLimiterMiddleware, controllers.getUnsubLinkState);
-  app.put('/api/guest/unsub', rateLimiterMiddleware, controllers.guestUnsub);
+  app.get('/api/app/user/unsub/state', identity.validateToken, controllers.getUnsubLinkState);
+  app.put('/api/app/user/unsub', identity.validateToken, controllers.userUnsub);
 
   // user
   app.post('/api/app/user/login', rateLimiterMiddleware, auth.login);

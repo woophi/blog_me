@@ -78,14 +78,10 @@ export const getUnsubLinkState = async (
   return res.status(HTTPStatus.OK).send(state);
 };
 
-export const guestUnsub = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const userUnsub = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const linkId = formator.formatString(req.body.uniqId);
-    if (!linkId) return res.status(HTTPStatus.BadRequest);
+    if (!linkId || !req.session?.userId) return res.status(HTTPStatus.BadRequest);
 
     const Link = (await LinkModel.findOne({
       uniqId: linkId
@@ -97,7 +93,11 @@ export const guestUnsub = async (
       return res.sendStatus(HTTPStatus.OK);
     }
 
-    // TODO: action to unsub person
+    await UserModel.findByIdAndUpdate(req.session.userId, {
+      notifications: {
+        email: false
+      }
+    });
     await Link.remove();
   } catch (error) {
     Logger.error('error to update SubscriberModel', error);

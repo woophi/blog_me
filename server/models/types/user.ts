@@ -11,6 +11,9 @@ export type UserGeneralModel = {
   name?: string;
   refreshToken?: string;
   resetId?: string;
+  notifications?: {
+    email?: boolean;
+  }
 };
 
 export type UserModel = UserGeneralModel & {
