@@ -4,6 +4,7 @@ import { Logger } from '../logger';
 import { EmailTemplate } from './types';
 import { createUniqLink } from './operations';
 import { agenda } from 'server/lib/agenda';
+import Mail from 'nodemailer/lib/mailer';
 const hbs = require('nodemailer-express-handlebars');
 
 export class Mailer {
@@ -18,7 +19,7 @@ export class Mailer {
   ) {
     this.init();
   }
-  private transporter;
+  private transporter: Mail;
 
   private init = () => {
     this.transporter = nodemailer.createTransport({
@@ -73,7 +74,7 @@ export class Mailer {
           ...(personalContext || this.context),
           unsubLink: `${config.SITE_URI}unsub/${unsubId}`
         }
-      });
+      } as any);
       Logger.debug('Message sent: ' + info.messageId);
       if (done) {
         done();
