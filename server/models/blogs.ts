@@ -4,6 +4,10 @@ const timestamps = require('mongoose-timestamp');
 
 export const BlogSchema = new mongoose.Schema(
   {
+    blogId: {
+      type: Number,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -21,6 +25,10 @@ export const BlogSchema = new mongoose.Schema(
       required: true
     },
     deleted: Date,
+    draft: {
+      type: Boolean,
+      default: false
+    },
     publishedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.USERS,
@@ -49,5 +57,6 @@ export const BlogSchema = new mongoose.Schema(
 );
 
 BlogSchema.plugin(timestamps);
+BlogSchema.index({ blogId: 1 });
 
 export default mongoose.model<Blog>(SchemaNames.BLOGS, BlogSchema);

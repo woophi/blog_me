@@ -7,11 +7,13 @@ import { Language } from './language';
 export type Blog = Model<BlogsModel>;
 
 export type BlogsModelGeneral = {
+  blogId: number;
   title: string;
   coverPhotoUrl: string;
   body: string;
   publishedDate: Date;
   deleted?: Date;
+  draft?: boolean;
 };
 
 export type BlogsModel = BlogsModelGeneral & {

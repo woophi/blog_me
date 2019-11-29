@@ -8,6 +8,7 @@ import { HTTPStatus } from 'server/lib/models';
 import { getLanguageIdByLocaleId } from 'server/operations';
 import { EventBus, BusEvents } from 'server/lib/events';
 import moment from 'moment';
+import { generateRandomNumbers } from 'server/utils/prgn';
 
 export const createBlog = async (
   req: Request,
@@ -22,7 +23,8 @@ export const createBlog = async (
       publishedBy: req.session.userId,
       publishedDate: req.body.publishedDate,
       title: req.body.title,
-      language: req.body.language
+      language: req.body.language,
+      draft: req.body.draft
     };
     await validator.check(
       {
@@ -48,16 +50,20 @@ export const createBlog = async (
     );
 
     const languageId = await getLanguageIdByLocaleId(data.language);
+    const blogId = await ensureUniqBlogId();
 
     delete data.language;
     const newBlog = await new BlogModel({
       ...data,
-      language: languageId
+      language: languageId,
+      blogId
     } as models.BlogsSaveModel).save();
 
-    EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
-    // TODO: event listener for fb
-    return res.send({ id: newBlog.id }).status(HTTPStatus.OK);
+    if (!data.draft) {
+      EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
+      // TODO: event listener for fb
+    }
+    return res.send({ blogId: newBlog.blogId }).status(HTTPStatus.OK);
   } catch (error) {
     Logger.error(error);
     return res.sendStatus(HTTPStatus.ServerError);
@@ -84,7 +90,7 @@ export const updateBlog = async (
         coverPhotoUrl: validator.required,
         publishedDate: validator.required,
         title: validator.required,
-        blogId: validator.notMongooseObject
+        blogId: validator.required
       },
       data
     );
@@ -94,24 +100,26 @@ export const updateBlog = async (
         coverPhotoUrl: formator.formatString,
         publishedDate: formator.formatDate,
         title: formator.formatString,
-        blogId: formator.formatString
+        blogId: formator.formatNumber
       },
       data
     );
 
-    const blog = await BlogModel.findById(data.blogId).exec();
+    const blog = await BlogModel.findOne({ blogId: data.blogId }).exec();
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
-    await blog.set({
-      title: data.title,
-      body: data.body,
-      coverPhotoUrl: data.coverPhotoUrl,
-      publishedDate: data.publishedDate
-    }).save();
+    await blog
+      .set({
+        title: data.title,
+        body: data.body,
+        coverPhotoUrl: data.coverPhotoUrl,
+        publishedDate: data.publishedDate
+      })
+      .save();
 
     return res.send({
-      id: blog.id,
+      blogId: blog.blogId,
       title: blog.title,
       body: blog.body,
       coverPhotoUrl: blog.coverPhotoUrl,
@@ -133,7 +141,7 @@ export const deleteBlogs = async (
   try {
     const validator = new Validator(req, res, next);
     const data = {
-      blogIds: req.body.blogIds as string[]
+      blogIds: req.body.blogIds as number[]
     };
     await validator.check(
       {
@@ -144,7 +152,7 @@ export const deleteBlogs = async (
 
     for (const blogId of data.blogIds) {
       Logger.debug('deleting blogid', blogId);
-      await BlogModel.findByIdAndUpdate(blogId, { deleted: moment().toDate() });
+      await BlogModel.findOneAndUpdate({ blogId }, { deleted: moment().toDate() });
     }
 
     return res.sendStatus(HTTPStatus.OK);
@@ -153,4 +161,13 @@ export const deleteBlogs = async (
 
     return res.sendStatus(HTTPStatus.BadRequest);
   }
+};
+
+const ensureUniqBlogId = async (): Promise<number> => {
+  const blogId = generateRandomNumbers(1, 9999999);
+  const exists = await BlogModel.findOne({ blogId }).lean();
+  if (exists) {
+    return await ensureUniqBlogId();
+  }
+  return blogId;
 };

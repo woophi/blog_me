@@ -4,15 +4,15 @@ import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
 
 export const getBlog = async (req: Request, res: Response) => {
-  const blogId = req.query['id'];
+  const blogId = req.query['blogId'];
   if (!blogId) return res.send({}).status(HTTPStatus.Empty);
 
-  const blog = await BlogModel.findById(blogId).exec();
+  const blog = await BlogModel.findOne({ blogId }).exec();
 
   if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
   return res.send({
-    id: blog.id,
+    blogId: blog.blogId,
     title: blog.title,
     body: blog.body,
     coverPhotoUrl: blog.coverPhotoUrl,
@@ -28,15 +28,18 @@ export const getBlogs = async (req: Request, res: Response) => {
     limit: req.body.limit
   };
 
-  await formator.formatData({
-    offset: formator.formatNumber,
-    limit: formator.formatNumber
-  }, data);
+  await formator.formatData(
+    {
+      offset: formator.formatNumber,
+      limit: formator.formatNumber
+    },
+    data
+  );
 
   const blogs = await BlogModel.find()
     .where('deleted', undefined)
     .sort('createdAt')
-    .select('title body coverPhotoUrl publishedDate')
+    .select('title body coverPhotoUrl publishedDate blogId -_id')
     .skip(data.offset)
     .limit(data.limit)
     .lean();
