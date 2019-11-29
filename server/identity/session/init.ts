@@ -19,5 +19,5 @@ export const initExpressSession = () => {
 }
 
 export enum SessionCookie {
-  SesId = 'drive.uid'
+  SesId = 'blogMe.uid'
 }
