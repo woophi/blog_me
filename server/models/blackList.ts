@@ -9,10 +9,12 @@ export const BlackListSchema = new mongoose.Schema(
 			required: true
 		},
 		ip: {
-			type: String
+      type: String,
+      default: null
     },
     email: {
-			type: String,
+      type: String,
+      default: null
     },
     level: {
       type: String,
@@ -25,4 +27,4 @@ export const BlackListSchema = new mongoose.Schema(
 
 BlackListSchema.plugin(timestamps);
 
-export default mongoose.model<Ban>(SchemaNames.BLACK_LIST, BlackListSchema, SchemaNames.BLACK_LIST);
+export default mongoose.model<Ban>(SchemaNames.BLACK_LIST, BlackListSchema);

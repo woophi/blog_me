@@ -4,9 +4,18 @@ const timestamps = require('mongoose-timestamp');
 
 export const LinksSchema = new mongoose.Schema(
 	{
-    uniqId: String,
-    email: String,
-    valid: Date
+    uniqId: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    valid: {
+      type: Date,
+      required: true
+    }
   },
 	{ collection: SchemaNames.LINKS }
 );

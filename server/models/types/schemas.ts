@@ -1,5 +1,5 @@
 export enum SchemaNames {
-  BLACK_LIST = 'black_list',
+  BLACK_LIST = 'black_lists',
   COMMENT = 'comments',
   FB_PAGES = 'facebook_pages',
   FILES = 'files',

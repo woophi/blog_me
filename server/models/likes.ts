@@ -6,11 +6,13 @@ export const LikesSchema = new mongoose.Schema(
 	{
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.USERS
+      ref: SchemaNames.USERS,
+      default: null
     },
 		blog: {
 			type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.BLOGS
+      ref: SchemaNames.BLOGS,
+      required: true
     }
   },
 	{ collection: SchemaNames.LIKES }

@@ -9,11 +9,13 @@ export const CommentSchema = new mongoose.Schema(
       required: true
     },
     deleted: {
-      type: Date
+      type: Date,
+      default: null
     },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.COMMENT
+      ref: SchemaNames.COMMENT,
+      default: null
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

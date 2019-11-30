@@ -13,7 +13,8 @@ export const FilesSchema = new mongoose.Schema(
       required: true
     },
 		thumbnail: {
-			type: String
+      type: String,
+      default: null
     }
   },
 	{ collection: SchemaNames.FILES }

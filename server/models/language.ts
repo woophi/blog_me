@@ -16,6 +16,7 @@ export const LanguageSchema = new mongoose.Schema(
     },
     deleted: {
       type: Date,
+      default: null
     }
   },
 	{ collection: SchemaNames.LANGUAGE }

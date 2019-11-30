@@ -4,9 +4,18 @@ const timestamps = require('mongoose-timestamp');
 
 export const ShortLinksSchema = new mongoose.Schema(
   {
-    originalUrl: String,
-    urlCode: String,
-    shortUrl: String
+    originalUrl: {
+      type: String,
+      required: true
+    },
+    urlCode: {
+      type: String,
+      required: true
+    },
+    shortUrl: {
+      type: String,
+      required: true
+    },
   },
   { collection: SchemaNames.SHORT_LINKS }
 );

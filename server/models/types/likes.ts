@@ -5,10 +5,10 @@ import { Blog } from './blogs';
 export type Likes = Model<LikesModel>;
 
 export type LikesModel = {
-  user: User;
+  user?: User;
   blog: Blog;
 };
 export type LikesSaveModel = {
-  user: string;
+  user?: string;
   blog: string;
 }

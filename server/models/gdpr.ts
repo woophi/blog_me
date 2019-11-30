@@ -10,7 +10,8 @@ export const GDPRSchema = new mongoose.Schema(
 		},
 		language: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.LANGUAGE
+      ref: SchemaNames.LANGUAGE,
+      required: true
     }
   },
 	{ collection: SchemaNames.GDPR }

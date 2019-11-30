@@ -9,11 +9,23 @@ export const UsersSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    name: String,
+    name: {
+      type: String,
+      default: null
+    },
     roles: [],
-    password: String,
-    refreshToken: String,
-    resetId: String,
+    password: {
+      type: String,
+      default: null
+    },
+    refreshToken: {
+      type: String,
+      default: null
+    },
+    resetId: {
+      type: String,
+      default: null
+    },
     notifications: {
       email: {
         type: Boolean,

@@ -29,7 +29,7 @@ export const guestLikeBlog = async (req: Request, res: Response) => {
     );
 
     const blog = await BlogModel.findOne({ blogId: data.blogId })
-      .where('deleted', undefined)
+      .where('deleted', null)
       .where('draft', false)
       .exec();
 

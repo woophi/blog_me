@@ -11,7 +11,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
   try {
     const data = {
       offset: req.query.offset,
-      limit: req.query.limit
+      limit: req.query.limit ?? 50
     };
     const validator = new Validator(req, res);
 
@@ -32,7 +32,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
     );
 
     const blogs = await BlogModel.find()
-      .where('deleted', undefined)
+      .where('deleted', null)
       .where('draft', false)
       .where('publishedDate')
       .lte(moment().toDate())
@@ -71,7 +71,7 @@ export const getGuestBlog = async (req: Request, res: Response) => {
     );
 
     const blog = await BlogModel.findOne({ blogId: data.blogId })
-      .where('deleted', undefined)
+      .where('deleted', null)
       .where('draft', false)
       .lean();
 

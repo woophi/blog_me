@@ -25,7 +25,7 @@ export const getBlog = async (req: Request, res: Response) => {
 export const getBlogs = async (req: Request, res: Response) => {
   const data = {
     offset: req.body.offset,
-    limit: req.body.limit
+    limit: req.body.limit ?? 50
   };
 
   await formator.formatData(
@@ -37,7 +37,7 @@ export const getBlogs = async (req: Request, res: Response) => {
   );
 
   const blogs = await BlogModel.find()
-    .where('deleted', undefined)
+    .where('deleted', null)
     .sort('createdAt')
     .select('title body coverPhotoUrl publishedDate blogId -_id')
     .skip(data.offset)

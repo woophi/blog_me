@@ -24,7 +24,10 @@ export const BlogSchema = new mongoose.Schema(
       type: Date,
       required: true
     },
-    deleted: Date,
+    deleted: { 
+      type: Date,
+      default: null
+    },
     draft: {
       type: Boolean,
       default: false
