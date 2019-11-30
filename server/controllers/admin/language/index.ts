@@ -76,7 +76,7 @@ export const toggleActivationLanguage = async (
     }).exec();
     if (!language) return res.sendStatus(HTTPStatus.NotFound);
 
-    const deleted = language.deleted ? undefined : moment().toDate();
+    const deleted = language.deleted ? null : moment().toDate();
     await language.set('deleted', deleted).save();
     return res.sendStatus(HTTPStatus.OK);
   } catch (error) {

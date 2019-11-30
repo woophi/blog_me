@@ -22,7 +22,7 @@ export const getLanguageData = async (req: Request) => {
   const languageId = await LanguageModel.findOne()
     .where({
       localeId,
-      deleted: undefined
+      deleted: null
     })
     .select('id')
     .lean();
@@ -36,7 +36,7 @@ export const getLanguageIdByLocaleId = async (localeId: Locales) => {
   const languageId = await LanguageModel.findOne()
   .where({
     localeId,
-    deleted: undefined
+    deleted: null
   })
   .select('id')
   .lean();

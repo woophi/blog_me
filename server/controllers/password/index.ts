@@ -38,7 +38,7 @@ export const resetPassword = async (
     const user = await UserModel.findOne()
       .where('email', data.email)
       .where('password')
-      .ne(undefined)
+      .ne(null)
       .exec();
     if (!user) {
       Logger.info('trying to reset pass for non existed user', data.email);
@@ -99,7 +99,7 @@ export const updatePassword = async (
     const user = await UserModel.findOne()
       .where('resetId', data.linkId)
       .where('password')
-      .ne(undefined)
+      .ne(null)
       .exec();
     if (!user) return res.sendStatus(HTTPStatus.OK);
     const Link = await LinkModel.findOne({

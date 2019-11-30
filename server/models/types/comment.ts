@@ -4,6 +4,7 @@ import { Blog } from './blogs';
 
 type GeneralCommentModel = {
   text: string;
+  rate?: number;
   deleted?: Date;
 };
 

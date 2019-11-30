@@ -2,7 +2,7 @@ import UserModel from 'server/models/users';
 import { Request, Response } from 'express';
 import { HTTPStatus } from 'server/lib/models';
 import { Logger } from 'server/logger';
-import dropRepeats from 'ramda/es/dropRepeats';
+import dropRepeats from 'ramda/src/dropRepeats';
 
 export const syncUserLikes = async (req: Request, res: Response) => {
   try {

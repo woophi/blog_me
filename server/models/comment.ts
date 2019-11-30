@@ -8,6 +8,10 @@ export const CommentSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    rate: {
+      type: Number,
+      default: 0
+    },
     deleted: {
       type: Date,
       default: null
