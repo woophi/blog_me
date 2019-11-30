@@ -57,6 +57,9 @@ export function router(
 
   app.patch('/api/app/user/likes', identity.validateToken, controllers.syncUserLikes);
 
+  app.get('/api/app/user/comments', identity.validateToken, controllers.getBlogComments);
+  app.post('/api/app/user/comment', identity.validateToken, controllers.createBlogComment);
+
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);
 

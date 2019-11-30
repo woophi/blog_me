@@ -10,5 +10,6 @@ export const EventBus = new ClientCallbackClass();
 
 export enum BusEvents {
   NEW_COMMENT = 'new_comment',
+  NEW_REPLIE = 'new_replie',
   NEW_BLOG = 'new_blog'
 }

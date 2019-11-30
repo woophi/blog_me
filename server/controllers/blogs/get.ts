@@ -36,7 +36,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
       .where('draft', false)
       .where('publishedDate')
       .lte(moment().toDate())
-      .sort('publishedDate')
+      .sort({ publishedDate: -1 })
       .select('title coverPhotoUrl publishedDate blogId -_id')
       .skip(data.offset)
       .limit(data.limit)
@@ -84,7 +84,7 @@ export const getGuestBlog = async (req: Request, res: Response) => {
         (await LikeModel.find()
           .where('user', req.session?.userId)
           .where('blog', blog._id)
-          .count()) > 0;
+          .countDocuments()) > 0;
     }
 
     return res.send({

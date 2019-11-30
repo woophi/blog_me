@@ -61,7 +61,8 @@ export const createBlog = async (
     } as models.BlogsSaveModel).save();
 
     if (!data.draft) {
-      EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
+      // TODO: uncomment and send with caption a shortLink
+      // EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
       // TODO: event listener for fb
     }
     return res.send({ blogId: newBlog.blogId }).status(HTTPStatus.OK);
