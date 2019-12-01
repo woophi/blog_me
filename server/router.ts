@@ -34,6 +34,7 @@ export function router(
   // guest blogs
   app.get('/api/guest/blogs', controllers.getGuestBlogs);
   app.get('/api/guest/blog', controllers.getGuestBlog);
+  app.get('/api/guest/blog/comments', controllers.getGuestBlogComments);
   app.post('/api/guest/blog/like', controllers.guestLikeBlog);
 
   // TODO: should be open in separate window

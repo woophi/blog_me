@@ -1,5 +1,6 @@
 import BlogModel from 'server/models/blogs';
 import LikeModel from 'server/models/likes';
+import CommentModel from 'server/models/comment';
 import { Request, Response } from 'express';
 import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
@@ -96,6 +97,62 @@ export const getGuestBlog = async (req: Request, res: Response) => {
       comments: blog.comments?.length ?? 0,
       liked
     });
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+};
+
+export const getGuestBlogComments = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      blogId: req.query.blogId,
+      offset: req.query.offset,
+      limit: req.query.limit ?? 50
+    };
+
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        blogId: validator.required,
+        offset: validator.required,
+        limit: validator.required
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        blogId: formator.formatNumber,
+        offset: formator.formatNumber,
+        limit: formator.formatNumber
+      },
+      data
+    );
+
+    const blog = await BlogModel.findOne({ blogId: data.blogId, deleted: null })
+      .select('_id')
+      .lean();
+
+    if (!blog) return res.sendStatus(HTTPStatus.NotFound);
+
+    Logger.info(blog._id);
+    const comments = await CommentModel.find()
+      .where('blog', blog._id)
+      .where('deleted', null)
+      .where('parent', null)
+      .populate({
+        path: 'user',
+        select: 'name email -_id'
+      })
+      .sort({ createdAt: -1, rate: 1 })
+      .select('text user replies rate')
+      .skip(data.offset)
+      .limit(data.limit)
+      .lean();
+
+    return res.send(comments);
   } catch (error) {
     Logger.error(error);
     return res.sendStatus(HTTPStatus.BadRequest);
