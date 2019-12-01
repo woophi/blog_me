@@ -60,6 +60,7 @@ export function router(
 
   app.get('/api/app/user/comments', identity.validateToken, controllers.getBlogComments);
   app.post('/api/app/user/comment', identity.validateToken, controllers.createBlogComment);
+  app.put('/api/app/user/comment', identity.validateToken, controllers.rateBlogComment);
 
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);

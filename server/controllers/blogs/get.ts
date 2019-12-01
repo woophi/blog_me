@@ -137,7 +137,6 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
-    Logger.info(blog._id);
     const comments = await CommentModel.find()
       .where('blog', blog._id)
       .where('deleted', null)

@@ -20,6 +20,7 @@ export type UserModel = UserGeneralModel & {
   language: Language;
   comments?: Comment[];
   likes?: Likes[];
+  rates?: Comment[];
 };
 
 export type User = Model<UserModel>;

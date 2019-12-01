@@ -93,3 +93,59 @@ export const createBlogComment = async (req: Request, res: Response) => {
     return res.sendStatus(HTTPStatus.BadRequest);
   }
 };
+
+export const rateBlogComment = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      commentId: req.body.commentId,
+      rate: req.body.rate ?? false,
+      user: req.session?.userId
+    };
+    const validator = new Validator(req, res);
+    await validator.check(
+      {
+        commentId: validator.notMongooseObject,
+        rate: validator.required,
+        user: validator.notMongooseObject
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        commentId: formator.formatString,
+        rate: formator.formatBoolean,
+        user: formator.formatString
+      },
+      data
+    );
+
+    const comment = await CommentModel.findById(data.commentId)
+      .where('deleted', null)
+      .exec();
+
+    if (!comment) return res.sendStatus(HTTPStatus.NotFound);
+
+    const exists = await UserModel.findById(data.user)
+      .where('rates')
+      .in([data.commentId])
+      .lean();
+
+    if (exists) return res.sendStatus(HTTPStatus.Conflict);
+
+    await comment
+      .set({
+        rate: data.rate ? (comment.rate += 1) : (comment.rate -= 1)
+      })
+      .save();
+
+    await UserModel.findByIdAndUpdate(data.user, {
+      $push: { rates: comment.id }
+    });
+
+    return res.sendStatus(HTTPStatus.OK);
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+};
