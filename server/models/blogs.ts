@@ -55,6 +55,8 @@ export const BlogSchema = new mongoose.Schema(
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: SchemaNames.TAGS
     // }]
+    // TODO: approx time when user scroll to the end of blog
+    // TODO: shortlink relation
   },
   { collection: SchemaNames.BLOGS }
 );
