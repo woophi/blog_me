@@ -4,6 +4,9 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { goToSpecific } from 'core/common';
+import { theme } from 'core/lib';
+import moment from 'moment';
+import Button from '@material-ui/core/Button';
 
 type Props = BlogGuestItem;
 
@@ -28,15 +31,41 @@ export const BlogPreview = React.memo<Props>(
       >
         <Paper>
           <Box padding="1rem" height="450px">
-            <Box>
-              <img src={coverPhotoUrl} alt={title} />
+            <Box width="100%" height="100%" position="relative">
+              <img
+                src={coverPhotoUrl}
+                alt={title}
+                style={{
+                  minWidth: '100%',
+                  maxHeight: '100%'
+                }}
+              />
+              <Box
+                position="absolute"
+                zIndex="1"
+                bottom="0"
+                style={{
+                  backgroundColor: theme.palette.background.paper
+                }}
+                width="100%"
+                padding="1rem"
+                boxShadow={theme.shadows}
+                display="flex"
+                flexDirection="column"
+              >
+                <Typography variant="h3" component="h1">
+                  {title}
+                </Typography>
+                <Typography variant="caption" display="block" gutterBottom>
+                  Опубликовано: {moment(publishedDate).format('DD MMMM YYYY HH:MM')}
+                </Typography>
+                <Box>
+                  <Button variant="contained" color="primary">
+                    Прочесть
+                  </Button>
+                </Box>
+              </Box>
             </Box>
-            <Typography variant="h3" component="h1">
-              {title}
-            </Typography>
-            <Typography variant="caption" display="block" gutterBottom>
-              {publishedDate}
-            </Typography>
           </Box>
         </Paper>
       </Box>
