@@ -12,7 +12,7 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
     <Box display="flex" flexDirection="column">
       {blogs.length
         ? blogs.map(b => <BlogPreview key={b.blogId} {...b} />)
-        : 'nothing here'}
+        : 'nothing here yet'}
     </Box>
   );
 });

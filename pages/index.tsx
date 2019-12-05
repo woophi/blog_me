@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IndexLayout } from 'ui/index';
+import { IndexLayout, GeneralLayout } from 'ui/index';
 import { getBLogs } from 'core/operations';
 import { BlogGuestItem } from 'core/models';
 
@@ -29,7 +29,11 @@ class Index extends React.Component<Props> {
 
   render() {
     const blogs = this.props.blogs.length ? this.props.blogs : this.state.blogs;
-    return <IndexLayout blogs={blogs} />;
+    return (
+      <GeneralLayout>
+        <IndexLayout blogs={blogs} />
+      </GeneralLayout>
+    );
   }
 }
 
