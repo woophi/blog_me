@@ -8,13 +8,15 @@ export const sendMessage = (data: models.MessageModel) =>
   callApi<void>('post', `api/guest/send/message`, data);
 
 export const getBlogComments = (blogId: string) =>
-  callApi<models.CommentItem[] | null>('get', `api/guest/comments/blog?id=${blogId}`);
+  callApi<models.CommentItem[] | null>(
+    'get',
+    `api/guest/comments/blog?id=${blogId}`
+  );
 
 export const createComment = (blogId: string, data: models.NewComment) =>
   callApi<boolean>('post', `api/guest/comments/new/blog?id=${blogId}`, data);
 
-export const getVisitorName = () =>
-  callApi<string>('get', `api/guest/name`);
+export const getVisitorName = () => callApi<string>('get', `api/guest/name`);
 
 export const getCommentById = (commentId: string) =>
   callApi<models.CommentItem>('get', `api/guest/comments/comment?id=${commentId}`);
@@ -33,3 +35,9 @@ export const updatePassword = (password: string, linkId: string) =>
 
 export const getResetPassLinkState = (uniqId: string) =>
   callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
+
+export const getBLogs = (offset = 0, limit = 50) =>
+  callApi<models.BlogGuestItem[]>(
+    'get',
+    `api/guest/blogs?offset=${offset}&limit=${limit}`
+  );

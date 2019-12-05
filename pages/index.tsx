@@ -1,8 +1,35 @@
 import * as React from 'react';
+import { IndexLayout } from 'ui/index';
+import { getBLogs } from 'core/operations';
+import { BlogGuestItem } from 'core/models';
 
-class Index extends React.Component {
+type Props = {
+  blogs: BlogGuestItem[];
+};
+class Index extends React.Component<Props> {
+  static async getInitialProps() {
+    const blogs = await getBLogs();
+    return { blogs };
+  }
+
+  static defaultProps = {
+    blogs: []
+  };
+
+  state = {
+    blogs: []
+  };
+
+  async componentDidMount() {
+    if (!this.props.blogs || !this.props.blogs.length) {
+      const blogs = await getBLogs();
+      this.setState({ blogs });
+    }
+  }
+
   render() {
-    return <div>kek</div>;
+    const blogs = this.props.blogs.length ? this.props.blogs : this.state.blogs;
+    return <IndexLayout blogs={blogs} />;
   }
 }
 

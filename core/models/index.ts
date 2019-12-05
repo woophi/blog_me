@@ -8,3 +8,4 @@ export * from './auth';
 export * from './admin';
 export * from './unsub';
 export * from './visitor';
+export * from './blog';

@@ -1,5 +1,4 @@
 import { client } from 'core/callbacks';
-import { getCommentById } from 'core/operations';
 import { store } from 'core/store';
 
 client.welcome = () => {
@@ -22,14 +21,14 @@ client.upload_done = (fileName, fileId, url) => {
 
 client.new_comment = async (commentId, blogId) => {
   // FIXME:
-  const blog = [].find(b => b.id == blogId);
-  if (blog) {
-    const comment = await getCommentById(commentId);
-    if (comment) {
-      store.dispatch({
-        type: 'UPDATE_COMMENTS',
-        payload: { blogId, comments: [...blog.comments, comment] }
-      });
-    }
-  }
+  // const blog = [].find(b => b.id == blogId);
+  // if (blog) {
+  //   const comment = await getCommentById(commentId);
+  //   if (comment) {
+  //     store.dispatch({
+  //       type: 'UPDATE_COMMENTS',
+  //       payload: { blogId, comments: [...blog.comments, comment] }
+  //     });
+  //   }
+  // }
 };
