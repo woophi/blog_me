@@ -1,13 +1,5 @@
 import { Provider } from 'react-redux';
 import App from 'next/app';
-import NProgress from 'nprogress';
-import Router from 'next/router';
-import Head from 'next/head';
-
-NProgress.configure({ showSpinner: false });
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
 
 import withRedux from 'next-redux-wrapper';
 import { initStore } from 'core/store';
@@ -19,6 +11,7 @@ import { theme } from 'core/lib';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { getCookie } from 'core/cookieManager';
 import { VisitorCookie } from 'core/models';
+import { RouterProgress } from 'ui/atoms/RouterProgress';
 import('core/fire-callbacks');
 
 class MyApp extends App {
@@ -53,10 +46,7 @@ class MyApp extends App {
     const { Component, pageProps, store } = this.props as any;
     return (
       <>
-        <Head>
-          {/* Import CSS for nprogress */}
-          <link rel="stylesheet" type="text/css" href="/nprogress.css" />
-        </Head>
+        <RouterProgress />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Provider store={store}>
