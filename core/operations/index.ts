@@ -41,3 +41,5 @@ export const getBLogs = (offset = 0, limit = 50) =>
     'get',
     `api/guest/blogs?offset=${offset}&limit=${limit}`
   );
+export const getBLog = (blogId: number) =>
+  callApi<models.BlogGuest>('get', `api/guest/blog?blogId=${blogId}`);

@@ -10,6 +10,7 @@
         "ui/*": ["./components/*"]
       },
       "extensions": [ ".wasm", ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx" ]
-    }]
+    }],
+    ["@babel/plugin-proposal-optional-chaining"]
   ]
 }

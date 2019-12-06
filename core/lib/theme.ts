@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
@@ -11,8 +11,10 @@ export const generalOptionsPalette: PaletteOptions = {
   type: 'dark'
 };
 
-export const theme = createMuiTheme({
+export let theme = createMuiTheme({
   palette: {
     ...generalOptionsPalette
   }
 });
+
+theme = responsiveFontSizes(theme);

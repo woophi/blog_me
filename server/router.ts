@@ -35,6 +35,7 @@ export function router(
   app.get('/api/guest/blogs', controllers.getGuestBlogs);
   app.get('/api/guest/blog', controllers.getGuestBlog);
   app.get('/api/guest/blog/comments', controllers.getGuestBlogComments);
+
   app.post('/api/guest/blog/like', controllers.guestLikeBlog);
 
   // TODO: should be open in separate window
@@ -97,6 +98,13 @@ export function router(
     const actualPage = '/password/update'
     const queryParams = { id: req.params.id }
     appNext.render(req, res, actualPage, queryParams)
+  });
+
+  app.get('/:blogId', (req, res) => {
+    const actualPage = '/blog';
+    const getBlogId = req.params.blogId?.split('-').pop();
+    const queryParams = { blogId: getBlogId };
+    appNext.render(req, res, actualPage, queryParams);
   });
 
   app.get('*', (req, res) => {

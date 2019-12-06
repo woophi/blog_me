@@ -95,7 +95,8 @@ export const getGuestBlog = async (req: Request, res: Response) => {
       coverPhotoUrl: blog.coverPhotoUrl,
       publishedDate: blog.publishedDate,
       comments: blog.comments?.length ?? 0,
-      liked
+      liked,
+      updatedAt: blog.updatedAt
     });
   } catch (error) {
     Logger.error(error);

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { dislikeBlog, likeBlog, getLikeState } from './operations';
+import { dislikeBlog, likeBlog, getGuestLikeState } from './operations';
 
 type Props = {
-  blogId: string;
+  blogId: number;
 };
 
 export const Like = React.memo<Props>(({ blogId }) => {
@@ -12,7 +12,7 @@ export const Like = React.memo<Props>(({ blogId }) => {
   const classes = useStyles({ selected: liked });
 
   React.useEffect(() => {
-    getLikeState(blogId).then(setLike);
+    setLike(getGuestLikeState(blogId));
   }, [blogId]);
 
   const handleClick = () => {
