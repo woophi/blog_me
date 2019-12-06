@@ -29,7 +29,7 @@ export const BlogPreview = React.memo<Props>(
         }}
         onClick={loadBlog}
       >
-        <Paper>
+        <Paper elevation={3}>
           <Box padding="1rem" height="450px">
             <Box width="100%" height="100%" position="relative">
               <img
