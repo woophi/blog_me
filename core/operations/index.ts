@@ -36,10 +36,10 @@ export const updatePassword = (password: string, linkId: string) =>
 export const getResetPassLinkState = (uniqId: string) =>
   callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
 
-export const getBLogs = (offset = 0, limit = 50) =>
+export const getBLogs = (offset = 0) =>
   callApi<models.BlogGuestItem[]>(
     'get',
-    `api/guest/blogs?offset=${offset}&limit=${limit}`
+    `api/guest/blogs?offset=${offset}`
   );
 export const getBLog = (blogId: number) =>
   callApi<models.BlogGuest>('get', `api/guest/blog?blogId=${blogId}`);

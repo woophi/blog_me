@@ -18,6 +18,13 @@ const rateLimiterMongo = new RateLimiter.RateLimiterMongo({
   duration: 60 // Per second(s)
 });
 
+const fetchingLimiter = new RateLimiter.RateLimiterMongo({
+  ...opts,
+  points: 2, // Number of points
+  duration: 1, // Per second(s)
+  keyPrefix: 'fetchForce'
+});
+
 export const rateLimiterMiddleware = (
   req: Request,
   res: Response,
@@ -25,6 +32,28 @@ export const rateLimiterMiddleware = (
 ) => {
   let limiter: RateLimiter.RateLimiterMongo = null;
   limiter = rateLimiterMongo;
+
+  return limiter
+    .consume(req.ip)
+    .then(() => {
+      next();
+    })
+    .catch(rateLimiterRes => {
+      Logger.info(rateLimiterRes);
+
+      const error = `You've made too many failed attempts in a short period of time, please try again at ${moment()
+        .add(rateLimiterRes.msBeforeNext, 'milliseconds')
+        .format()}`;
+      return res.status(HTTPStatus.TooManyRequests).send({ error });
+    });
+};
+export const fetchingLimiterMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let limiter: RateLimiter.RateLimiterMongo = null;
+  limiter = fetchingLimiter;
 
   return limiter
     .consume(req.ip)

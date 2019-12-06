@@ -6,7 +6,7 @@ import * as identity from './identity';
 import * as storage from './storage';
 import { join } from 'path';
 import { HTTPStatus } from './lib/models';
-import { rateLimiterMiddleware } from './lib/rate-limiter';
+import { rateLimiterMiddleware, fetchingLimiterMiddleware } from './lib/rate-limiter';
 const Agendash = require('agendash');
 import { UrlWithParsedQuery } from 'url';
 import Server from 'next/dist/next-server/server/next-server';
@@ -32,11 +32,11 @@ export function router(
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
 
   // guest blogs
-  app.get('/api/guest/blogs', controllers.getGuestBlogs);
-  app.get('/api/guest/blog', controllers.getGuestBlog);
-  app.get('/api/guest/blog/comments', controllers.getGuestBlogComments);
+  app.get('/api/guest/blogs', fetchingLimiterMiddleware, controllers.getGuestBlogs);
+  app.get('/api/guest/blog', fetchingLimiterMiddleware, controllers.getGuestBlog);
+  app.get('/api/guest/blog/comments', fetchingLimiterMiddleware, controllers.getGuestBlogComments);
 
-  app.post('/api/guest/blog/like', controllers.guestLikeBlog);
+  app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
 
   // TODO: should be open in separate window
   app.get('/auth/:external/go', auth.externalLogin);

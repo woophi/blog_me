@@ -12,7 +12,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
   try {
     const data = {
       offset: req.query.offset,
-      limit: req.query.limit ?? 50
+      limit: 50
     };
     const validator = new Validator(req, res);
 
