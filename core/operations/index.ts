@@ -7,17 +7,6 @@ export const subscribe = (email: string) =>
 export const sendMessage = (data: models.MessageModel) =>
   callApi<void>('post', `api/guest/send/message`, data);
 
-export const getBlogComments = (blogId: string) =>
-  callApi<models.CommentItem[] | null>(
-    'get',
-    `api/guest/comments/blog?id=${blogId}`
-  );
-
-export const createComment = (blogId: string, data: models.NewComment) =>
-  callApi<boolean>('post', `api/guest/comments/new/blog?id=${blogId}`, data);
-
-export const getVisitorName = () => callApi<string>('get', `api/guest/name`);
-
 export const getCommentById = (commentId: string) =>
   callApi<models.CommentItem>('get', `api/guest/comments/comment?id=${commentId}`);
 
@@ -37,9 +26,12 @@ export const getResetPassLinkState = (uniqId: string) =>
   callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
 
 export const getBLogs = (offset = 0) =>
-  callApi<models.BlogGuestItem[]>(
-    'get',
-    `api/guest/blogs?offset=${offset}`
-  );
+  callApi<models.BlogGuestItem[]>('get', `api/guest/blogs?offset=${offset}`);
 export const getBLog = (blogId: number) =>
   callApi<models.BlogGuest>('get', `api/guest/blog?blogId=${blogId}`);
+
+export const getBlogComments = (blogId: number, offset = 0) =>
+  callApi<models.CommentItem[]>(
+    'get',
+    `api/guest/blog/comments?blogId=${blogId}&offset=${offset}`
+  );

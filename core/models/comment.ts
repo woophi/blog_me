@@ -1,10 +1,13 @@
 export type CommentItem = {
-  avatarSrc?: string;
-  name?: string;
-  createdAt?: string;
-  text?: string;
-  id?: string;
-}
+  _id: string;
+  text: string;
+  user: {
+    name: string;
+  };
+  rate: number;
+  createdAt: Date;
+  replies?: string[];
+};
 
 export type NewComment = {
   name: string;

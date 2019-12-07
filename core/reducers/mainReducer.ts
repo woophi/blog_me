@@ -14,7 +14,8 @@ export const initialState: models.AppState['ui'] = {
     selectedFile: null,
     uploadingFile: false,
     facebookActive: false
-  }
+  },
+  comments: []
 }
 
 export const reducer = (state = initialState, dispatch: models.AppDispatch): models.AppState['ui'] => {
@@ -25,10 +26,16 @@ export const reducer = (state = initialState, dispatch: models.AppDispatch): mod
         user: dispatch.payload
       };
     }
-    // FIXME:
     case 'SET_COMMENTS': {
       return {
-        ...state
+        ...state,
+        comments: [dispatch.payload]
+      };
+    }
+    case 'LOAD_MORE_COMMENTS': {
+      return {
+        ...state,
+        comments: [...state.comments, dispatch.payload]
       };
     }
     case 'UPDATE_COMMENTS': {

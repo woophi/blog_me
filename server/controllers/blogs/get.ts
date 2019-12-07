@@ -109,7 +109,7 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
     const data = {
       blogId: req.query.blogId,
       offset: req.query.offset,
-      limit: req.query.limit ?? 50
+      limit: 50
     };
 
     const validator = new Validator(req, res);
@@ -144,10 +144,10 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
       .where('parent', null)
       .populate({
         path: 'user',
-        select: 'name email -_id'
+        select: 'name -_id'
       })
       .sort({ createdAt: -1, rate: 1 })
-      .select('text user replies rate')
+      .select('text user replies rate createdAt')
       .skip(data.offset)
       .limit(data.limit)
       .lean();

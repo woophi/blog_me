@@ -1,15 +1,14 @@
-import { getBlogComments, createComment } from 'core/operations';
+import { getBlogComments } from 'core/operations';
 import { store } from 'core/store';
 import { NewComment } from 'core/models';
 
-export const getComments = async (blogId: string) => {
+export const getComments = async (blogId: number, offset = 0) => {
   try {
-    const comments = await getBlogComments(blogId);
+    const comments = await getBlogComments(blogId, offset);
     store.dispatch({ type: 'SET_COMMENTS', payload: { blogId,  comments } });
   } catch (error) {
     console.error(error);
   }
 };
 
-export const newComment = (data: NewComment, blogId: string) =>
-  createComment(blogId, data);
+export const newComment = (data: NewComment, blogId: number) => {};

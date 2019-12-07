@@ -9,29 +9,29 @@ import moment from 'moment';
 import { CommentItem } from 'core/models';
 
 export const Comment = React.memo<CommentItem>(({
-  createdAt, name, text
+  createdAt, user, text
 }) => {
   const classes = useStyles({});
   return (
     <Paper elevation={4} className={classes.paper}>
       <div className={classes.topText}>
-        <Avatar
-          className={classes.avatar}
-        >
-          <Icon className="fas fa-user" style={{paddingLeft:2}} />
+        <Avatar className={classes.avatar}>
+          <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
         </Avatar>
         <div className={classes.text}>
           <Typography
             noWrap
-            title={name}
+            title={user.name}
             className={classes.nickname}
             component="p"
           >
-            {name}
+            {user.name}
           </Typography>
-          <Typography component="p">{moment(createdAt).format('YYYY-MM-DD HH:mm')}</Typography>
+          <Typography component="p">
+            {moment(createdAt).format('YYYY-MM-DD HH:mm')}
+          </Typography>
         </div>
-        {/* <MenuComment /> */}
+        <MenuComment />
       </div>
       <Typography component="p" className={classes.content}>
         {text}

@@ -35,7 +35,7 @@ export const ButtonsForm = React.memo<Props>(
           type="submit"
           disabled={pristine || submitting}
           variant={'contained'}
-          color="primary"
+          color="secondary"
           className={classes.sbm}
         >
           {submitting ? (

@@ -45,10 +45,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: '1rem',
     minHeight: props.textArea ? '8rem' : '4rem',
     '&>label': {
-      color: theme.palette.primary.main
+      color: theme.palette.secondary.main
     },
     '&>.MuiFormHelperText-filled': {
-      color: theme.palette.primary.main
+      color: theme.palette.secondary.main
     }
   })
 }));

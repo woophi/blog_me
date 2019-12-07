@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
 import { Like } from 'ui/molecules';
+import { LoadComments } from './LoadComments';
 
 type Props = {
   blog: BlogGuest;
@@ -11,28 +12,52 @@ type Props = {
 
 export const BlogLayout = React.memo<Props>(({ blog }) => {
   return (
-    <Box>
-      <Typography variant="h1" component="h1">
-        {blog.title}
-      </Typography>
-      <Typography variant="caption" display="block" gutterBottom>
-        Опубликовано: {moment(blog.publishedDate).format('DD MMMM YYYY HH:MM')}
-      </Typography>
-      <Typography variant="caption" display="block" gutterBottom>
-        Обновлено: {moment(blog.updatedAt).format('DD MMMM YYYY HH:MM')}
-      </Typography>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+        <Typography variant="h1" component="h1" gutterBottom>
+          {blog.title}
+        </Typography>
+        <Typography
+          variant="caption"
+          display="block"
+          gutterBottom
+          color="textSecondary"
+        >
+          Опубликовано: {moment(blog.publishedDate).format('DD MMMM YYYY HH:MM')}
+        </Typography>
+        <Typography
+          variant="caption"
+          display="block"
+          gutterBottom
+          color="textSecondary"
+        >
+          Обновлено: {moment(blog.updatedAt).format('DD MMMM YYYY HH:MM')}
+        </Typography>
+      </Box>
       <img
         src={blog.coverPhotoUrl}
         alt={blog.title}
         style={{
-          minWidth: '100%',
-          maxHeight: '100%'
+          minWidth: '50vw',
+          maxHeight: '65vh',
+          maxWidth: '720px'
         }}
       />
-      <Typography gutterBottom dangerouslySetInnerHTML={{ __html: blog.body }} />
-      <Typography variant="overline" display="block" gutterBottom>
-        Комментарии: {blog.comments}
-      </Typography>
+      <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+        <Typography
+          component="div"
+          gutterBottom
+          dangerouslySetInnerHTML={{ __html: blog.body }}
+        />
+      </Box>
+      <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+        <LoadComments commentsCount={blog.comments} blogId={blog.blogId} />
+      </Box>
       <Like blogId={blog.blogId} />
     </Box>
   );

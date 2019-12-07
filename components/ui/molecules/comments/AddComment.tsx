@@ -8,10 +8,9 @@ import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { FORM_ERROR } from 'final-form';
-import { getVisitorName } from 'core/operations';
 
 type Props = {
-  blogId: string;
+  blogId: number;
 };
 
 type CommentForm = {
@@ -34,16 +33,10 @@ const validate = (values: CommentForm, t: (s: string) => string) => {
 
 const onSubmit = async (
   data: CommentForm,
-  blogId: string,
-  visitorName: string,
-  setName: (v: string) => void
+  blogId: number
 ) => {
   try {
     await newComment(data, blogId);
-    if (!visitorName) {
-      const name = await getVisitorName();
-      setName(name);
-    }
   } catch (error) {
     return { [FORM_ERROR]: 'Cannot add comment' };
   }
@@ -52,12 +45,6 @@ const onSubmit = async (
 export const AddComment = React.memo<Props>(({ blogId }) => {
   const { t } = useTranslation();
   const classes = useStyles({});
-  const [visitorName, setName] = React.useState('');
-
-  React.useEffect(() => {
-    getVisitorName().then(setName);
-  }, []);
-
   return (
     <Paper elevation={4} className={classes.paper}>
       <Typography gutterBottom variant="body1">
@@ -65,11 +52,11 @@ export const AddComment = React.memo<Props>(({ blogId }) => {
       </Typography>
       <Form
         onSubmit={(d: CommentForm) =>
-          onSubmit(d, blogId, visitorName, setName)
+          onSubmit(d, blogId)
         }
         validate={(v: CommentForm) => validate(v, t)}
         initialValues={{
-          name: visitorName,
+          name: '',
           message: ''
         }}
         render={({ handleSubmit, pristine, submitting, submitError, form }) => (

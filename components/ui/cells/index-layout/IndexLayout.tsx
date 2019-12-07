@@ -11,8 +11,9 @@ type Props = {
 
 export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
   const [offset, setOffset] = React.useState(0);
-  const [allBlogs, setBlogs] = React.useState([]);
+  const [allBlogs, setBlogs] = React.useState(blogs);
   const [fetching, setFetching] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
 
   React.useEffect(() => {
     setBlogs(blogs);
@@ -29,7 +30,7 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
         }
         return false;
       })
-      .then(r => r && setOffset(newOffset))
+      .then(r => r ? setOffset(newOffset) : setHidden(true))
       .finally(() => setFetching(false));
   }, [offset]);
   return (
@@ -38,10 +39,15 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
         ? allBlogs.map(b => <BlogPreview key={b.blogId} {...b} />)
         : 'nothing here yet'}
 
-      {allBlogs.length ? (
-        <Button color="primary" onClick={loadMore} size="large" style={{
-          height: 120
-        }}>
+      {allBlogs.length && !hidden ? (
+        <Button
+          color="primary"
+          onClick={loadMore}
+          size="large"
+          style={{
+            height: 120
+          }}
+        >
           {fetching ? 'Загрузка...' : 'Загрузить еще'}
         </Button>
       ) : null}
