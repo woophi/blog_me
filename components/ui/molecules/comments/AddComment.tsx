@@ -8,22 +8,27 @@ import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { FORM_ERROR } from 'final-form';
+import { connect } from 'react-redux';
+import { AppState } from 'core/models';
+import { canUserComment } from 'core/selectors';
 
-type Props = {
+type OwnProps = {
   blogId: number;
 };
 
+const mapState = (state: AppState, _: OwnProps) => ({
+  canAccess: canUserComment(state)
+});
+
+type Props = ReturnType<typeof mapState> & OwnProps;
+
 type CommentForm = {
-  name: string;
   message: string;
 };
 
 const validate = (values: CommentForm, t: (s: string) => string) => {
   const errors: Partial<CommentForm> = {};
 
-  if (!values.name || !safeTrim(values.name)) {
-    errors.name = t('common:forms.field.required');
-  }
   if (!values.message || !safeTrim(values.message)) {
     errors.message = t('common:forms.field.required');
   }
@@ -31,10 +36,7 @@ const validate = (values: CommentForm, t: (s: string) => string) => {
   return errors;
 };
 
-const onSubmit = async (
-  data: CommentForm,
-  blogId: number
-) => {
+const onSubmit = async (data: CommentForm, blogId: number) => {
   try {
     await newComment(data, blogId);
   } catch (error) {
@@ -42,21 +44,19 @@ const onSubmit = async (
   }
 };
 
-export const AddComment = React.memo<Props>(({ blogId }) => {
+const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
   const { t } = useTranslation();
   const classes = useStyles({});
+
   return (
     <Paper elevation={4} className={classes.paper}>
       <Typography gutterBottom variant="body1">
         {t('gallery.addComments')}
       </Typography>
       <Form
-        onSubmit={(d: CommentForm) =>
-          onSubmit(d, blogId)
-        }
+        onSubmit={(d: CommentForm) => onSubmit(d, blogId)}
         validate={(v: CommentForm) => validate(v, t)}
         initialValues={{
-          name: '',
           message: ''
         }}
         render={({ handleSubmit, pristine, submitting, submitError, form }) => (
@@ -65,12 +65,14 @@ export const AddComment = React.memo<Props>(({ blogId }) => {
             <form
               onSubmit={async event => {
                 const error = await handleSubmit(event);
-                if (error) { return error; }
+                if (error) {
+                  return error;
+                }
                 form.reset();
               }}
               className={classes.form}
             >
-              <Field
+              {/* <Field
                 name="name"
                 render={({ input, meta }) => (
                   <TextField
@@ -92,28 +94,40 @@ export const AddComment = React.memo<Props>(({ blogId }) => {
                     }}
                   />
                 )}
-              />
+              /> */}
               <Field
                 name="message"
-                render={({ input, meta }) => (
-                  <TextField
-                    id="outlined-message-static"
-                    label={t('common:typeHere')}
-                    multiline
-                    rows="4"
-                    fullWidth
-                    className={classes.field}
-                    {...input}
-                    error={Boolean(meta.touched && meta.error)}
-                    helperText={
-                      (meta.touched && meta.error) || `${input.value.length}/2000`
+                render={({ input, meta }) => {
+                  const handleOnFocus = (
+                    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+                  ) => {
+                    if (!canAccess) {
+                      console.log('auth pls');
+                    } else {
+                      input.onFocus(e);
                     }
-                    disabled={submitting}
-                    inputProps={{
-                      maxLength: 2000
-                    }}
-                  />
-                )}
+                  };
+                  return (
+                    <TextField
+                      id="outlined-message-static"
+                      label={t('common:typeHere')}
+                      multiline
+                      rows="4"
+                      fullWidth
+                      className={classes.field}
+                      {...input}
+                      onFocus={handleOnFocus}
+                      error={Boolean(meta.touched && meta.error)}
+                      helperText={
+                        (meta.touched && meta.error) || `${input.value.length}/2000`
+                      }
+                      disabled={submitting}
+                      inputProps={{
+                        maxLength: 2000
+                      }}
+                    />
+                  );
+                }}
               />
               <ButtonsForm
                 pristine={pristine}
@@ -129,6 +143,8 @@ export const AddComment = React.memo<Props>(({ blogId }) => {
     </Paper>
   );
 });
+
+export const AddComment = connect(mapState)(AddCommentPC);
 
 const useStyles = makeStyles(theme => ({
   form: {

@@ -7,38 +7,42 @@ import { MenuComment } from './Menu';
 import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
 import { CommentItem } from 'core/models';
+import { Replies } from './Replies';
 
-export const Comment = React.memo<CommentItem>(({
-  createdAt, user, text
-}) => {
-  const classes = useStyles({});
-  return (
-    <Paper elevation={4} className={classes.paper}>
-      <div className={classes.topText}>
-        <Avatar className={classes.avatar}>
-          <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
-        </Avatar>
-        <div className={classes.text}>
-          <Typography
-            noWrap
-            title={user.name}
-            className={classes.nickname}
-            component="p"
-          >
-            {user.name}
-          </Typography>
-          <Typography component="p">
-            {moment(createdAt).format('YYYY-MM-DD HH:mm')}
-          </Typography>
+export const Comment = React.memo<CommentItem & { blogId: number }>(
+  ({ createdAt, user, text, replies = [], rate, _id, blogId }) => {
+    const classes = useStyles({});
+    return (
+      <Paper elevation={4} className={classes.paper}>
+        <div className={classes.topText}>
+          <Avatar className={classes.avatar}>
+            <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
+          </Avatar>
+          <div className={classes.text}>
+            <Typography
+              noWrap
+              title={user.name}
+              className={classes.nickname}
+              component="p"
+            >
+              {user.name}
+            </Typography>
+            <Typography component="p" color="textSecondary">
+              {moment(createdAt).format('YYYY-MM-DD HH:mm')}
+            </Typography>
+          </div>
+          <MenuComment />
         </div>
-        <MenuComment />
-      </div>
-      <Typography component="p" className={classes.content}>
-        {text}
-      </Typography>
-    </Paper>
-  );
-});
+        <Typography component="p" className={classes.content}>
+          {text}
+        </Typography>
+        {replies && replies.length ? (
+          <Replies replieIds={replies} parentId={_id} blogId={blogId} />
+        ) : null}
+      </Paper>
+    );
+  }
+);
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -61,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     overflow: 'hidden',
-    wordBreak: 'break-word',
+    wordBreak: 'break-word'
   },
   nickname: {
     maxWidth: 160

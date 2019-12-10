@@ -158,3 +158,50 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
     return res.sendStatus(HTTPStatus.BadRequest);
   }
 };
+export const getGuestBlogCommentReplies = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      parentId: req.query.parentId,
+      offset: req.query.offset,
+      limit: 50
+    };
+
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        parentId: validator.notMongooseObject,
+        offset: validator.required,
+        limit: validator.required
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        parentId: formator.formatString,
+        offset: formator.formatNumber,
+        limit: formator.formatNumber
+      },
+      data
+    );
+
+    const comments = await CommentModel.find()
+      .where('deleted', null)
+      .where('parent', data.parentId)
+      .populate({
+        path: 'user',
+        select: 'name -_id'
+      })
+      .sort({ createdAt: -1, rate: 1 })
+      .select('text user replies rate createdAt')
+      .skip(data.offset)
+      .limit(data.limit)
+      .lean();
+
+    return res.send(comments);
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+};

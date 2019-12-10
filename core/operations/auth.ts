@@ -1,5 +1,5 @@
 import { store } from 'core/store';
-import { isUserAuthorized } from 'core/selectors';
+import { isUserGod } from 'core/selectors';
 import Router from 'next/router';
 import { callApi, getWindow } from 'core/common';
 import * as models from 'core/models';
@@ -40,7 +40,7 @@ export const checkAuth = async () => {
 export const ensureNotAuthorized = async () => {
   await checkAuth();
   const state = store.getState();
-  if (!isUserAuthorized(state)) {
+  if (!isUserGod(state)) {
     Router.push('/login');
   } else {
     connectAdminSocket();
@@ -49,7 +49,7 @@ export const ensureNotAuthorized = async () => {
 export const ensureAuthorized = async () => {
   await checkAuth();
   const state = store.getState();
-  if (isUserAuthorized(state)) {
+  if (isUserGod(state)) {
     connectAdminSocket();
     Router.push('/admin');
   }

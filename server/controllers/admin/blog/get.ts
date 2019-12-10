@@ -25,7 +25,7 @@ export const getBlog = async (req: Request, res: Response) => {
 export const getBlogs = async (req: Request, res: Response) => {
   const data = {
     offset: req.body.offset,
-    limit: req.body.limit ?? 50
+    limit: 50
   };
 
   await formator.formatData(

@@ -21,7 +21,7 @@ export const createBlogComment = async (req: Request, res: Response) => {
     await validator.check(
       {
         blogId: validator.required,
-        text: validator.required,
+        text: validator.maxLength(2000),
         userId: validator.notMongooseObject
       },
       data

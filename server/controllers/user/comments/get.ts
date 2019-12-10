@@ -9,7 +9,7 @@ export const getBlogComments = async (req: Request, res: Response) => {
   try {
     const data = {
       offset: req.query.offset,
-      limit: req.query.limit ?? 50,
+      limit: 50,
       userId: req.session?.userId
     };
     const validator = new Validator(req, res);

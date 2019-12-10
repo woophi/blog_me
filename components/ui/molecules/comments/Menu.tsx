@@ -8,8 +8,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core';
+import { connect as redux } from 'react-redux';
+import { AppState } from 'core/models';
+import { canUserComment } from 'core/selectors';
 
-export const MenuComment = React.memo(() => {
+const mapState = (state: AppState) => ({
+  canAccess: canUserComment(state)
+});
+
+type Props = ReturnType<typeof mapState>;
+
+const MenuCommentPC = React.memo<Props>(({ canAccess }) => {
   const classes = useStyles({});
 
   const [open, setOpen] = React.useState(false);
@@ -29,6 +38,7 @@ export const MenuComment = React.memo(() => {
 
     setOpen(false);
   }
+  if (!canAccess) return null;
   return (
     <>
       <IconButton
@@ -67,6 +77,8 @@ export const MenuComment = React.memo(() => {
     </>
   );
 });
+
+export const MenuComment = redux(mapState)(MenuCommentPC);
 
 const useStyles = makeStyles(theme => ({
   butnMenu: {

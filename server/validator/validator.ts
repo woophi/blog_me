@@ -97,4 +97,11 @@ export class Validator {
       return 'invalid';
     }
   };
+
+  maxLength = (maxLength: number) => <T>(value: T) => {
+    this.required(value);
+    if (typeof value === 'string' && value.length > maxLength) {
+      return 'increased allowed length'
+    }
+  }
 }
