@@ -68,7 +68,7 @@ export const uploadFiles = (files: File[]) => {
 export const allowedFormats = ['image/png', 'image/jpg', 'image/jpeg'];
 
 export const getWindow = () => {
-  if (typeof window !== undefined) {
+  if (typeof window !== 'undefined') {
     return window;
   }
   return null

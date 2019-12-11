@@ -19,5 +19,6 @@ export type IDictionary<T> = {
 }
 
 export enum LocalError {
-  PAYMENT_REQUIRED = 'payment_required'
+  PAYMENT_REQUIRED = 'payment_required',
+  CANNOT_GET_MORE_INFO = 'Cannot retrive information'
 }

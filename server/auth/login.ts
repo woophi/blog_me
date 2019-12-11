@@ -50,29 +50,29 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   );
 };
 
-export const externalLogin = (req: Request, res: Response, next: NextFunction) => {
+export const externalLogin = (req: Request, res: Response) => {
   const type = req.params.external as ExternalLogin;
   if (type === 'google') {
-    return googleAuthFirstStep(req, res, next);
+    return googleAuthFirstStep(req, res);
   }
   if (type === 'fb') {
-    return fbAuthFirstStep(req, res, next);
+    return fbAuthFirstStep(req, res);
   }
   if (type === 'vk') {
-    return vKAuthFirstStep(req, res, next);
+    return vKAuthFirstStep(req, res);
   }
   return res.sendStatus(HTTPStatus.OK);
 };
-export const externalLoginComplete = (req: Request, res: Response, next: NextFunction) => {
+export const externalLoginComplete = (req: Request, res: Response) => {
   const type = req.params.external as ExternalLogin;
   if (type === 'google') {
-    return processGoogleLogin(req, res, next);
+    return processGoogleLogin(req, res);
   }
   if (type === 'fb') {
-    return processFbLogin(req, res, next);
+    return processFbLogin(req, res);
   }
   if (type === 'vk') {
-    return processVKLogin(req, res, next);
+    return processVKLogin(req, res);
   }
   return res.sendStatus(HTTPStatus.OK);
 };

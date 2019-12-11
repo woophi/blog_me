@@ -1,8 +1,14 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { Comments, getComments } from 'ui/molecules';
+import { getComments } from 'ui/molecules';
 import { AppState } from 'core/models';
 import { connect as redux } from 'react-redux';
+
+import dynamic from 'next/dynamic';
+
+const Comments = dynamic(() => import('ui/molecules/comments/Comments'), {
+  ssr: false
+});
 
 type OwnProps = {
   commentsCount: number;

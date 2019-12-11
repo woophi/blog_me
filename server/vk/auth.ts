@@ -1,13 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { buildQueryString, callApi } from 'server/utils/api';
 import config from 'server/config';
 import { scopes } from './constants';
 import { formatString } from 'server/formator';
-import { registerExteranlUser } from 'server/operations';
+import { registerExternalUser } from 'server/operations';
 import { authUser } from 'server/identity';
-import { HTTPStatus } from 'server/lib/models';
+import { HTTPStatus, LocalError } from 'server/lib/models';
 
-export const vKAuthFirstStep = (req: Request, res: Response, next: NextFunction) => {
+export const vKAuthFirstStep = (req: Request, res: Response) => {
   const url = `https://oauth.vk.com/authorize${buildQueryString([
     { client_id: config.VK_CLIENT_ID },
     { redirect_uri: config.SITE_URI + 'login/vk/complete' },
@@ -18,29 +18,22 @@ export const vKAuthFirstStep = (req: Request, res: Response, next: NextFunction)
   res.redirect(url);
 };
 
-export const processVKLogin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const processVKLogin = async (req: Request, res: Response) => {
+  const onSuccess = () => {
+    return res.render('finishAuth', { layout: false });
+  };
+  const onFail = (error: Error) => {
+    return res.status(HTTPStatus.BadRequest).send({ error: error.message });
+  };
+
   const code = req.query['code'] || '';
-  if (!code) return res.redirect('/');
+  if (!code) return onFail(new Error(LocalError.CANNOT_GET_MORE_INFO));
   const data = await getAccessToken(formatString(code));
-  if (!data.access_token) return res.redirect('/');
+  if (!data.access_token) return onFail(new Error(LocalError.CANNOT_GET_MORE_INFO));
 
   const userInfo = await getUserInfo(data.access_token);
 
-  const user = await registerExteranlUser(data.email ?? userInfo.id, userInfo.name);
-
-  const onSuccess = (token: string) => {
-    // TODO: redirect to previus url
-    return res.send({ token }).status(HTTPStatus.OK);
-  };
-  const onFail = (error: Error) => {
-    // TODO: redirect to previus url
-    // and show error status or open separate window so close it
-    return res.status(HTTPStatus.BadRequest).send({ error: error.message });
-  };
+  const user = await registerExternalUser(data.email ?? userInfo.id, userInfo.name);
 
   return await authUser(req, res, user.email, user.password, onSuccess, onFail);
 };

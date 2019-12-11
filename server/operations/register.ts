@@ -6,7 +6,7 @@ import { ROLES } from 'server/identity';
 import { getLanguageIdByLocaleId } from './locales';
 
 const hashing = new identity.Hashing();
-export const registerExteranlUser = async (email: string, name: string) => {
+export const registerExternalUser = async (email: string, name: string) => {
   const user = (await UserModel.findOne({ email }).lean()) as User;
 
   if (user) return user;

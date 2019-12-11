@@ -11,6 +11,7 @@ import { FORM_ERROR } from 'final-form';
 import { connect } from 'react-redux';
 import { AppState } from 'core/models';
 import { canUserComment } from 'core/selectors';
+import { AuthButtons } from './AuthButtons';
 
 type OwnProps = {
   blogId: number;
@@ -53,26 +54,28 @@ const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
       <Typography gutterBottom variant="body1">
         {t('gallery.addComments')}
       </Typography>
-      <Form
-        onSubmit={(d: CommentForm) => onSubmit(d, blogId)}
-        validate={(v: CommentForm) => validate(v, t)}
-        initialValues={{
-          message: ''
-        }}
-        render={({ handleSubmit, pristine, submitting, submitError, form }) => (
-          <>
-            <Snakbars variant="error" message={submitError} />
-            <form
-              onSubmit={async event => {
-                const error = await handleSubmit(event);
-                if (error) {
-                  return error;
-                }
-                form.reset();
-              }}
-              className={classes.form}
-            >
-              {/* <Field
+      {!canAccess && <AuthButtons />}
+      {canAccess && (
+        <Form
+          onSubmit={(d: CommentForm) => onSubmit(d, blogId)}
+          validate={(v: CommentForm) => validate(v, t)}
+          initialValues={{
+            message: ''
+          }}
+          render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+            <>
+              <Snakbars variant="error" message={submitError} />
+              <form
+                onSubmit={async event => {
+                  const error = await handleSubmit(event);
+                  if (error) {
+                    return error;
+                  }
+                  form.reset();
+                }}
+                className={classes.form}
+              >
+                {/* <Field
                 name="name"
                 render={({ input, meta }) => (
                   <TextField
@@ -95,51 +98,53 @@ const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
                   />
                 )}
               /> */}
-              <Field
-                name="message"
-                render={({ input, meta }) => {
-                  const handleOnFocus = (
-                    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-                  ) => {
-                    if (!canAccess) {
-                      console.log('auth pls');
-                    } else {
-                      input.onFocus(e);
-                    }
-                  };
-                  return (
-                    <TextField
-                      id="outlined-message-static"
-                      label={t('common:typeHere')}
-                      multiline
-                      rows="4"
-                      fullWidth
-                      className={classes.field}
-                      {...input}
-                      onFocus={handleOnFocus}
-                      error={Boolean(meta.touched && meta.error)}
-                      helperText={
-                        (meta.touched && meta.error) || `${input.value.length}/2000`
+                <Field
+                  name="message"
+                  render={({ input, meta }) => {
+                    const handleOnFocus = (
+                      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+                    ) => {
+                      if (!canAccess) {
+                        console.log('auth pls');
+                      } else {
+                        input.onFocus(e);
                       }
-                      disabled={submitting}
-                      inputProps={{
-                        maxLength: 2000
-                      }}
-                    />
-                  );
-                }}
-              />
-              <ButtonsForm
-                pristine={pristine}
-                submitting={submitting}
-                both
-                onCancel={form.reset}
-                submitLabel={'common:buttons.add'}
-              />
-            </form>
-          </>
-        )}
-      />
+                    };
+                    return (
+                      <TextField
+                        id="outlined-message-static"
+                        label={t('common:typeHere')}
+                        multiline
+                        rows="4"
+                        fullWidth
+                        className={classes.field}
+                        {...input}
+                        onFocus={handleOnFocus}
+                        error={Boolean(meta.touched && meta.error)}
+                        helperText={
+                          (meta.touched && meta.error) ||
+                          `${input.value.length}/2000`
+                        }
+                        disabled={submitting}
+                        inputProps={{
+                          maxLength: 2000
+                        }}
+                      />
+                    );
+                  }}
+                />
+                <ButtonsForm
+                  pristine={pristine}
+                  submitting={submitting}
+                  both
+                  onCancel={form.reset}
+                  submitLabel={'common:buttons.add'}
+                />
+              </form>
+            </>
+          )}
+        />
+      )}
     </Paper>
   );
 });

@@ -22,3 +22,5 @@ export const Comments = React.memo<Props>(({
     </>
   );
 });
+
+export default Comments;

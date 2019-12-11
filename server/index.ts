@@ -27,6 +27,7 @@ import { registerSocket } from './lib/sockets';
 import { router } from './router';
 import { initExpressSession } from './identity';
 import fileUpload from 'express-fileupload';
+import handlebars from 'express-handlebars';
 import { applyMigration } from './lib/updates';
 import next from 'next';
 import { connection } from './lib/db';
@@ -52,6 +53,18 @@ appNext.prepare().then(async () => {
   appExpress.use(cookieParser(config.COOKIE_SECRET));
   appExpress.use(initExpressSession());
   appExpress.use(nextI18NextMiddleware(nextI18next));
+
+  appExpress.engine(
+    '.hbs',
+    handlebars({
+      defaultLayout: 'main',
+      extname: '.hbs',
+      layoutsDir: 'server/views/layouts',
+      partialsDir: 'server/views/partials'
+    })
+  );
+  appExpress.set('views', join(__dirname, 'views'));
+  appExpress.set('view engine', '.hbs');
   // serve locales for client
   appExpress.use('/locales', express.static(join(__dirname, '../locales')));
   if (!fs.existsSync(join(__dirname, 'storage/temp'))) {

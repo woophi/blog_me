@@ -49,16 +49,20 @@ export class Auth extends Hashing {
       return onFail(generalError);
     }
 
-    UserModel
-      .findOne({ email: String(data.email).toLowerCase() })
-      .exec(async (err, user: User) => {
+    UserModel.findOne({ email: String(data.email).toLowerCase() }).exec(
+      async (err, user: User) => {
         if (user) {
           try {
-            const passMatch = await this.verifyPassword(String(data.password), user.password);
+            const passMatch = await this.verifyPassword(
+              String(data.password),
+              user.password
+            );
             if (passMatch) {
               return await this.proceedUserSession(user);
             }
-          } catch {
+          } catch (err) {
+            Logger.error('failed, fq err', err);
+
             return onFail(generalError);
           }
         }
@@ -66,17 +70,20 @@ export class Auth extends Hashing {
           Logger.error(err);
         }
         return onFail(generalError);
-      })
-
+      }
+    );
   };
 
   private proceedUserSession = async (user: User) => {
     const { onFail, generalError, req, onSuccess, encrypt, res } = this;
     if (!user) {
+      Logger.info('failed, no user');
       return onFail(generalError);
     }
     req.session.regenerate(async () => {
       if (!user.password) {
+        Logger.info('failed, no password');
+
         return onFail(generalError);
       }
 
@@ -84,7 +91,7 @@ export class Auth extends Hashing {
       const tokenParams = {
         id: user.id,
         roles: user.roles
-      }
+      };
       let payload: {
         accessToken: string;
         refreshToken: string;
@@ -92,21 +99,20 @@ export class Auth extends Hashing {
         accessToken: setAccessToken(tokenParams),
         refreshToken: setRefreshToken(tokenParams, user.refreshToken)
       };
-      user
-        .set('refreshToken', payload.refreshToken)
-        .save((err) => {
-          if (err) {
-            Logger.error(err);
-            return onFail(generalError);
-          }
-        });
+      user.set('refreshToken', payload.refreshToken).save(err => {
+        if (err) {
+          Logger.error(err);
+          return onFail(generalError);
+        }
+      });
 
       try {
-        const userToken = user.id + ':' + await encrypt(req.sessionID, user.password);
+        const userToken =
+          user.id + ':' + (await encrypt(req.sessionID, user.password));
         const cookieOpts = {
           signed: true,
           httpOnly: !config.DEV_MODE,
-          maxAge: tenDaysInMS,
+          maxAge: tenDaysInMS
         };
         req.session.cookie.maxAge = tenDaysInMS;
         req.session.user = user;
@@ -116,10 +122,12 @@ export class Auth extends Hashing {
           req.session.cookie.httpOnly = true;
         }
         res.cookie(SessionCookie.SesId, userToken, cookieOpts);
-        onSuccess(payload.accessToken);
-      } catch {
+        return onSuccess(payload.accessToken);
+      } catch (err) {
+        Logger.error('failed on generate session', err);
+
         return onFail(generalError);
       }
     });
-  }
+  };
 }
