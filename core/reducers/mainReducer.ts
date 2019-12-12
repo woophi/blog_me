@@ -29,13 +29,13 @@ export const reducer = (state = initialState, dispatch: models.AppDispatch): mod
     case 'SET_COMMENTS': {
       return {
         ...state,
-        comments: [dispatch.payload]
+        comments: dispatch.payload.comments
       };
     }
     case 'LOAD_MORE_COMMENTS': {
       return {
         ...state,
-        comments: [...state.comments, dispatch.payload]
+        comments: [...state.comments, ...dispatch.payload.comments]
       };
     }
     case 'UPDATE_COMMENTS': {

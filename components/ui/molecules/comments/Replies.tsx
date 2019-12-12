@@ -85,7 +85,7 @@ export const Replies = React.memo<Props>(({ replieIds = [], blogId, parentId }) 
         </AppBar>
         <Box paddingTop="5rem">
           {replies.map(r => (
-            <Comment key={r._id} {...r} blogId={blogId} />
+            <Comment key={r._id} {...r} />
           ))}
         </Box>
         {hasMore && !hidden ? (

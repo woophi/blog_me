@@ -13,6 +13,7 @@ import { AppState } from 'core/models';
 import { canUserComment, getUserName } from 'core/selectors';
 import { AuthButtons } from './AuthButtons';
 import { checkAuth } from 'core/operations/auth';
+import { MenuComment } from './Menu';
 
 type OwnProps = {
   blogId: number;
@@ -60,6 +61,11 @@ const AddCommentPC = React.memo<Props>(({ blogId, canAccess, userName }) => {
 
   return (
     <Paper elevation={4} className={classes.paper}>
+      {canAccess && (
+        <div className={classes.wrap}>
+          <MenuComment formContainer />
+        </div>
+      )}
       <Typography gutterBottom variant="body1">
         {t('gallery.addComments')}
       </Typography>
@@ -158,7 +164,10 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto .5rem',
     padding: '1rem',
     maxWidth: '600px',
-    width: '100%'
+    width: '100%',
+  },
+  wrap: {
+    position: 'relative'
   },
   field: {
     margin: 0

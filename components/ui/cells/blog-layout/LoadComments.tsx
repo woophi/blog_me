@@ -16,7 +16,7 @@ type OwnProps = {
 };
 
 const mapState = (state: AppState, props: OwnProps) => ({
-  blogComments: state.ui.comments.find(bc => bc.blogId === props.blogId)?.comments
+  blogComments: state.ui.comments.filter(bc => bc.blog?.blogId === props.blogId)
 });
 
 type Props = ReturnType<typeof mapState> & OwnProps;

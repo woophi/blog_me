@@ -55,10 +55,10 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
           dangerouslySetInnerHTML={{ __html: blog.body }}
         />
       </Box>
+      <Like blogId={blog.blogId} />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
         <LoadComments commentsCount={blog.comments} blogId={blog.blogId} />
       </Box>
-      <Like blogId={blog.blogId} />
     </Box>
   );
 });

@@ -16,7 +16,7 @@ export const Comments = React.memo<Props>(({
   return (
     <>
       {comments.map(c => (
-        <Comment key={c._id} {...c} blogId={blogId} />
+        <Comment key={c._id} {...c} />
       ))}
       <AddComment blogId={blogId} />
     </>

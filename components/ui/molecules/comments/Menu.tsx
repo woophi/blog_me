@@ -10,13 +10,20 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core';
 import { connect as redux } from 'react-redux';
 import { AppState } from 'core/models';
-import { canUserComment } from 'core/selectors';
+import { hasUserCommentMenu } from 'core/selectors';
+import { logout } from 'core/operations/auth';
 
-const mapState = (state: AppState) => ({
-  canAccess: canUserComment(state)
+type OwnProps = {
+  blogId?: number;
+  commentId?: string;
+  formContainer?: boolean
+};
+
+const mapState = (state: AppState, props: OwnProps) => ({
+  canAccess: props.formContainer || hasUserCommentMenu(state)(props.commentId, props.blogId)
 });
 
-type Props = ReturnType<typeof mapState>;
+type Props = ReturnType<typeof mapState> & OwnProps;
 
 const MenuCommentPC = React.memo<Props>(({ canAccess }) => {
   const classes = useStyles({});
@@ -38,6 +45,10 @@ const MenuCommentPC = React.memo<Props>(({ canAccess }) => {
 
     setOpen(false);
   }
+  const handleLogout = React.useCallback(() => {
+    setOpen(false);
+    logout();
+  }, []);
   if (!canAccess) return null;
   return (
     <>
@@ -53,21 +64,22 @@ const MenuCommentPC = React.memo<Props>(({ canAccess }) => {
         anchorEl={anchorRef.current}
         transition
         disablePortal
-        placement="left-start"
+        placement="right-start"
+        className={classes.popper}
       >
         {({ TransitionProps }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: 'right top'
+              transformOrigin: 'left top'
             }}
           >
             <Paper id="menu-list-grow">
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem disabled>Понравилось</MenuItem>
+                  <MenuItem disabled>Комментарии</MenuItem>
+                  <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -84,6 +96,9 @@ const useStyles = makeStyles(theme => ({
   butnMenu: {
     position: 'absolute',
     top: '-12px',
-    right: '-16px'
+    right: '-12px'
+  },
+  popper: {
+    zIndex: 1
   }
 }));

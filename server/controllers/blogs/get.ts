@@ -144,10 +144,14 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
       .where('parent', null)
       .populate({
         path: 'user',
-        select: 'name -_id'
+        select: 'name'
+      })
+      .populate({
+        path: 'blog',
+        select: 'blogId -_id'
       })
       .sort({ createdAt: -1, rate: 1 })
-      .select('text user replies rate createdAt')
+      .select('text user replies rate createdAt blog')
       .skip(data.offset)
       .limit(data.limit)
       .lean();
@@ -191,10 +195,14 @@ export const getGuestBlogCommentReplies = async (req: Request, res: Response) =>
       .where('parent', data.parentId)
       .populate({
         path: 'user',
-        select: 'name -_id'
+        select: 'name'
+      })
+      .populate({
+        path: 'blog',
+        select: 'blogId -_id'
       })
       .sort({ createdAt: -1, rate: 1 })
-      .select('text user replies rate createdAt')
+      .select('text user replies rate createdAt blog')
       .skip(data.offset)
       .limit(data.limit)
       .lean();

@@ -9,8 +9,8 @@ import moment from 'moment';
 import { CommentItem } from 'core/models';
 import { Replies } from './Replies';
 
-export const Comment = React.memo<CommentItem & { blogId: number }>(
-  ({ createdAt, user, text, replies = [], rate, _id, blogId }) => {
+export const Comment = React.memo<CommentItem>(
+  ({ createdAt, user, text, replies = [], rate, _id, blog }) => {
     const classes = useStyles({});
     return (
       <Paper elevation={4} className={classes.paper}>
@@ -21,23 +21,23 @@ export const Comment = React.memo<CommentItem & { blogId: number }>(
           <div className={classes.text}>
             <Typography
               noWrap
-              title={user.name}
+              title={user?.name}
               className={classes.nickname}
               component="p"
             >
-              {user.name}
+              {user?.name}
             </Typography>
             <Typography component="p" color="textSecondary">
               {moment(createdAt).format('YYYY-MM-DD HH:mm')}
             </Typography>
           </div>
-          <MenuComment />
+          <MenuComment blogId={blog?.blogId} commentId={_id} />
         </div>
         <Typography component="p" className={classes.content}>
           {text}
         </Typography>
         {replies && replies.length ? (
-          <Replies replieIds={replies} parentId={_id} blogId={blogId} />
+          <Replies replieIds={replies} parentId={_id} blogId={blog?.blogId} />
         ) : null}
       </Paper>
     );
