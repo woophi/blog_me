@@ -10,20 +10,23 @@ import Typography from '@material-ui/core/Typography';
 import { FORM_ERROR } from 'final-form';
 import { connect } from 'react-redux';
 import { AppState } from 'core/models';
-import { canUserComment } from 'core/selectors';
+import { canUserComment, getUserName } from 'core/selectors';
 import { AuthButtons } from './AuthButtons';
+import { checkAuth } from 'core/operations/auth';
 
 type OwnProps = {
   blogId: number;
 };
 
 const mapState = (state: AppState, _: OwnProps) => ({
-  canAccess: canUserComment(state)
+  canAccess: canUserComment(state),
+  userName: getUserName(state)
 });
 
 type Props = ReturnType<typeof mapState> & OwnProps;
 
 type CommentForm = {
+  name: string;
   message: string;
 };
 
@@ -32,6 +35,9 @@ const validate = (values: CommentForm, t: (s: string) => string) => {
 
   if (!values.message || !safeTrim(values.message)) {
     errors.message = t('common:forms.field.required');
+  }
+  if (!values.name || !safeTrim(values.name)) {
+    errors.name = t('common:forms.field.required');
   }
 
   return errors;
@@ -45,7 +51,10 @@ const onSubmit = async (data: CommentForm, blogId: number) => {
   }
 };
 
-const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
+const AddCommentPC = React.memo<Props>(({ blogId, canAccess, userName }) => {
+  React.useLayoutEffect(() => {
+    checkAuth();
+  }, []);
   const { t } = useTranslation();
   const classes = useStyles({});
 
@@ -60,7 +69,8 @@ const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
           onSubmit={(d: CommentForm) => onSubmit(d, blogId)}
           validate={(v: CommentForm) => validate(v, t)}
           initialValues={{
-            message: ''
+            message: '',
+            name: userName
           }}
           render={({ handleSubmit, pristine, submitting, submitError, form }) => (
             <>
@@ -75,63 +85,50 @@ const AddCommentPC = React.memo<Props>(({ blogId, canAccess }) => {
                 }}
                 className={classes.form}
               >
-                {/* <Field
-                name="name"
-                render={({ input, meta }) => (
-                  <TextField
-                    id="outlined-name-input"
-                    label={t('common:forms.name')}
-                    type="text"
-                    name="name"
-                    fullWidth
-                    required
-                    className={classes.field}
-                    {...input}
-                    error={Boolean(meta.touched && meta.error)}
-                    helperText={
-                      (meta.touched && meta.error) || `${input.value.length}/256`
-                    }
-                    disabled={submitting}
-                    inputProps={{
-                      maxLength: 256
-                    }}
-                  />
-                )}
-              /> */}
+                <Field
+                  name="name"
+                  render={({ input, meta }) => (
+                    <TextField
+                      id="outlined-name-input"
+                      label={t('common:forms.name')}
+                      type="text"
+                      name="name"
+                      fullWidth
+                      required
+                      className={classes.field}
+                      {...input}
+                      error={Boolean(meta.touched && meta.error)}
+                      helperText={
+                        (meta.touched && meta.error) || `${input.value.length}/256`
+                      }
+                      disabled={submitting}
+                      inputProps={{
+                        maxLength: 256
+                      }}
+                    />
+                  )}
+                />
                 <Field
                   name="message"
-                  render={({ input, meta }) => {
-                    const handleOnFocus = (
-                      e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-                    ) => {
-                      if (!canAccess) {
-                        console.log('auth pls');
-                      } else {
-                        input.onFocus(e);
+                  render={({ input, meta }) => (
+                    <TextField
+                      id="outlined-message-static"
+                      label={t('common:typeHere')}
+                      multiline
+                      rows="4"
+                      fullWidth
+                      className={classes.field}
+                      {...input}
+                      error={Boolean(meta.touched && meta.error)}
+                      helperText={
+                        (meta.touched && meta.error) || `${input.value.length}/2000`
                       }
-                    };
-                    return (
-                      <TextField
-                        id="outlined-message-static"
-                        label={t('common:typeHere')}
-                        multiline
-                        rows="4"
-                        fullWidth
-                        className={classes.field}
-                        {...input}
-                        onFocus={handleOnFocus}
-                        error={Boolean(meta.touched && meta.error)}
-                        helperText={
-                          (meta.touched && meta.error) ||
-                          `${input.value.length}/2000`
-                        }
-                        disabled={submitting}
-                        inputProps={{
-                          maxLength: 2000
-                        }}
-                      />
-                    );
-                  }}
+                      disabled={submitting}
+                      inputProps={{
+                        maxLength: 2000
+                      }}
+                    />
+                  )}
                 />
                 <ButtonsForm
                   pristine={pristine}

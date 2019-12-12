@@ -10,6 +10,7 @@ export type CommentItem = {
 };
 
 export type NewComment = {
+  name: string;
   message: string;
 }
 

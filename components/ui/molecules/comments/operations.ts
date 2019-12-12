@@ -11,4 +11,6 @@ export const getComments = async (blogId: number, offset = 0) => {
   }
 };
 
-export const newComment = (data: NewComment, blogId: number) => {};
+export const newComment = async (data: NewComment, blogId: number) => {
+  throw 'suck'
+};

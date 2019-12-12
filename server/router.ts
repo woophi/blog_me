@@ -39,7 +39,6 @@ export function router(
 
   app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
 
-  // TODO: should be open in separate window
   app.get('/auth/:external/go', auth.externalLogin);
   app.get('/login/:external/complete', auth.externalLoginComplete);
 

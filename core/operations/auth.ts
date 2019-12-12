@@ -36,7 +36,6 @@ export const checkAuth = async () => {
   store.dispatch({ type: 'SET_USER_FETCHING', payload: false });
 };
 
-// FIXME: fix this logic
 export const ensureNotAuthorized = async () => {
   await checkAuth();
   const state = store.getState();
