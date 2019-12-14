@@ -5,6 +5,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 
 type LocalState = {
   show: boolean;
+  disabled: boolean;
 };
 
 type ScrollButtonProps = {
@@ -23,7 +24,8 @@ export class ScrollButton extends React.PureComponent<
   mounted: boolean = false;
 
   state: LocalState = {
-    show: false
+    show: false,
+    disabled: false
   };
 
   get checkWindow() {
@@ -58,6 +60,7 @@ export class ScrollButton extends React.PureComponent<
   };
 
   stopScrolling = () => {
+    this.setState({ disabled: false });
     clearInterval(this.timeInterval);
   };
 
@@ -69,13 +72,21 @@ export class ScrollButton extends React.PureComponent<
   };
 
   scrollToTop = () => {
-    let intervalId = setInterval(this.scrollStep, 16.66);
-    this.timeInterval = intervalId;
+    this.setState(
+      {
+        disabled: true
+      },
+      () => {
+        let intervalId = setInterval(this.scrollStep, 16.66);
+        this.timeInterval = intervalId;
+      }
+    );
   };
 
   render() {
     return (
       <ActionButton
+        disabled={this.state.disabled}
         onClick={this.scrollToTop}
         visible={this.state.show}
         position={this.props.position}
@@ -87,16 +98,24 @@ export class ScrollButton extends React.PureComponent<
 type Props = {
   onClick: () => void;
   visible: boolean;
+  disabled: boolean;
 } & ScrollButtonProps;
 
-const ActionButton = React.memo<Props>(({ onClick, visible, position }) => {
-  const classes = useStyles({ visible, position });
-  return (
-    <IconButton color="secondary" className={classes.scrollTotop} onClick={onClick}>
-      <NavigationIcon />
-    </IconButton>
-  );
-});
+const ActionButton = React.memo<Props>(
+  ({ onClick, visible, position, disabled }) => {
+    const classes = useStyles({ visible, position });
+    return (
+      <IconButton
+        color="secondary"
+        className={classes.scrollTotop}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        <NavigationIcon />
+      </IconButton>
+    );
+  }
+);
 
 type StyleProps = {
   visible: boolean;
