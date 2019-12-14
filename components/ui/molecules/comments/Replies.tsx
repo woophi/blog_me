@@ -74,7 +74,12 @@ const RepliesPC = React.memo<Props>(
 
     return (
       <>
-        <Button color="secondary" onClick={handleClickOpen} variant="outlined">
+        <Button
+          color="secondary"
+          onClick={handleClickOpen}
+          variant="outlined"
+          className={classes.butn}
+        >
           {replieIds.length ? `Ответы: ${replieIds.length}` : 'Ответить'}
         </Button>
         <Dialog
@@ -125,5 +130,8 @@ export const Replies = redux(mapState, mapDispatch)(RepliesPC);
 const useStyles = makeStyles(theme => ({
   appBar: {
     marginBottom: '1rem'
+  },
+  butn: {
+    marginTop: '2rem'
   }
 }));

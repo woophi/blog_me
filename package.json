@@ -81,6 +81,7 @@
     "semver": "^6.3.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "string-strip-html": "^4.3.10",
     "ts-node": "^8.5.2",
     "uuid": "^3.3.3"
   },
@@ -112,6 +113,7 @@
     "@types/react-window": "^1.8.1",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
+    "@types/string-strip-html": "^4.3.0",
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^3.4.6",
     "cross-env": "^6.0.3",

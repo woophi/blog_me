@@ -23,20 +23,20 @@ export const sendMailToAdmins = async (
     email: req.body.email,
     message: req.body.message
   };
+  await formator.formatData(
+    {
+      name: formator.formatHtml,
+      email: formator.formatEmail,
+      message: formator.formatHtml
+    },
+    message
+  );
 
   await validate.check(
     {
       name: validate.required,
       email: validate.isEmail,
       message: validate.required
-    },
-    message
-  );
-  await formator.formatData(
-    {
-      name: formator.formatString,
-      email: formator.formatEmail,
-      message: formator.formatString
     },
     message
   );

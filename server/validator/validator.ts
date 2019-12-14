@@ -92,16 +92,18 @@ export class Validator {
   };
 
   notMongooseObject = <T>(value: T) => {
-    this.required(value);
+    const required = this.required(value);
+    if (required) return required;
     if (!Types.ObjectId.isValid(value as any)) {
       return 'invalid';
     }
   };
 
   maxLength = (maxLength: number) => <T>(value: T) => {
-    this.required(value);
+    const required = this.required(value);
+    if (required) return required;
     if (typeof value === 'string' && value.length > maxLength) {
-      return 'increased allowed length'
+      return 'increased allowed length';
     }
-  }
+  };
 }

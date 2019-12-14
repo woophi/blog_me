@@ -17,22 +17,21 @@ export const createBlogComment = async (req: Request, res: Response) => {
       userId: req.session?.userId,
       parentId: req.body.parentId || ''
     };
+    await formator.formatData(
+      {
+        blogId: formator.formatNumber,
+        text: formator.formatHtml,
+        userId: formator.formatString,
+        parentId: formator.formatString
+      },
+      data
+    );
     const validator = new Validator(req, res);
     await validator.check(
       {
         blogId: validator.required,
         text: validator.maxLength(2000),
         userId: validator.notMongooseObject
-      },
-      data
-    );
-
-    await formator.formatData(
-      {
-        blogId: formator.formatNumber,
-        text: formator.formatString,
-        userId: formator.formatString,
-        parentId: formator.formatString
       },
       data
     );

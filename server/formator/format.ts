@@ -1,5 +1,6 @@
 import { FormatType } from './types';
 import moment from 'moment';
+import stripHtml from 'string-strip-html'
 
 export const formatData = async (
   formating: {
@@ -25,6 +26,8 @@ export const formatData = async (
 export const formatEmail = (email: string) => String(email).toLowerCase();
 
 export const formatString = (email: string) => String(email);
+
+export const formatHtml = (email: string) => stripHtml(String(email));
 
 export const formatDate = (v: any) => moment(v).toDate();
 
