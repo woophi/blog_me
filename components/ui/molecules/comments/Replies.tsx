@@ -16,6 +16,7 @@ import { INCREASE_OFFSET } from 'core/constants';
 import { makeStyles } from '@material-ui/core';
 import { Dispatch } from 'redux';
 import { connect as redux } from 'react-redux';
+import { getReplies } from 'core/selectors';
 
 type OwnProps = {
   replieIds: string[];
@@ -24,7 +25,7 @@ type OwnProps = {
 };
 
 const mapState = (state: AppState, _: OwnProps) => ({
-  replies: state.ui.replies
+  replies: getReplies(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>, props: OwnProps) => ({
@@ -71,8 +72,6 @@ const RepliesPC = React.memo<Props>(
         .finally(() => setLoading(false));
     }, [offset]);
 
-    const hasMore = replies.length && replies.length - offset === INCREASE_OFFSET;
-
     return (
       <>
         <Button color="secondary" onClick={handleClickOpen} variant="outlined">
@@ -102,7 +101,7 @@ const RepliesPC = React.memo<Props>(
               <Comment key={r._id} {...r} />
             ))}
           </Box>
-          {hasMore && !hidden ? (
+          {!hidden ? (
             <Box>
               <Button
                 color="secondary"

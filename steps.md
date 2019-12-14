@@ -1,4 +1,4 @@
-- [ ] load more comments
+- [x] load more comments
 - [x] create comment
 - [ ] better appeare of comment
 - [ ] fb meta data

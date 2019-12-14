@@ -5,6 +5,7 @@ import { AppState } from 'core/models';
 import { connect as redux } from 'react-redux';
 
 import dynamic from 'next/dynamic';
+import { getCommentsByBlogId } from 'core/selectors';
 
 const Comments = dynamic(() => import('ui/molecules/comments/Comments'), {
   ssr: false
@@ -16,7 +17,7 @@ type OwnProps = {
 };
 
 const mapState = (state: AppState, props: OwnProps) => ({
-  blogComments: state.ui.comments.filter(bc => bc.blog?.blogId === props.blogId)
+  blogComments: getCommentsByBlogId(state)(props.blogId)
 });
 
 type Props = ReturnType<typeof mapState> & OwnProps;
