@@ -1,7 +1,7 @@
 - [x] load more comments
 - [x] create comment
 - [x] better appear of comment
-- [ ] fb meta data
+- [x] fb meta data
 - [x] fix bug with multiple scroll
 - [x] clear shit from comments
 - [ ] photo url

@@ -3,6 +3,7 @@ export type BlogGuestItem = {
   coverPhotoUrl: string; 
   publishedDate: Date; 
   blogId: number;
+  shortText: string;
 }
 
 export type BlogGuest = BlogGuestItem & {

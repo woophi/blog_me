@@ -32,6 +32,10 @@ export const BlogSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    shortText: {
+      type: String,
+      required: true
+    },
     publishedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.USERS,

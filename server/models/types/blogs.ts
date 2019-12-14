@@ -14,6 +14,7 @@ export type BlogsModelGeneral = {
   publishedDate: Date;
   deleted?: Date;
   draft?: boolean;
+  shortText: string;
 };
 
 export type BlogsModel = BlogsModelGeneral & {

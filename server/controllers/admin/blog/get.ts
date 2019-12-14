@@ -18,7 +18,8 @@ export const getBlog = async (req: Request, res: Response) => {
     coverPhotoUrl: blog.coverPhotoUrl,
     publishedDate: blog.publishedDate,
     likes: blog.likes?.length ?? 0,
-    comments: blog.comments?.length ?? 0
+    comments: blog.comments?.length ?? 0,
+    shortText: blog.shortText
   });
 };
 
@@ -39,7 +40,7 @@ export const getBlogs = async (req: Request, res: Response) => {
   const blogs = await BlogModel.find()
     .where('deleted', null)
     .sort('createdAt')
-    .select('title body coverPhotoUrl publishedDate blogId -_id')
+    .select('title body coverPhotoUrl publishedDate blogId shortText -_id')
     .skip(data.offset)
     .limit(data.limit)
     .lean();

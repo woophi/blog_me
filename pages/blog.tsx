@@ -9,6 +9,10 @@ import isNil from 'ramda/src/isNil';
 import { NextPageContext } from 'next';
 import { BlogLayout } from 'ui/cells';
 import { connectSocketBlog, joinRoom, leaveRoom } from 'core/socket/blog';
+import Head from 'next/head';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const { SITE_URL } = publicRuntimeConfig;
 
 type Props = {
   blog: BlogGuest;
@@ -44,11 +48,21 @@ class Blog extends React.Component<Props> {
     const blog = or(isEmpty(this.props.blog), isNil(this.props.blog))
       ? this.state.blog
       : this.props.blog;
-    const { title } = blog;
+      
+    const { title, shortText, coverPhotoUrl, blogId } = blog;
     return (
-      <GeneralLayout title={title}>
-        <BlogLayout blog={blog} />
-      </GeneralLayout>
+      <>
+        <Head>
+          <meta property="og:url" content={`${SITE_URL}/${title.toLowerCase()}-${blogId}`} />
+          <meta property="og:type" content="article" />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={shortText} />
+          <meta property="og:image" content={coverPhotoUrl} />
+        </Head>
+        <GeneralLayout title={title}>
+          <BlogLayout blog={blog} />
+        </GeneralLayout>
+      </>
     );
   }
 }

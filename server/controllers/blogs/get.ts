@@ -38,7 +38,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
       .where('publishedDate')
       .lte(moment().toDate())
       .sort({ publishedDate: -1 })
-      .select('title coverPhotoUrl publishedDate blogId -_id')
+      .select('title coverPhotoUrl publishedDate blogId shortText -_id')
       .skip(data.offset)
       .limit(data.limit)
       .lean();
@@ -101,7 +101,8 @@ export const getGuestBlog = async (req: Request, res: Response) => {
       publishedDate: blog.publishedDate,
       comments: blog.comments?.length ?? 0,
       liked,
-      updatedAt: blog.updatedAt
+      updatedAt: blog.updatedAt,
+      shortText: blog.shortText
     });
   } catch (error) {
     Logger.error(error);

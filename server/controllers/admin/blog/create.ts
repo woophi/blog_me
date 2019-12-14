@@ -24,6 +24,7 @@ export const createBlog = async (
       publishedDate: req.body.publishedDate,
       title: req.body.title,
       language: req.body.language,
+      shortText: req.body.shortText,
       draft: req.body.draft ?? false
     };
     await validator.check(
@@ -33,7 +34,8 @@ export const createBlog = async (
         publishedBy: validator.notMongooseObject,
         publishedDate: validator.required,
         title: validator.required,
-        language: validator.required
+        language: validator.required,
+        shortText: validator.required
       },
       data
     );
@@ -45,7 +47,8 @@ export const createBlog = async (
         publishedDate: formator.formatDate,
         title: formator.formatString,
         language: formator.formatString,
-        draft: formator.formatBoolean
+        draft: formator.formatBoolean,
+        shortText: formator.formatHtml
       },
       data
     );
