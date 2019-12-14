@@ -8,38 +8,41 @@ import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
 import { CommentItem } from 'core/models';
 import { Replies } from './Replies';
+import Zoom from '@material-ui/core/Zoom';
 
 export const Comment = React.memo<CommentItem>(
   ({ createdAt, user, text, replies = [], rate, _id, blog, parent }) => {
     const classes = useStyles({});
     return (
-      <Paper elevation={4} className={classes.paper}>
-        <div className={classes.topText}>
-          <Avatar className={classes.avatar}>
-            <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
-          </Avatar>
-          <div className={classes.text}>
-            <Typography
-              noWrap
-              title={user?.name}
-              className={classes.nickname}
-              component="p"
-            >
-              {user?.name}
-            </Typography>
-            <Typography component="p" color="textSecondary">
-              {moment(createdAt).format('YYYY-MM-DD HH:mm')}
-            </Typography>
+      <Zoom in mountOnEnter timeout={1000}>
+        <Paper elevation={4} className={classes.paper}>
+          <div className={classes.topText}>
+            <Avatar className={classes.avatar}>
+              <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
+            </Avatar>
+            <div className={classes.text}>
+              <Typography
+                noWrap
+                title={user?.name}
+                className={classes.nickname}
+                component="p"
+              >
+                {user?.name}
+              </Typography>
+              <Typography component="p" color="textSecondary">
+                {moment(createdAt).format('YYYY-MM-DD HH:mm')}
+              </Typography>
+            </div>
+            <MenuComment blogId={blog?.blogId} commentId={_id} />
           </div>
-          <MenuComment blogId={blog?.blogId} commentId={_id} />
-        </div>
-        <Typography component="p" className={classes.content}>
-          {text}
-        </Typography>
-        {!parent && (
-          <Replies replieIds={replies} parentId={_id} blogId={blog?.blogId} />
-        )}
-      </Paper>
+          <Typography component="p" className={classes.content}>
+            {text}
+          </Typography>
+          {!parent && (
+            <Replies replieIds={replies} parentId={_id} blogId={blog?.blogId} />
+          )}
+        </Paper>
+      </Zoom>
     );
   }
 );

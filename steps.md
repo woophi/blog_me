@@ -1,6 +1,6 @@
 - [x] load more comments
 - [x] create comment
-- [ ] better appeare of comment
+- [x] better appear of comment
 - [ ] fb meta data
 - [x] fix bug with multiple scroll
 - [x] clear shit from comments
