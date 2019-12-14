@@ -80,12 +80,8 @@ export const createBlogComment = async (req: Request, res: Response) => {
         comments: [...user.comments, newComment.id]
       })
       .save();
-
-    if (parenComment) {
-      EventBus.emit(BusEvents.NEW_REPLY);
-    } else {
-      EventBus.emit(BusEvents.NEW_COMMENT, newComment.id, blog.blogId);
-    }
+      
+    EventBus.emit(BusEvents.NEW_COMMENT, newComment.id, blog.blogId);
 
     return res.sendStatus(HTTPStatus.OK);
   } catch (error) {

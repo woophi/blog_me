@@ -10,17 +10,16 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core';
 import { connect as redux } from 'react-redux';
 import { AppState } from 'core/models';
-import { hasUserCommentMenu } from 'core/selectors';
+import { canUserComment } from 'core/selectors';
 import { logout } from 'core/operations/auth';
 
 type OwnProps = {
   blogId?: number;
   commentId?: string;
-  formContainer?: boolean
 };
 
 const mapState = (state: AppState, props: OwnProps) => ({
-  canAccess: props.formContainer || hasUserCommentMenu(state)(props.commentId, props.blogId)
+  canAccess: canUserComment(state)
 });
 
 type Props = ReturnType<typeof mapState> & OwnProps;

@@ -15,7 +15,8 @@ export const initialState: models.AppState['ui'] = {
     uploadingFile: false,
     facebookActive: false
   },
-  comments: []
+  comments: [],
+  replies: []
 };
 
 export const reducer = (
@@ -45,6 +46,37 @@ export const reducer = (
       return {
         ...state,
         comments: [...state.comments, dispatch.payload.comment]
+      };
+    }
+    case 'UPDATE_COMMENT_REPLIES': {
+      return {
+        ...state,
+        comments: state.comments.map(c =>
+          c._id == dispatch.payload.commentId
+            ? {
+                ...c,
+                replies: [...c.replies, ...dispatch.payload.replies]
+              }
+            : c
+        )
+      };
+    }
+    case 'SET_REPLIES': {
+      return {
+        ...state,
+        replies: dispatch.payload.replies
+      };
+    }
+    case 'LOAD_MORE_REPLIES': {
+      return {
+        ...state,
+        replies: [...state.replies, ...dispatch.payload.replies]
+      };
+    }
+    case 'UPDATE_REPLIES': {
+      return {
+        ...state,
+        replies: [...state.replies, dispatch.payload.reply]
       };
     }
 

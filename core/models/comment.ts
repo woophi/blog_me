@@ -10,25 +10,11 @@ export type CommentItem = {
   replies?: string[];
   blog: {
     blogId: number;
-  }
+  };
+  parent?: string;
 };
 
 export type NewComment = {
   name: string;
   message: string;
 }
-
-export type ReplieItem = {
-  _id: string;
-  text: string;
-  user: {
-    _id: string;
-    name: string;
-  };
-  rate: number;
-  createdAt: Date;
-  parentId: string;
-  blog: {
-    blogId: number;
-  };
-};

@@ -22,10 +22,20 @@ client.upload_done = (fileName, fileId, url) => {
 
 client.new_comment = async commentId => {
   const comment = await getCommentById(commentId);
-  if (comment) {
+  if (!comment.parent) {
     store.dispatch({
       type: 'UPDATE_COMMENTS',
       payload: { comment }
+    });
+  }
+  if (comment.parent) {
+    store.dispatch({
+      type: 'UPDATE_REPLIES',
+      payload: { reply: comment }
+    });
+    store.dispatch({
+      type: 'UPDATE_COMMENT_REPLIES',
+      payload: { commentId: comment.parent, replies: [comment._id] }
     });
   }
 };

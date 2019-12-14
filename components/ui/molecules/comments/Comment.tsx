@@ -10,7 +10,7 @@ import { CommentItem } from 'core/models';
 import { Replies } from './Replies';
 
 export const Comment = React.memo<CommentItem>(
-  ({ createdAt, user, text, replies = [], rate, _id, blog }) => {
+  ({ createdAt, user, text, replies = [], rate, _id, blog, parent }) => {
     const classes = useStyles({});
     return (
       <Paper elevation={4} className={classes.paper}>
@@ -36,9 +36,9 @@ export const Comment = React.memo<CommentItem>(
         <Typography component="p" className={classes.content}>
           {text}
         </Typography>
-        {replies && replies.length ? (
+        {!parent && (
           <Replies replieIds={replies} parentId={_id} blogId={blog?.blogId} />
-        ) : null}
+        )}
       </Paper>
     );
   }

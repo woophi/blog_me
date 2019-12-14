@@ -7,6 +7,7 @@ export type AppState = {
     user: AuthData;
     admin: AdminState;
     comments: CommentItem[];
+    replies: CommentItem[];
   };
 };
 
@@ -16,12 +17,20 @@ export type AppDispatch =
   | { type: 'SET_USER_FETCHING'; payload: AppState['ui']['user']['fetching'] }
   //comments
   | { type: 'UPDATE_COMMENTS'; payload: { comment: CommentItem } }
+  | { type: 'UPDATE_COMMENT_REPLIES'; payload: { commentId: string, replies: string[] } }
   | {
       type: 'LOAD_MORE_COMMENTS';
       payload: { comments: CommentItem[] };
     }
   | { type: 'SET_COMMENTS'; payload: { comments: CommentItem[] } }
-  // files TODO: delete mbe
+  //replies
+  | { type: 'UPDATE_REPLIES'; payload: { reply: CommentItem } }
+  | {
+      type: 'LOAD_MORE_REPLIES';
+      payload: { replies: CommentItem[] };
+    }
+  | { type: 'SET_REPLIES'; payload: { replies: CommentItem[] } }
+  // files admin
   | { type: 'FETCH_FILES'; payload: AdminState['files'] }
   | { type: 'UPDATE_FILES'; payload: FileItem }
   | { type: 'SELECT_FILE'; payload: FileItem }

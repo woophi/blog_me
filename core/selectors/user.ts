@@ -35,6 +35,8 @@ export const canUserComment = createSelector(
 );
 export const getUserFetching = createSelector(getUser, user => user.fetching);
 
+
+// TODO: mbe delete
 export const hasUserCommentMenu = createSelector(
   [canUserComment, getUserId, getCommentsByBlogId],
   (hasAccess, userId, comments) =>

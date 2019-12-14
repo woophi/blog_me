@@ -39,7 +39,7 @@ export const getBlogComments = (blogId: number, offset = 0) =>
     `api/guest/blog/comments?blogId=${blogId}&offset=${offset}`
   );
 export const getCommentReplies = (parentId: string, offset = 0) =>
-  callApi<models.ReplieItem[]>(
+  callApi<models.CommentItem[]>(
     'get',
     `api/guest/blog/comment/replies?parentId=${parentId}&offset=${offset}`
   );

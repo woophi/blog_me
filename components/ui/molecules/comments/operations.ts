@@ -12,5 +12,13 @@ export const getComments = async (blogId: number, offset = 0) => {
   }
 };
 
-export const newComment = async (data: NewComment, blogId: number) =>
-  callUserApi<void>('post', 'api/app/user/comment', { blogId, message: data.message });
+export const newComment = async (
+  data: NewComment,
+  blogId: number,
+  parentCommentId?: string
+) =>
+  callUserApi<void>('post', 'api/app/user/comment', {
+    blogId,
+    message: data.message,
+    parentId: parentCommentId
+  });

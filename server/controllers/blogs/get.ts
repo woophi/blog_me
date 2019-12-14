@@ -74,6 +74,11 @@ export const getGuestBlog = async (req: Request, res: Response) => {
     const blog = await BlogModel.findOne({ blogId: data.blogId })
       .where('deleted', null)
       .where('draft', false)
+      .populate({
+        path: 'comments',
+        match: { deleted: null, parent: null },
+        select: 'id'
+      })
       .lean();
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
@@ -150,6 +155,11 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
         path: 'blog',
         select: 'blogId -_id'
       })
+      .populate({
+        path: 'replies',
+        match: { deleted: null },
+        select: 'id'
+      })
       .sort({ createdAt: 1 })
       .select('text user replies rate createdAt blog')
       .skip(data.offset)
@@ -194,8 +204,10 @@ export const getGuestBlogComment = async (req: Request, res: Response) => {
         path: 'blog',
         select: 'blogId -_id'
       })
-      .select('text user replies rate createdAt blog')
+      .select('text user replies rate createdAt blog parent')
       .lean();
+
+    if (!comment) return res.sendStatus(HTTPStatus.NotFound);
 
     return res.send(comment);
   } catch (error) {
@@ -243,7 +255,7 @@ export const getGuestBlogCommentReplies = async (req: Request, res: Response) =>
         select: 'blogId -_id'
       })
       .sort({ createdAt: 1 })
-      .select('text user replies rate createdAt blog')
+      .select('text user rate createdAt blog parent')
       .skip(data.offset)
       .limit(data.limit)
       .lean();

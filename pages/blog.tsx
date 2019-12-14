@@ -15,7 +15,6 @@ type Props = {
 } & WithRouterProps;
 class Blog extends React.Component<Props> {
   static async getInitialProps(context: NextPageContext) {
-    console.log(context.query);
     const blog = await getBLog(Number(context.query.blogId));
     return { blog };
   }
