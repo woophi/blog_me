@@ -102,7 +102,7 @@ const RepliesPC = React.memo<Props>(
             ))}
           </Box>
           {!hidden ? (
-            <Box>
+            <Box margin="1rem auto" display="flex" justifyContent="center">
               <Button
                 color="secondary"
                 onClick={loadMore}

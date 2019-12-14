@@ -55,7 +55,7 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
         />
       </Box>
       <Like blogId={blog.blogId} />
-      <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+      <Box minWidth="50vw" padding="1rem" maxWidth="720px" marginBottom="2rem">
         <LoadComments commentsCount={blog.comments} blogId={blog.blogId} />
       </Box>
     </Box>
