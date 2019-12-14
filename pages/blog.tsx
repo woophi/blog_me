@@ -8,6 +8,7 @@ import or from 'ramda/src/or';
 import isNil from 'ramda/src/isNil';
 import { NextPageContext } from 'next';
 import { BlogLayout } from 'ui/cells';
+import { connectSocketBlog, joinRoom, leaveRoom } from 'core/socket/blog';
 
 type Props = {
   blog: BlogGuest;
@@ -28,10 +29,16 @@ class Blog extends React.Component<Props> {
   };
 
   async componentDidMount() {
+    connectSocketBlog();
+    joinRoom(String(this.props.router.query.blogId));
     if (or(isEmpty(this.props.blog), isNil(this.props.blog))) {
       const blog = await getBLog(Number(this.props.router.query.blogId));
       this.setState({ blog });
     }
+  }
+
+  componentWillUnmount() {
+    leaveRoom(String(this.props.router.query.blogId));
   }
 
   render() {

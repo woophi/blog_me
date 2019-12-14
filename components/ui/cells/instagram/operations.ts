@@ -1,14 +1,14 @@
-import { callAdminApi } from 'core/common';
+import { callUserApi } from 'core/common';
 
 export const askIgLogin = async () => {
 
-  const check = await callAdminApi<boolean>('patch', 'api/admin/ig/check');
+  const check = await callUserApi<boolean>('patch', 'api/admin/ig/check');
 
   if (check) return true;
 
-  await callAdminApi('patch', 'api/admin/ig/login');
+  await callUserApi('patch', 'api/admin/ig/login');
   return false;
 }
 export const sendIgCode = async (code: number) => {
-  return await callAdminApi<boolean>('patch', 'api/admin/ig/code', { code });
+  return await callUserApi<boolean>('patch', 'api/admin/ig/code', { code });
 }

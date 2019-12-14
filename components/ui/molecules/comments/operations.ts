@@ -1,6 +1,7 @@
 import { getBlogComments } from 'core/operations';
 import { store } from 'core/store';
 import { NewComment } from 'core/models';
+import { callUserApi } from 'core/common';
 
 export const getComments = async (blogId: number, offset = 0) => {
   try {
@@ -11,6 +12,5 @@ export const getComments = async (blogId: number, offset = 0) => {
   }
 };
 
-export const newComment = async (data: NewComment, blogId: number) => {
-  throw 'suck'
-};
+export const newComment = async (data: NewComment, blogId: number) =>
+  callUserApi<void>('post', 'api/app/user/comment', { blogId, message: data.message });

@@ -15,7 +15,7 @@ export type AppDispatch =
   | { type: 'SET_USER_TOKEN'; payload: AppState['ui']['user']['token'] }
   | { type: 'SET_USER_FETCHING'; payload: AppState['ui']['user']['fetching'] }
   //comments
-  | { type: 'UPDATE_COMMENTS'; payload: { comments: CommentItem[] } }
+  | { type: 'UPDATE_COMMENTS'; payload: { comment: CommentItem } }
   | {
       type: 'LOAD_MORE_COMMENTS';
       payload: { comments: CommentItem[] };

@@ -43,9 +43,8 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
         src={blog.coverPhotoUrl}
         alt={blog.title}
         style={{
-          minWidth: '50vw',
-          maxHeight: '65vh',
-          maxWidth: '720px'
+          width: '100%',
+          maxHeight: '100vh'
         }}
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">

@@ -34,6 +34,7 @@ export function router(
   // guest blogs
   app.get('/api/guest/blogs', fetchingLimiterMiddleware, controllers.getGuestBlogs);
   app.get('/api/guest/blog', fetchingLimiterMiddleware, controllers.getGuestBlog);
+  app.get('/api/guest/blog/comment', fetchingLimiterMiddleware, controllers.getGuestBlogComment);
   app.get('/api/guest/blog/comments', fetchingLimiterMiddleware, controllers.getGuestBlogComments);
   app.get('/api/guest/blog/comment/replies', fetchingLimiterMiddleware, controllers.getGuestBlogCommentReplies);
 

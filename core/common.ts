@@ -39,7 +39,7 @@ export const callApi = <T>(method: HTTPMethod = 'post', url: string, data: any =
     });
 }
 
-export const callAdminApi = <T>(method: HTTPMethod = 'post', url: string, data: any = null): Promise<T> =>
+export const callUserApi = <T>(method: HTTPMethod = 'post', url: string, data: any = null): Promise<T> =>
   callApi<T>(method, url, data, getUserToken(store.getState()));
 
 export const uploadFiles = (files: File[]) => {

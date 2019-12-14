@@ -13,7 +13,7 @@ export const createBlogComment = async (req: Request, res: Response) => {
   try {
     const data = {
       blogId: req.body.blogId,
-      text: req.body.text,
+      text: req.body.message,
       userId: req.session?.userId,
       parentId: req.body.parentId || ''
     };
@@ -82,9 +82,9 @@ export const createBlogComment = async (req: Request, res: Response) => {
       .save();
 
     if (parenComment) {
-      EventBus.emit(BusEvents.NEW_REPLIE);
+      EventBus.emit(BusEvents.NEW_REPLY);
     } else {
-      EventBus.emit(BusEvents.NEW_COMMENT);
+      EventBus.emit(BusEvents.NEW_COMMENT, newComment.id, blog.blogId);
     }
 
     return res.sendStatus(HTTPStatus.OK);

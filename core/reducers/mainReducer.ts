@@ -16,9 +16,12 @@ export const initialState: models.AppState['ui'] = {
     facebookActive: false
   },
   comments: []
-}
+};
 
-export const reducer = (state = initialState, dispatch: models.AppDispatch): models.AppState['ui'] => {
+export const reducer = (
+  state = initialState,
+  dispatch: models.AppDispatch
+): models.AppState['ui'] => {
   switch (dispatch.type) {
     case 'SET_USER': {
       return {
@@ -40,7 +43,8 @@ export const reducer = (state = initialState, dispatch: models.AppDispatch): mod
     }
     case 'UPDATE_COMMENTS': {
       return {
-        ...state
+        ...state,
+        comments: [...state.comments, dispatch.payload.comment]
       };
     }
 
@@ -76,7 +80,7 @@ export const reducer = (state = initialState, dispatch: models.AppDispatch): mod
         ...state,
         admin: {
           ...state.admin,
-          files: [ dispatch.payload, ...state.admin.files ]
+          files: [dispatch.payload, ...state.admin.files]
         }
       };
     }
@@ -109,7 +113,7 @@ export const reducer = (state = initialState, dispatch: models.AppDispatch): mod
     }
 
     default: {
-      return state
+      return state;
     }
   }
-}
+};

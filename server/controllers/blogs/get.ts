@@ -150,13 +150,54 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
         path: 'blog',
         select: 'blogId -_id'
       })
-      .sort({ createdAt: -1, rate: 1 })
+      .sort({ createdAt: 1 })
       .select('text user replies rate createdAt blog')
       .skip(data.offset)
       .limit(data.limit)
       .lean();
 
     return res.send(comments);
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+};
+export const getGuestBlogComment = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      commentId: req.query.commentId
+    };
+
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        commentId: validator.notMongooseObject
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        commentId: formator.formatString
+      },
+      data
+    );
+
+    const comment = await CommentModel.findById(data.commentId)
+      .where('deleted', null)
+      .populate({
+        path: 'user',
+        select: 'name'
+      })
+      .populate({
+        path: 'blog',
+        select: 'blogId -_id'
+      })
+      .select('text user replies rate createdAt blog')
+      .lean();
+
+    return res.send(comment);
   } catch (error) {
     Logger.error(error);
     return res.sendStatus(HTTPStatus.BadRequest);
@@ -201,7 +242,7 @@ export const getGuestBlogCommentReplies = async (req: Request, res: Response) =>
         path: 'blog',
         select: 'blogId -_id'
       })
-      .sort({ createdAt: -1, rate: 1 })
+      .sort({ createdAt: 1 })
       .select('text user replies rate createdAt blog')
       .skip(data.offset)
       .limit(data.limit)

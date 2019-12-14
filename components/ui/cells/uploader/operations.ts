@@ -1,4 +1,4 @@
-import { uploadFiles, callAdminApi } from 'core/common';
+import { uploadFiles, callUserApi } from 'core/common';
 import { store } from 'core/store';
 import { FileItem } from 'core/models';
 
@@ -29,7 +29,7 @@ export const getChosenFile = (fileId: string) => {
 
 export const fetchFiles = async () => {
   try {
-    const data = await callAdminApi<FileItem[]>('get', 'api/admin/files');
+    const data = await callUserApi<FileItem[]>('get', 'api/admin/files');
     store.dispatch({ type: 'FETCH_FILES', payload: data });
   } catch (error) {
     return error.error;

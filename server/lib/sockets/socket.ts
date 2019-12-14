@@ -15,9 +15,9 @@ export const registerSocket = (server: Server) => {
 
   const nspBlogs = IO.of(NameSpaces.BLOGS);
 
-  const newComment = (commentId: string, blogId: string) => {
+  const newComment = (commentId: string, blogId: number) => {
     Logger.debug('emit comment', commentId, blogId);
-    nspBlogs.to(blogId).emit(EmitEvents.new_comment, commentId, blogId);
+    nspBlogs.to(blogId.toString()).emit(EmitEvents.new_comment, commentId);
   };
 
   EventBus.on(BusEvents.NEW_COMMENT, newComment);

@@ -1,3 +1,3 @@
 - [ ] load more comments
-- [ ] create comment
- 
+- [x] create comment
+- [ ] better appeare of comment

@@ -8,7 +8,10 @@ export const sendMessage = (data: models.MessageModel) =>
   callApi<void>('post', `api/guest/send/message`, data);
 
 export const getCommentById = (commentId: string) =>
-  callApi<models.CommentItem>('get', `api/guest/comments/comment?id=${commentId}`);
+  callApi<models.CommentItem>(
+    'get',
+    `api/guest/blog/comment?commentId=${commentId}`
+  );
 
 export const getUnsubLinkState = (uniqId: string) =>
   callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
