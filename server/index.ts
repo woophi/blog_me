@@ -32,6 +32,7 @@ import { applyMigration } from './lib/updates';
 import next from 'next';
 import { connection } from './lib/db';
 import { agenda } from './lib/agenda';
+import('./views');
 
 const appNext = next({ dev: config.DEV_MODE });
 const handle = appNext.getRequestHandler();
