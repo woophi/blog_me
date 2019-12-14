@@ -31,30 +31,33 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
         }
         return false;
       })
-      .then(r => r ? setOffset(newOffset) : setHidden(true))
+      .then(r => (r ? setOffset(newOffset) : setHidden(true)))
       .finally(() => setFetching(false));
   }, [offset]);
 
   const hasMore = allBlogs.length && allBlogs.length - offset === INCREASE_OFFSET;
 
   return (
-    <Box display="flex" flexDirection="column">
-      {allBlogs.length
-        ? allBlogs.map(b => <BlogPreview key={b.blogId} {...b} />)
-        : 'nothing here yet'}
-
-      {hasMore && !hidden ? (
-        <Button
-          color="primary"
-          onClick={loadMore}
-          size="large"
-          style={{
-            height: 120
-          }}
-        >
-          {fetching ? 'Загрузка...' : 'Загрузить еще'}
-        </Button>
-      ) : null}
-    </Box>
+    <>
+      <Box display="flex" flexWrap="wrap" justifyContent="center">
+        {allBlogs.length
+          ? allBlogs.map(b => <BlogPreview key={b.blogId} {...b} />)
+          : 'nothing here yet'}
+      </Box>
+      <Box display="flex" width="100%" justifyContent="center" flexDirection="column">
+        {hasMore && !hidden ? (
+          <Button
+            color="primary"
+            onClick={loadMore}
+            size="large"
+            style={{
+              height: 120
+            }}
+          >
+            {fetching ? 'Загрузка...' : 'Загрузить еще'}
+          </Button>
+        ) : null}
+      </Box>
+    </>
   );
 });

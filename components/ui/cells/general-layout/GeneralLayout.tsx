@@ -35,7 +35,7 @@ export const GeneralLayout = React.memo<Props>(({ title = 'Красноглаз�
 
 const useStyles = makeStyles(theme => ({
   content: {
-    paddingTop: '84px',
+    padding: '84px 0',
     minHeight: '100vh',
     overflowX: 'hidden',
     wordBreak: 'break-all'
