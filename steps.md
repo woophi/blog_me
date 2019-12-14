@@ -5,3 +5,4 @@
 - [x] fix bug with multiple scroll
 - [x] clear shit from comments
 - [ ] photo url
+- [x] views compile
