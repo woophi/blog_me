@@ -37,7 +37,7 @@ export const getBlogComments = async (req: Request, res: Response) => {
       .where('parent', null)
       .populate({
         path: 'user',
-        select: 'name email -_id'
+        select: 'name gravatarPhotoUrl'
       })
       .sort({ createdAt: -1 })
       .select('text user replies rate')

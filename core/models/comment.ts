@@ -4,6 +4,7 @@ export type CommentItem = {
   user: {
     _id: string;
     name: string;
+    gravatarPhotoUrl: string;
   };
   rate: number;
   createdAt: Date;

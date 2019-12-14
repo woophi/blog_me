@@ -32,6 +32,10 @@ export const UsersSchema = new mongoose.Schema(
         default: true
       }
     },
+    gravatarPhotoUrl: {
+      type: String,
+      default: null
+    },
     language: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.LANGUAGE,

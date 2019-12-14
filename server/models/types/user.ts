@@ -13,7 +13,8 @@ export type UserGeneralModel = {
   resetId?: string;
   notifications?: {
     email?: boolean;
-  }
+  };
+  gravatarPhotoUrl?: string;
 };
 
 export type UserModel = UserGeneralModel & {

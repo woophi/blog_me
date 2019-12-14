@@ -150,7 +150,7 @@ export const getGuestBlogComments = async (req: Request, res: Response) => {
       .where('parent', null)
       .populate({
         path: 'user',
-        select: 'name'
+        select: 'name gravatarPhotoUrl'
       })
       .populate({
         path: 'blog',
@@ -199,7 +199,7 @@ export const getGuestBlogComment = async (req: Request, res: Response) => {
       .where('deleted', null)
       .populate({
         path: 'user',
-        select: 'name'
+        select: 'name gravatarPhotoUrl'
       })
       .populate({
         path: 'blog',
@@ -249,7 +249,7 @@ export const getGuestBlogCommentReplies = async (req: Request, res: Response) =>
       .where('parent', data.parentId)
       .populate({
         path: 'user',
-        select: 'name'
+        select: 'name gravatarPhotoUrl'
       })
       .populate({
         path: 'blog',

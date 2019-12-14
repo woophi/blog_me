@@ -4,6 +4,7 @@ import { generateRandomString } from 'server/utils/prgn';
 import * as identity from 'server/identity';
 import { ROLES } from 'server/identity';
 import { getLanguageIdByLocaleId } from './locales';
+import crypto from 'crypto';
 
 const hashing = new identity.Hashing();
 export const registerExternalUser = async (email: string, name: string) => {
@@ -14,12 +15,18 @@ export const registerExternalUser = async (email: string, name: string) => {
   let password = generateRandomString(6);
   password = await hashing.hashPassword(password);
   const language = await getLanguageIdByLocaleId(Locales.RU);
+  const emailHash = crypto
+    .createHash('md5')
+    .update(email)
+    .digest('hex');
+    const gravatarPhotoUrl = `https://www.gravatar.com/avatar/${emailHash}?d=robohash`;
   const newUser = await new UserModel({
     email,
     name,
     password,
     roles: [ROLES.COMMENT],
-    language
+    language,
+    gravatarPhotoUrl
   }).save();
   return newUser;
 };

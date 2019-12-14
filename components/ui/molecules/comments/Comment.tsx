@@ -17,9 +17,13 @@ export const Comment = React.memo<CommentItem>(
       <Zoom in mountOnEnter timeout={1000}>
         <Paper elevation={4} className={classes.paper}>
           <div className={classes.topText}>
-            <Avatar className={classes.avatar}>
-              <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
-            </Avatar>
+            {user?.gravatarPhotoUrl ? (
+              <Avatar src={user.gravatarPhotoUrl} className={classes.avatar} />
+            ) : (
+              <Avatar className={classes.avatar}>
+                <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
+              </Avatar>
+            )}
             <div className={classes.text}>
               <Typography
                 noWrap
