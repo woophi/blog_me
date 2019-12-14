@@ -4,6 +4,6 @@
 - [x] fb meta data
 - [x] fix bug with multiple scroll
 - [x] clear shit from comments
-- [ ] photo url
+- [x] photo url
 - [x] views compile
 - [ ] improve likes
