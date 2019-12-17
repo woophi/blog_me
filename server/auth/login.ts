@@ -12,8 +12,6 @@ import { vKAuthFirstStep, processVKLogin } from 'server/vk';
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const validate = new kia.Validator(req, res);
 
-  Logger.debug(`starting authenticate user ${new Date().toLocaleTimeString()}`);
-
   const userData = {
     email: req.body.email,
     password: req.body.password

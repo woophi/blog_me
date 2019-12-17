@@ -7,3 +7,4 @@
 - [x] photo url
 - [x] views compile
 - [x] improve likes
+- [ ] sync likes add epics

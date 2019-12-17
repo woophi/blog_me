@@ -41,7 +41,7 @@ export const resetPassword = async (
       .ne(null)
       .exec();
     if (!user) {
-      Logger.info('trying to reset pass for non existed user', data.email);
+      Logger.info('trying to reset pass for non existed user');
       return res.sendStatus(HTTPStatus.OK);
     }
     const linkId = await createUniqLink(data.email);

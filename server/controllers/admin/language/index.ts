@@ -14,8 +14,6 @@ export const createNewLanguage = async (
 ) => {
   const validate = new kia.Validator(req, res);
 
-  Logger.debug(`starting to create new language ${new Date().toLocaleTimeString()}`);
-
   const languageData: models.LanguageModel = {
     localeId: req.body.localeId,
     name: req.body.name

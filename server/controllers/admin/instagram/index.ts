@@ -21,7 +21,6 @@ export const verrifyLoginInstagram = async (
   }).catch(IgCheckpointError, async () => {
     await ig.challenge.auto(true); // Requesting sms-code or click "It was me" button
     Logger.info('generate challenge');
-    Logger.info(JSON.stringify(ig.state.checkpoint)); // Challenge info here
     return res.send(false).status(HTTPStatus.OK);
   });
 };
@@ -48,7 +47,7 @@ export const sendCodeInstagram = async (
 ) => {
   if (!req.body.code) return res.send(false).status(HTTPStatus.OK);
   try {
-    Logger.debug('try to send code', req.body.code);
+    Logger.debug('try to send code');
     await ig.challenge.sendSecurityCode(formatString(req.body.code));
 
     return res.send(true).status(HTTPStatus.OK);

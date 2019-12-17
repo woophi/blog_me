@@ -112,6 +112,7 @@ export class Auth extends Hashing {
         const cookieOpts = {
           signed: true,
           httpOnly: !config.DEV_MODE,
+          secure: !config.DEV_MODE,
           maxAge: tenDaysInMS
         };
         req.session.cookie.maxAge = tenDaysInMS;
@@ -120,6 +121,7 @@ export class Auth extends Hashing {
         req.session.accessToken = payload.accessToken;
         if (!config.DEV_MODE) {
           req.session.cookie.httpOnly = true;
+          req.session.cookie.secure = true;
         }
         res.cookie(SessionCookie.SesId, userToken, cookieOpts);
         return onSuccess(payload.accessToken);

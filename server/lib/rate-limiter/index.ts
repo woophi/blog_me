@@ -39,8 +39,6 @@ export const rateLimiterMiddleware = (
       next();
     })
     .catch(rateLimiterRes => {
-      Logger.info(rateLimiterRes);
-
       const error = `You've made too many failed attempts in a short period of time, please try again at ${moment()
         .add(rateLimiterRes.msBeforeNext, 'milliseconds')
         .format()}`;
@@ -61,8 +59,6 @@ export const fetchingLimiterMiddleware = (
       next();
     })
     .catch(rateLimiterRes => {
-      Logger.info(rateLimiterRes);
-
       const error = `You've made too many failed attempts in a short period of time, please try again at ${moment()
         .add(rateLimiterRes.msBeforeNext, 'milliseconds')
         .format()}`;
