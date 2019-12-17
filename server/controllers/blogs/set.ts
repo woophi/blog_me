@@ -35,7 +35,15 @@ export const guestLikeBlog = async (req: Request, res: Response) => {
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
-    const user = await UserModel.findById(req.session?.userId).exec();
+    const user = await UserModel.findById(req.session?.userId)
+      .populate('likes')
+      .exec();
+
+    if (user) {
+      const exists = user.likes.some(l => l.blog.id == blog.id);
+
+      if (exists) return res.sendStatus(HTTPStatus.Conflict);
+    }
 
     const update = user
       ? {

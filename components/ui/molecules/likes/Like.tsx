@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { dislikeBlog, likeBlog, getGuestLikeState } from './operations';
+import { checkAuth } from 'core/operations/auth';
 
 type Props = {
   blogId: number;
@@ -12,7 +13,10 @@ export const Like = React.memo<Props>(({ blogId }) => {
   const classes = useStyles({ selected: liked });
 
   React.useEffect(() => {
-    setLike(getGuestLikeState(blogId));
+    (async () => {
+      await checkAuth();
+      setLike(await getGuestLikeState(blogId));
+    })();
   }, [blogId]);
 
   const handleClick = () => {

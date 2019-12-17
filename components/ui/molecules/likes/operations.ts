@@ -1,4 +1,4 @@
-import { callApi } from 'core/common';
+import { callApi, callUserApi } from 'core/common';
 import { LocalStorageManager } from 'core/localStorageManager';
 import { getUserId } from 'core/selectors';
 import { store } from 'core/store';
@@ -12,27 +12,30 @@ export const likeBlog = async (blogId: number) => {
   if (liked?.likeId && !getUserId(store.getState())) {
     const likes = <string[]>LocalStorageManager.get(blogId, 'likes') || [];
     LocalStorageManager.set(blogId, 'likes', [...likes, liked.likeId]);
-    return true;
   }
-  return false;
 };
 
 export const dislikeBlog = async (blogId: number) => {
-  if (getGuestLikeState(blogId)) {
-    LocalStorageManager.delete(blogId, 'likes');
-    return true;
+  if (getUserId(store.getState())) {
+    callUserApi<boolean>('delete', `api/app/user/blog/dislike?blogId=${blogId}`);
   } else {
-    if (getUserId(store.getState())) {
-      return await callApi<boolean>(
-        'delete',
-        `api/app/user/blog/dislike?blogId=${blogId}`
-      );
-    }
-    return false;
+    LocalStorageManager.delete(blogId, 'likes');
   }
 };
 
-export const getGuestLikeState = (blogId: number) => {
-  const likes = <string[]>LocalStorageManager.get(blogId, 'likes');
-  return !!likes?.length;
+export const getGuestLikeState = async (blogId: number) => {
+  try {
+    if (getUserId(store.getState())) {
+      const hasLike = await callUserApi<boolean>(
+        'get',
+        `api/app/user/like?blogId=${blogId}`
+      );
+      return hasLike;
+    } else {
+      const likes = <string[]>LocalStorageManager.get(blogId, 'likes');
+      return !!likes?.length;
+    }
+  } catch {
+    return false;
+  }
 };

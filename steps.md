@@ -6,4 +6,4 @@
 - [x] clear shit from comments
 - [x] photo url
 - [x] views compile
-- [ ] improve likes
+- [x] improve likes

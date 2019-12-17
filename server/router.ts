@@ -59,6 +59,8 @@ export function router(
   app.post('/api/app/user/check', auth.checkUser);
 
   app.patch('/api/app/user/likes', identity.validateToken, controllers.syncUserLikes);
+  app.get('/api/app/user/like', identity.validateToken, controllers.getUserLike);
+  app.delete('/api/app/user/blog/dislike', identity.validateToken, controllers.userDislike);
 
   app.get('/api/app/user/comments', identity.validateToken, controllers.getBlogComments);
   app.post('/api/app/user/comment', identity.validateToken, controllers.createBlogComment);

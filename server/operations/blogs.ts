@@ -11,3 +11,14 @@ export const getBlogCaptionData = async (blogId: string) => {
     shortText
   };
 };
+
+export const getBlogObjectId = async (blogId: number): Promise<string> => {
+  try {
+    const { _id } = await BlogModel.findOne({ blogId })
+      .select('id')
+      .lean();
+    return _id;
+  } catch {
+    return null;
+  }
+};
