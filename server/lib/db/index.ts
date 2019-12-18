@@ -6,9 +6,7 @@ export const databaseUri = config.PORT_MONGO;
 export const generalMgOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,
-  useUnifiedTopology: true,
-  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-  reconnectInterval: 100,
+  useUnifiedTopology: true
 }
 Logger.info('connecting to mongo db')
 export const connection = mongoose.connect(databaseUri, generalMgOptions);
