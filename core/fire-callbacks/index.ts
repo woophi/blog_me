@@ -2,10 +2,6 @@ import { client } from 'core/callbacks';
 import { store } from 'core/store';
 import { getCommentById } from 'core/operations';
 
-client.welcome = () => {
-  console.warn('welcome uniq guest');
-};
-
 client.upload_done = (fileName, fileId, url) => {
   console.warn(fileName, 'fileName', 'fileId', fileId);
   if (fileId) {
