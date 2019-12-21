@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  emphasize,
   withStyles,
   makeStyles,
   Theme,
@@ -19,12 +18,8 @@ const StyledBreadcrumb = withStyles((theme: Theme) => ({
     height: 24,
     color: theme.palette.grey[800],
     fontWeight: theme.typography.fontWeightRegular,
-    '&:hover, &:focus': {
-      backgroundColor: theme.palette.grey[300]
-    },
     '&:active': {
-      boxShadow: theme.shadows[1],
-      backgroundColor: emphasize(theme.palette.grey[300], 0.12)
+      boxShadow: theme.shadows[1]
     }
   }
 }))(Chip) as typeof Chip;
@@ -32,7 +27,8 @@ const StyledBreadcrumb = withStyles((theme: Theme) => ({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      padding: theme.spacing(1)
+      padding: theme.spacing(1),
+      backgroundColor: 'transparent'
     }
   })
 );
@@ -66,29 +62,11 @@ const SpecificRoute: React.FC<SpecificRouteProps> = ({ currentRoute }) => {
   if (currentRoute.indexOf('blog') !== -1) {
     return <StyledBreadcrumb label={'Блоги'} onClick={constants.toBlogs} />;
   }
-  if (currentRoute.indexOf('album') !== -1) {
-    return <StyledBreadcrumb label={'Альбомы'} onClick={constants.toAlbums} />;
-  }
-  if (currentRoute.indexOf('slider') !== -1) {
-    return <StyledBreadcrumb label={'Слайдер'} onClick={constants.toSlider} />;
-  }
-  if (currentRoute.indexOf('bio') !== -1) {
-    return <StyledBreadcrumb label={'Биография'} onClick={constants.toBio} />;
-  }
-  if (currentRoute.indexOf('photo') !== -1) {
-    return <StyledBreadcrumb label={'Фото'} onClick={constants.toPhotos} />;
-  }
-  if (currentRoute.indexOf('youtube') !== -1) {
-    return <StyledBreadcrumb label={'Youtube'} onClick={constants.toYoutube} />;
-  }
   if (currentRoute.indexOf('comment') !== -1) {
     return <StyledBreadcrumb label={'Комментарии'} onClick={constants.toComments} />;
   }
   if (currentRoute.indexOf('facebook') !== -1) {
     return <StyledBreadcrumb label={'Facebook'} onClick={constants.toFacebook} />;
-  }
-  if (currentRoute.indexOf('follower') !== -1) {
-    return <StyledBreadcrumb label={'Подписчики'} onClick={constants.toFollowers} />;
   }
   if (currentRoute.indexOf('user') !== -1) {
     return <StyledBreadcrumb label={'Пользователи'} onClick={constants.toUsers} />;
