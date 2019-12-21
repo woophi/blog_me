@@ -53,7 +53,7 @@ class Blog extends React.Component<Props> {
     return (
       <>
         <Head>
-          <meta property="og:url" content={`${SITE_URL}/${title.toLowerCase()}-${blogId}`} />
+          <meta property="og:url" content={`${SITE_URL}/post/${title.toLowerCase()}-${blogId}`} />
           <meta property="og:type" content="article" />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={shortText} />

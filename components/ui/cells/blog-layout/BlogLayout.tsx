@@ -97,12 +97,12 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
       <Box display="flex">
         <Like blogId={blog.blogId} />
         <Shares
-          linkToShare={`${SITE_URL}/${blog.title.toLowerCase()}-${blog.blogId}`}
+          linkToShare={`${SITE_URL}/post/${blog.title.toLowerCase()}-${blog.blogId}`}
         />
       </Box>
       <PopUp
         value={pers}
-        linkToShare={`${SITE_URL}/${blog.title.toLowerCase()}-${blog.blogId}`}
+        linkToShare={`${SITE_URL}/post/${blog.title.toLowerCase()}-${blog.blogId}`}
         scrollToElement={scrollToElement}
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px" marginBottom="2rem">

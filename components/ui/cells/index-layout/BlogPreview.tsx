@@ -18,7 +18,7 @@ export const BlogPreview = React.memo<Props>(
         .toLowerCase()
         .split(' ')
         .join('-');
-      goToSpecific(`/${mapTitle}-${blogId}`);
+      goToSpecific(`/post/${mapTitle}-${blogId}`);
     }, [blogId, title]);
     return (
       <Zoom in mountOnEnter timeout={1000}>

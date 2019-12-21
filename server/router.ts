@@ -103,7 +103,7 @@ export function router(
     appNext.render(req, res, actualPage, queryParams)
   });
 
-  app.get('/:blogId', (req, res) => {
+  app.get('/post/:blogId', (req, res) => {
     const actualPage = '/blog';
     const getBlogId = req.params.blogId?.split('-').pop();
     const queryParams = { blogId: getBlogId };
