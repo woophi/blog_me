@@ -1,7 +1,6 @@
 export * from './Links';
 export * from './spinner';
 export * from './HtmlTooltip';
-export * from './SocialButtons';
 export * from './ScrollToTop';
 export * from './H1';
 export * from './TextField';
