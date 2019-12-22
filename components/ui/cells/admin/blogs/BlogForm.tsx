@@ -249,17 +249,6 @@ export const BlogForm = React.memo<Props>(({ blogId, initialValues = {} }) => {
             <Field
               name="body"
               render={({ input: { onChange, value }, meta }) => (
-                // <TextField
-                //   variant="outlined"
-                //   label={'Текст блога'}
-                //   multiline
-                //   rows="4"
-                //   className={classes.field}
-                //   {...input}
-                //   error={Boolean(meta.touched && meta.error)}
-                //   helperText={meta.touched && meta.error}
-                //   disabled={submitting}
-                // />
                 <Box className={classes.field}>
                   <QuillEditor onChange={onChange} value={value} />
                 </Box>
