@@ -110,6 +110,12 @@ export function router(
     appNext.render(req, res, actualPage, queryParams);
   });
 
+  app.get('/admin/blogs/edit/:blogId', identity.authorizedForSuperAdmin, (req, res) => {
+    const actualPage = '/admin/blogs/edit';
+    const queryParams = { blogId: req.params.blogId };
+    appNext.render(req, res, actualPage, queryParams);
+  });
+
   app.get('*', (req, res) => {
     return handle(req, res);
   });

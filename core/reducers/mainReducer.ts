@@ -1,4 +1,5 @@
 import * as models from 'core/models';
+import * as admin from 'core/models/admin';
 
 export const initialState: models.AppState['ui'] = {
   user: {
@@ -9,7 +10,7 @@ export const initialState: models.AppState['ui'] = {
     fetching: true
   },
   admin: {
-    section: models.Section.Albums,
+    section: admin.Section.Albums,
     files: [],
     selectedFile: null,
     uploadingFile: false,

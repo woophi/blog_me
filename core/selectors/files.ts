@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { getAdminState } from './common';
-import { FileItem } from 'core/models';
+import { FileItem } from 'core/models/admin';
 
 export const getSelectedFile = createSelector(
   getAdminState,

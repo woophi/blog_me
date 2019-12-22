@@ -7,7 +7,7 @@ import Router from 'next/router';
 
 type Props = {
   title: string;
-  subTitle: string;
+  subTitle: React.ReactNode;
   imgSrc: string;
   href: string;
   timeOut?: number;
