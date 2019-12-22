@@ -8,3 +8,6 @@
 - [x] views compile
 - [x] improve likes
 - [ ] sync likes add epics
+- [ ] autosave blog on bounce input
+- [ ] style pre tag
+- [ ] search
