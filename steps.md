@@ -7,7 +7,6 @@
 - [x] photo url
 - [x] views compile
 - [x] improve likes
-- [ ] sync likes add epics
-- [ ] autosave blog on bounce input
+- [x] ~~sync likes~~ add epics
 - [ ] style pre tag
 - [ ] search

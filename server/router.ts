@@ -58,7 +58,6 @@ export function router(
   app.post('/api/app/user/logout', rateLimiterMiddleware, identity.validateToken, auth.logout);
   app.post('/api/app/user/check', auth.checkUser);
 
-  app.patch('/api/app/user/likes', identity.validateToken, controllers.syncUserLikes);
   app.get('/api/app/user/like', identity.validateToken, controllers.getUserLike);
   app.delete('/api/app/user/blog/dislike', identity.validateToken, controllers.userDislike);
 

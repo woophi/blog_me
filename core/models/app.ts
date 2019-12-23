@@ -12,12 +12,15 @@ export type AppState = {
 };
 
 export type AppDispatch =
-  | { type: 'SET_USER'; payload: AppState['ui']['user'] }
+  | SetUserDispatch
   | { type: 'SET_USER_TOKEN'; payload: AppState['ui']['user']['token'] }
   | { type: 'SET_USER_FETCHING'; payload: AppState['ui']['user']['fetching'] }
   //comments
   | { type: 'UPDATE_COMMENTS'; payload: { comment: CommentItem } }
-  | { type: 'UPDATE_COMMENT_REPLIES'; payload: { commentId: string, replies: string[] } }
+  | {
+      type: 'UPDATE_COMMENT_REPLIES';
+      payload: { commentId: string; replies: string[] };
+    }
   | {
       type: 'LOAD_MORE_COMMENTS';
       payload: { comments: CommentItem[] };
@@ -36,3 +39,5 @@ export type AppDispatch =
   | { type: 'SELECT_FILE'; payload: FileItem }
   | { type: 'UPLOADING_FILE'; payload: AdminState['uploadingFile'] }
   | { type: 'UPDATE_FACEBOOK_ACTIVE'; payload: AdminState['facebookActive'] };
+
+export type SetUserDispatch = { type: 'SET_USER'; payload: AppState['ui']['user'] };

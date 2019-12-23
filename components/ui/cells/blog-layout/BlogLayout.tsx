@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BlogGuest } from 'core/models';
+import { BlogGuest, AppState } from 'core/models';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
@@ -8,14 +8,22 @@ import { LoadComments } from './LoadComments';
 import { getWindow } from 'core/common';
 import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
+import { connect } from 'react-redux';
+import { getUserId } from 'core/selectors';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
-type Props = {
+type OwnProps = {
   blog: BlogGuest;
 };
 
-export const BlogLayout = React.memo<Props>(({ blog }) => {
+const mapState = (state: AppState, _: OwnProps) => ({
+  userId: getUserId(state)
+});
+
+type Props = ReturnType<typeof mapState> & OwnProps;
+
+const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
   const [pers, setPers] = React.useState<number>(null);
   const divRef = React.useRef<HTMLDivElement>();
 
@@ -95,7 +103,7 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
         />
       </Box>
       <Box display="flex">
-        <Like blogId={blog.blogId} />
+        {userId && <Like blogId={blog.blogId} />}
         <Shares
           linkToShare={`${SITE_URL}/post/${blog.title.toLowerCase()}-${blog.blogId}`}
         />
@@ -112,3 +120,5 @@ export const BlogLayout = React.memo<Props>(({ blog }) => {
     </Box>
   );
 });
+
+export const BlogLayout = connect(mapState)(BlogLayoutPC);
