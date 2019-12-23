@@ -8,7 +8,6 @@ import { appWithTranslation, i18next } from 'server/lib/i18n';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from 'core/lib';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { getCookie } from 'core/cookieManager';
 import { VisitorCookie } from 'core/models';
 import { RouterProgress } from 'ui/atoms/RouterProgress';

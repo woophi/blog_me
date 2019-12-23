@@ -96,11 +96,14 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
         }}
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
-        <Typography
-          component="div"
-          gutterBottom
-          dangerouslySetInnerHTML={{ __html: blog.body }}
-        />
+        <Typography component="div" gutterBottom>
+          <div className="ql-snow">
+            <div
+              className="ql-editor"
+              dangerouslySetInnerHTML={{ __html: blog.body }}
+            />
+          </div>
+        </Typography>
       </Box>
       <Box display="flex">
         {userId && <Like blogId={blog.blogId} />}
