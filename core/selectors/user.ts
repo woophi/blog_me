@@ -1,6 +1,6 @@
 import { createSelector, defaultMemoize } from 'reselect';
 import { selectState } from './common';
-import { IROLES, AuthData, AppState } from 'core/models';
+import { IROLES, AuthData } from 'core/models';
 import { getCommentsByBlogId } from './comments';
 
 export const getUser = createSelector(
@@ -36,7 +36,7 @@ export const canUserComment = createSelector(
 export const getUserFetching = createSelector(getUser, user => user.fetching);
 
 
-// TODO: mbe delete
+// TODO: rewrite to use as superadmin
 export const hasUserCommentMenu = createSelector(
   [canUserComment, getUserId, getCommentsByBlogId],
   (hasAccess, userId, comments) =>

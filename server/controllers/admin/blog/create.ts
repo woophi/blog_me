@@ -64,6 +64,7 @@ export const createBlog = async (
     } as models.BlogsSaveModel).save();
 
     if (!data.draft) {
+      // TODO: scheduler to notify before publication
       // TODO: uncomment and send with caption a shortLink
       // EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
       // TODO: event listener for fb
