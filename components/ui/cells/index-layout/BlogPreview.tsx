@@ -38,8 +38,8 @@ export const BlogPreview = React.memo<Props>(
                   src={coverPhotoUrl}
                   alt={title}
                   style={{
-                    minWidth: '100%',
-                    maxHeight: '100%'
+                    width: '100%',
+                    height: '100%'
                   }}
                 />
                 <Box
@@ -55,7 +55,7 @@ export const BlogPreview = React.memo<Props>(
                   display="flex"
                   flexDirection="column"
                 >
-                  <Typography variant="h3" component="h1">
+                  <Typography variant="h3" component="h1" noWrap title={title}>
                     {title}
                   </Typography>
                   <Typography variant="caption" display="block" gutterBottom>
