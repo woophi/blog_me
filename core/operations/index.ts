@@ -1,5 +1,6 @@
 import { callApi } from 'core/common';
 import * as models from 'core/models';
+import { store } from 'core/store';
 
 export const subscribe = (email: string) =>
   callApi<models.ResultSubscribe>('post', 'api/guest/subscribe', { email });
@@ -43,3 +44,19 @@ export const getCommentReplies = (parentId: string, offset = 0) =>
     'get',
     `api/guest/blog/comment/replies?parentId=${parentId}&offset=${offset}`
   );
+
+export const searchBlogs = async (query: string) => {
+  try {
+    const r = await callApi<models.BlogGuestItem[]>(
+      'get',
+      `api/guest/blogs/search?q=${query}`
+    );
+
+    store.dispatch({ type: 'SET_SEARCH_RESULTS', payload: r });
+  } catch {
+    store.dispatch({
+      type: 'SET_SEARCH_STATUS',
+      payload: models.SearchStatus.error
+    });
+  }
+};

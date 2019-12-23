@@ -1,6 +1,7 @@
 import { CommentItem } from './comment';
 import { AuthData } from './auth';
 import { AdminState, FileItem } from './admin';
+import { BlogGuestItem, SearchStatus } from './blog';
 
 export type AppState = {
   ui: {
@@ -8,6 +9,9 @@ export type AppState = {
     admin: AdminState;
     comments: CommentItem[];
     replies: CommentItem[];
+    searchResults: BlogGuestItem[];
+    searchQuery: string;
+    searchStatus: SearchStatus;
   };
 };
 
@@ -38,6 +42,22 @@ export type AppDispatch =
   | { type: 'UPDATE_FILES'; payload: FileItem }
   | { type: 'SELECT_FILE'; payload: FileItem }
   | { type: 'UPLOADING_FILE'; payload: AdminState['uploadingFile'] }
-  | { type: 'UPDATE_FACEBOOK_ACTIVE'; payload: AdminState['facebookActive'] };
+  | { type: 'UPDATE_FACEBOOK_ACTIVE'; payload: AdminState['facebookActive'] }
+  | SetSearchResultsDispatch
+  | SetSearchQueryDispatch
+  | SetSearchStatusDispatch;
 
 export type SetUserDispatch = { type: 'SET_USER'; payload: AppState['ui']['user'] };
+
+export type SetSearchResultsDispatch = {
+  type: 'SET_SEARCH_RESULTS';
+  payload: AppState['ui']['searchResults'];
+};
+export type SetSearchQueryDispatch = {
+  type: 'SET_SEARCH_QUERY';
+  payload: AppState['ui']['searchQuery'];
+};
+export type SetSearchStatusDispatch = {
+  type: 'SET_SEARCH_STATUS';
+  payload: AppState['ui']['searchStatus'];
+};

@@ -19,13 +19,13 @@ export type BlogsModelGeneral = {
 
 export type BlogsModel = BlogsModelGeneral & {
   publishedBy: User;
-  language: Language;
+  localeId: Language;
   likes?: Likes[];
   comments?: Comment[];
 };
 export type BlogsSaveModel = BlogsModelGeneral & {
   publishedBy: string;
-  language: string;
+  localeId: string;
   likes?: string[];
   comments?: string[];
 };

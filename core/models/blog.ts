@@ -12,3 +12,9 @@ export type BlogGuest = BlogGuestItem & {
   liked: boolean;
   updatedAt: Date
 };
+
+export enum SearchStatus {
+  init = 'init',
+  update = 'update',
+  error = 'error'
+}

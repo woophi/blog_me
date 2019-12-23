@@ -6,7 +6,8 @@ export const BlogSchema = new mongoose.Schema(
   {
     blogId: {
       type: Number,
-      required: true
+      required: true,
+      index: true
     },
     title: {
       type: String,
@@ -24,7 +25,7 @@ export const BlogSchema = new mongoose.Schema(
       type: Date,
       required: true
     },
-    deleted: { 
+    deleted: {
       type: Date,
       default: null
     },
@@ -41,19 +42,23 @@ export const BlogSchema = new mongoose.Schema(
       ref: SchemaNames.USERS,
       required: true
     },
-    language: {
+    localeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.LANGUAGE,
       required: true
     },
-    likes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.LIKES
-    }],
-    comments: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.COMMENT
-    }],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: SchemaNames.LIKES
+      }
+    ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: SchemaNames.COMMENT
+      }
+    ]
     // TODO: add after general
     // tags: [{
     //   type: mongoose.Schema.Types.ObjectId,
@@ -64,7 +69,20 @@ export const BlogSchema = new mongoose.Schema(
   { collection: SchemaNames.BLOGS }
 );
 
+BlogSchema.index(
+  { title: 'text', body: 'text', shortText: 'text' },
+  {
+    weights: {
+      title: 1,
+      shortText: 2,
+      body: 3
+    }
+  }
+);
 BlogSchema.plugin(timestamps);
-BlogSchema.index({ blogId: 1 });
+
+BlogSchema.on('index', function(error) {
+  console.log(error.message);
+});
 
 export default mongoose.model<Blog>(SchemaNames.BLOGS, BlogSchema);

@@ -11,7 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { initialState, reducer as uiReducer } from 'core/reducers';
 import { AppState, AppDispatch } from 'core/models';
 import { createEpicMiddleware } from 'redux-observable';
-// import { rootEpic } from './epics';
+import { rootEpic } from './epics';
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -53,7 +53,7 @@ export const store: Store<AppState, AppDispatch> = createStore(
   composeWithDevTools(middleware)
 ) as any;
 
-// epicMiddleware.run(rootEpic);
+epicMiddleware.run(rootEpic);
 
 export const initStore = (initState = { ui: initialState }): any => {
   return store;

@@ -6,6 +6,7 @@ import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
 import { Logger } from 'server/logger';
 import { Validator } from 'server/validator';
+import moment from 'moment';
 
 export const guestLikeBlog = async (req: Request, res: Response) => {
   try {
@@ -73,6 +74,48 @@ export const guestLikeBlog = async (req: Request, res: Response) => {
     return res.send({ likeId: newLike.id });
   } catch (error) {
     Logger.error(error);
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+};
+
+export const searchBlogs = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      q: req.query.q
+    };
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        q: validator.required
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        q: formator.formatHtml
+      },
+      data
+    );
+
+    const blogs = await BlogModel.find(
+      { $text: { $search: data.q } },
+      { score: { $meta: 'textScore' } }
+    )
+      .where('deleted', null)
+      .where('draft', false)
+      .where('publishedDate')
+      .lte(moment().toDate())
+      .sort({ score: { $meta: 'textScore' } })
+      .select('title coverPhotoUrl publishedDate blogId shortText -_id')
+      .skip(0)
+      .limit(5)
+      .lean();
+    return res.send(blogs);
+  } catch (error) {
+    Logger.error(error);
+
     return res.sendStatus(HTTPStatus.BadRequest);
   }
 };

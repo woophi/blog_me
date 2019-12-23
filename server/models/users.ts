@@ -64,6 +64,5 @@ export const UsersSchema = new mongoose.Schema(
 );
 
 UsersSchema.plugin(timestamps);
-UsersSchema.index({ email: 1 });
 
 export default mongoose.model<User>(SchemaNames.USERS, UsersSchema);

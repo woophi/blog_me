@@ -59,7 +59,7 @@ export const createBlog = async (
     delete data.language;
     const newBlog = await new BlogModel({
       ...data,
-      language: languageId,
+      localeId: languageId,
       blogId
     } as models.BlogsSaveModel).save();
 

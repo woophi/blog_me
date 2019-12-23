@@ -17,7 +17,10 @@ export const initialState: models.AppState['ui'] = {
     facebookActive: false
   },
   comments: [],
-  replies: []
+  replies: [],
+  searchResults: [],
+  searchQuery: '',
+  searchStatus: models.SearchStatus.init
 };
 
 export const reducer = (
@@ -142,6 +145,26 @@ export const reducer = (
           ...state.admin,
           facebookActive: dispatch.payload
         }
+      };
+    }
+
+    case 'SET_SEARCH_RESULTS': {
+      return {
+        ...state,
+        searchResults: dispatch.payload,
+        searchStatus: models.SearchStatus.init
+      };
+    }
+    case 'SET_SEARCH_QUERY': {
+      return {
+        ...state,
+        searchQuery: dispatch.payload
+      };
+    }
+    case 'SET_SEARCH_STATUS': {
+      return {
+        ...state,
+        searchStatus: dispatch.payload
       };
     }
 

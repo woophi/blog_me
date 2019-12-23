@@ -27,7 +27,6 @@ type Props = {
 type BlogForm = BlogData;
 
 const validate = (values: BlogForm) => {
-  console.debug(values);
   const errors: Partial<BlogForm> = {};
   if (!safeTrim(values.coverPhotoUrl)) {
     errors.coverPhotoUrl = 'Обязательно к заполнению';
@@ -54,7 +53,7 @@ const onSubmit = async (data: BlogForm, blogId?: number) => {
       await editBlog(blogId, data);
     } else {
       const { blogId } = await createNewBlog(data);
-      // goToSpecific(`/admin/blogs/edit/${id}`);
+      goToSpecific(`/admin/blogs/edit/${blogId}`);
     }
   } catch (error) {
     return { [FORM_ERROR]: error.error };
