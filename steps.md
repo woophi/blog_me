@@ -8,5 +8,5 @@
 - [x] views compile
 - [x] improve likes
 - [x] ~~sync likes~~ add epics
-- [ ] style pre tag
+- [x] style pre tag
 - [ ] search
