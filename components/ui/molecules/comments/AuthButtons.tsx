@@ -4,6 +4,10 @@ import { getWindow } from 'core/common';
 import { checkAuth } from 'core/operations/auth';
 import { useInterval } from 'core/lib';
 
+type Props = {
+  onComplete?: () => void
+}
+
 type DialogPath = 'fb' | 'google' | 'vk';
 let loginWindow: Window = null;
 
@@ -13,7 +17,7 @@ type GuestIdentificationWindow = {
   typeof globalThis;
 const windowExt = getWindow() as GuestIdentificationWindow;
 
-export const AuthButtons = React.memo(() => {
+export const AuthButtons = React.memo<Props>(({ onComplete }) => {
   const [processing, setProcess] = React.useState(false);
   const uniqRenederId = Date.now();
 
@@ -38,6 +42,9 @@ export const AuthButtons = React.memo(() => {
             loginWindow = null;
           }
           checkAuth();
+          if (onComplete) {
+            onComplete();
+          }
         })
       : null;
   }, [windowExt]);
@@ -80,7 +87,6 @@ export const AuthButtons = React.memo(() => {
 
   return (
     <div>
-      <Typography component="p">Необходимо авторизоваться</Typography>
       <div>
         <button className={googleBtn} disabled={processing} onClick={authGoogle}>
           <img src="/img/google.svg" />

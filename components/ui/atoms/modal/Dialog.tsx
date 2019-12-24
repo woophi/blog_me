@@ -8,10 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 type Props = {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   title: React.ReactNode;
   confirmTitle?: string;
   children?: React.ReactNode;
+  withActions?: boolean;
 };
 
 export const ModalDialog = React.memo<Props>(
@@ -21,7 +22,8 @@ export const ModalDialog = React.memo<Props>(
     onConfirm,
     children,
     title,
-    confirmTitle = 'Добавить'
+    confirmTitle = 'Добавить',
+    withActions = true
   }) => {
     return (
       <Dialog
@@ -36,14 +38,16 @@ export const ModalDialog = React.memo<Props>(
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color="primary" variant="contained">
-            {'Отмена'}
-          </Button>
-          <Button onClick={onConfirm} color="primary" variant="contained">
-            {confirmTitle}
-          </Button>
-        </DialogActions>
+        {withActions && (
+          <DialogActions>
+            <Button onClick={onClose} color="primary" variant="contained">
+              {'Отмена'}
+            </Button>
+            <Button onClick={onConfirm} color="primary" variant="contained">
+              {confirmTitle}
+            </Button>
+          </DialogActions>
+        )}
       </Dialog>
     );
   }

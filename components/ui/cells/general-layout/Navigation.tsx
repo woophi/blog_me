@@ -17,6 +17,15 @@ import { SearchResults } from './SearchResults';
 import { Dispatch, compose } from 'redux';
 import { AppDispatch, AppState, SearchStatus } from 'core/models';
 import { connect } from 'react-redux';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import { getUserProfileUrl, getUserId } from 'core/selectors';
+import Avatar from '@material-ui/core/Avatar';
+import { logout, checkAuth } from 'core/operations/auth';
+import { ModalDialog } from 'ui/atoms';
+import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
 
 type Props = {
   children: React.ReactElement;
@@ -34,7 +43,9 @@ function HideOnScroll(props: Props) {
 
 const mapState = (state: AppState) => ({
   query: state.ui.searchQuery,
-  searchStatus: state.ui.searchStatus
+  searchStatus: state.ui.searchStatus,
+  userPicture: getUserProfileUrl(state),
+  userId: getUserId(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>) => ({
@@ -48,9 +59,30 @@ type NavigationProps = ReturnType<typeof mapState> &
   WithRouterProps;
 
 const NavigationPC = React.memo<NavigationProps>(
-  ({ router, searchStatus, query, search }) => {
-    const [show, setShow] = React.useState(false);
+  ({ router, searchStatus, query, search, userPicture, userId }) => {
     const classes = useStyles({});
+
+    const [show, setShow] = React.useState(false);
+    const [openDialog, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    React.useEffect(() => {
+      checkAuth();
+    }, []);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleLogout = React.useCallback(() => {
+      handleClose();
+      logout();
+    }, []);
     const goHome = React.useCallback(() => {
       goToSpecific('/');
     }, []);
@@ -61,6 +93,9 @@ const NavigationPC = React.memo<NavigationProps>(
       },
       [search]
     );
+    const closeModal = React.useCallback(() => {
+      setOpen(false);
+    }, []);
 
     const getIcon = React.useCallback(() => {
       switch (searchStatus) {
@@ -99,11 +134,53 @@ const NavigationPC = React.memo<NavigationProps>(
                   value={query}
                 />
               </div>
+              {userId ? (
+                <div>
+                  <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    {userPicture ? <Avatar src={userPicture} /> : <AccountCircle />}
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+                  </Menu>
+                </div>
+              ) : (
+                <Button color="inherit" onClick={() => setOpen(true)}>
+                  Войти
+                </Button>
+              )}
             </Toolbar>
           </AppBar>
         </HideOnScroll>
         <Toolbar />
         <SearchResults show={show} />
+        <ModalDialog
+          withActions={false}
+          open={openDialog}
+          onClose={closeModal}
+          title={'Выберите способ авторизации'}
+        >
+          <AuthButtons onComplete={closeModal} />
+        </ModalDialog>
       </>
     );
   }
@@ -127,7 +204,8 @@ const useStyles = makeStyles(theme =>
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         width: 'auto'
-      }
+      },
+      marginRight: '1rem'
     },
     searchIcon: {
       width: theme.spacing(7),

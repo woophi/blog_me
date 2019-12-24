@@ -8,6 +8,10 @@ export const getUser = createSelector(
   ui => ui.user || ({} as AuthData)
 );
 export const getUserToken = createSelector(getUser, user => user.token);
+export const getUserProfileUrl = createSelector(
+  getUser,
+  user => user.gravatarPhotoUrl
+);
 export const getUserRoles = createSelector(getUser, user => user.roles || []);
 export const getUserId = createSelector(getUser, user => user.userId);
 export const getUserName = createSelector(getUser, user => user.name);
@@ -34,7 +38,6 @@ export const canUserComment = createSelector(
   (god, comment) => god || comment
 );
 export const getUserFetching = createSelector(getUser, user => user.fetching);
-
 
 // TODO: rewrite to use as superadmin
 export const hasUserCommentMenu = createSelector(

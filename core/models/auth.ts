@@ -3,6 +3,7 @@ export type AuthData = {
   roles: IROLES[];
   name: string;
   userId: string;
+  gravatarPhotoUrl?: string;
   fetching?: boolean;
 };
 

@@ -10,8 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import { FilesList } from './FileList';
 import { deselectFile, getChosenFile } from './operations';
 import { connect } from 'react-redux';
-import { AppState, FileItem } from 'core/models';
+import { AppState } from 'core/models';
 import { getSelectedFile } from 'core/selectors';
+import { FileItem } from 'core/models/admin';
 
 type OwnProps = {
   label?: string;

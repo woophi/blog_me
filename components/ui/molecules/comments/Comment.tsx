@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-import { MenuComment } from './Menu';
+// import { MenuComment } from './Menu';
 import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
 import { CommentItem } from 'core/models';
@@ -37,7 +37,7 @@ export const Comment = React.memo<CommentItem>(
                 {moment(createdAt).format('YYYY-MM-DD HH:mm')}
               </Typography>
             </div>
-            <MenuComment blogId={blog?.blogId} commentId={_id} />
+            {/* <MenuComment blogId={blog?.blogId} commentId={_id} /> */}
           </div>
           <Typography component="p" className={classes.content}>
             {text}
