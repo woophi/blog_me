@@ -10,4 +10,4 @@
 - [x] ~~sync likes~~ add epics
 - [x] style pre tag
 - [x] search
-- [ ] design auth buttons by rule
+- [x] design auth buttons by rule

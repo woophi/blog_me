@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import UserModel from 'server/models/users';
 import { HTTPStatus } from 'server/lib/models';
+import { SessionCookie } from 'server/identity';
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.session.user) {
@@ -15,6 +16,9 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 
     req.session.destroy(err => {
       if (err) return res.send({ error: err.message }).status(HTTPStatus.BadRequest);
+
+      res.clearCookie('connect.sid');
+      res.clearCookie(SessionCookie.SesId);
       return res.sendStatus(HTTPStatus.OK);
     });
   } catch (error) {

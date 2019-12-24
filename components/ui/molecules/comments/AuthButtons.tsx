@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, LinearProgress, Typography } from '@material-ui/core';
+import { Button, LinearProgress, Typography, makeStyles } from '@material-ui/core';
 import { getWindow } from 'core/common';
 import { checkAuth } from 'core/operations/auth';
 import { useInterval } from 'core/lib';
@@ -16,6 +16,8 @@ const windowExt = getWindow() as GuestIdentificationWindow;
 export const AuthButtons = React.memo(() => {
   const [processing, setProcess] = React.useState(false);
   const uniqRenederId = Date.now();
+
+  const { googleBtn, facebookBtn } = useStyles({});
 
   useInterval(
     () => {
@@ -76,18 +78,18 @@ export const AuthButtons = React.memo(() => {
     []
   );
 
-  // TODO: design buttons by rule
-
   return (
     <div>
       <Typography component="p">Необходимо авторизоваться</Typography>
       <div>
-        <Button disabled={processing} onClick={authGoogle}>
-          google
-        </Button>
-        <Button disabled={processing} onClick={authFb}>
-          facebook
-        </Button>
+        <button className={googleBtn} disabled={processing} onClick={authGoogle}>
+          <img src="/img/google.svg" />
+          <Typography gutterBottom>Войти с Google</Typography>
+        </button>
+        <button className={facebookBtn} disabled={processing} onClick={authFb}>
+          <i className="fab fa-facebook" />
+          <Typography>Войти с Facebook</Typography>
+        </button>
         <Button disabled={processing} onClick={authVk}>
           vk
         </Button>
@@ -95,4 +97,62 @@ export const AuthButtons = React.memo(() => {
       </div>
     </div>
   );
+});
+
+const useStyles = makeStyles(theme => ({
+  googleBtn: {
+    ...commonStyle(),
+    backgroundColor: '#4285F4',
+    borderRadius: '2px',
+    '&>img': {
+      position: 'relative',
+      top: -3,
+      left: -3,
+      marginRight: '6px'
+    },
+    '&>div': {
+      fontSize: '14px',
+      margin: 'auto'
+    }
+  },
+  facebookBtn: {
+    ...commonStyle(),
+    backgroundColor: '#1877f2',
+    borderRadius: '4px',
+    '&>i': {
+      fontSize: 28,
+      marginRight: '8px',
+      marginLeft: '.5rem'
+    },
+    '&>div': {
+      lineHeight: '1.4rem',
+      margin: 'auto'
+    }
+  }
+}));
+
+const commonStyle = () => ({
+  padding: '0 .5rem 0 0',
+  height: 40,
+  maxWidth: 400,
+  color: '#fff',
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: '.5rem',
+  cursor: 'pointer',
+  boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.24), 0px 0px 1px rgba(0, 0, 0, 0.12)',
+  transform: 'translateY(0)',
+  transition: '.2s ease',
+  outline: 'none !important',
+  border: 'none',
+  '&:active:not(:disabled)': {
+    boxShadow: 'unset',
+    transform: 'translateY(1px)'
+  },
+  '&:hover': {
+    boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.4)'
+  },
+  '&:disabled': {
+    cursor: 'not-allowed'
+  }
 });

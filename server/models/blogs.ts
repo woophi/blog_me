@@ -65,6 +65,7 @@ export const BlogSchema = new mongoose.Schema(
     //   ref: SchemaNames.TAGS
     // }]
     // TODO: shortlink relation
+    // TODO: views
   },
   { collection: SchemaNames.BLOGS }
 );
