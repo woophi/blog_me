@@ -9,5 +9,5 @@
 - [x] improve likes
 - [x] ~~sync likes~~ add epics
 - [x] style pre tag
-- [ ] search
+- [x] search
 - [ ] design auth buttons by rule
