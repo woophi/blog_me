@@ -7,8 +7,9 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { selectFile, fetchFiles } from './operations';
 import { Spinner, Snakbars, InputSearch, styleTruncate } from 'ui/atoms';
 import { connect as redux } from 'react-redux';
-import { AppState, FileItem } from 'core/models';
+import { AppState } from 'core/models';
 import { getSelectedFile } from 'core/selectors';
+import { FileItem } from 'core/models/admin';
 
 type Props = {
   files: FileItem[];

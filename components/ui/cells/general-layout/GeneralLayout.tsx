@@ -22,9 +22,7 @@ export const GeneralLayout = React.memo<Props>(({ title = 'Красноглаз�
         />
         <meta name="keywords" content="ИТ, IT, вайти, красноглазик, блог айти" />
       </Head>
-      <header>
-        <Navigation />
-      </header>
+      <Navigation />
       <div className={classes.content}>
         {children}
       </div>

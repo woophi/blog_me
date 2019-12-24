@@ -50,7 +50,7 @@ export class RouterProgress extends React.PureComponent<Props> {
         #nprogress .bar {
           background: ${color};
           position: fixed;
-          z-index: 1031;
+          z-index: 1200;
           top: 0;
           left: 0;
           width: 100%;
@@ -71,7 +71,7 @@ export class RouterProgress extends React.PureComponent<Props> {
         #nprogress .spinner {
           display: ${spinner ? 'block' : 'none'};
           position: fixed;
-          z-index: 1031;
+          z-index: 1200;
           top: 15px;
           right: 15px;
         }

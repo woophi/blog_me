@@ -1,6 +1,6 @@
 import { uploadFiles, callUserApi } from 'core/common';
 import { store } from 'core/store';
-import { FileItem } from 'core/models';
+import { FileItem } from 'core/models/admin';
 
 
 export const selectFile = (payload: FileItem) => {

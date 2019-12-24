@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import RootRef from '@material-ui/core/RootRef';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
-import { AppState, FileItem } from 'core/models';
+import { AppState } from 'core/models';
 import { getSelectedFile, getAdminState } from 'core/selectors';
 import { Spinner } from 'ui/atoms';
 import { uploadFile } from './operations';
@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { theme } from 'core/lib';
 import { allowedFormats } from 'core/common';
 import Box from '@material-ui/core/Box';
+import { FileItem } from 'core/models/admin';
 
 type Props = {
   file: FileItem;
