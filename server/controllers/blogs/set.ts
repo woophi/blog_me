@@ -108,7 +108,7 @@ export const searchBlogs = async (req: Request, res: Response) => {
       .where('publishedDate')
       .lte(moment().toDate())
       .sort({ score: { $meta: 'textScore' } })
-      .select('title coverPhotoUrl publishedDate blogId shortText -_id')
+      .select('title publishedDate blogId shortText -_id')
       .skip(0)
       .limit(5)
       .lean();

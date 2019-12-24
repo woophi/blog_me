@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { goToSpecific } from 'core/common';
 import { withRouter } from 'next/router';
@@ -33,7 +34,7 @@ function HideOnScroll(props: Props) {
 
 const mapState = (state: AppState) => ({
   query: state.ui.searchQuery,
-  processing: state.ui.searchStatus !== SearchStatus.init
+  searchStatus: state.ui.searchStatus
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>) => ({
@@ -47,7 +48,7 @@ type NavigationProps = ReturnType<typeof mapState> &
   WithRouterProps;
 
 const NavigationPC = React.memo<NavigationProps>(
-  ({ router, processing, query, search }) => {
+  ({ router, searchStatus, query, search }) => {
     const [show, setShow] = React.useState(false);
     const classes = useStyles({});
     const goHome = React.useCallback(() => {
@@ -61,6 +62,17 @@ const NavigationPC = React.memo<NavigationProps>(
       [search]
     );
 
+    const getIcon = React.useCallback(() => {
+      switch (searchStatus) {
+        case SearchStatus.update:
+          return <Icon className="fas fa-cog fa-spin" />;
+        case SearchStatus.error:
+          return <Icon className="fas fa-exclamation-triangle" color="error" />;
+        default:
+          return <SearchIcon />;
+      }
+    }, [searchStatus]);
+
     return (
       <>
         <CssBaseline />
@@ -73,9 +85,7 @@ const NavigationPC = React.memo<NavigationProps>(
                 </IconButton>
               ) : null}
               <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
+                <div className={classes.searchIcon}>{getIcon()}</div>
                 <InputBase
                   placeholder="Search…"
                   classes={{
