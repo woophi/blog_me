@@ -38,7 +38,7 @@ export const getGuestBlogs = async (req: Request, res: Response) => {
       .where('publishedDate')
       .lte(moment().toDate())
       .sort({ publishedDate: -1 })
-      .select('title coverPhotoUrl publishedDate blogId shortText -_id')
+      .select('title coverPhotoUrl publishedDate blogId shortText views -_id')
       .skip(data.offset)
       .limit(data.limit)
       .lean();

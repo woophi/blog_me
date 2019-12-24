@@ -4,6 +4,7 @@ export type BlogGuestItem = {
   publishedDate: Date; 
   blogId: number;
   shortText: string;
+  views: number;
 }
 
 export type BlogGuest = BlogGuestItem & {

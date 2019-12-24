@@ -10,6 +10,7 @@ import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
+import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
@@ -25,6 +26,7 @@ type Props = ReturnType<typeof mapState> & OwnProps;
 
 const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
   const [pers, setPers] = React.useState<number>(null);
+  const [once, setOnce] = React.useState(false);
   const divRef = React.useRef<HTMLDivElement>();
 
   React.useEffect(() => {
@@ -33,6 +35,12 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
     return () =>
       getWindow()?.document.removeEventListener('scroll', () => scrollPers(onePers));
   });
+
+  React.useEffect(() => {
+    if (once) {
+      increaseBlogView(blog.blogId);
+    }
+  }, [once, blog.blogId]);
 
   const calcOnePersent = () => {
     const rect = divRef.current.getBoundingClientRect();
@@ -48,6 +56,9 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
     }
     if (value > 100) {
       setPers(null);
+      if (!once) {
+        setOnce(true);
+      }
     }
     if (value > 0 && value < 1) {
       setPers(null);

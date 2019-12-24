@@ -37,6 +37,10 @@ export const BlogSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    views: {
+      type: Number,
+      default: 1
+    },
     publishedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.USERS,
@@ -59,13 +63,11 @@ export const BlogSchema = new mongoose.Schema(
         ref: SchemaNames.COMMENT
       }
     ]
-    // TODO: add after general
+    // TODO: mbe future
     // tags: [{
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: SchemaNames.TAGS
     // }]
-    // TODO: shortlink relation
-    // TODO: views
   },
   { collection: SchemaNames.BLOGS }
 );

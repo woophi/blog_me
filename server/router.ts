@@ -40,6 +40,7 @@ export function router(
   app.get('/api/guest/blog/comment/replies', fetchingLimiterMiddleware, controllers.getGuestBlogCommentReplies);
 
   app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
+  app.post('/api/guest/blog/view', fetchingLimiterMiddleware, controllers.increaseBlogViews);
 
   app.get('/auth/:external/go', auth.externalLogin);
   app.get('/login/:external/complete', auth.externalLoginComplete);

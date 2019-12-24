@@ -1,7 +1,6 @@
-import { createSelector, defaultMemoize } from 'reselect';
+import { createSelector } from 'reselect';
 import { selectState } from './common';
 import { IROLES, AuthData } from 'core/models';
-import { getCommentsByBlogId } from './comments';
 
 export const getUser = createSelector(
   selectState,
@@ -38,14 +37,3 @@ export const canUserComment = createSelector(
   (god, comment) => god || comment
 );
 export const getUserFetching = createSelector(getUser, user => user.fetching);
-
-// TODO: rewrite to use as superadmin
-export const hasUserCommentMenu = createSelector(
-  [canUserComment, getUserId, getCommentsByBlogId],
-  (hasAccess, userId, comments) =>
-    defaultMemoize(
-      (commentId: string, blogId: number) =>
-        hasAccess &&
-        !!comments(blogId).find(c => c._id === commentId && c.user?._id == userId)
-    )
-);

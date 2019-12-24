@@ -60,3 +60,7 @@ export const searchBlogs = async (query: string) => {
     });
   }
 };
+
+export const viewBlog = (blogId: number) => callApi('post', 'api/guest/blog/view', {
+  blogId
+});

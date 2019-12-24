@@ -1,3 +1,4 @@
 export enum VisitorCookie {
-  Lang = 'drive_lng',
+  Lang = 'blog_me_lng',
+  View = 'blog_me_views'
 }

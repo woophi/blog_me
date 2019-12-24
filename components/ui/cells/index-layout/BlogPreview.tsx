@@ -8,11 +8,12 @@ import { theme } from 'core/lib';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import Zoom from '@material-ui/core/Zoom';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 type Props = BlogGuestItem;
 
 export const BlogPreview = React.memo<Props>(
-  ({ blogId, coverPhotoUrl, publishedDate, title }) => {
+  ({ blogId, coverPhotoUrl, publishedDate, title, views }) => {
     const loadBlog = React.useCallback(() => {
       const mapTitle = title
         .toLowerCase()
@@ -62,10 +63,18 @@ export const BlogPreview = React.memo<Props>(
                     Опубликовано:{' '}
                     {moment(publishedDate).format('DD MMMM YYYY HH:MM')}
                   </Typography>
-                  <Box>
+                  <Box display="flex" justifyContent="space-between">
                     <Button variant="contained" color="primary">
                       Прочесть
                     </Button>
+                    <Box display="flex" alignItems="center">
+                      <VisibilityIcon />{' '}
+                      <Box component="span" marginLeft=".5rem">
+                        <Typography component="span" color="textSecondary">
+                          {views}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
