@@ -25,7 +25,8 @@ export const createBlog = async (
       title: req.body.title,
       language: req.body.language,
       shortText: req.body.shortText,
-      draft: req.body.draft ?? false
+      draft: req.body.draft ?? false,
+      fbPageId: req.body.fbPageId
     };
     await validator.check(
       {
@@ -35,7 +36,8 @@ export const createBlog = async (
         publishedDate: validator.required,
         title: validator.required,
         language: validator.required,
-        shortText: validator.required
+        shortText: validator.required,
+        fbPageId: validator.required
       },
       data
     );
@@ -48,7 +50,8 @@ export const createBlog = async (
         title: formator.formatString,
         language: formator.formatString,
         draft: formator.formatBoolean,
-        shortText: formator.formatHtml
+        shortText: formator.formatHtml,
+        fbPageId: formator.formatNumber
       },
       data
     );
@@ -64,8 +67,10 @@ export const createBlog = async (
     } as models.BlogsSaveModel).save();
 
     if (!data.draft) {
-      EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.blogId });
-      // TODO: event listener for fb
+      EventBus.emit(BusEvents.NEW_BLOG, {
+        blogId: newBlog.blogId,
+        fbPageId: data.fbPageId
+      });
     }
     return res.send({ blogId: newBlog.blogId }).status(HTTPStatus.OK);
   } catch (error) {
@@ -88,7 +93,8 @@ export const updateBlog = async (
       title: req.body.title,
       blogId: req.body.blogId,
       shortText: req.body.shortText,
-      draft: req.body.draft ?? false
+      draft: req.body.draft ?? false,
+      fbPageId: req.body.fbPageId
     };
     await validator.check(
       {
@@ -97,7 +103,8 @@ export const updateBlog = async (
         publishedDate: validator.required,
         title: validator.required,
         blogId: validator.required,
-        shortText: validator.required
+        shortText: validator.required,
+        fbPageId: validator.required
       },
       data
     );
@@ -109,7 +116,8 @@ export const updateBlog = async (
         title: formator.formatString,
         blogId: formator.formatNumber,
         shortText: formator.formatString,
-        draft: formator.formatBoolean
+        draft: formator.formatBoolean,
+        fbPageId: formator.formatNumber
       },
       data
     );
@@ -119,8 +127,10 @@ export const updateBlog = async (
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
     if (!data.draft && blog.draft) {
-      EventBus.emit(BusEvents.NEW_BLOG, { blogId: blog.blogId });
-      // TODO: event listener for fb
+      EventBus.emit(BusEvents.NEW_BLOG, {
+        blogId: blog.blogId,
+        fbPageId: data.fbPageId
+      });
     }
 
     await blog
@@ -134,7 +144,6 @@ export const updateBlog = async (
       })
       .save();
 
-    
     return res.sendStatus(HTTPStatus.OK);
   } catch (error) {
     Logger.error(error);

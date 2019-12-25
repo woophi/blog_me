@@ -2,62 +2,36 @@ import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import { getFacebookPageIds, checkTokenValidation } from './operations';
-import { LinkButton, ArrowTooltip, Spinner } from 'ui/atoms';
+import { LinkButton, ArrowTooltip } from 'ui/atoms';
 
 export const AdminFacebook = React.memo(() => {
-  const [pages, setPages] = React.useState([]);
-  const [valid, setValid] = React.useState(false);
-  const [fetching, setFetching] = React.useState(true);
+  const [pagesV, setPagesV] = React.useState<{ id: number; valid: Boolean }[]>([]);
 
   React.useEffect(() => {
-    getFacebookPageIds().then(setPages);
+    getFacebookPageIds().then(setPagesV);
   }, []);
-
-  React.useEffect(() => {
-    if (pages.length === 1) {
-      checkTokenValidation(pages[0]).then(setValid)
-      .then(() => setFetching(false))
-      .catch(() => setFetching(false));
-    } else {
-      setFetching(false);
-    }
-  }, [pages]);
 
   return (
     <Box flexDirection="column" flex={1}>
       <Box display="flex" alignItems="center">
         <LinkButton
           href={'/setup/fb'}
-          disabled={!!(pages.length && valid)}
-          label={'Добавить facebook страницу'}
+          label={'Добавить facebook страницы'}
           variant="contained"
           color="primary"
         />
-        <Box>
-          {!valid && (
-            <ArrowTooltip
-              placement="top"
-              title={'Сайт не может получить доступ к facebook странице'}
-            >
-              <Icon
-                className={`fas fa-exclamation-triangle`}
-                color="error"
-                style={{ width: 'auto' }}
-              />
-            </ArrowTooltip>
-          )}
-          {valid && (
-            <ArrowTooltip placement="top" title={'Facebook страница добавлена'}>
+        {pagesV.map(pv => (
+          <Box key={pv.id}>
+            <ArrowTooltip placement="top" title={`Facebook страница ${pv.id}`}>
               <Icon
                 className={`fas fa-check`}
-                color="primary"
+                color={pv.valid ? 'secondary' : 'error'}
                 style={{ width: 'auto' }}
               />
             </ArrowTooltip>
-          )}
-        </Box>
+          </Box>
+        ))}
       </Box>
-      <Spinner isShow={fetching} />
     </Box>
   );
 });

@@ -3,7 +3,6 @@ import config from 'server/config';
 import * as FB from 'server/facebook';
 import * as async from 'async';
 import * as kia from 'server/validator';
-import { HTTPStatus } from 'server/lib/models';
 import { Logger } from 'server/logger';
 import { formatString, formatNumber } from 'server/formator';
 
@@ -51,13 +50,17 @@ export const checkTokenValidation = async (
   );
   try {
     const valid = await FB.validateLongLivedToken(pageId);
-    return res.send({ valid }).status(HTTPStatus.OK);
+    return res.send({ valid });
   } catch (error) {
     Logger.error('validateLongLivedToken', error);
-    return res.send({ valid: false }).status(HTTPStatus.OK);
+    return res.send({ valid: false });
   }
 };
 export const getFBPIds = async (req: Request, res: Response, next: NextFunction) => {
   const ids = await FB.getFacebookPageIds();
-  return res.send(ids).status(HTTPStatus.OK);
+  return res.send(ids.map(id => ({ id, valid: true })));
+};
+export const getFBPages = async (req: Request, res: Response, next: NextFunction) => {
+  const pages = await FB.getFacebookPages();
+  return res.send(pages);
 };

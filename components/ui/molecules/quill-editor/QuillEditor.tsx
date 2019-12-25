@@ -9,6 +9,8 @@ if (typeof window !== 'undefined') {
 
 type Props = {
   onChange: (e: any) => void;
+  onBlur: (e: any) => void;
+  onFocus: (e: any) => void;
   value: any;
 };
 
@@ -33,30 +35,58 @@ const toolbarOptions = [
   ['clean'] // remove formatting button
 ];
 
-export const QuillEditor = React.memo<Props>(({ onChange, value }) => {
-  const quillRef = React.useRef<any>();
-  const imageHandler = () => {
-    if (!quillRef.current) return;
-    const range = quillRef.current.getEditor().getSelection();
-    const value = prompt('What is the image URL');
-    if (value) {
-      quillRef.current.getEditor().insertEmbed(range.index, 'image', value, 'user');
-    }
-  };
-  if (ReactQuill === null) return null;
-  return (
-    <ReactQuill
-      ref={el => (quillRef.current = el)}
-      value={value}
-      onChange={onChange}
-      modules={{
-        toolbar: {
-          container: toolbarOptions,
-          handlers: {
-            image: imageHandler
-          }
+export const QuillEditor = React.memo<Props>(
+  ({ onChange, value, onFocus, onBlur }) => {
+    const quillRef = React.useRef<any>();
+    const imageHandler = React.useCallback(() => {
+      if (!quillRef.current) return;
+      const range = quillRef.current.getEditor().getSelection();
+      const value = prompt('What is the image URL');
+      if (value) {
+        quillRef.current
+          .getEditor()
+          .insertEmbed(range.index, 'image', value, 'user');
+      }
+    }, [quillRef.current]);
+
+    const handleChange = React.useCallback(
+      (textHTML: string, delta: any, source: string, editor: any) => {
+        if (!onChange || source !== 'user') {
+          return;
         }
-      }}
-    />
-  );
-});
+        const text = editor.getText();
+        if (!text) {
+          textHTML = '';
+        }
+
+        onChange(textHTML);
+      },
+      [onChange]
+    );
+
+    const toolbar = React.useMemo(
+      () => ({
+        container: toolbarOptions,
+        handlers: {
+          image: imageHandler
+        }
+      }),
+      []
+    );
+    if (ReactQuill === null) return null;
+
+    return (
+      <ReactQuill
+        id="fuck-it"
+        ref={el => (quillRef.current = el)}
+        value={value}
+        onChange={handleChange}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        modules={{
+          toolbar
+        }}
+      />
+    );
+  }
+);

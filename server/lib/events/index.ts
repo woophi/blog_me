@@ -15,5 +15,6 @@ export enum BusEvents {
 
 export type NewBlogEventParams = {
   blogId: number;
+  fbPageId?: number;
   done?: (err?: Error) => void;
 };

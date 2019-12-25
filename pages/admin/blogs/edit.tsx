@@ -2,24 +2,28 @@ import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
-import { BlogData } from 'core/models/admin';
+import { BlogData, FacebookPageItem } from 'core/models/admin';
 import { AdminLayout } from 'ui/cells/admin';
 import { BlogForm } from 'ui/cells/admin/blogs';
 import { getBlogData } from 'ui/cells/admin/blogs/operations';
+import { getFacebookPages } from 'ui/cells/facebook/operations';
 
 type localState = {
   blogData: BlogData;
+  fbData: FacebookPageItem[]
 };
 
 class EditBlog extends React.PureComponent<WithRouterProps, localState> {
   state: localState = {
-    blogData: undefined
+    blogData: undefined,
+    fbData: []
   };
   async componentDidMount() {
     try {
       await ensureNotAuthorized();
       const blogData = await getBlogData(Number(this.props.router.query.blogId));
-      this.setState({ blogData });
+      const fbData = await getFacebookPages();
+      this.setState({ blogData, fbData });
     } catch (e) {
       console.error('Error in Admin EditBlog fetch', e);
     }
@@ -31,6 +35,7 @@ class EditBlog extends React.PureComponent<WithRouterProps, localState> {
         <BlogForm
           blogId={Number(this.props.router.query.blogId)}
           initialValues={this.state.blogData}
+          facebookPages={this.state.fbData}
         />
       </AdminLayout>
     );

@@ -11,17 +11,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import { connect as redux } from 'react-redux';
-import { AppState } from 'core/models';
 import * as constants from 'ui/atoms/constants';
-import { getFacebookActiveStatus } from 'core/selectors/facebook';
-import { theme } from 'core/lib';
 
-type Props = {
-  facebookActive: boolean;
-};
-
-const AdminMenuComponent = React.memo<Props>(({ facebookActive }) => {
+export const AdminMenu = React.memo(() => {
   const classes = useStyles({});
 
   return (
@@ -48,13 +40,7 @@ const AdminMenuComponent = React.memo<Props>(({ facebookActive }) => {
         </ListItem>
         <ListItem button onClick={constants.toFacebook}>
           <ListItemIcon>
-            <ThumbUp
-              style={{
-                color: facebookActive
-                  ? theme.palette.primary.main
-                  : theme.palette.error.main
-              }}
-            />
+            <ThumbUp />
           </ListItemIcon>
           <ListItemText primary={'Facebook'} />
         </ListItem>
@@ -84,10 +70,6 @@ const AdminMenuComponent = React.memo<Props>(({ facebookActive }) => {
     </div>
   );
 });
-
-export const AdminMenu = redux((state: AppState) => ({
-  facebookActive: getFacebookActiveStatus(state)
-}))(AdminMenuComponent);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

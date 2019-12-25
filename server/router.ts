@@ -82,6 +82,7 @@ export function router(
   app.post('/storage/upload', identity.authorizedForAdmin, storage.startUpload);
 
   app.get('/api/admin/fb/pages', identity.authorizedForAdmin, controllers.getFBPIds);
+  app.get('/api/admin/fb/pages/full', identity.authorizedForAdmin, controllers.getFBPages);
   app.patch('/api/admin/fb/check/token', identity.authorizedForAdmin, controllers.checkTokenValidation);
 
   app.patch('/api/admin/ig/check', identity.authorizedForAdmin, controllers.checkLoginInstagram);
