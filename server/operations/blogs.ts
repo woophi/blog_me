@@ -1,7 +1,10 @@
 import BlogModel from 'server/models/blogs';
+import config from 'server/config';
 
-export const getBlogCaptionData = async (blogId: string) => {
-  const { title, coverPhotoUrl, shortText } = await BlogModel.findById(blogId)
+export const getBlogCaptionData = async (blogId: number) => {
+  const { title, coverPhotoUrl, shortText } = await BlogModel.findOne({
+    blogId
+  })
     .select('title coverPhotoUrl shortText')
     .lean();
 
@@ -21,4 +24,13 @@ export const getBlogObjectId = async (blogId: number): Promise<string> => {
   } catch {
     return null;
   }
+};
+
+export const blogRelativeUrl = (blogId: number, title: string) => {
+  const mapTitle = title
+    .toLowerCase()
+    .split(' ')
+    .join('-');
+
+  return `${config.SITE_URI}post/${mapTitle}-${blogId}`;
 };

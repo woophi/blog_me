@@ -36,6 +36,6 @@ const useStyles = makeStyles(theme => ({
     padding: '84px 0',
     minHeight: '100vh',
     overflowX: 'hidden',
-    wordBreak: 'break-all'
+    wordBreak: 'break-word'
   }
 }));

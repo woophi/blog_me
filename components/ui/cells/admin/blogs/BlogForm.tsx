@@ -234,7 +234,7 @@ export const BlogForm = React.memo<Props>(({ blogId, initialValues = {} }) => {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={input.value}
+                      checked={Boolean(input.value)}
                       onChange={input.onChange}
                       value="checkedB"
                       color="primary"

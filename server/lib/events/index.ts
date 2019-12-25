@@ -12,3 +12,8 @@ export enum BusEvents {
   NEW_COMMENT = 'new_comment',
   NEW_BLOG = 'new_blog'
 }
+
+export type NewBlogEventParams = {
+  blogId: number;
+  done?: (err?: Error) => void;
+};

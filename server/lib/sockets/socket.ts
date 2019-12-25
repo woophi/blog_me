@@ -2,16 +2,16 @@ import { Server } from 'http';
 import socket from 'socket.io';
 import { Logger } from 'server/logger';
 import * as cl from 'server/storage/cloudinary';
-import * as ig from 'server/instagram';
 import { EventBus, BusEvents } from '../events';
 import * as storageTypes from 'server/storage/types';
 import { NameSpaces, EmitEvents } from './types';
+import { registerAgendaEvents } from '../agenda';
 
 export const registerSocket = (server: Server) => {
   const IO = socket(server);
   Logger.debug('Storage register events');
   cl.registerCloudinaryEvents();
-  ig.registerInstagramEvents();
+  registerAgendaEvents();
 
   const nspBlogs = IO.of(NameSpaces.BLOGS);
 

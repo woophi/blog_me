@@ -1,9 +1,8 @@
 import { IgApiClient } from 'instagram-private-api';
-import { EventBus, BusEvents } from '../lib/events';
 import { Logger } from '../logger';
 import config from '../config';
-import { IgEventParams } from './types';
-import { getBlogCaptionData } from 'server/operations';
+import { getBlogCaptionData, blogRelativeUrl } from 'server/operations';
+import { NewBlogEventParams } from 'server/lib/events';
 const Jimp = require('jimp');
 
 export const ig = new IgApiClient();
@@ -25,9 +24,9 @@ const loginToIg = async () => {
   }
 };
 
-export const postToInstagram = async ({ blogId, done }: IgEventParams) => {
+export const postToInstagram = async ({ blogId, done }: NewBlogEventParams) => {
   try {
-    const { coverPhotoUrl, title } = await getBlogCaptionData(blogId);
+    const { coverPhotoUrl, title, shortText } = await getBlogCaptionData(blogId);
     const ig = await loginToIg();
     if (!ig) throw Error('failed login to instagram');
 
@@ -42,21 +41,33 @@ export const postToInstagram = async ({ blogId, done }: IgEventParams) => {
       Logger.debug('got buff');
       await ig.publish.photo({
         file: buffData,
-        caption: title
+        caption: `${title} ${shortText} ${blogRelativeUrl(blogId, title)}`
       });
       Logger.debug('ig photo published');
+
+      const currentUser = await ig.account.currentUser();
+      Logger.debug('ig get current account data');
+      await ig.account.editProfile({
+        biography: currentUser.biography,
+        email: currentUser.email,
+        external_url: blogRelativeUrl(blogId, title),
+        first_name: currentUser.full_name,
+        gender: currentUser.gender.toString(),
+        phone_number: currentUser.phone_number,
+        username: currentUser.username
+      });
+      Logger.debug('ig update current account data external_url');
+
     });
   } catch (error) {
     Logger.error(error);
+    if (done) {
+      return done(error);
+    }
   }
   if (done) {
     return done();
   }
-};
-
-export const registerInstagramEvents = () => {
-  Logger.debug('Register Instagram Events');
-  EventBus.on(BusEvents.NEW_BLOG, postToInstagram);
 };
 
 const igPerfectResolution = 1080;

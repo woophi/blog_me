@@ -102,7 +102,7 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
         src={blog.coverPhotoUrl}
         alt={blog.title}
         style={{
-          width: '100%',
+          maxWidth: '100%',
           maxHeight: '100vh'
         }}
       />

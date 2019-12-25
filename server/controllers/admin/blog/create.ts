@@ -64,8 +64,7 @@ export const createBlog = async (
     } as models.BlogsSaveModel).save();
 
     if (!data.draft) {
-      // TODO: uncomment and send with caption a shortLink
-      // EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.id });
+      EventBus.emit(BusEvents.NEW_BLOG, { blogId: newBlog.blogId });
       // TODO: event listener for fb
     }
     return res.send({ blogId: newBlog.blogId }).status(HTTPStatus.OK);
@@ -87,7 +86,9 @@ export const updateBlog = async (
       coverPhotoUrl: req.body.coverPhotoUrl,
       publishedDate: req.body.publishedDate,
       title: req.body.title,
-      blogId: req.body.blogId
+      blogId: req.body.blogId,
+      shortText: req.body.shortText,
+      draft: req.body.draft ?? false
     };
     await validator.check(
       {
@@ -95,7 +96,8 @@ export const updateBlog = async (
         coverPhotoUrl: validator.required,
         publishedDate: validator.required,
         title: validator.required,
-        blogId: validator.required
+        blogId: validator.required,
+        shortText: validator.required
       },
       data
     );
@@ -105,7 +107,9 @@ export const updateBlog = async (
         coverPhotoUrl: formator.formatString,
         publishedDate: formator.formatDate,
         title: formator.formatString,
-        blogId: formator.formatNumber
+        blogId: formator.formatNumber,
+        shortText: formator.formatString,
+        draft: formator.formatBoolean
       },
       data
     );
@@ -114,24 +118,24 @@ export const updateBlog = async (
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
+    if (!data.draft && blog.draft) {
+      EventBus.emit(BusEvents.NEW_BLOG, { blogId: blog.blogId });
+      // TODO: event listener for fb
+    }
+
     await blog
       .set({
         title: data.title,
         body: data.body,
         coverPhotoUrl: data.coverPhotoUrl,
-        publishedDate: data.publishedDate
+        publishedDate: data.publishedDate,
+        shortText: data.shortText,
+        draft: data.draft
       })
       .save();
 
-    return res.send({
-      blogId: blog.blogId,
-      title: blog.title,
-      body: blog.body,
-      coverPhotoUrl: blog.coverPhotoUrl,
-      publishedDate: blog.publishedDate,
-      likes: blog.likes?.length ?? 0,
-      comments: blog.comments?.length ?? 0
-    });
+    
+    return res.sendStatus(HTTPStatus.OK);
   } catch (error) {
     Logger.error(error);
     return res.sendStatus(HTTPStatus.ServerError);
