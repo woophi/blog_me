@@ -8,7 +8,6 @@ export const styleTruncate: CSSProperties = {
 };
 
 export const toBlogs = () => goToSpecific('/admin/blogs');
-// export const toFiles = () => goToSpecific('/admin/files');
 export const toBans = () => goToSpecific('/admin/bans');
 export const toComments = () => goToSpecific('/admin/comments');
 export const toFacebook = () => goToSpecific('/admin/facebook');
