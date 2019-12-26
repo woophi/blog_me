@@ -17,7 +17,7 @@ export const registerExternalUser = async (email: string, name: string) => {
   const language = await getLanguageIdByLocaleId(Locales.RU);
   const emailHash = crypto
     .createHash('md5')
-    .update(email)
+    .update(String(email))
     .digest('hex');
     const gravatarPhotoUrl = `https://www.gravatar.com/avatar/${emailHash}?d=robohash`;
   const newUser = await new UserModel({
