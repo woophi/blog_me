@@ -3,6 +3,7 @@ import { Button, LinearProgress, Typography, makeStyles } from '@material-ui/cor
 import { getWindow } from 'core/common';
 import { checkAuth } from 'core/operations/auth';
 import { useInterval } from 'core/lib';
+import { LinkButton } from 'ui/atoms';
 
 type Props = {
   onComplete?: () => void
@@ -101,6 +102,12 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
         </Button>
         <LinearProgress color="secondary" hidden={!processing} />
       </div>
+      <LinkButton
+        href="/privacy-policy"
+        color="secondary"
+        variant="outlined"
+        label="Privacy policy"
+      />
     </div>
   );
 });
