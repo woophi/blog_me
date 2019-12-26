@@ -50,7 +50,7 @@ export const AdminBlogs = React.memo(() => {
                   {b.draft ? 'Черновик' : ''} {moment(b.publishedDate).format('DD MM YYYY')}
                 </>
               }
-              href={`edit/${b.blogId}`}
+              href={`/admin/blogs/edit/${b.blogId}`}
             />
           ))}
         </Box>

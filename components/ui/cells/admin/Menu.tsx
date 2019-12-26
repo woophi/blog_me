@@ -4,6 +4,7 @@ import Wallpaper from '@material-ui/icons/Wallpaper';
 import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import Block from '@material-ui/icons/Block';
 import ThumbUp from '@material-ui/icons/ThumbUp';
+import Files from '@material-ui/icons/FileCopy';
 import Comment from '@material-ui/icons/Comment';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
 import List from '@material-ui/core/List';
@@ -20,18 +21,18 @@ export const AdminMenu = React.memo(() => {
     <div>
       <div className={classes.toolbar} />
       <List>
+        <ListItem button disabled>
+          <ListItemIcon>
+            <Files />
+          </ListItemIcon>
+          <ListItemText primary={'файлы'} />
+        </ListItem>
         <ListItem button onClick={constants.toBlogs}>
           <ListItemIcon>
             <Wallpaper />
           </ListItemIcon>
           <ListItemText primary={'Блоги'} />
         </ListItem>
-        {/* <ListItem button onClick={toFiles}>
-          <ListItemIcon>
-            <Files />
-          </ListItemIcon>
-          <ListItemText primary={'файлы'} />
-        </ListItem> */}
         <ListItem button onClick={constants.toComments}>
           <ListItemIcon>
             <Comment />

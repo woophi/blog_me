@@ -3,7 +3,7 @@ import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/styles';
-import Router from 'next/router';
+import { goToSpecific } from 'core/common';
 
 type Props = {
   title: string;
@@ -20,7 +20,7 @@ export const Block: React.FC<Props> = React.memo(
     React.useEffect(() => {
       setMount(true);
     }, []);
-    const goTo = () => Router.push(`${Router.route}/${href}`);
+    const goTo = () => goToSpecific(href);
     return (
       <Grow in={mounted} {...(mounted ? { timeout: timeOut } : {})}>
         <Paper elevation={4} className={classes.paper}>

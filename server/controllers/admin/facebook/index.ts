@@ -23,7 +23,7 @@ export const processLogin = async (
 ) => {
   const code = req.query['code'] || '';
   const accessToken = await FB.getAccessToken(
-    formatString(code),
+    code,
     'processLogin/fb/at'
   );
   const pages = await FB.getPagesData(accessToken);

@@ -11,7 +11,7 @@ export const getAccessToken = async (
   code: string,
   cbUrl: string
 ): Promise<string> => {
-  const { access_token } = await callFbApi('get', 'oauth/access_token', [
+  const { access_token } = await callFbApi('post', 'oauth/access_token', [
     { client_id: config.FB_APP_ID },
     { client_secret: config.FB_APP_SECRET },
     { redirect_uri: config.SITE_URI + cbUrl },
