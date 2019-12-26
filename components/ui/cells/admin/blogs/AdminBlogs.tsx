@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Block, LinkButton } from 'ui/atoms';
+import { Block } from 'ui/atoms/Block';
+import { LinkButton } from 'ui/atoms/Links';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { AdminBlogItem } from 'core/models/admin';

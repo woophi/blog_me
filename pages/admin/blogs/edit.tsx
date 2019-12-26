@@ -3,8 +3,8 @@ import { ensureNotAuthorized } from 'core/operations/auth';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { BlogData, FacebookPageItem } from 'core/models/admin';
-import { AdminLayout } from 'ui/cells/admin';
-import { BlogForm } from 'ui/cells/admin/blogs';
+import { AdminLayout } from 'ui/cells/admin/layouts';
+import BlogForm from 'ui/cells/admin/blogs/BlogForm';
 import { getBlogData } from 'ui/cells/admin/blogs/operations';
 import { getFacebookPages } from 'ui/cells/facebook/operations';
 

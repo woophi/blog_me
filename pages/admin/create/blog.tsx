@@ -1,13 +1,19 @@
 import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
-import { AdminLayout } from 'ui/cells/admin';
-import { BlogForm } from 'ui/cells/admin/blogs';
+import { AdminLayout } from 'ui/cells/admin/layouts';
 import { getFacebookPages } from 'ui/cells/facebook/operations';
 import { FacebookPageItem } from 'core/models/admin';
+import dynamic from 'next/dynamic';
 
 type localState = {
   fbData: FacebookPageItem[];
 };
+
+
+const BlogForm = dynamic(import('ui/cells/admin/blogs/BlogForm'), {
+  ssr: false
+});
+
 class NewBlog extends React.PureComponent<unknown, localState> {
   state: localState = {
     fbData: []

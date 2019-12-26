@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
-import { AdminLayout } from 'ui/cells/admin';
-import { AdminBlogs } from 'ui/cells/admin/blogs';
+import { AdminLayout } from 'ui/cells/admin/layouts';
+import { AdminBlogs } from 'ui/cells/admin/blogs/AdminBlogs';
 
 class Blogs extends React.PureComponent {
   async componentDidMount() {

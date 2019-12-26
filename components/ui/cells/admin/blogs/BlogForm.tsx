@@ -61,7 +61,7 @@ const onSubmit = async (data: BlogForm, blogId?: number) => {
   }
 };
 
-export const BlogForm = React.memo<Props>(
+const BlogForm: React.FC<Props> = React.memo(
   ({ blogId, initialValues = {}, facebookPages }) => {
     const classes = useStyles({});
     const inputLabelSLID = React.useRef<any>(null);
@@ -305,6 +305,8 @@ export const BlogForm = React.memo<Props>(
     );
   }
 );
+
+export default BlogForm;
 
 const useStyles = makeStyles(theme => ({
   form: {
