@@ -5,7 +5,6 @@ import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useInterval } from 'core/lib';
-import TwitterIcon from '@material-ui/icons/Twitter';
 
 let shareWindow: Window = null;
 
@@ -14,7 +13,7 @@ type Props = {
 };
 
 export const Shares = React.memo<Props>(({ linkToShare }) => {
-  const { iFB, vk, twit } = useStyles({});
+  const { iFB, vk } = useStyles({});
   const [processing, setProcess] = React.useState(false);
 
   useInterval(
@@ -51,17 +50,6 @@ export const Shares = React.memo<Props>(({ linkToShare }) => {
       'width=626,height=436'
     );
   }, []);
-  const twitShare = React.useCallback(() => {
-    setProcess(true);
-    if (shareWindow) {
-      shareWindow.close();
-    }
-    shareWindow = window.open(
-      `https://twitter.com/intent/tweet?url=${linkToShare}`,
-      '_blank',
-      'width=626,height=436'
-    );
-  }, []);
 
   return (
     <Box display="flex" justifyContent="center" position="relative">
@@ -70,9 +58,6 @@ export const Shares = React.memo<Props>(({ linkToShare }) => {
       </Button>
       <Button disabled={processing} className={iFB} onClick={fbShare}>
         <Icon className={`fab fa-facebook-square`} />
-      </Button>
-      <Button disabled={processing} className={twit} onClick={twitShare}>
-        <TwitterIcon />
       </Button>
       {processing && (
         <Box position="absolute" width="100%" bottom="0">
@@ -87,11 +72,6 @@ const useStyles = makeStyles(theme => ({
   iFB: {
     '&:hover': {
       color: '#4267b2'
-    }
-  },
-  twit: {
-    '&:hover': {
-      color: '#1da1f2'
     }
   },
   vk: {

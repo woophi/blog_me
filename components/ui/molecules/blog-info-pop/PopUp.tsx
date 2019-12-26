@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import ShareIcon from '@material-ui/icons/Share';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { useInterval } from 'core/lib';
 
@@ -59,17 +58,6 @@ export const PopUp = React.memo<Props>(({ value, linkToShare, scrollToElement })
       'width=626,height=436'
     );
   }, []);
-  const twitShare = React.useCallback(() => {
-    setProcess(true);
-    if (shareWindow) {
-      shareWindow.close();
-    }
-    shareWindow = window.open(
-      `https://twitter.com/intent/tweet?url=${linkToShare}`,
-      '_blank',
-      'width=626,height=436'
-    );
-  }, []);
 
   const toggleShow = React.useCallback(() => {
     setShow(!show);
@@ -90,9 +78,6 @@ export const PopUp = React.memo<Props>(({ value, linkToShare, scrollToElement })
             display="flex"
             justifyContent="center"
           >
-            <IconButton color="secondary" onClick={twitShare}>
-              <TwitterIcon />
-            </IconButton>
             <IconButton color="secondary" onClick={fbShare}>
               <FacebookIcon />
             </IconButton>
