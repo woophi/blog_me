@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Button } from '@material-ui/core';
 import * as constants from 'ui/atoms/constants';
 
 export const AdminMenu = React.memo(() => {
@@ -27,11 +27,8 @@ export const AdminMenu = React.memo(() => {
           </ListItemIcon>
           <ListItemText primary={'файлы'} />
         </ListItem>
-        <ListItem button onClick={constants.toBlogs}>
-          <ListItemIcon>
-            <Wallpaper />
-          </ListItemIcon>
-          <ListItemText primary={'Блоги'} />
+        <ListItem>
+          <Button onClick={constants.toBlogs}>{'Блоги'}</Button>
         </ListItem>
         <ListItem button onClick={constants.toComments}>
           <ListItemIcon>

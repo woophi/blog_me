@@ -66,7 +66,7 @@ const subscribeAndSavePage = async (page: Page, longLiveToken: string) => {
     { subscribed_fields: 'publisher_subscriptions, feed' }
   ]);
 
-  if (!result.success) {
+  if (!result?.success) {
     Logger.error('FB unsuccsess ' + JSON.stringify(result));
     return false;
   }
