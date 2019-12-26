@@ -65,7 +65,7 @@ export const PopUp = React.memo<Props>(({ value, linkToShare, scrollToElement })
       shareWindow.close();
     }
     shareWindow = window.open(
-      `https://twitter.com/share?url=${linkToShare}`,
+      `https://twitter.com/intent/tweet?url=${linkToShare}`,
       '_blank',
       'width=626,height=436'
     );

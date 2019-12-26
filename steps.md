@@ -12,3 +12,4 @@
 - [x] search
 - [x] design auth buttons by rule
 - [ ] add time to publish
+- [ ] footer

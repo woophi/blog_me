@@ -57,7 +57,7 @@ export const Shares = React.memo<Props>(({ linkToShare }) => {
       shareWindow.close();
     }
     shareWindow = window.open(
-      `https://twitter.com/share?url=${linkToShare}`,
+      `https://twitter.com/intent/tweet?url=${linkToShare}`,
       '_blank',
       'width=626,height=436'
     );
