@@ -83,7 +83,7 @@ export const BlogForm = React.memo<Props>(
           <ActionButton
             action={hundleDeletBlog}
             label={'Удалить блог'}
-            backToUrl={'/admin/blogs'}
+            backToUrl={'/admin/full'}
             className={classes.delete}
           />
         )}

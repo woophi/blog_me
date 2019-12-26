@@ -7,7 +7,7 @@ export const styleTruncate: CSSProperties = {
   textOverflow: 'ellipsis'
 };
 
-export const toBlogs = () => goToSpecific('/admin/blogs');
+export const toBlogs = () => goToSpecific('/admin/full');
 export const toBans = () => goToSpecific('/admin/bans');
 export const toComments = () => goToSpecific('/admin/comments');
 export const toFacebook = () => goToSpecific('/admin/facebook');
