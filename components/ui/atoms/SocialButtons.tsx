@@ -47,29 +47,7 @@ export const SocialButtons: React.FC = React.memo(() => {
       <Link
         component="a"
         variant="body2"
-        href="https://www.facebook.com/furman2012"
-        target="_blank"
-      >
-        <Icon
-          className={clsx(classes.icon, 'fab fa-facebook-square', classes.iFB)}
-          color="primary"
-        />
-      </Link>
-
-      <Link
-        component="a"
-        variant="body2"
-        href="skype:live:bd37f9fda1ce6827?call"
-      >
-        <Icon
-          className={clsx(classes.icon, 'fab fa-skype', classes.iSkype)}
-          color="primary"
-        />
-      </Link>
-      <Link
-        component="a"
-        variant="body2"
-        href="https://vk.com/id183126454"
+        href="https://vk.com/space_goose"
         target="_blank"
       >
         <Icon
@@ -80,7 +58,7 @@ export const SocialButtons: React.FC = React.memo(() => {
       <Link
         component="a"
         variant="body2"
-        href="https://www.instagram.com/akaidoart"
+        href="https://www.instagram.com/red_eyes_me"
         target="_blank"
       >
         <Icon
@@ -88,18 +66,6 @@ export const SocialButtons: React.FC = React.memo(() => {
           color="primary"
         />
       </Link>
-
-      <Link
-        component="a"
-        variant="body2"
-        href="https://www.youtube.com/channel/UCAkXly2PfDr412tYnNZHq3g"
-        target="_blank"
-      >
-        <Icon
-          className={clsx(classes.icon, 'fab fa-youtube', classes.ytube)}
-          color="primary"
-        />
-      </Link>
     </div>
-  )
+  );
 })

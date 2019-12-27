@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { makeStyles } from '@material-ui/core';
 import { ScrollButton } from 'ui/atoms';
 import { Navigation } from './Navigation';
+import { Footer } from 'ui/atoms/Footer';
 
 type Props = {
   title?: string;
@@ -27,6 +28,7 @@ export const GeneralLayout = React.memo<Props>(({ title = 'Красноглаз�
         {children}
       </div>
       <ScrollButton />
+      <Footer />
     </>
   );
 })
