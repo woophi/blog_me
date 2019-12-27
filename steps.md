@@ -13,3 +13,4 @@
 - [x] design auth buttons by rule
 - [x] footer
 - [ ] add time to publish
+- [ ] img onclick open box

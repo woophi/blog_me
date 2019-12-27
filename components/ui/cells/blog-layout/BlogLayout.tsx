@@ -10,6 +10,7 @@ import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
+import 'react-quill/dist/quill.snow.css';
 import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
@@ -107,12 +108,14 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
         }}
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
-        <Typography component="div" gutterBottom className="quill ">
-          <div className="ql-snow">
-            <div
-              className="ql-editor"
-              dangerouslySetInnerHTML={{ __html: blog.body }}
-            />
+        <Typography component="div" gutterBottom>
+          <div className="quill ">
+            <div className="ql-snow">
+              <div
+                className="ql-editor"
+                dangerouslySetInnerHTML={{ __html: blog.body }}
+              />
+            </div>
           </div>
         </Typography>
       </Box>
