@@ -55,7 +55,7 @@ class Blog extends React.Component<Props> {
         <Head>
           <meta
             property="og:url"
-            content={`${SITE_URL}/post/${title
+            content={`${SITE_URL}post/${title
               .toLowerCase()
               .split(' ')
               .join('-')}-${blogId}`}
