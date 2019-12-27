@@ -11,5 +11,5 @@
 - [x] style pre tag
 - [x] search
 - [x] design auth buttons by rule
+- [x] footer
 - [ ] add time to publish
-- [ ] footer

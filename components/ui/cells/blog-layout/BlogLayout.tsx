@@ -107,7 +107,7 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
         }}
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
-        <Typography component="div" gutterBottom>
+        <Typography component="div" gutterBottom className="quill ">
           <div className="ql-snow">
             <div
               className="ql-editor"

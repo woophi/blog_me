@@ -56,7 +56,7 @@ export const BlogPreview = React.memo<Props>(
                   display="flex"
                   flexDirection="column"
                 >
-                  <Typography variant="h3" component="h1" noWrap title={title}>
+                  <Typography variant="h5" component="h1" title={title} gutterBottom>
                     {title}
                   </Typography>
                   <Typography variant="caption" display="block" gutterBottom>
