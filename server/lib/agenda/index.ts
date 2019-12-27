@@ -42,7 +42,6 @@ const schedulePost = async ({ blogId, fbPageId }: NewBlogEventParams) => {
       async (_, done: (err?: Error) => void) => {
         Logger.debug('Runnig post to social media task', blogId);
         await postToInstagram({ blogId, done });
-        await postToFacebook({ blogId, fbPageId, done });
       }
     );
     await agenda.schedule(blog.publishedDate, task);
