@@ -14,3 +14,4 @@
 - [x] footer
 - [ ] add time to publish
 - [ ] img onclick open box
+- [ ] solve task runner after restart of server

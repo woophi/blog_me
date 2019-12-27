@@ -48,12 +48,18 @@ class Blog extends React.Component<Props> {
     const blog = or(isEmpty(this.props.blog), isNil(this.props.blog))
       ? this.state.blog
       : this.props.blog;
-      
+
     const { title, shortText, coverPhotoUrl, blogId } = blog;
     return (
       <>
         <Head>
-          <meta property="og:url" content={`${SITE_URL}/post/${title.toLowerCase()}-${blogId}`} />
+          <meta
+            property="og:url"
+            content={`${SITE_URL}/post/${title
+              .toLowerCase()
+              .split(' ')
+              .join('-')}-${blogId}`}
+          />
           <meta property="og:type" content="article" />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={shortText} />
