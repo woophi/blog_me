@@ -6,7 +6,6 @@ import { Logger } from 'server/logger';
 import { EventBus, BusEvents, NewBlogEventParams } from '../events';
 import BlogModel from 'server/models/blogs';
 import { postToInstagram } from 'server/instagram';
-import { postToFacebook } from 'server/facebook';
 
 export const agenda: Agenda = new Agenda(
   {
@@ -19,7 +18,7 @@ export const agenda: Agenda = new Agenda(
       }
     }
   },
-  () => agenda.start()
+  () => agenda.start().then(() => redefineAllJobs())
 );
 
 export const registerAgendaEvents = () => {
@@ -35,15 +34,36 @@ const schedulePost = async ({ blogId, fbPageId }: NewBlogEventParams) => {
   if (jobs.length) {
     const j = jobs[0];
     j.schedule(blog.publishedDate);
+    await j.save();
   } else {
-    agenda.define(
-      task,
-      { priority: 'high', concurrency: 10 },
-      async (_, done: (err?: Error) => void) => {
-        Logger.debug('Runnig post to social media task', blogId);
-        await postToInstagram({ blogId, done });
-      }
-    );
-    await agenda.schedule(blog.publishedDate, task);
+    schedulePostJob(task);
+    await agenda.schedule(blog.publishedDate, task, { blogId });
   }
+};
+
+agenda.on('start', job => {
+  Logger.debug('Job starting', job.attrs.name);
+});
+
+agenda.on('fail', (err, job) => {
+  Logger.debug(`Job failed with error: ${err.message}`, job.attrs.name);
+});
+
+const redefineAllJobs = async () => {
+  const jobs = await agenda.jobs({ lastFinishedAt: undefined });
+  jobs.forEach(j => {
+    Logger.debug('redefined job', j.attrs.name);
+    schedulePostJob(j.attrs.name);
+  });
+};
+
+const schedulePostJob = (taskName: string) => {
+  agenda.define<{ blogId: number }>(
+    taskName,
+    { priority: 'high', concurrency: 10 },
+    async (job, done: (err?: Error) => void) => {
+      Logger.debug('Runnig post to social media task', job.attrs.data.blogId);
+      await postToInstagram({ blogId: job.attrs.data.blogId, done });
+    }
+  );
 };

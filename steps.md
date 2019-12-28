@@ -14,5 +14,5 @@
 - [x] footer
 - [x] add time to publish
 - [x] fixed parse of blogId on get
-- [ ] solve task runner after restart of server
+- [x] solve task runner after restart of server
 - [ ] img onclick open box
