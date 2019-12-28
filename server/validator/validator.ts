@@ -62,6 +62,14 @@ export class Validator {
     return typeof value === 'string';
   };
 
+  typeOfNumber = <T>(value: T) => {
+    const required = this.required(value);
+    if (required) return required;
+    if (typeof Number(value) !== 'number' || isNaN(Number(value))) {
+      return 'invalid format';
+    }
+  };
+
   isEmpty = <T>(value: T) => {
     const empty = 'empty';
     if (!value) {

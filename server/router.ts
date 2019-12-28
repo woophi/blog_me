@@ -108,6 +108,9 @@ export function router(
   app.get('/post/:blogId', (req, res) => {
     const actualPage = '/blog';
     const getBlogId = req.params.blogId?.split('-').pop();
+    if (isNaN(Number(getBlogId))) {
+      return res.sendStatus(HTTPStatus.NotFound);
+    }
     const queryParams = { blogId: getBlogId };
     appNext.render(req, res, actualPage, queryParams);
   });

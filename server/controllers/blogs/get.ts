@@ -59,7 +59,7 @@ export const getGuestBlog = async (req: Request, res: Response) => {
 
     await validator.check(
       {
-        blogId: validator.required
+        blogId: validator.typeOfNumber
       },
       data
     );

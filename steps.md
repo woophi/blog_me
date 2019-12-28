@@ -13,6 +13,6 @@
 - [x] design auth buttons by rule
 - [x] footer
 - [x] add time to publish
-- [ ] fixed parse of blogId on get
+- [x] fixed parse of blogId on get
 - [ ] solve task runner after restart of server
 - [ ] img onclick open box
