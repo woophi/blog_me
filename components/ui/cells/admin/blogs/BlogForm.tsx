@@ -61,250 +61,236 @@ const onSubmit = async (data: BlogForm, blogId?: number) => {
   }
 };
 
-const BlogForm: React.FC<Props> = React.memo(
-  ({ blogId, initialValues = {}, facebookPages }) => {
-    const classes = useStyles({});
-    const inputLabelSLID = React.useRef<any>(null);
-    const inputLabelFBPID = React.useRef<any>(null);
-    const [labelWidthSLID, setLabelWidthSLID] = React.useState(0);
-    const [labelWidthFBPID, setLabelWidthFBPID] = React.useState(0);
-    React.useEffect(() => {
-      if (!blogId) {
-        setLabelWidthSLID(inputLabelSLID.current?.offsetWidth ?? 0);
-      }
-      setLabelWidthFBPID(inputLabelFBPID.current?.offsetWidth ?? 0);
-    }, []);
+const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) => {
+  const classes = useStyles({});
+  const inputLabelSLID = React.useRef<any>(null);
+  const [labelWidthSLID, setLabelWidthSLID] = React.useState(0);
+  React.useEffect(() => {
+    if (!blogId) {
+      setLabelWidthSLID(inputLabelSLID.current?.offsetWidth ?? 0);
+    }
+  }, []);
 
-    const hundleDeletBlog = () => deleteBlog(blogId);
+  const hundleDeletBlog = () => deleteBlog(blogId);
 
-    return (
-      <>
-        {blogId && (
-          <ActionButton
-            action={hundleDeletBlog}
-            label={'Удалить блог'}
-            backToUrl={'/admin/full'}
-            className={classes.delete}
-          />
-        )}
-        <Form
-          onSubmit={(d: BlogForm) => onSubmit(d, blogId)}
-          validate={validate}
-          mutators={{
-            ...arrayMutators
-          }}
-          initialValues={
-            blogId
-              ? {
-                  ...initialValues,
-                  publishedDate: moment(
-                    (initialValues as BlogData).publishedDate
-                  ).format('YYYY-MM-DD')
-                }
-              : {
-                  publishedDate: moment().format('YYYY-MM-DD'),
-                  language: 'ru',
-                  draft: true,
-                  body: '<p><br></p>'
-                }
-          }
-          render={({ handleSubmit, pristine, submitting, submitError, form }) => (
-            <form
-              onSubmit={async event => {
-                const error = await handleSubmit(event);
-                if (error) {
-                  return error;
-                }
-                if (!blogId) {
-                  form.reset();
-                } else {
-                  form.setConfig('initialValues', form.getState().values);
-                }
-              }}
-              className={classes.form}
-            >
-              <Snakbars
-                variant="error"
-                message={submitError}
-                className={classes.field}
-              />
-              <Field
-                name="title"
-                render={({ input, meta }) => (
-                  <TextField
-                    label={'Название блога'}
-                    type="text"
-                    name="title"
-                    required
-                    variant="outlined"
-                    className={classes.field}
-                    {...input}
-                    error={Boolean(meta.touched && meta.error)}
-                    helperText={
-                      (meta.touched && meta.error) || `${input.value.length}/256`
-                    }
-                    disabled={submitting}
-                    inputProps={{
-                      maxLength: 256
-                    }}
-                  />
-                )}
-              />
-              <Field
-                name="shortText"
-                render={({ input, meta }) => (
-                  <TextField
-                    label={'Краткое описание'}
-                    type="text"
-                    name="shortText"
-                    required
-                    variant="outlined"
-                    className={classes.field}
-                    {...input}
-                    error={Boolean(meta.touched && meta.error)}
-                    helperText={
-                      (meta.touched && meta.error) || `${input.value.length}/256`
-                    }
-                    disabled={submitting}
-                    inputProps={{
-                      maxLength: 256
-                    }}
-                  />
-                )}
-              />
-              <Field
-                name="coverPhotoUrl"
-                render={({ input, meta }) => (
-                  <TextField
-                    label={'Картинка для preview'}
-                    type="text"
-                    name="coverPhotoUrl"
-                    required
-                    variant="outlined"
-                    className={classes.field}
-                    {...input}
-                    error={Boolean(meta.touched && meta.error)}
-                    helperText={meta.touched && meta.error}
-                    disabled={submitting}
-                  />
-                )}
-              />
-              <Field
-                name="publishedDate"
-                render={({ input, meta }) => (
-                  <TextField
-                    label={'Дата публикации'}
-                    name="publishedDate"
-                    required
-                    variant="outlined"
-                    className={classes.field}
-                    {...input}
-                    type="date"
-                    error={Boolean(meta.touched && meta.error)}
-                    disabled={submitting}
-                  />
-                )}
-              />
-              {!blogId ? (
-                <Field
-                  name="language"
-                  render={({ input, meta }) => (
-                    <FormControl variant="outlined" className={classes.field}>
-                      <InputLabel
-                        htmlFor="localeId"
-                        ref={inputLabelSLID}
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        {'Язык для публикации'}
-                      </InputLabel>
-                      <Select
-                        {...input}
-                        input={
-                          <OutlinedInput labelWidth={labelWidthSLID} id="localeId" />
-                        }
-                        error={Boolean(meta.touched && meta.error)}
-                        disabled={submitting}
-                      >
-                        <MenuItem value={'en'}>{'Английский'}</MenuItem>
-                        <MenuItem value={'cs'}>{'Чешский'}</MenuItem>
-                        <MenuItem value={'ru'}>{'Русский'}</MenuItem>
-                      </Select>
-                    </FormControl>
-                  )}
+  return (
+    <>
+      {blogId && (
+        <ActionButton
+          action={hundleDeletBlog}
+          label={'Удалить блог'}
+          backToUrl={'/admin/full'}
+          className={classes.delete}
+        />
+      )}
+      <Form
+        onSubmit={(d: BlogForm) => onSubmit(d, blogId)}
+        validate={validate}
+        mutators={{
+          ...arrayMutators
+        }}
+        initialValues={
+          blogId
+            ? {
+                ...initialValues,
+                publishedDate: moment(
+                  (initialValues as BlogData).publishedDate
+                ).format('YYYY-MM-DD'),
+                time: moment((initialValues as BlogData).publishedDate).format(
+                  'hh:mm'
+                )
+              }
+            : {
+                publishedDate: moment().format('YYYY-MM-DD'),
+                language: 'ru',
+                draft: true,
+                body: '<p><br></p>'
+              }
+        }
+        render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+          <form
+            onSubmit={async event => {
+              const error = await handleSubmit(event);
+              if (error) {
+                return error;
+              }
+              if (!blogId) {
+                form.reset();
+              } else {
+                form.setConfig('initialValues', form.getState().values);
+              }
+            }}
+            className={classes.form}
+          >
+            <Snakbars
+              variant="error"
+              message={submitError}
+              className={classes.field}
+            />
+            <Field
+              name="title"
+              render={({ input, meta }) => (
+                <TextField
+                  label={'Название блога'}
+                  type="text"
+                  name="title"
+                  required
+                  variant="outlined"
+                  className={classes.field}
+                  {...input}
+                  error={Boolean(meta.touched && meta.error)}
+                  helperText={
+                    (meta.touched && meta.error) || `${input.value.length}/256`
+                  }
+                  disabled={submitting}
+                  inputProps={{
+                    maxLength: 256
+                  }}
                 />
-              ) : null}
+              )}
+            />
+            <Field
+              name="shortText"
+              render={({ input, meta }) => (
+                <TextField
+                  label={'Краткое описание'}
+                  type="text"
+                  name="shortText"
+                  required
+                  variant="outlined"
+                  className={classes.field}
+                  {...input}
+                  error={Boolean(meta.touched && meta.error)}
+                  helperText={
+                    (meta.touched && meta.error) || `${input.value.length}/256`
+                  }
+                  disabled={submitting}
+                  inputProps={{
+                    maxLength: 256
+                  }}
+                />
+              )}
+            />
+            <Field
+              name="coverPhotoUrl"
+              render={({ input, meta }) => (
+                <TextField
+                  label={'Картинка для preview'}
+                  type="text"
+                  name="coverPhotoUrl"
+                  required
+                  variant="outlined"
+                  className={classes.field}
+                  {...input}
+                  error={Boolean(meta.touched && meta.error)}
+                  helperText={meta.touched && meta.error}
+                  disabled={submitting}
+                />
+              )}
+            />
+            <Field
+              name="publishedDate"
+              render={({ input, meta }) => (
+                <TextField
+                  label={'Дата публикации'}
+                  name="publishedDate"
+                  required
+                  variant="outlined"
+                  className={classes.field}
+                  {...input}
+                  type="date"
+                  error={Boolean(meta.touched && meta.error)}
+                  disabled={submitting}
+                />
+              )}
+            />
+            <Field
+              name="time"
+              render={({ input, meta }) => (
+                <TextField
+                  label={'Время публикации'}
+                  name="time"
+                  required
+                  variant="outlined"
+                  className={classes.field}
+                  {...input}
+                  type="time"
+                  error={Boolean(meta.touched && meta.error)}
+                  disabled={submitting}
+                />
+              )}
+            />
+            {!blogId ? (
               <Field
-                name="fbPageId"
+                name="language"
                 render={({ input, meta }) => (
                   <FormControl variant="outlined" className={classes.field}>
                     <InputLabel
-                      htmlFor="fbPageId"
-                      ref={inputLabelFBPID}
+                      htmlFor="localeId"
+                      ref={inputLabelSLID}
                       style={{ color: theme.palette.primary.main }}
                     >
-                      {'Facebook страница'}
+                      {'Язык для публикации'}
                     </InputLabel>
                     <Select
                       {...input}
                       input={
-                        <OutlinedInput labelWidth={labelWidthFBPID} id="fbPageId" />
+                        <OutlinedInput labelWidth={labelWidthSLID} id="localeId" />
                       }
                       error={Boolean(meta.touched && meta.error)}
                       disabled={submitting}
                     >
-                      {facebookPages.map(p => (
-                        <MenuItem key={p.pageId} value={p.pageId}>
-                          {p.pageName}
-                        </MenuItem>
-                      ))}
+                      <MenuItem value={'en'}>{'Английский'}</MenuItem>
+                      <MenuItem value={'cs'}>{'Чешский'}</MenuItem>
+                      <MenuItem value={'ru'}>{'Русский'}</MenuItem>
                     </Select>
                   </FormControl>
                 )}
               />
-              <Field
-                name="draft"
-                render={({ input }) => (
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={Boolean(input.value)}
-                        onChange={input.onChange}
-                        value="checkedB"
-                        color="primary"
-                      />
-                    }
-                    label={'Черновик'}
-                    className={classes.field}
-                  />
-                )}
-              />
-              <Field
-                name="body"
-                render={({ input: { onChange, value, onBlur, onFocus }, meta }) => (
-                  <Box className={classes.field}>
-                    <QuillEditor
-                      onChange={onChange}
-                      value={value}
-                      onBlur={onBlur}
-                      onFocus={onFocus}
+            ) : null}
+            <Field
+              name="draft"
+              render={({ input }) => (
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={Boolean(input.value)}
+                      onChange={input.onChange}
+                      value="checkedB"
+                      color="primary"
                     />
-                  </Box>
-                )}
-              />
-              <ButtonsForm
-                pristine={pristine}
-                submitting={submitting}
-                both
-                onCancel={form.reset}
-                submitLabel={blogId ? 'common:buttons.save' : 'common:buttons.add'}
-              />
-            </form>
-          )}
-        />
-      </>
-    );
-  }
-);
+                  }
+                  label={'Черновик'}
+                  className={classes.field}
+                />
+              )}
+            />
+            <Field
+              name="body"
+              render={({ input: { onChange, value, onBlur, onFocus } }) => (
+                <Box className={classes.field}>
+                  <QuillEditor
+                    onChange={onChange}
+                    value={value}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
+                  />
+                </Box>
+              )}
+            />
+            <ButtonsForm
+              pristine={pristine}
+              submitting={submitting}
+              both
+              onCancel={form.reset}
+              submitLabel={blogId ? 'common:buttons.save' : 'common:buttons.add'}
+            />
+          </form>
+        )}
+      />
+    </>
+  );
+});
 
 export default BlogForm;
 

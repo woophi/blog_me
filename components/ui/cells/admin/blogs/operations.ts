@@ -1,5 +1,6 @@
 import { callUserApi } from 'core/common';
 import { AdminBlogItem, BlogData } from 'core/models/admin';
+import moment from 'moment';
 
 export const getAllBlogs = (offset = 0) =>
   callUserApi<AdminBlogItem[]>('post', `api/admin/get/blogs`, {
@@ -7,10 +8,16 @@ export const getAllBlogs = (offset = 0) =>
   });
 
 export const editBlog = (blogId: number, data: BlogData) =>
-  callUserApi('put', 'api/admin/update/blog', data);
+  callUserApi('put', 'api/admin/update/blog', {
+    ...data,
+    publishedDate: moment(`${data.time} ${data.publishedDate}`, 'hh:mm YYYY-MM-DD')
+  });
 
 export const createNewBlog = (data: BlogData) =>
-  callUserApi<{ blogId: number }>('post', 'api/admin/create/blog', data);
+  callUserApi<{ blogId: number }>('post', 'api/admin/create/blog', {
+    ...data,
+    publishedDate: moment(`${data.time} ${data.publishedDate}`, 'hh:mm YYYY-MM-DD')
+  });
 export const deleteBlog = (blogId: number) =>
   callUserApi('delete', 'api/admin/delete/blogs', { blogIds: [blogId] });
 

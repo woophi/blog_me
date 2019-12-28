@@ -15,7 +15,7 @@ export type BlogData = {
   draft: boolean;
   body: string;
   language?: string;
-  fbPageId: number;
+  time?: string;
 };
 
 export type FacebookPageItem = {
