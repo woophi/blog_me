@@ -17,4 +17,5 @@
 - [x] solve task runner after restart of server
 - [x] short links
 - [x] img onclick open box
+- [x] fix user access to admin sections
 - [ ] improve img onclick open box

@@ -121,6 +121,9 @@ export function router(
     appNext.render(req, res, actualPage, queryParams);
   });
 
+  app.use('/admin/*', identity.authorizedForAdmin);
+  app.use('/admin', identity.authorizedForAdmin);
+
   app.get('*', (req, res) => {
     return handle(req, res);
   });
