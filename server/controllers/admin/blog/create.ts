@@ -5,10 +5,11 @@ import * as formator from 'server/formator';
 import { Validator } from 'server/validator';
 import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
-import { getLanguageIdByLocaleId } from 'server/operations';
+import { getLanguageIdByLocaleId, blogRelativeUrl } from 'server/operations';
 import { EventBus, BusEvents } from 'server/lib/events';
 import moment from 'moment';
 import { generateRandomNumbers } from 'server/utils/prgn';
+import { createShortLink } from 'server/lib/short-links';
 
 export const createBlog = async (
   req: Request,
@@ -56,11 +57,16 @@ export const createBlog = async (
     const languageId = await getLanguageIdByLocaleId(data.language);
     const blogId = await ensureUniqBlogId();
 
+    const url = blogRelativeUrl(blogId, data.title);
+
+    const { id } = await createShortLink(url);
+
     delete data.language;
     const newBlog = await new BlogModel({
       ...data,
       localeId: languageId,
-      blogId
+      blogId,
+      shortLink: id
     } as models.BlogsSaveModel).save();
 
     if (!data.draft) {

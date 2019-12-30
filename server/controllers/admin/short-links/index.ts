@@ -18,7 +18,7 @@ export const generateNewShortLink = async (
       return res.sendStatus(HTTPStatus.BadRequest);
     }
 
-    const link = await createShortLink(originalUrl);
+    const { link } = await createShortLink(originalUrl);
 
     return res
       .send({

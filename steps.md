@@ -15,4 +15,5 @@
 - [x] add time to publish
 - [x] fixed parse of blogId on get
 - [x] solve task runner after restart of server
+- [x] short links
 - [ ] img onclick open box

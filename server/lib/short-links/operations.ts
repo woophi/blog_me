@@ -12,10 +12,16 @@ export const createShortLink = async (originalUrl: string) => {
         shortUrl: `${config.SITE_URI}pick/${uniqStringId}`,
         urlCode: uniqStringId
     } as ShortLinksModel).save();
-    return newLink.shortUrl;
+    return {
+      link: newLink.shortUrl,
+      id: newLink.id
+    };
   } catch (error) {
     Logger.error(error);
-    return '';
+    return {
+      link: '',
+      id: ''
+    };
   }
 };
 

@@ -51,6 +51,10 @@ export const BlogSchema = new mongoose.Schema(
       ref: SchemaNames.LANGUAGE,
       required: true
     },
+    shortLink: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: SchemaNames.SHORT_LINKS
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,

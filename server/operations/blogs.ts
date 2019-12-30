@@ -34,3 +34,15 @@ export const blogRelativeUrl = (blogId: number, title: string) => {
 
   return `${config.SITE_URI}post/${mapTitle}-${blogId}`;
 };
+
+
+export const getBlogShortLink = async (blogId: number) => {
+  const blog = await BlogModel.findOne({ blogId })
+    .populate({
+      path: 'shortLink',
+      select: 'shortUrl -_id'
+    })
+    .select('shortLink')
+    .lean();
+  return blog?.shortLink?.shortUrl ?? '';
+};

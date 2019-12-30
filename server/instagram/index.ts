@@ -1,7 +1,7 @@
 import { IgApiClient } from 'instagram-private-api';
 import { Logger } from '../logger';
 import config from '../config';
-import { getBlogCaptionData, blogRelativeUrl } from 'server/operations';
+import { getBlogCaptionData, getBlogShortLink } from 'server/operations';
 import { NewBlogEventParams } from 'server/lib/events';
 const Jimp = require('jimp');
 
@@ -39,9 +39,13 @@ export const postToInstagram = async ({ blogId, done }: NewBlogEventParams) => {
       Logger.debug('trying to get buff');
       const buffData = await v.getBufferAsync('image/jpeg');
       Logger.debug('got buff');
+
+      Logger.debug('getting post link');
+      const link = await getBlogShortLink(blogId);
+      Logger.debug('got post link');
       await ig.publish.photo({
         file: buffData,
-        caption: `${title} ${shortText} ${blogRelativeUrl(blogId, title)}`
+        caption: `${title} ${shortText} ${link}`
       });
       Logger.debug('ig photo published');
 
@@ -50,14 +54,13 @@ export const postToInstagram = async ({ blogId, done }: NewBlogEventParams) => {
       await ig.account.editProfile({
         biography: currentUser.biography,
         email: currentUser.email,
-        external_url: blogRelativeUrl(blogId, title),
+        external_url: link,
         first_name: currentUser.full_name,
         gender: currentUser.gender.toString(),
         phone_number: currentUser.phone_number,
         username: currentUser.username
       });
       Logger.debug('ig update current account data external_url');
-
     });
   } catch (error) {
     Logger.error(error);
