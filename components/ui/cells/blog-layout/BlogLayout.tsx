@@ -10,12 +10,11 @@ import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
+import mediumZoom from 'medium-zoom';
 import 'react-quill/dist/quill.snow.css';
 import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
-
-const mediumZoom = require('medium-zoom').default;
 
 type OwnProps = {
   blog: BlogGuest;
