@@ -16,11 +16,6 @@ const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
 const mediumZoom = require('medium-zoom').default;
-if (mediumZoom && getWindow())
-  mediumZoom(
-    getWindow().document.querySelectorAll('img'),
-    { background: '#303030' }
-  );
 
 type OwnProps = {
   blog: BlogGuest;
@@ -36,6 +31,13 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
   const [pers, setPers] = React.useState<number>(null);
   const [once, setOnce] = React.useState(false);
   const divRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    if (mediumZoom && getWindow())
+      mediumZoom(getWindow().document.querySelectorAll('img'), {
+        background: '#303030'
+      });
+  }, [mediumZoom]);
 
   React.useEffect(() => {
     const onePers = calcOnePersent();
