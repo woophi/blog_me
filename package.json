@@ -48,6 +48,7 @@
     "instagram-private-api": "^1.36.1",
     "jimp": "^0.9.3",
     "jsonwebtoken": "^8.5.1",
+    "medium-zoom": "^1.0.5",
     "module-alias": "^2.2.2",
     "moment": "^2.24.0",
     "mongodb-core": "^3.2.7",

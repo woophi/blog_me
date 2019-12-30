@@ -15,6 +15,9 @@ import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
+const mediumZoom = require('medium-zoom').default;
+if (mediumZoom) mediumZoom('[data-zoomable]', { background: '#303030' });
+
 type OwnProps = {
   blog: BlogGuest;
 };
@@ -106,6 +109,7 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
           maxWidth: '100%',
           maxHeight: '100vh'
         }}
+        data-zoomable
       />
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
         <Typography component="div" gutterBottom>
