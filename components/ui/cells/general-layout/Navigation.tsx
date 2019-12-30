@@ -21,7 +21,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import { getUserProfileUrl, getUserId } from 'core/selectors';
+import { getUserProfileUrl, getUserId, isUserGod } from 'core/selectors';
 import Avatar from '@material-ui/core/Avatar';
 import { logout, checkAuth } from 'core/operations/auth';
 import { ModalDialog } from 'ui/atoms';
@@ -45,7 +45,8 @@ const mapState = (state: AppState) => ({
   query: state.ui.searchQuery,
   searchStatus: state.ui.searchStatus,
   userPicture: getUserProfileUrl(state),
-  userId: getUserId(state)
+  userId: getUserId(state),
+  isUserGod: isUserGod(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>) => ({
@@ -59,7 +60,7 @@ type NavigationProps = ReturnType<typeof mapState> &
   WithRouterProps;
 
 const NavigationPC = React.memo<NavigationProps>(
-  ({ router, searchStatus, query, search, userPicture, userId }) => {
+  ({ router, searchStatus, query, search, userPicture, userId, isUserGod }) => {
     const classes = useStyles({});
 
     const [show, setShow] = React.useState(false);
@@ -107,6 +108,13 @@ const NavigationPC = React.memo<NavigationProps>(
           return <SearchIcon />;
       }
     }, [searchStatus]);
+
+    const gotoAdmin = React.useCallback(() => {
+      goToSpecific('/admin');
+    }, []);
+    const gotoAgenda = React.useCallback(() => {
+      goToSpecific('/dash');
+    }, []);
 
     return (
       <>
@@ -160,6 +168,8 @@ const NavigationPC = React.memo<NavigationProps>(
                     open={open}
                     onClose={handleClose}
                   >
+                    {isUserGod && <MenuItem onClick={gotoAdmin}>Админ</MenuItem>}
+                    {isUserGod && <MenuItem onClick={gotoAgenda}>Agenda</MenuItem>}
                     <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                   </Menu>
                 </div>
