@@ -10,14 +10,21 @@ export const getAllBlogs = (offset = 0) =>
 export const editBlog = (blogId: number, data: BlogData) =>
   callUserApi('put', 'api/admin/update/blog', {
     ...data,
-    publishedDate: moment(`${data.time} ${data.publishedDate}`, 'hh:mm YYYY-MM-DD')
+    publishedDate: moment(
+      `${data.time} ${data.publishedDate}`,
+      'hh:mm YYYY-MM-DD'
+    ).toDate()
   });
 
 export const createNewBlog = (data: BlogData) =>
   callUserApi<{ blogId: number }>('post', 'api/admin/create/blog', {
     ...data,
-    publishedDate: moment(`${data.time} ${data.publishedDate}`, 'hh:mm YYYY-MM-DD')
+    publishedDate: moment(
+      `${data.time} ${data.publishedDate}`,
+      'hh:mm YYYY-MM-DD'
+    ).toDate()
   });
+
 export const deleteBlog = (blogId: number) =>
   callUserApi('delete', 'api/admin/delete/blogs', { blogIds: [blogId] });
 
