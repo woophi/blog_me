@@ -7,7 +7,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles(theme => ({
   icon: {
     margin: theme.spacing(1),
-    width: 30,
+    width: 'auto',
     '&:hover': {
       cursor: 'pointer'
     }
@@ -36,6 +36,11 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       color: '#dd2c00'
     }
+  },
+  tg: {
+    '&:hover': {
+      color: '#0088cc'
+    }
   }
 }));
 
@@ -63,6 +68,17 @@ export const SocialButtons: React.FC = React.memo(() => {
       >
         <Icon
           className={clsx(classes.icon, 'fab fa-instagram', classes.ig)}
+          color="primary"
+        />
+      </Link>
+      <Link
+        component="a"
+        variant="body2"
+        href="https://t.me/redeyesme"
+        target="_blank"
+      >
+        <Icon
+          className={clsx(classes.icon, 'fab fa-telegram', classes.tg)}
           color="primary"
         />
       </Link>
