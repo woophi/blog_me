@@ -18,4 +18,4 @@
 - [x] short links
 - [x] img onclick open box
 - [x] fix user access to admin sections
-- [ ] improve img onclick open box
+- [x] sticky toolbar

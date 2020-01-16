@@ -11,7 +11,7 @@ import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
 import mediumZoom from 'medium-zoom';
-import 'react-quill/dist/quill.snow.css';
+import 'ui/molecules/quill-editor/quill.css';
 import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;

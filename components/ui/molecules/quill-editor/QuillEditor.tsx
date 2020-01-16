@@ -1,5 +1,5 @@
 import * as React from 'react';
-import 'react-quill/dist/quill.snow.css';
+import './quill.css';
 
 let ReactQuill = null;
 
