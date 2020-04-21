@@ -11,6 +11,7 @@ import { BlogLayout } from 'ui/cells';
 import { connectSocketBlog, joinRoom, leaveRoom } from 'core/socket/blog';
 import Head from 'next/head';
 import getConfig from 'next/config';
+import Error from './_error';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
@@ -19,8 +20,13 @@ type Props = {
 } & WithRouterProps;
 class Blog extends React.Component<Props> {
   static async getInitialProps(context: NextPageContext) {
-    const blog = await getBLog(Number(context.query.blogId));
-    return { blog };
+    try {
+      const blog = await getBLog(Number(context.query.blogId));
+      return { blog };
+    } catch (error) {
+      console.log(error);
+      return {};
+    }
   }
 
   static defaultProps: Partial<Props> = {
@@ -48,6 +54,10 @@ class Blog extends React.Component<Props> {
     const blog = or(isEmpty(this.props.blog), isNil(this.props.blog))
       ? this.state.blog
       : this.props.blog;
+
+    if (or(isEmpty(blog), isNil(blog))) {
+      return <Error statusCode={404} err={''} />
+    }
 
     const { title, shortText, coverPhotoUrl, blogId } = blog;
     return (
