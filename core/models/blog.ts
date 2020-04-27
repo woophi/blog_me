@@ -11,7 +11,7 @@ export type BlogGuest = BlogGuestItem & {
   body: string;
   comments: number;
   liked: boolean;
-  updatedAt: Date
+  updatedAt?: Date
 };
 
 export enum SearchStatus {

@@ -138,7 +138,9 @@ export const updateBlog = async (
         coverPhotoUrl: data.coverPhotoUrl,
         publishedDate: data.publishedDate,
         shortText: data.shortText,
-        draft: data.draft
+        draft: data.draft,
+        updatedDate: moment().toDate(),
+        updatedBy: req.session.userId
       })
       .save();
 

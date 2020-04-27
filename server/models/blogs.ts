@@ -25,6 +25,9 @@ export const BlogSchema = new mongoose.Schema(
       type: Date,
       required: true
     },
+    updatedDate: {
+      type: Date,
+    },
     deleted: {
       type: Date,
       default: null
@@ -45,6 +48,10 @@ export const BlogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.USERS,
       required: true
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: SchemaNames.USERS
     },
     localeId: {
       type: mongoose.Schema.Types.ObjectId,

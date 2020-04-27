@@ -13,6 +13,7 @@ export type BlogsModelGeneral = {
   coverPhotoUrl: string;
   body: string;
   publishedDate: Date;
+  updatedDate?: Date;
   deleted?: Date;
   draft?: boolean;
   shortText: string;
@@ -21,6 +22,7 @@ export type BlogsModelGeneral = {
 
 export type BlogsModel = BlogsModelGeneral & {
   publishedBy: User;
+  updatedBy?: User;
   localeId: Language;
   shortLink?: ShortLink;
   likes?: Likes[];

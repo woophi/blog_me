@@ -98,14 +98,16 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
         >
           Опубликовано: {moment(blog.publishedDate).format('DD MMMM YYYY HH:MM')}
         </Typography>
-        <Typography
-          variant="caption"
-          display="block"
-          gutterBottom
-          color="textSecondary"
-        >
-          Обновлено: {moment(blog.updatedAt).format('DD MMMM YYYY HH:MM')}
-        </Typography>
+        {blog.updatedAt ? (
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            color="textSecondary"
+          >
+            Обновлено: {moment(blog.updatedAt).format('DD MMMM YYYY HH:MM')}
+          </Typography>
+        ) : null}
       </Box>
       <img
         src={blog.coverPhotoUrl}

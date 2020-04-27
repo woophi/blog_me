@@ -127,21 +127,24 @@ const NavigationPC = React.memo<NavigationProps>(
                   <ArrowBackIcon />
                 </IconButton>
               ) : null}
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>{getIcon()}</div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                  onFocus={() => setShow(true)}
-                  onBlur={() => setShow(false)}
-                  onChange={handleChange}
-                  value={query}
-                />
-              </div>
+              <div className={classes.arrowBack} />
+              {router.route === '/' ? (
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>{getIcon()}</div>
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    onFocus={() => setShow(true)}
+                    onBlur={() => setShow(false)}
+                    onChange={handleChange}
+                    value={query}
+                  />
+                </div>
+              ) : null}
               {userId ? (
                 <div>
                   <IconButton
@@ -203,6 +206,9 @@ export const Navigation = compose(
 
 const useStyles = makeStyles(theme =>
   createStyles({
+    arrowBack: {
+      marginRight: 'auto'
+    },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
@@ -210,7 +216,6 @@ const useStyles = makeStyles(theme =>
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25)
       },
-      marginLeft: 'auto',
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         width: 'auto'

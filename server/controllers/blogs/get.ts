@@ -101,7 +101,7 @@ export const getGuestBlog = async (req: Request, res: Response) => {
       publishedDate: blog.publishedDate,
       comments: blog.comments?.length ?? 0,
       liked,
-      updatedAt: blog.updatedAt,
+      updatedAt: blog.updatedDate,
       shortText: blog.shortText
     });
   } catch (error) {
