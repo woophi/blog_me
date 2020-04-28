@@ -26,6 +26,7 @@ export interface Props {
   onClose?: () => void;
   variant: keyof typeof variantIcon;
   style?: React.CSSProperties;
+  timerValue?: number;
 }
 
 function Alert(props: AlertProps) {
@@ -36,10 +37,10 @@ const INITIAL_TIMER_VALUE = 2500;
 
 export const Snakbars = React.memo<Props>((props) => {
   const classes = useStyles({});
-  const { className, message, onClose, variant, style = {} } = props;
+  const { className, message, onClose, variant, style = {}, timerValue } = props;
   const [shown, show] = React.useState(true);
   const [info, setMessage] = React.useState(message);
-  const [timer, setTimer] = React.useState(INITIAL_TIMER_VALUE);
+  const [timer, setTimer] = React.useState(timerValue ?? INITIAL_TIMER_VALUE);
 
   React.useEffect(() => {
     setMessage(message);
@@ -70,7 +71,9 @@ export const Snakbars = React.memo<Props>((props) => {
     }
   }, [timer, shown, info, handleClose]);
 
-  const calcValue = Number(((timer / INITIAL_TIMER_VALUE) * 100).toFixed(0));
+  const calcValue = Number(
+    ((timer / (timerValue ?? INITIAL_TIMER_VALUE)) * 100).toFixed(0)
+  );
 
   return (
     <Snackbar

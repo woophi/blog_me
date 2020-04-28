@@ -138,6 +138,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
               variant="success"
               message={submitSucceeded && !submitError ? 'Updated' : null}
               className={classes.field}
+              timerValue={1000}
             />
             <Field
               name="title"

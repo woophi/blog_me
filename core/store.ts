@@ -3,7 +3,6 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
-  Reducer,
   ReducersMapObject,
   Store
 } from 'redux';
@@ -20,32 +19,6 @@ const middleware = applyMiddleware(thunk, epicMiddleware);
 const rootReducerMap: ReducersMapObject<AppState, AppDispatch> = {
   ui: uiReducer
 };
-
-let asyncReducers: any = {};
-
-function updateRootReducer() {
-  store.replaceReducer(
-    combineReducers({
-      ...rootReducerMap,
-      ...asyncReducers
-    })
-  );
-}
-
-export function injectReducer<T>(name: string, reducer: Reducer<T>) {
-  asyncReducers[name] = reducer;
-  updateRootReducer();
-  return store;
-}
-
-export function injectReducers(reducers: ReducersMapObject) {
-  asyncReducers = {
-    ...asyncReducers,
-    ...reducers
-  };
-  updateRootReducer();
-  return store;
-}
 
 export const store: Store<AppState, AppDispatch> = createStore(
   combineReducers(rootReducerMap),
