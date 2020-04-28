@@ -52,7 +52,7 @@ export const SocialButtons: React.FC = React.memo(() => {
       <Link
         component="a"
         variant="body2"
-        href="https://vk.com/space_goose"
+        href="https://vk.com/id0"
         target="_blank"
       >
         <Icon
