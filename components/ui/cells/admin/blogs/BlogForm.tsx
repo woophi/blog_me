@@ -87,7 +87,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
         onSubmit={(d: BlogForm) => onSubmit(d, blogId)}
         validate={validate}
         mutators={{
-          ...arrayMutators
+          ...arrayMutators,
         }}
         initialValues={
           blogId
@@ -98,18 +98,25 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
                 ).format('YYYY-MM-DD'),
                 time: moment((initialValues as BlogData).publishedDate).format(
                   'hh:mm'
-                )
+                ),
               }
             : {
                 publishedDate: moment().format('YYYY-MM-DD'),
                 language: 'ru',
                 draft: true,
-                body: '<p><br></p>'
+                body: '<p><br></p>',
               }
         }
-        render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+        render={({
+          handleSubmit,
+          pristine,
+          submitting,
+          submitError,
+          form,
+          submitSucceeded,
+        }) => (
           <form
-            onSubmit={async event => {
+            onSubmit={async (event) => {
               const error = await handleSubmit(event);
               if (error) {
                 return error;
@@ -125,6 +132,11 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
             <Snakbars
               variant="error"
               message={submitError}
+              className={classes.field}
+            />
+            <Snakbars
+              variant="success"
+              message={submitSucceeded && !submitError ? 'Updated' : null}
               className={classes.field}
             />
             <Field
@@ -144,7 +156,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
                   }
                   disabled={submitting}
                   inputProps={{
-                    maxLength: 256
+                    maxLength: 256,
                   }}
                 />
               )}
@@ -166,7 +178,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
                   }
                   disabled={submitting}
                   inputProps={{
-                    maxLength: 256
+                    maxLength: 256,
                   }}
                 />
               )}
@@ -294,7 +306,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
 
 export default BlogForm;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
@@ -302,15 +314,15 @@ const useStyles = makeStyles(theme => ({
     minWidth: 320,
     maxWidth: '50vw',
     width: '100%',
-    margin: '1rem auto'
+    margin: '1rem auto',
   },
   field: {
-    margin: '0 1rem 1rem'
+    margin: '0 1rem 1rem',
   },
   fieldInArray: {
-    margin: '0 1rem .5rem 0'
+    margin: '0 1rem .5rem 0',
   },
   delete: {
-    margin: '1.3rem auto'
-  }
+    margin: '1.3rem auto',
+  },
 }));
