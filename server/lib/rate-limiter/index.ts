@@ -1,6 +1,6 @@
 import * as RateLimiter from 'rate-limiter-flexible';
 import { databaseUri, generalMgOptions } from '../db';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import { Logger } from 'server/logger';
 import mongoose from 'mongoose';
 import { HTTPStatus } from '../models';

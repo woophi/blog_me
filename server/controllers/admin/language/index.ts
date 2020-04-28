@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import LanguageModel from 'server/models/language';
 import * as models from 'server/models/types';
 import { Logger } from 'server/logger';
@@ -37,7 +37,7 @@ export const createNewLanguage = async (
       localeId: languageData.localeId
     }).lean();
     if (exists) {
-      return res.send({ error: 'Language already exists' });
+      return res.status(HTTPStatus.Conflict).send({ error: 'Language already exists' });
     }
     await new LanguageModel(languageData).save();
     return res.sendStatus(HTTPStatus.OK);

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { buildQueryString, callApi } from 'server/utils/api';
 import config from 'server/config';
 import { scopes } from './constants';

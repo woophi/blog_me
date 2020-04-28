@@ -5,8 +5,8 @@ import { Blog } from './blogs';
 export type Likes = Model<LikesModel>;
 
 export type LikesModel = {
-  user?: User;
-  blog: Blog;
+  user?: User | string;
+  blog: Blog | string;
 };
 export type LikesSaveModel = {
   user?: string;

@@ -1,6 +1,6 @@
 import BlogModel from 'server/models/blogs';
 import * as models from 'server/models/types';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import * as formator from 'server/formator';
 import { Validator } from 'server/validator';
 import { Logger } from 'server/logger';

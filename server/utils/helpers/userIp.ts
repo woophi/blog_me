@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from 'express-serve-static-core';
 
 export const getUserIp = (req: Request) => {
 	const ip = req.headers['x-forwarded-for'] ||

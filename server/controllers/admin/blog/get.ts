@@ -1,11 +1,11 @@
 import BlogModel from 'server/models/blogs';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
 
 export const getBlog = async (req: Request, res: Response) => {
   const blogId = req.query['blogId'];
-  if (!blogId) return res.send({}).status(HTTPStatus.Empty);
+  if (!blogId) return res.status(HTTPStatus.Empty).send({});
 
   const blog = await BlogModel.findOne({ blogId }).exec();
 

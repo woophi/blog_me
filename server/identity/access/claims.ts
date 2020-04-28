@@ -1,8 +1,7 @@
 import UserModel from 'server/models/users';
 import { User } from 'server/models/types';
-import { Logger } from 'server/logger';
 import * as options from 'server/options';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 
 export const getRoles = async (userId: string) => {
 	let roles = [];

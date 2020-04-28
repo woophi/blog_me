@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import config from 'server/config';
 import * as FB from 'server/facebook';
 import * as async from 'async';
 import * as kia from 'server/validator';
 import { Logger } from 'server/logger';
-import { formatString, formatNumber } from 'server/formator';
+import { formatNumber } from 'server/formator';
 
 export const fbLogin = async (req: Request, res: Response, next: NextFunction) => {
   return res.redirect(

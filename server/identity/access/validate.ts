@@ -1,6 +1,6 @@
 import { verifyToken } from './verify';
 import { requireUser } from './claims';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import { ROLES } from './constants';
 import { HTTPStatus } from 'server/lib/models';
 
@@ -13,14 +13,14 @@ export const validateToken = (req: Request, res: Response, next: NextFunction) =
 	const userId = req.session.userId;
 	const token = getToken(req);
 	if (!token)
-		return res.send({ error: 'Authentication failed' }).status(HTTPStatus.Unauthorized);
+		return res.status(HTTPStatus.Unauthorized).send({ error: 'Authentication failed' });
 
 	const { claims, verificaitionError } = verifyToken(token);
   if (verificaitionError)
-    return res.send({ error: 'Authentication failed' }).status(HTTPStatus.Forbidden);
+    return res.status(HTTPStatus.Forbidden).send({ error: 'Authentication failed' });
 
   if (userId && userId !== claims.id)
-    return res.send({ error: 'Authentication failed' }).status(HTTPStatus.BadRequest);
+    return res.status(HTTPStatus.BadRequest).send({ error: 'Authentication failed' });
 	next();
 }
 
@@ -29,10 +29,10 @@ export const authorizedForAdmin = (req: Request,  res: Response,  next: NextFunc
   const token = getToken(req);
   const { claims, verificaitionError } = verifyToken(token);
 	if (verificaitionError)
-		return res.send({ error: 'Authentication failed' }).status(HTTPStatus.Forbidden);
+		return res.status(HTTPStatus.Forbidden).send({ error: 'Authentication failed' });
 
   if (!claims.roles.find(r => r === ROLES.GODLIKE || r === ROLES.ADMIN))
-    return res.send({ error: 'Unable to get data' }).status(HTTPStatus.BadRequest);
+    return res.status(HTTPStatus.BadRequest).send({ error: 'Unable to get data' });
 	next();
 }
 
@@ -41,9 +41,9 @@ export const authorizedForSuperAdmin = (req: Request,  res: Response,  next: Nex
   const token = getToken(req);
 	const { claims, verificaitionError } = verifyToken(token);
 	if (verificaitionError)
-		return res.send({ error: 'Authentication failed' }).status(HTTPStatus.Forbidden);
+		return res.status(HTTPStatus.Forbidden).send({ error: 'Authentication failed' });
 
 	if (!claims.roles.find(r => r === ROLES.GODLIKE))
-    return res.send({ error: 'Unable to get data' }).status(HTTPStatus.BadRequest);
+    return res.status(HTTPStatus.BadRequest).send({ error: 'Unable to get data' });
 	next();
 }

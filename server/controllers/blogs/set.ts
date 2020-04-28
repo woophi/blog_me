@@ -1,12 +1,13 @@
 import BlogModel from 'server/models/blogs';
 import LikeModel from 'server/models/likes';
 import UserModel from 'server/models/users';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { HTTPStatus, VisitorCookie } from 'server/lib/models';
 import * as formator from 'server/formator';
 import { Logger } from 'server/logger';
 import { Validator } from 'server/validator';
 import moment from 'moment';
+import { Blog } from 'server/models/types';
 
 export const guestLikeBlog = async (req: Request, res: Response) => {
   try {
@@ -41,7 +42,7 @@ export const guestLikeBlog = async (req: Request, res: Response) => {
       .exec();
 
     if (user) {
-      const exists = user.likes.some(l => l.blog.id == blog.id);
+      const exists = user.likes.some(l => (l.blog as Blog).id == blog.id);
 
       if (exists) return res.sendStatus(HTTPStatus.Conflict);
     }

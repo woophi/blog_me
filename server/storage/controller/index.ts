@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Response, Request } from 'express-serve-static-core';
 import { Storage } from '..';
 import { HTTPStatus } from 'server/lib/models';
 

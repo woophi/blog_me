@@ -1,7 +1,7 @@
 import BlogModel from 'server/models/blogs';
 import LikeModel from 'server/models/likes';
 import CommentModel from 'server/models/comment';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { HTTPStatus } from 'server/lib/models';
 import * as formator from 'server/formator';
 import { Logger } from 'server/logger';

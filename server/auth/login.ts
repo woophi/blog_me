@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import { Logger } from '../logger';
 import * as kia from '../validator';
 import * as identity from '../identity';

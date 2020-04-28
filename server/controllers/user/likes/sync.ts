@@ -1,7 +1,7 @@
 import UserModel from 'server/models/users';
 import LikeModel from 'server/models/likes';
 import BlogModel from 'server/models/blogs';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { HTTPStatus } from 'server/lib/models';
 import { Logger } from 'server/logger';
 import { getBlogObjectId } from 'server/operations';
@@ -19,7 +19,7 @@ export const getUserLike = async (req: Request, res: Response) => {
     const like =
       (await LikeModel.findOne({
         user: userId,
-        blog: await getBlogObjectId(blogId)
+        blog: await getBlogObjectId(blogId)        
       }).countDocuments()) > 0;
 
     return res.send(like);

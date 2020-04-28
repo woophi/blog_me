@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { getLoginUrl } from './helpers';
 import config from 'server/config';
 import { authScopes } from './constants';

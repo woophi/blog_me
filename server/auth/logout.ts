@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import UserModel from 'server/models/users';
 import { HTTPStatus } from 'server/lib/models';
 import { SessionCookie } from 'server/identity';
@@ -15,13 +15,13 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
     }).save();
 
     req.session.destroy(err => {
-      if (err) return res.send({ error: err.message }).status(HTTPStatus.BadRequest);
+      if (err) return res.status(HTTPStatus.BadRequest).send({ error: err.message });
 
       res.clearCookie('connect.sid');
       res.clearCookie(SessionCookie.SesId);
       return res.sendStatus(HTTPStatus.OK);
     });
   } catch (error) {
-    return res.send({ error: error.message }).status(HTTPStatus.ServerError);
+    return res.status(HTTPStatus.ServerError).send({ error: error.message });
   }
 };

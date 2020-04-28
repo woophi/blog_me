@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { Auth } from './create';
 
 export const authUser = async (

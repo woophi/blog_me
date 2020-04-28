@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import { Validator } from 'server/validator';
 import * as formator from 'server/formator';
 import CommentModel from 'server/models/comment';

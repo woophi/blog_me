@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express-serve-static-core';
 import * as kia from 'server/validator';
 import UserModel from 'server/models/users';
 import { Hashing } from '../hashing';

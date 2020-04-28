@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
 import { createShortLink } from 'server/lib/short-links';

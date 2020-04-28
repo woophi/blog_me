@@ -1,6 +1,6 @@
 import LanguageModel from 'server/models/language';
 import { get, set } from 'server/options';
-import { Request } from 'express';
+import { Request } from 'express-serve-static-core';
 import { Locales } from 'server/models/types';
 
 export const getLocaleIds = async () => {
