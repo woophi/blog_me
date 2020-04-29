@@ -33,7 +33,7 @@ export const BlogPreview = React.memo<Props>(
             <Box padding="1rem" height="450px">
               <Box width="100%" height="100%" position="relative">
                 <picture>
-                  <source type="image/webp" srcSet={coverPhotoUrl + '.webp'} />
+                  <source type="image/webp" data-srcset={coverPhotoUrl + '.webp'} />
                   <img
                     alt={title}
                     data-src={coverPhotoUrl + '.jpg'}

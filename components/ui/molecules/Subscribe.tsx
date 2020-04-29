@@ -11,6 +11,12 @@ import { ResultSubscribe } from 'core/models';
 import { ArrowTooltip } from 'ui/atoms';
 import { useTranslation } from 'server/lib/i18n';
 import InputLabel from '@material-ui/core/InputLabel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleNotch,
+  faExclamationTriangle,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   onSubscribe: (email: string) => Promise<ResultSubscribe>;
@@ -29,7 +35,7 @@ export const Subscribe: React.FC<Props> = React.memo(({ onSubscribe }) => {
     setError('');
     setLoading(true);
     onSubscribe(value)
-      .then(r => {
+      .then((r) => {
         setDone(r.done);
         setError(r.error || '');
       })
@@ -56,7 +62,7 @@ export const Subscribe: React.FC<Props> = React.memo(({ onSubscribe }) => {
           type="email"
           value={value}
           required
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           disabled={loading}
         />
         <Divider className={classes.divider} />
@@ -70,71 +76,72 @@ export const Subscribe: React.FC<Props> = React.memo(({ onSubscribe }) => {
           <EmailIcon />
         </IconButton>
         {loading && (
-          <Icon
-            className={`${classes.statusIcon} fas fa-circle-notch fa-spin`}
-            color="primary"
-          />
+          <Icon className={classes.statusIcon} color="primary">
+            <FontAwesomeIcon icon={faCircleNotch} spin />
+          </Icon>
         )}
         {error && (
           <ArrowTooltip placement="top" title={JSON.stringify(error)}>
             <Icon
-              className={`${classes.statusIcon} ${
-                classes.error
-              } fas fa-exclamation-triangle`}
+              className={`${classes.statusIcon} ${classes.error}`}
               color="primary"
-            />
+            >
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </Icon>
           </ArrowTooltip>
         )}
         {done && (
           <Icon
-            className={`${classes.statusIcon} ${classes.success} fas fa-check`}
+            className={`${classes.statusIcon} ${classes.success}`}
             color="primary"
-          />
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </Icon>
         )}
       </Paper>
     </section>
   );
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     padding: '3rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
   button: {
     margin: theme.spacing(2),
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   root: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
     maxWidth: 400,
-    width: '100%'
+    width: '100%',
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
+    padding: 10,
   },
   divider: {
     width: 1,
     height: 28,
-    margin: 4
+    margin: 4,
   },
   statusIcon: {
     margin: theme.spacing(1),
-    width: 'auto'
+    width: 'auto',
   },
   error: {
-    color: theme.palette.error.main
+    color: theme.palette.error.main,
   },
   success: {
-    color: theme.palette.primary['100']
-  }
+    color: theme.palette.primary['100'],
+  },
 }));

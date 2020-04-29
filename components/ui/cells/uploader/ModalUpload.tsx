@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import { AppState } from 'core/models';
 import { getSelectedFile } from 'core/selectors';
 import { FileItem } from 'core/models/admin';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 type OwnProps = {
   label?: string;
@@ -37,7 +39,7 @@ const ModalUploadComponent = React.memo<Props>(
     file,
     chosenFile,
     className = '',
-    inputLabel = ''
+    inputLabel = '',
   }) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => setOpen(true);
@@ -73,11 +75,9 @@ const ModalUploadComponent = React.memo<Props>(
               title={error}
               style={{ marginLeft: '.5rem' }}
             >
-              <Icon
-                className={'fas fa-exclamation-triangle'}
-                color="error"
-                style={{ width: 'auto' }}
-              />
+              <Icon color="error" style={{ width: 'auto' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+              </Icon>
             </ArrowTooltip>
           )}
         </Button>
@@ -115,5 +115,5 @@ const ModalUploadComponent = React.memo<Props>(
 
 export const ModalUpload = connect((state: AppState, props: OwnProps) => ({
   file: getSelectedFile(state),
-  chosenFile: getChosenFile(props.input && props.input.value)
+  chosenFile: getChosenFile(props.input && props.input.value),
 }))(ModalUploadComponent);

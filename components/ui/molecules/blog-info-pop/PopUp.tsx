@@ -10,6 +10,8 @@ import ShareIcon from '@material-ui/icons/Share';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { useInterval } from 'core/lib';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 
 type Props = {
   value: number;
@@ -82,7 +84,7 @@ export const PopUp = React.memo<Props>(({ value, linkToShare, scrollToElement })
               <FacebookIcon />
             </IconButton>
             <IconButton color="secondary" onClick={vkShare}>
-              <Icon color="secondary" className={`fab fa-vk`} />
+              <Icon color="secondary"><FontAwesomeIcon icon={faVk} /></Icon>
             </IconButton>
           </Box>
         </Slide>

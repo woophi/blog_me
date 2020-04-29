@@ -2,13 +2,19 @@ import * as React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 import { makeStyles } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-export const DragHandler = SortableHandle(props => {
+export const DragHandler = SortableHandle((props) => {
   const classes = useStyles({});
-  return <Icon className={`fas fa-sort ${classes.handler}`} />;
+  return (
+    <Icon className={classes.handler}>
+      <FontAwesomeIcon icon={faSort} />
+    </Icon>
+  );
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   handler: {
     cursor: 'grab',
     marginRight: '10px',
@@ -17,13 +23,13 @@ const useStyles = makeStyles(theme => ({
     userSelect: 'none',
     alignSelf: 'center',
     '&:active': {
-      cursor: 'grabbing'
+      cursor: 'grabbing',
     },
     '&:focus': {
-      cursor: 'grabbing'
+      cursor: 'grabbing',
     },
     '&:hover': {
-      cursor: 'grabbing'
-    }
-  }
+      cursor: 'grabbing',
+    },
+  },
 }));

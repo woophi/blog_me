@@ -19,3 +19,6 @@
 - [x] img onclick open box
 - [x] fix user access to admin sections
 - [x] sticky toolbar
+- [ ] use lazy load for blog imgs; also try to include modern exts
+- [ ] add compress on server
+- [ ] fixed alert countdown

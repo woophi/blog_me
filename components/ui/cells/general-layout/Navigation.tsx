@@ -26,6 +26,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { logout, checkAuth } from 'core/operations/auth';
 import { ModalDialog } from 'ui/atoms';
 import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   children: React.ReactElement;
@@ -46,13 +48,13 @@ const mapState = (state: AppState) => ({
   searchStatus: state.ui.searchStatus,
   userPicture: getUserProfileUrl(state),
   userId: getUserId(state),
-  isUserGod: isUserGod(state)
+  isUserGod: isUserGod(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>) => ({
   search(payload: string) {
     dispatch({ type: 'SET_SEARCH_QUERY', payload });
-  }
+  },
 });
 
 type NavigationProps = ReturnType<typeof mapState> &
@@ -101,9 +103,18 @@ const NavigationPC = React.memo<NavigationProps>(
     const getIcon = React.useCallback(() => {
       switch (searchStatus) {
         case SearchStatus.update:
-          return <Icon className="fas fa-cog fa-spin" />;
+          return (
+            <Icon className={classes.icon}>
+              <FontAwesomeIcon icon={faCog} spin />
+            </Icon>
+          );
+
         case SearchStatus.error:
-          return <Icon className="fas fa-exclamation-triangle" color="error" />;
+          return (
+            <Icon color="error" className={classes.icon}>
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </Icon>
+          );
         default:
           return <SearchIcon />;
       }
@@ -135,7 +146,7 @@ const NavigationPC = React.memo<NavigationProps>(
                     placeholder="Search…"
                     classes={{
                       root: classes.inputRoot,
-                      input: classes.inputInput
+                      input: classes.inputInput,
                     }}
                     inputProps={{ 'aria-label': 'search' }}
                     onFocus={() => setShow(true)}
@@ -161,12 +172,12 @@ const NavigationPC = React.memo<NavigationProps>(
                     anchorEl={anchorEl}
                     anchorOrigin={{
                       vertical: 'top',
-                      horizontal: 'right'
+                      horizontal: 'right',
                     }}
                     keepMounted
                     transformOrigin={{
                       vertical: 'top',
-                      horizontal: 'right'
+                      horizontal: 'right',
                     }}
                     open={open}
                     onClose={handleClose}
@@ -204,23 +215,23 @@ export const Navigation = compose(
   withRouter
 )(NavigationPC);
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     arrowBack: {
-      marginRight: 'auto'
+      marginRight: 'auto',
     },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25)
+        backgroundColor: fade(theme.palette.common.white, 0.25),
       },
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: 'auto'
+        width: 'auto',
       },
-      marginRight: '1rem'
+      marginRight: '1rem',
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -229,10 +240,10 @@ const useStyles = makeStyles(theme =>
       pointerEvents: 'none',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     inputRoot: {
-      color: 'inherit'
+      color: 'inherit',
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
@@ -241,9 +252,14 @@ const useStyles = makeStyles(theme =>
       [theme.breakpoints.up('sm')]: {
         width: 120,
         '&:focus': {
-          width: 200
-        }
-      }
-    }
+          width: 200,
+        },
+      },
+    },
+    icon: {
+      display: 'flex',
+      flex: 1,
+      justifyContent: 'center',
+    },
   })
 );

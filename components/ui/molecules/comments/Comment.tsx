@@ -9,6 +9,8 @@ import moment from 'moment';
 import { CommentItem } from 'core/models';
 import { Replies } from './Replies';
 import Zoom from '@material-ui/core/Zoom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 export const Comment = React.memo<CommentItem>(
   ({ createdAt, user, text, replies = [], rate, _id, blog, parent }) => {
@@ -21,7 +23,9 @@ export const Comment = React.memo<CommentItem>(
               <Avatar src={user.gravatarPhotoUrl} className={classes.avatar} />
             ) : (
               <Avatar className={classes.avatar}>
-                <Icon className="fas fa-user" style={{ paddingLeft: 2 }} />
+                <Icon style={{ paddingLeft: 2 }}>
+                  <FontAwesomeIcon icon={faUser} />
+                </Icon>
               </Avatar>
             )}
             <div className={classes.text}>
@@ -51,30 +55,30 @@ export const Comment = React.memo<CommentItem>(
   }
 );
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     margin: '0 auto .5rem',
     padding: '1rem',
     maxWidth: '600px',
-    width: '100%'
+    width: '100%',
   },
   topText: {
     display: 'flex',
     position: 'relative',
-    marginBottom: '.75rem'
+    marginBottom: '.75rem',
   },
   avatar: {
-    margin: 'auto 1rem auto 0'
+    margin: 'auto 1rem auto 0',
   },
   text: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   content: {
     overflow: 'hidden',
-    wordBreak: 'break-word'
+    wordBreak: 'break-word',
   },
   nickname: {
-    maxWidth: 160
-  }
+    maxWidth: 160,
+  },
 }));

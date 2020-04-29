@@ -4,6 +4,8 @@ import { getWindow } from 'core/common';
 import { checkAuth } from 'core/operations/auth';
 import { useInterval } from 'core/lib';
 import { LinkButton } from 'ui/atoms';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faVk } from '@fortawesome/free-brands-svg-icons';
 
 type Props = {
   onComplete?: () => void
@@ -94,11 +96,11 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
           <Typography gutterBottom>Войти с Google</Typography>
         </button>
         <button className={facebookBtn} disabled={processing} onClick={authFb}>
-          <i className="fab fa-facebook" />
+          <FontAwesomeIcon icon={faFacebook} />
           <Typography>Войти с Facebook</Typography>
         </button>
         <Button disabled={processing} onClick={authVk}>
-          vk
+          <FontAwesomeIcon icon={faVk} size="2x" />
         </Button>
         <LinearProgress color="secondary" hidden={!processing} />
       </div>
@@ -132,7 +134,7 @@ const useStyles = makeStyles(theme => ({
     ...commonStyle(),
     backgroundColor: '#1877f2',
     borderRadius: '4px',
-    '&>i': {
+    '&>svg': {
       fontSize: 28,
       marginRight: '8px',
       marginLeft: '.5rem'

@@ -5,6 +5,8 @@ import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useInterval } from 'core/lib';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk, faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 
 let shareWindow: Window = null;
 
@@ -13,7 +15,7 @@ type Props = {
 };
 
 export const Shares = React.memo<Props>(({ linkToShare }) => {
-  const { iFB, vk } = useStyles({});
+  const { iFB, vk, icon } = useStyles({});
   const [processing, setProcess] = React.useState(false);
 
   useInterval(
@@ -54,10 +56,14 @@ export const Shares = React.memo<Props>(({ linkToShare }) => {
   return (
     <Box display="flex" justifyContent="center" position="relative">
       <Button disabled={processing} className={vk} onClick={vkShare}>
-        <Icon className={`fab fa-vk`} />
+        <Icon className={icon}>
+          <FontAwesomeIcon icon={faVk} />
+        </Icon>
       </Button>
       <Button disabled={processing} className={iFB} onClick={fbShare}>
-        <Icon className={`fab fa-facebook-square`} />
+        <Icon className={icon}>
+          <FontAwesomeIcon icon={faFacebookSquare} />
+        </Icon>
       </Button>
       {processing && (
         <Box position="absolute" width="100%" bottom="0">
@@ -68,15 +74,18 @@ export const Shares = React.memo<Props>(({ linkToShare }) => {
   );
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   iFB: {
     '&:hover': {
-      color: '#4267b2'
-    }
+      color: '#4267b2',
+    },
   },
   vk: {
     '&:hover': {
-      color: '#5b88bd'
-    }
+      color: '#5b88bd',
+    },
+  },
+  icon: {
+    display: 'flex'
   }
 }));

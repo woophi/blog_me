@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { useTranslation } from 'server/lib/i18n';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   pristine: boolean;
@@ -14,7 +16,14 @@ type Props = {
 };
 
 export const ButtonsForm = React.memo<Props>(
-  ({ pristine, submitting, both = false, onCancel, submitLabel, noMargin = false }) => {
+  ({
+    pristine,
+    submitting,
+    both = false,
+    onCancel,
+    submitLabel,
+    noMargin = false,
+  }) => {
     const classes = useStyles({ noMargin });
     const { t } = useTranslation();
     return (
@@ -40,12 +49,13 @@ export const ButtonsForm = React.memo<Props>(
         >
           {submitting ? (
             <Icon
-              className={`fas fa-circle-notch fa-spin`}
               color="action"
               style={{
-                margin: 'auto'
+                display: 'flex'
               }}
-            />
+            >
+              <FontAwesomeIcon icon={faCircleNotch} spin />
+            </Icon>
           ) : (
             t(submitLabel || 'common:buttons.send')
           )}
@@ -55,15 +65,15 @@ export const ButtonsForm = React.memo<Props>(
   }
 );
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: (props: any) => ({
     margin: props.noMargin ? undefined : '0 auto 1rem',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   }),
   sbm: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   cncl: {
-    marginRight: '1rem'
-  }
+    marginRight: '1rem',
+  },
 }));

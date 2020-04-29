@@ -3,6 +3,8 @@ import Link from '@material-ui/core/Link';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVk, faInstagram, faTelegram } from '@fortawesome/free-brands-svg-icons';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -56,9 +58,11 @@ export const SocialButtons: React.FC = React.memo(() => {
         target="_blank"
       >
         <Icon
-          className={clsx(classes.icon, 'fab fa-vk', classes.vk)}
+          className={clsx(classes.icon, classes.vk)}
           color="primary"
-        />
+        >
+          <FontAwesomeIcon icon={faVk} />
+        </Icon>
       </Link>
       <Link
         component="a"
@@ -67,9 +71,11 @@ export const SocialButtons: React.FC = React.memo(() => {
         target="_blank"
       >
         <Icon
-          className={clsx(classes.icon, 'fab fa-instagram', classes.ig)}
+          className={clsx(classes.icon, classes.ig)}
           color="primary"
-        />
+        >
+          <FontAwesomeIcon icon={faInstagram} />
+        </Icon>
       </Link>
       <Link
         component="a"
@@ -78,9 +84,11 @@ export const SocialButtons: React.FC = React.memo(() => {
         target="_blank"
       >
         <Icon
-          className={clsx(classes.icon, 'fab fa-telegram', classes.tg)}
+          className={clsx(classes.icon, classes.tg)}
           color="primary"
-        />
+        >
+          <FontAwesomeIcon icon={faTelegram} />
+        </Icon>
       </Link>
     </div>
   );

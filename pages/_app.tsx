@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import App from 'next/app';
-
 import withRedux from 'next-redux-wrapper';
 import { initStore } from 'core/store';
 import * as React from 'react';
@@ -28,7 +27,7 @@ class MyApp extends App {
       ? await Component.getInitialProps(ctx)
       : {};
     return {
-      pageProps
+      pageProps,
     };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {

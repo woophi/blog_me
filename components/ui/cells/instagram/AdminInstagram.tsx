@@ -6,6 +6,8 @@ import { askIgLogin, sendIgCode } from './operations';
 import { ArrowTooltip, Spinner, TextField } from 'ui/atoms';
 import Fade from '@material-ui/core/Fade';
 import { theme } from 'core/lib';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export const AdminInstagram = React.memo(() => {
   const [open, setOpen] = React.useState(false);
@@ -16,14 +18,14 @@ export const AdminInstagram = React.memo(() => {
   const handleAsk = React.useCallback(() => {
     setFetching(true);
     askIgLogin()
-      .then(r => (!r ? setOpen(true) : setValid(true)))
+      .then((r) => (!r ? setOpen(true) : setValid(true)))
       .finally(() => setFetching(false));
   }, []);
 
   const handleSendCode = React.useCallback(() => {
     setFetching(true);
     sendIgCode(Number(value))
-      .then(r => setValid(r))
+      .then((r) => setValid(r))
       .finally(() => setFetching(false));
   }, [value]);
 
@@ -42,14 +44,15 @@ export const AdminInstagram = React.memo(() => {
           {valid && (
             <ArrowTooltip placement="top" title={'Сайт получил доступ к Instagram'}>
               <Icon
-                className={`fas fa-check`}
                 color="primary"
                 style={{
                   width: 'auto',
                   marginLeft: '1rem',
-                  color: theme.palette.primary['100']
+                  color: theme.palette.primary['100'],
                 }}
-              />
+              >
+                <FontAwesomeIcon icon={faCheck} />
+              </Icon>
             </ArrowTooltip>
           )}
         </Box>
@@ -63,7 +66,7 @@ export const AdminInstagram = React.memo(() => {
             variant="standard"
             disabled={fetching}
             value={value}
-            onChange={e => change(e.target.value)}
+            onChange={(e) => change(e.target.value)}
           />
           <Button
             disabled={fetching || !value}

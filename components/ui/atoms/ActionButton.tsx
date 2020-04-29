@@ -3,6 +3,11 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { ArrowTooltip } from './HtmlTooltip';
 import { goToSpecific } from 'core/common';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleNotch,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   action: () => Promise<any>;
@@ -21,7 +26,7 @@ export const ActionButton = React.memo<Props>(
       action()
         .then(() => setWorking(false))
         .then(() => backToUrl && goToSpecific(backToUrl))
-        .catch(e => {
+        .catch((e) => {
           setError(e.error || e);
           setWorking(false);
         });
@@ -37,12 +42,13 @@ export const ActionButton = React.memo<Props>(
       >
         {working ? (
           <Icon
-            className={`fas fa-circle-notch fa-spin`}
             color="action"
             style={{
-              margin: 'auto'
+              display: 'flex',
             }}
-          />
+          >
+            <FontAwesomeIcon icon={faCircleNotch} spin />
+          </Icon>
         ) : (
           label
         )}
@@ -53,10 +59,13 @@ export const ActionButton = React.memo<Props>(
             style={{ marginLeft: '.5rem' }}
           >
             <Icon
-              className={'fas fa-exclamation-triangle'}
               color="error"
-              style={{ width: 'auto' }}
-            />
+              style={{
+                display: 'flex',
+              }}
+            >
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </Icon>
           </ArrowTooltip>
         )}
       </Button>
