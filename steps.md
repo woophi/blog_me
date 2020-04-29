@@ -22,5 +22,5 @@
 - [x] add compress on server
 - [x] fixed alert countdown
 - [x] contact page
-- [ ] max one mssg per day per mail
+- [x] max one mssg per day per mail
 - [ ] use lazy load for blog imgs; also try to include modern exts
