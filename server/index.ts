@@ -19,6 +19,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { createServer } from 'http';
+import compression from 'compression';
 
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
 
@@ -40,6 +41,7 @@ const handle = appNext.getRequestHandler();
 appNext.prepare().then(async () => {
   await connection;
   const appExpress = express();
+  appExpress.use(compression({ filter: shouldCompress }));
   appExpress.use(bodyParser.urlencoded({ extended: true }));
   appExpress.use(bodyParser.json());
   appExpress.use(fileUpload());
@@ -61,7 +63,7 @@ appNext.prepare().then(async () => {
       defaultLayout: 'main',
       extname: '.hbs',
       layoutsDir: 'server/views/layouts',
-      partialsDir: 'server/views/partials'
+      partialsDir: 'server/views/partials',
     })
   );
   appExpress.set('views', join(__dirname, 'views'));
@@ -109,12 +111,22 @@ appNext.prepare().then(async () => {
   });
 });
 
-process.on('uncaughtException', async err => {
+process.on('uncaughtException', async (err) => {
   console.error(err);
   await agenda.stop();
   process.exit(1);
 });
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err);
 });
+
+function shouldCompress(req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false;
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res);
+}
