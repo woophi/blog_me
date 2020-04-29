@@ -15,10 +15,7 @@ type Props = BlogGuestItem;
 export const BlogPreview = React.memo<Props>(
   ({ blogId, coverPhotoUrl, publishedDate, title, views }) => {
     const loadBlog = React.useCallback(() => {
-      const mapTitle = title
-        .toLowerCase()
-        .split(' ')
-        .join('-');
+      const mapTitle = title.toLowerCase().split(' ').join('-');
       goToSpecific(`/post/${mapTitle}-${blogId}`);
     }, [blogId, title]);
     return (
@@ -28,28 +25,32 @@ export const BlogPreview = React.memo<Props>(
           width="25vw"
           margin="2rem"
           style={{
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
           onClick={loadBlog}
         >
           <Paper elevation={3}>
             <Box padding="1rem" height="450px">
               <Box width="100%" height="100%" position="relative">
-                <img
-                  src={coverPhotoUrl}
-                  alt={title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                />
+                <picture>
+                  <source type="image/webp" srcSet={coverPhotoUrl + '.webp'} />
+                  <img
+                    alt={title}
+                    data-src={coverPhotoUrl + '.jpg'}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                    className="lazyload"
+                  />
+                </picture>
                 <Box
                   position="absolute"
                   zIndex="1"
                   bottom="0"
                   style={{
-                    backgroundColor: theme.palette.background.paper
+                    backgroundColor: theme.palette.background.paper,
                   }}
                   width="100%"
                   padding="1rem"

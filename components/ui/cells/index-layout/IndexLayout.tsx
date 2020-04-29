@@ -1,4 +1,6 @@
 import * as React from 'react';
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { BlogGuestItem } from 'core/models';
