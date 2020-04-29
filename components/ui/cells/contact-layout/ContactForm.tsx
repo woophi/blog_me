@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, ButtonsForm } from 'ui/atoms';
+import { TextField, ButtonsForm, Snakbars } from 'ui/atoms';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
 import { sendMessage } from 'core/operations';
 import { useTranslation } from 'server/lib/i18n';
+import { FORM_ERROR } from 'final-form';
 
 type ContactForm = {
   name: string;
@@ -32,7 +33,11 @@ const validate = (values: ContactForm, t: (s: string) => string) => {
 };
 
 const onSubmit = async (data: ContactForm) => {
-  await sendMessage(data);
+  try {
+    await sendMessage(data);
+  } catch (error) {
+    return { [FORM_ERROR]: JSON.stringify(error.error) };
+  }
 };
 
 export const ContactForm: React.FC = () => {
@@ -42,11 +47,29 @@ export const ContactForm: React.FC = () => {
     <Form
       onSubmit={onSubmit}
       validate={(v: ContactForm) => validate(v, t)}
-      render={({ handleSubmit, pristine, submitting, form }) => (
+      render={({
+        handleSubmit,
+        pristine,
+        submitting,
+        form,
+        submitError,
+        submitSucceeded,
+      }) => (
         <form
-          onSubmit={async event => await handleSubmit(event).then(form.reset)}
           className={classes.form}
+          onSubmit={async (event) => {
+            const error = await handleSubmit(event);
+            if (error) {
+              return error;
+            }
+          }}
         >
+          <Snakbars variant="error" message={submitError} />
+          <Snakbars
+            variant="success"
+            message={submitSucceeded && !submitError ? 'Сообщение отправилено' : null}
+            timerValue={1000}
+          />
           <Field
             name="name"
             render={({ input, meta }) => (
@@ -108,13 +131,13 @@ export const ContactForm: React.FC = () => {
   );
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     margin: '2rem auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     minWidth: '320px',
-    maxWidth: '50%'
-  }
+    maxWidth: '50%',
+  },
 }));

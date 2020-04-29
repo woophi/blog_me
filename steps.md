@@ -19,6 +19,8 @@
 - [x] img onclick open box
 - [x] fix user access to admin sections
 - [x] sticky toolbar
-- [ ] use lazy load for blog imgs; also try to include modern exts
 - [x] add compress on server
 - [x] fixed alert countdown
+- [x] contact page
+- [ ] max one mssg per day per mail
+- [ ] use lazy load for blog imgs; also try to include modern exts
