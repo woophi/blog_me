@@ -21,4 +21,4 @@
 - [x] sticky toolbar
 - [ ] use lazy load for blog imgs; also try to include modern exts
 - [x] add compress on server
-- [ ] fixed alert countdown
+- [x] fixed alert countdown

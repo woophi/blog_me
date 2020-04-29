@@ -62,7 +62,7 @@ export const Snakbars = React.memo<Props>((props) => {
     }
     show(false);
     setMessage('');
-    setTimer(INITIAL_TIMER_VALUE);
+    setTimer(timerValue ?? INITIAL_TIMER_VALUE);
   }, [onClose]);
 
   React.useEffect(() => {
