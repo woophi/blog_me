@@ -6,7 +6,7 @@ import * as identity from './identity';
 import * as storage from './storage';
 import { join } from 'path';
 import { HTTPStatus } from './lib/models';
-import { rateLimiterMiddleware, fetchingLimiterMiddleware } from './lib/rate-limiter';
+import { rateLimiterMiddleware, fetchingLimiterMiddleware, messageLimiterMiddleware } from './lib/rate-limiter';
 const Agendash = require('agendash');
 import { UrlWithParsedQuery } from 'url';
 import Server from 'next/dist/next-server/server/next-server';
@@ -46,7 +46,7 @@ export function router(
   app.get('/login/:external/complete', auth.externalLoginComplete);
 
   // contact message
-  app.post('/api/guest/send/message', rateLimiterMiddleware, controllers.sendMailToAdmins);
+  app.post('/api/guest/send/message', messageLimiterMiddleware, controllers.sendMailToAdmins);
 
   // pass reset
   app.post('/api/guest/password/reset', rateLimiterMiddleware, controllers.resetPassword);
