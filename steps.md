@@ -23,4 +23,4 @@
 - [x] fixed alert countdown
 - [x] contact page
 - [x] max one mssg per day per mail
-- [ ] use lazy load for blog imgs; also try to include modern exts
+- [x] use lazy load for blog imgs; also try to include modern exts

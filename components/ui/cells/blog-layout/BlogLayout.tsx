@@ -103,14 +103,18 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
           </Typography>
         ) : null}
       </Box>
-      <img
-        src={blog.coverPhotoUrl}
-        alt={blog.title}
-        style={{
-          maxWidth: '100%',
-          maxHeight: '100vh'
-        }}
-      />
+      <picture>
+        <source type="image/webp" data-srcset={blog.coverPhotoUrl + '.webp'} />
+        <img
+          alt={blog.title}
+          data-src={blog.coverPhotoUrl + '.jpg'}
+          style={{
+            maxWidth: '100%',
+            maxHeight: '100vh'
+          }}
+          className="lazyload"
+        />
+      </picture>
       <Box minWidth="50vw" padding="1rem" maxWidth="720px">
         <Typography component="div" gutterBottom>
           <div className="quill ">
