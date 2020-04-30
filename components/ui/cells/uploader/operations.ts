@@ -10,6 +10,10 @@ export const deselectFile = () => {
   store.dispatch({ type: 'SELECT_FILE', payload: null });
 };
 
+export const failedFalse = () => {
+  store.dispatch({ type: 'UPLOAD_FAILED', payload: false });
+};
+
 export const uploadFile = async (files: File[]) => {
   store.dispatch({ type: 'SELECT_FILE', payload: null });
   store.dispatch({ type: 'UPLOADING_FILE', payload: true });

@@ -80,6 +80,7 @@ export function router(
   app.patch('/api/admin/toggle/language', identity.authorizedForAdmin, controllers.toggleActivationLanguage);
 
   app.post('/storage/upload', identity.authorizedForAdmin, storage.startUpload);
+  app.get('/api/admin/files', identity.authorizedForAdmin, controllers.getAllFiles);
 
   app.get('/api/admin/fb/pages', identity.authorizedForAdmin, controllers.getFBPIds);
   app.get('/api/admin/fb/pages/full', identity.authorizedForAdmin, controllers.getFBPages);

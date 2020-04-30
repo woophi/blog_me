@@ -14,7 +14,8 @@ export const initialState: models.AppState['ui'] = {
     files: [],
     selectedFile: null,
     uploadingFile: false,
-    facebookActive: false
+    facebookActive: false,
+    uploadFailed: false
   },
   comments: [],
   replies: [],
@@ -135,6 +136,15 @@ export const reducer = (
         admin: {
           ...state.admin,
           uploadingFile: dispatch.payload
+        }
+      };
+    }
+    case 'UPLOAD_FAILED': {
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          uploadFailed: dispatch.payload
         }
       };
     }

@@ -16,6 +16,12 @@ client.upload_done = (fileName, fileId, url) => {
   store.dispatch({ type: 'UPLOADING_FILE', payload: false });
 };
 
+client.upload_error = fileName => {
+  console.warn(fileName, 'upload failed');
+  store.dispatch({ type: 'UPLOAD_FAILED', payload: true });
+  store.dispatch({ type: 'UPLOADING_FILE', payload: false });
+};
+
 client.new_comment = async commentId => {
   const comment = await getCommentById(commentId);
   if (!comment.parent) {

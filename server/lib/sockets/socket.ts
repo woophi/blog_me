@@ -49,7 +49,7 @@ export const registerSocket = (server: Server) => {
     };
 
     const fileErr = ({ fileName }: storageTypes.FileCompleteParams) => {
-      socket.emit(EmitEvents.upload_done, fileName);
+      socket.emit(EmitEvents.upload_error, fileName);
     };
 
     socket.on('disconnect', () => {

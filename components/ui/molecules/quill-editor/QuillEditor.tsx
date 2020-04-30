@@ -2,6 +2,10 @@ import * as React from 'react';
 import './quill.css';
 import ReactQuill, { Quill } from 'react-quill';
 import { Image } from './Image';
+import { ModalUpload } from 'ui/cells/uploader';
+import { deselectFile } from 'ui/cells/uploader/operations';
+import { useSelector } from 'react-redux';
+import { getSelectedFile } from 'core/selectors';
 
 type Props = {
   onChange: (e: any) => void;
@@ -35,23 +39,30 @@ const toolbarOptions = [
 export const QuillEditor = React.memo<Props>(
   ({ onChange, value, onFocus, onBlur }) => {
     const quillRef = React.useRef<ReactQuill>();
+    const selectedFile = useSelector(getSelectedFile);
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => setOpen(true);
+    const handleClickClose = () => {
+      setOpen(false);
+      deselectFile();
+    };
+    const handleConfirm = () => {
+      setOpen(false);
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection();
+      editor.insertEmbed(
+        range.index,
+        'image',
+        {
+          url: selectedFile.url,
+          alt: selectedFile.name,
+        },
+        'user'
+      );
+    };
     const imageHandler = React.useCallback(() => {
       if (!quillRef.current) return;
-      const range = quillRef.current.getEditor().getSelection();
-      const url = prompt('What is the image URL');
-      const alt = prompt('What is the image Alt');
-      if (url) {
-        const editor = quillRef.current.getEditor();
-        editor.insertEmbed(
-          range.index,
-          'image',
-          {
-            url,
-            alt,
-          },
-          'user'
-        );
-      }
+      handleClickOpen();
     }, [quillRef.current]);
 
     const handleChange = React.useCallback(
@@ -80,17 +91,24 @@ export const QuillEditor = React.memo<Props>(
     if (ReactQuill === null) return null;
 
     return (
-      <ReactQuill
-        id="fuck-it"
-        ref={(el) => (quillRef.current = el)}
-        value={value}
-        onChange={handleChange}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        modules={{
-          toolbar,
-        }}
-      />
+      <>
+        <ReactQuill
+          id="fuck-it"
+          ref={(el) => (quillRef.current = el)}
+          value={value}
+          onChange={handleChange}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          modules={{
+            toolbar,
+          }}
+        />
+        <ModalUpload
+          onConfirm={handleConfirm}
+          onClose={handleClickClose}
+          open={open}
+        />
+      </>
     );
   }
 );

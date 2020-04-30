@@ -5,6 +5,7 @@ export type AdminState = {
   files: FileItem[];
   selectedFile: FileItem;
   uploadingFile: boolean;
+  uploadFailed: boolean;
   facebookActive: boolean;
 };
 

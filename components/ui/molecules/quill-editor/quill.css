@@ -649,7 +649,7 @@
 .ql-snow .ql-editor img {
   max-width: 100%;
 }
-.ql-snow .ql-editor picture img {
+.ql-snow .ql-editor picture img.lazyload {
   height: 25px;
   width: 25px;
   border: 1px solid red;
