@@ -4,14 +4,18 @@ import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { BlogData, FacebookPageItem } from 'core/models/admin';
 import { AdminLayout } from 'ui/cells/admin/layouts';
-import BlogForm from 'ui/cells/admin/blogs/BlogForm';
 import { getBlogData } from 'ui/cells/admin/blogs/operations';
 import { getFacebookPages } from 'ui/cells/facebook/operations';
+import dynamic from 'next/dynamic';
 
 type localState = {
   blogData: BlogData;
   fbData: FacebookPageItem[]
 };
+
+const DynamicComponentWithNoSSR = dynamic(() => import('ui/cells/admin/blogs/BlogForm'), {
+  ssr: false
+})
 
 class EditBlog extends React.PureComponent<WithRouterProps, localState> {
   state: localState = {
@@ -32,7 +36,7 @@ class EditBlog extends React.PureComponent<WithRouterProps, localState> {
   render() {
     return (
       <AdminLayout>
-        <BlogForm
+        <DynamicComponentWithNoSSR
           blogId={Number(this.props.router.query.blogId)}
           initialValues={this.state.blogData}
           facebookPages={this.state.fbData}

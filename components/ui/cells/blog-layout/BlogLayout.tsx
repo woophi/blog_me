@@ -10,8 +10,9 @@ import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
-import mediumZoom from 'medium-zoom';
 import 'ui/molecules/quill-editor/quill.css';
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { increaseBlogView } from './operations';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
@@ -30,13 +31,6 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
   const [pers, setPers] = React.useState<number>(null);
   const [once, setOnce] = React.useState(false);
   const divRef = React.useRef<HTMLDivElement>();
-
-  React.useEffect(() => {
-    if (mediumZoom && getWindow())
-      mediumZoom(getWindow().document.querySelectorAll('img'), {
-        background: '#303030'
-      });
-  }, [mediumZoom]);
 
   React.useEffect(() => {
     const onePers = calcOnePersent();

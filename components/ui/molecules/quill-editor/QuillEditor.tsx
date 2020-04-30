@@ -1,11 +1,7 @@
 import * as React from 'react';
 import './quill.css';
-
-let ReactQuill = null;
-
-if (typeof window !== 'undefined') {
-  ReactQuill = require('react-quill');
-}
+import ReactQuill, { Quill } from 'react-quill';
+import { Image } from './Image';
 
 type Props = {
   onChange: (e: any) => void;
@@ -13,6 +9,8 @@ type Props = {
   onFocus: (e: any) => void;
   value: any;
 };
+
+Quill.register(Image);
 
 const toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -31,20 +29,28 @@ const toolbarOptions = [
   [{ font: [] }],
   [{ align: [] }],
 
-  ['clean'] // remove formatting button
+  ['clean'], // remove formatting button
 ];
 
 export const QuillEditor = React.memo<Props>(
   ({ onChange, value, onFocus, onBlur }) => {
-    const quillRef = React.useRef<any>();
+    const quillRef = React.useRef<ReactQuill>();
     const imageHandler = React.useCallback(() => {
       if (!quillRef.current) return;
       const range = quillRef.current.getEditor().getSelection();
-      const value = prompt('What is the image URL');
-      if (value) {
-        quillRef.current
-          .getEditor()
-          .insertEmbed(range.index, 'image', value, 'user');
+      const url = prompt('What is the image URL');
+      const alt = prompt('What is the image Alt');
+      if (url) {
+        const editor = quillRef.current.getEditor();
+        editor.insertEmbed(
+          range.index,
+          'image',
+          {
+            url,
+            alt,
+          },
+          'user'
+        );
       }
     }, [quillRef.current]);
 
@@ -57,7 +63,6 @@ export const QuillEditor = React.memo<Props>(
         if (!text) {
           textHTML = '';
         }
-
         onChange(textHTML);
       },
       [onChange]
@@ -67,8 +72,8 @@ export const QuillEditor = React.memo<Props>(
       () => ({
         container: toolbarOptions,
         handlers: {
-          image: imageHandler
-        }
+          image: imageHandler,
+        },
       }),
       []
     );
@@ -77,13 +82,13 @@ export const QuillEditor = React.memo<Props>(
     return (
       <ReactQuill
         id="fuck-it"
-        ref={el => (quillRef.current = el)}
+        ref={(el) => (quillRef.current = el)}
         value={value}
         onChange={handleChange}
         onBlur={onBlur}
         onFocus={onFocus}
         modules={{
-          toolbar
+          toolbar,
         }}
       />
     );
