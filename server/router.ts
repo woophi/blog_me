@@ -30,6 +30,8 @@ export function router(
 
   app.get('/robots.txt', (_, res) => res.status(HTTPStatus.OK).sendFile('robots.txt', options));
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
+  
+  app.get('/contact.html', (_, res) => res.redirect('/contact'));
 
   // guest blogs
   app.get('/api/guest/blogs', fetchingLimiterMiddleware, controllers.getGuestBlogs);
