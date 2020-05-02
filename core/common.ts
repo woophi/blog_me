@@ -65,7 +65,7 @@ export const uploadFiles = (files: File[]) => {
   });
 }
 
-export const allowedFormats = ['image/png', 'image/jpg', 'image/jpeg'];
+export const allowedFormats = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
 
 export const getWindow = () => {
   if (typeof window !== 'undefined') {
