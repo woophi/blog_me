@@ -41,7 +41,7 @@ export class Validator {
   };
 
   required = <T>(value: T) => {
-    if (!value || (typeof value === 'string' && value.indexOf('undefined') !== -1)) {
+    if (!value || (typeof value === 'string' && value === 'undefined')) {
       const err = 'required';
       return err;
     }

@@ -4,6 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
 import flush from 'styled-jsx/server';
 import { theme } from 'core/lib/theme';
+import { Script } from 'ui/index';
 class MyDocument extends Document {
   render() {
     return (
@@ -32,6 +33,20 @@ class MyDocument extends Document {
           </noscript>
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+          {/* <!-- Global site tag (gtag.js) - Google Ads: 973953037 --> */}
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-973953037"
+          />
+          <Script>
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments)}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-973953037');
+            `}
+          </Script>
         </Head>
         <body>
           <Main />
