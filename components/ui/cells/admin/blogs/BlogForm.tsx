@@ -18,6 +18,10 @@ import moment from 'moment';
 import { editBlog, createNewBlog, deleteBlog } from './operations';
 import { BlogData, FacebookPageItem } from 'core/models/admin';
 import { QuillEditor } from 'ui/molecules/quill-editor';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {
   blogId?: number;
@@ -61,10 +65,34 @@ const onSubmit = async (data: BlogForm, blogId?: number) => {
   }
 };
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+}
+
 const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) => {
   const classes = useStyles({});
   const inputLabelSLID = React.useRef<any>(null);
   const [labelWidthSLID, setLabelWidthSLID] = React.useState(0);
+  const [tabValue, setValue] = React.useState(0);
+  
   React.useEffect(() => {
     if (!blogId) {
       setLabelWidthSLID(inputLabelSLID.current?.offsetWidth ?? 0);
@@ -72,6 +100,10 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
   }, []);
 
   const hundleDeletBlog = () => deleteBlog(blogId);
+
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <>
@@ -278,16 +310,47 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
                 />
               )}
             />
+            <Box padding="1rem">
+              <Paper>
+                <Tabs
+                  value={tabValue}
+                  onChange={handleChange}
+                  indicatorColor="secondary"
+                  textColor="secondary"
+                  centered
+                >
+                  <Tab label="Editor" />
+                  <Tab label="Preview" />
+                </Tabs>
+              </Paper>
+            </Box>
+
             <Field
               name="body"
               render={({ input: { onChange, value, onBlur, onFocus } }) => (
                 <Box className={classes.field}>
-                  <QuillEditor
-                    onChange={onChange}
-                    value={value}
-                    onBlur={onBlur}
-                    onFocus={onFocus}
-                  />
+                  <TabPanel value={tabValue} index={0}>
+                    <QuillEditor
+                      onChange={onChange}
+                      value={value}
+                      onBlur={onBlur}
+                      onFocus={onFocus}
+                    />
+                  </TabPanel>
+                  <TabPanel value={tabValue} index={1}>
+                  <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+                    <Typography component="div" gutterBottom>
+                      <div className="quill ">
+                        <div className="ql-snow">
+                          <div
+                            className="ql-editor"
+                            dangerouslySetInnerHTML={{ __html: value }}
+                          />
+                        </div>
+                      </div>
+                    </Typography>
+                  </Box>
+                  </TabPanel>
                 </Box>
               )}
             />
