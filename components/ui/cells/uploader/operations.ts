@@ -24,6 +24,16 @@ export const uploadFile = async (files: File[]) => {
   }
 };
 
+export const uploadFileUrl = async (url: string) => {
+  store.dispatch({ type: 'SELECT_FILE', payload: null });
+  store.dispatch({ type: 'UPLOADING_FILE', payload: true });
+  try {
+    await callUserApi('post', 'api/admin/file', { url });
+  } catch (error) {
+    store.dispatch({ type: 'UPLOADING_FILE', payload: false });
+  }
+};
+
 export const getChosenFile = (fileId: string) => {
   if (!fileId) return {} as FileItem;
   return (

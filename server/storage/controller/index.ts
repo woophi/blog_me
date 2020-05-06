@@ -7,3 +7,13 @@ export const startUpload = (req: Request, res: Response) => {
   storage.performQueue();
   return res.sendStatus(HTTPStatus.OK);
 };
+
+export const startUploadUrl = (req: Request, res: Response) => {
+  if (req.body.url) {
+    const storage = new Storage(null, 'process file url', req.body.url);
+    storage.performQueue();
+  } else {
+    return res.sendStatus(HTTPStatus.BadRequest);
+  }
+  return res.sendStatus(HTTPStatus.OK);
+};

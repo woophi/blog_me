@@ -21,7 +21,7 @@ export const ModalUpload = React.memo<Props>(({
       title={'Выберете файл или загрузите новый'}
       confirmTitle={'Выбрать'}
     >
-      <Box flex={1} height={500} display="flex" flexWrap="wrap">
+      <Box flex={1} height={500} display="flex" flexDirection="column">
         <Box minWidth={250} minHeight={250}>
           <FilesList />
         </Box>

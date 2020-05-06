@@ -14,3 +14,4 @@ export * from './constants';
 export * from './Bread';
 export * from './ActionButton';
 export * from './TransitionSlide';
+export * from './TabPanel';

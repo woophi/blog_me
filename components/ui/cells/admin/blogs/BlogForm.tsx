@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextField, ButtonsForm, Snakbars, ActionButton } from 'ui/atoms';
+import { TextField, ButtonsForm, Snakbars, ActionButton, TabPanel } from 'ui/atoms';
 import { safeTrim, theme } from 'core/lib';
 import { Form, Field } from 'react-final-form';
 import { makeStyles } from '@material-ui/core';
@@ -64,28 +64,6 @@ const onSubmit = async (data: BlogForm, blogId?: number) => {
     return { [FORM_ERROR]: JSON.stringify(error.error) };
   }
 };
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
-  );
-}
 
 const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) => {
   const classes = useStyles({});

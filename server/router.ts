@@ -83,6 +83,7 @@ export function router(
 
   app.post('/storage/upload', identity.authorizedForAdmin, storage.startUpload);
   app.get('/api/admin/files', identity.authorizedForAdmin, controllers.getAllFiles);
+  app.post('/api/admin/file', identity.authorizedForAdmin, storage.startUploadUrl);
 
   app.get('/api/admin/fb/pages', identity.authorizedForAdmin, controllers.getFBPIds);
   app.get('/api/admin/fb/pages/full', identity.authorizedForAdmin, controllers.getFBPages);
