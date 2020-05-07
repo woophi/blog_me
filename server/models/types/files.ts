@@ -6,4 +6,5 @@ export type FilesModel = {
   name: string;
   url: string;
   thumbnail?: string;
+  format?: string;
 }

@@ -25,5 +25,5 @@
 - [x] max one mssg per day per mail
 - [x] use lazy load for blog imgs; also try to include modern exts
 - [x] create preview of blog
-- [ ] allow upload with url
-- [ ] choose for gif
+- [x] allow upload with url
+- [x] choose for gif

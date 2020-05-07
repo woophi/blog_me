@@ -7,7 +7,7 @@ export const getAllFiles = async (
   res: Response,
   next: NextFunction
 ) => {
-  const files = await FilesModel.find().select('name url id').lean();
+  const files = await FilesModel.find().select('name url format id').lean();
 
   return res.send(files).status(HTTPStatus.OK);
 }

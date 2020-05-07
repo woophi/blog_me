@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './quill.css';
 import ReactQuill, { Quill } from 'react-quill';
-import { Image } from './Image';
+import { Image, ImageValue } from './Image';
 import { ModalUpload } from 'ui/cells/uploader';
 import { deselectFile } from 'ui/cells/uploader/operations';
 import { useSelector } from 'react-redux';
@@ -56,7 +56,8 @@ export const QuillEditor = React.memo<Props>(
         {
           url: selectedFile.url,
           alt: selectedFile.name,
-        },
+          format: selectedFile.format,
+        } as ImageValue,
         'user'
       );
     };

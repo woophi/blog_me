@@ -2,13 +2,14 @@ import { client } from 'core/callbacks';
 import { store } from 'core/store';
 import { getCommentById } from 'core/operations';
 
-client.upload_done = (fileName, fileId, url) => {
+client.upload_done = (fileName, fileId, url, format) => {
   console.warn(fileName, 'fileName', 'fileId', fileId);
   if (fileId) {
     const file = {
       _id: fileId,
       name: fileName,
-      url
+      url,
+      format
     };
     store.dispatch({ type: 'UPDATE_FILES', payload: file });
     store.dispatch({ type: 'SELECT_FILE', payload: file });

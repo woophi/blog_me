@@ -18,25 +18,7 @@ export type FileUrlEventParams = {
 
 export type FileCompleteParams = {
   fileName: string;
-  fileId?: string;
-  url?: string;
-}
-
-export type CloudinaryImg = {
-  public_id: string;
-  version: number;
-  signature: string;
-  width: number;
-  height: number;
-  format: string;
-  resource_type: string;
-  created_at: string;
-  bytes: number;
-  type: string;
-  etag: string;
-  placeholder: boolean;
+  fileId: string;
   url: string;
-  secure_url: string;
-  // fqing overrides to "file" when stream
-  original_filename: string;
-};
+  format: string;
+}

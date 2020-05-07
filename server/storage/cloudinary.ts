@@ -4,7 +4,6 @@ import { EventBus } from '../lib/events';
 import * as fs from 'fs';
 import { Logger } from '../logger';
 import {
-  CloudinaryImg,
   FStorageEvents,
   FileEventParams,
   FileUrlEventParams,
@@ -40,6 +39,7 @@ const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
       name: image.original_filename ?? generateRandomString(8),
       url: image.secure_url,
       thumbnail: thumbnail ? thumbnail : image.secure_url,
+      format: image.format
     };
     const createFile = await new FilesModel(newFile).save();
     Logger.debug('new file saved');
@@ -47,6 +47,7 @@ const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
       fileId: createFile._id,
       fileName: createFile.name,
       url: createFile.url,
+      format: createFile.format
     });
   } catch (error) {
     Logger.error('err to save new file ', error);
@@ -59,7 +60,7 @@ const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
 };
 
 export const upload_stream = (fileName: string, done: FileEventParams['done']) =>
-  cloudinary.v2.uploader.upload_stream({}, (err, image: CloudinaryImg) => {
+  cloudinary.v2.uploader.upload_stream({}, (err, image) => {
     Logger.debug('** Stream Upload');
     if (err) {
       Logger.error(err);
@@ -82,6 +83,7 @@ export const upload_stream = (fileName: string, done: FileEventParams['done']) =
             name: fileName,
             url: image.secure_url,
             thumbnail: thumbnail ? thumbnail : image.secure_url,
+            format: image.format
           };
 
           const createFile = new FilesModel(newFile);
@@ -96,6 +98,7 @@ export const upload_stream = (fileName: string, done: FileEventParams['done']) =
               fileId: file._id,
               fileName,
               url: newFile.url,
+              format: newFile.format
             });
             return cb();
           });

@@ -15,6 +15,10 @@ export const FilesSchema = new mongoose.Schema(
 		thumbnail: {
       type: String,
       default: null
+    },
+    format: {
+      type: String,
+      default: null
     }
   },
 	{ collection: SchemaNames.FILES }

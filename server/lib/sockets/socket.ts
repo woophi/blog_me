@@ -44,8 +44,8 @@ export const registerSocket = (server: Server) => {
   const nspAdmin = IO.of(NameSpaces.ADMIN);
   nspAdmin.on('connection', socket => {
     Logger.debug('admin connected ' + socket.id);
-    const fileSuc = ({ fileName, fileId, url }: storageTypes.FileCompleteParams) => {
-      socket.emit(EmitEvents.upload_done, fileName, fileId, url);
+    const fileSuc = ({ fileName, fileId, url, format }: storageTypes.FileCompleteParams) => {
+      socket.emit(EmitEvents.upload_done, fileName, fileId, url, format);
     };
 
     const fileErr = ({ fileName }: storageTypes.FileCompleteParams) => {
