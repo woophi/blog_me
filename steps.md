@@ -33,5 +33,5 @@
 - [x] update instagram sign
 - [ ] quizz pages
 - [ ] notify queue for new comments
-- [ ] fetch by 6 blogs for main page
+- [x] fetch by 6 blogs for main page
 - [ ] select img for preview with uploader and also choose thumbnail

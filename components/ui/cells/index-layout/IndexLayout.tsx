@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { BlogGuestItem } from 'core/models';
 import { BlogPreview } from './BlogPreview';
 import { getBLogs } from 'core/operations';
-import { INCREASE_OFFSET } from 'core/constants';
+import { INCREASE_BLOG_OFFSET } from 'core/constants';
 
 type Props = {
   blogs: BlogGuestItem[];
@@ -24,7 +24,7 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
 
   const loadMore = React.useCallback(() => {
     setFetching(true);
-    const newOffset = offset + INCREASE_OFFSET;
+    const newOffset = offset + INCREASE_BLOG_OFFSET;
     getBLogs(newOffset)
       .then(newBlogs => {
         if (!!newBlogs.length) {
@@ -37,7 +37,7 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
       .finally(() => setFetching(false));
   }, [offset]);
 
-  const hasMore = allBlogs.length && allBlogs.length - offset === INCREASE_OFFSET;
+  const hasMore = allBlogs.length && allBlogs.length - offset === INCREASE_BLOG_OFFSET;
 
   return (
     <>
