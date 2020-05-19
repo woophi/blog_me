@@ -27,3 +27,11 @@
 - [x] create preview of blog
 - [x] allow upload with url
 - [x] choose for gif
+- [x] fix broke on first upload
+- [x] on refresh new token
+- [ ] fix jumping editor
+- [ ] update instagram sign
+- [ ] quizz pages
+- [ ] notify queue for new comments
+- [ ] fetch by 6 blogs for main page
+- [ ] select img for preview with uploader and also choose thumbnail

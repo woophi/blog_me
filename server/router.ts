@@ -54,20 +54,20 @@ export function router(
   app.post('/api/guest/password/reset', rateLimiterMiddleware, controllers.resetPassword);
   app.patch('/api/guest/password/update', controllers.updatePassword);
   // unsub
-  app.get('/api/app/user/unsub/state', identity.validateToken, controllers.getUnsubLinkState);
-  app.put('/api/app/user/unsub', identity.validateToken, controllers.userUnsub);
+  app.get('/api/app/user/unsub/state', identity.authorizedForApp, controllers.getUnsubLinkState);
+  app.put('/api/app/user/unsub', identity.authorizedForApp, controllers.userUnsub);
 
   // user
   app.post('/api/app/user/login', rateLimiterMiddleware, auth.login);
-  app.post('/api/app/user/logout', rateLimiterMiddleware, identity.validateToken, auth.logout);
+  app.post('/api/app/user/logout', rateLimiterMiddleware, identity.authorizedForApp, auth.logout);
   app.post('/api/app/user/check', auth.checkUser);
 
-  app.get('/api/app/user/like', identity.validateToken, controllers.getUserLike);
-  app.delete('/api/app/user/blog/dislike', identity.validateToken, controllers.userDislike);
+  app.get('/api/app/user/like', identity.authorizedForApp, controllers.getUserLike);
+  app.delete('/api/app/user/blog/dislike', identity.authorizedForApp, controllers.userDislike);
 
-  app.get('/api/app/user/comments', identity.validateToken, controllers.getBlogComments);
-  app.post('/api/app/user/comment', identity.validateToken, controllers.createBlogComment);
-  app.put('/api/app/user/comment', identity.validateToken, controllers.rateBlogComment);
+  app.get('/api/app/user/comments', identity.authorizedForApp, controllers.getBlogComments);
+  app.post('/api/app/user/comment', identity.authorizedForApp, controllers.createBlogComment);
+  app.put('/api/app/user/comment', identity.authorizedForApp, controllers.rateBlogComment);
 
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);

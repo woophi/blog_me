@@ -41,6 +41,16 @@ export const QuillEditor = React.memo<Props>(
     const quillRef = React.useRef<ReactQuill>();
     const selectedFile = useSelector(getSelectedFile);
     const [open, setOpen] = React.useState(false);
+    const [lastIndex, setLastIndex] = React.useState(0);
+
+    const rangeIndex = quillRef.current?.getEditor()?.getSelection()?.index;
+    React.useEffect(() =>  {
+      if (rangeIndex) {
+        setLastIndex(rangeIndex);
+      }
+    }, [rangeIndex]);
+
+
     const handleClickOpen = () => setOpen(true);
     const handleClickClose = () => {
       setOpen(false);
@@ -49,9 +59,8 @@ export const QuillEditor = React.memo<Props>(
     const handleConfirm = () => {
       setOpen(false);
       const editor = quillRef.current.getEditor();
-      const range = editor.getSelection();
       editor.insertEmbed(
-        range.index,
+        lastIndex,
         'image',
         {
           url: selectedFile.url,
