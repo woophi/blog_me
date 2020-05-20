@@ -5,3 +5,4 @@ yarn-error.log
 dist
 server/logger/log/**
 .env
+sitemap.xml

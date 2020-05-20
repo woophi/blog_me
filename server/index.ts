@@ -33,6 +33,7 @@ import { applyMigration } from './lib/updates';
 import next from 'next';
 import { connection } from './lib/db';
 import { agenda } from './lib/agenda';
+import { generateSiteMap } from './utils/helpers/sitemap';
 import('./views');
 
 const appNext = next({ dev: config.DEV_MODE });
@@ -79,6 +80,7 @@ appNext.prepare().then(async () => {
   registerSocket(server);
 
   applyMigration();
+  generateSiteMap();
   server.listen(config.PORT_CORE, () => {
     console.log(`> Ready on http://localhost:${config.PORT_CORE}`);
   });
