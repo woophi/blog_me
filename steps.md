@@ -29,9 +29,11 @@
 - [x] choose for gif
 - [x] fix broke on first upload
 - [x] on refresh new token
-- [ ] fix jumping editor
 - [x] update instagram sign
-- [ ] quizz pages
-- [ ] notify queue for new comments
 - [x] fetch by 6 blogs for main page
+- [ ] optimize resave session
 - [ ] select img for preview with uploader and also choose thumbnail
+- [ ] fix jumping editor
+- [ ] quizz pages
+- [ ] blog tags
+- [ ] notify queue for new comments

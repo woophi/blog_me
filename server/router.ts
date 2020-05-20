@@ -93,6 +93,12 @@ export function router(
   app.patch('/api/admin/ig/login', identity.authorizedForAdmin, controllers.verrifyLoginInstagram);
   app.patch('/api/admin/ig/code', identity.authorizedForAdmin, controllers.sendCodeInstagram);
 
+  app.post('/api/admin/quiz', identity.authorizedForAdmin, controllers.createNewQuiz);
+  app.put('/api/admin/quiz', identity.authorizedForAdmin, controllers.updateQuiz);
+  app.delete('/api/admin/quiz', identity.authorizedForAdmin, controllers.deleteQuiz);
+  app.get('/api/admin/quiz', identity.authorizedForAdmin, controllers.getQuiz);
+  app.get('/api/admin/quizzes', identity.authorizedForAdmin, controllers.getQuizzes);
+
   // facebook connect
   app.get('/setup/fb', controllers.fbLogin);
   app.get('/processLogin/fb/at', controllers.processLogin);

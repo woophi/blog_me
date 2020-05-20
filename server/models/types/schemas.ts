@@ -8,6 +8,9 @@ export enum SchemaNames {
   LIKES = 'likes',
   LINKS = 'links',
   BLOGS = 'blogs',
+  QUIZZES = 'quizzes',
+  QUIZ_QUESTIONS = 'quiz_questions',
+  QUIZ_PARTICIPANTS = 'quiz_participants',
 
   GDPR = 'gdprs',
 
