@@ -2,13 +2,20 @@ import { SitemapStream } from 'sitemap';
 import { Logger } from 'server/logger';
 import config from 'server/config';
 import BlogModel from 'server/models/blogs';
-import { createWriteStream } from 'fs';
+import { createWriteStream, existsSync, appendFileSync } from 'fs';
+import { resolve } from 'path';
 
 export const generateSiteMap = async () => {
   try {
     Logger.info('[Sitemap] start to generate sitemap');
 
     const smStream = new SitemapStream({ hostname: config.SITE_URI });
+
+    const smDir = resolve(__dirname, '../../../assets/sitemap.xml');
+
+    if (!existsSync(smDir)) {
+      appendFileSync(smDir, '');
+    }
 
     const writeStream = createWriteStream(
       __dirname + '../../../../assets/sitemap.xml'
