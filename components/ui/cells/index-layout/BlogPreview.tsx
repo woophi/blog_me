@@ -18,6 +18,12 @@ export const BlogPreview = React.memo<Props>(
       const mapTitle = title.toLowerCase().split(' ').join('-');
       goToSpecific(`/post/${mapTitle}-${blogId}`);
     }, [blogId, title]);
+
+    const indexOfUpload = coverPhotoUrl.indexOf('upload/') + 7;
+    const coverPhotoThumbnail =
+      coverPhotoUrl.substr(0, indexOfUpload) +
+      'h_400/' +
+      coverPhotoUrl.substr(indexOfUpload);
     return (
       <Zoom in mountOnEnter timeout={1000}>
         <Box
@@ -33,10 +39,13 @@ export const BlogPreview = React.memo<Props>(
             <Box padding="1rem" height="450px">
               <Box width="100%" height="100%" position="relative">
                 <picture>
-                  <source type="image/webp" data-srcset={coverPhotoUrl + '.webp'} />
+                  <source
+                    type="image/webp"
+                    data-srcset={coverPhotoThumbnail + '.webp'}
+                  />
                   <img
                     alt={title}
-                    data-src={coverPhotoUrl + '.jpg'}
+                    data-src={coverPhotoThumbnail + '.jpg'}
                     style={{
                       width: '100%',
                       height: '100%',
