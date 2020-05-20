@@ -32,7 +32,7 @@
 - [x] update instagram sign
 - [x] fetch by 6 blogs for main page
 - [x] thumbnail img for guest previews
-- [ ] optimize resave session
+- [x] optimize resave session
 ~~- [ ] select img for preview with uploader and also choose thumbnail~~
 - [ ] fix jumping editor
 - [ ] quizz pages

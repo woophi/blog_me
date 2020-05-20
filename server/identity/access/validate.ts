@@ -36,17 +36,24 @@ export const validateTokenAndCreateNewAccessToken = async (signedCookie: string,
 
     const verifyRefreshToken = verifyToken(userSession.user.refreshToken);
     if (verifyRefreshToken.verificaitionError) {
-      Logger.info('Connot validate token -> verifyRefreshToken.verificaitionError', JSON.stringify(verifyRefreshToken.verificaitionError));
+      Logger.info('Connot validate refresh token -> verifyRefreshToken.verificaitionError', JSON.stringify(verifyRefreshToken.verificaitionError));
       return false;
     }
 
-    accessToken = setAccessToken({
-      id: userId,
-      roles: userSession.user.roles
-    });
-    userSession.accessToken = accessToken;
-    userSession.cookie.expires = new Date(Date.now() + tenDaysInMS);
-    userSession.save(() => Logger.debug('resave session'));
+    const { verificaitionError } = verifyToken(accessToken);
+    
+    if (verificaitionError) {
+      Logger.info('Connot validate access token -> verifyToken.verificaitionError', JSON.stringify(verificaitionError));
+      Logger.info('---');
+      Logger.info('Setup new access token');
+      accessToken = setAccessToken({
+        id: userId,
+        roles: userSession.user.roles
+      });
+      userSession.accessToken = accessToken;
+      userSession.cookie.expires = new Date(Date.now() + tenDaysInMS);
+      userSession.save(() => Logger.debug('resave session'));
+    }
 
     return accessToken;
   } catch (error) {
