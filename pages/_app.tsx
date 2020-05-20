@@ -1,7 +1,6 @@
 import { Provider } from 'react-redux';
 import App from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import { initStore } from 'core/store';
+import { wrapper, store } from 'core/store';
 import * as React from 'react';
 import { appWithTranslation, i18next } from 'server/lib/i18n';
 import { ThemeProvider } from '@material-ui/styles';
@@ -27,7 +26,7 @@ class MyApp extends App {
       ? await Component.getInitialProps(ctx)
       : {};
     return {
-      pageProps,
+      pageProps
     };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -41,7 +40,7 @@ class MyApp extends App {
     }
   }
   render() {
-    const { Component, pageProps, store } = this.props as any;
+    const { Component, pageProps } = this.props;
     return (
       <>
         <RouterProgress />
@@ -57,4 +56,6 @@ class MyApp extends App {
     );
   }
 }
-export default withRedux(initStore)(appWithTranslation(MyApp));
+
+export default wrapper.withRedux(appWithTranslation(MyApp));
+

@@ -11,6 +11,7 @@ import { initialState, reducer as uiReducer } from 'core/reducers';
 import { AppState, AppDispatch } from 'core/models';
 import { createEpicMiddleware } from 'redux-observable';
 import { rootEpic } from './epics';
+import { MakeStore, Context, createWrapper } from 'next-redux-wrapper';
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -20,14 +21,14 @@ const rootReducerMap: ReducersMapObject<AppState, AppDispatch> = {
   ui: uiReducer
 };
 
-export const store: Store<AppState, AppDispatch> = createStore(
+export const store: Store<AppState, AppDispatch> = createStore<AppState, AppDispatch, unknown, unknown>(
   combineReducers(rootReducerMap),
   { ui: initialState },
   composeWithDevTools(middleware)
-) as any;
+);
 
 epicMiddleware.run(rootEpic);
 
-export const initStore = (initState = { ui: initialState }): any => {
-  return store;
-};
+const makeStore: MakeStore<AppState, AppDispatch> = (context: Context) => store;
+
+export const wrapper = createWrapper(makeStore);

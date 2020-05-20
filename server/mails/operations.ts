@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4';
+import { v4 } from 'uuid';
 import LinksModel from 'server/models/links';
 import * as models from 'server/models/types';
 import moment from 'moment';
@@ -22,7 +22,7 @@ export const createUniqLink = async (email: string) => {
       }
       return Link.uniqId;
     } else {
-      const uniqId = uuidv4();
+      const uniqId = v4();
       const valid = moment()
         .add(5, 'days')
         .toDate();
