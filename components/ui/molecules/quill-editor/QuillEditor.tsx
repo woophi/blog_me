@@ -44,12 +44,20 @@ export const QuillEditor = React.memo<Props>(
     const [lastIndex, setLastIndex] = React.useState(0);
 
     const rangeIndex = quillRef.current?.getEditor()?.getSelection()?.index;
-    React.useEffect(() =>  {
+    React.useEffect(() => {
       if (rangeIndex) {
         setLastIndex(rangeIndex);
       }
     }, [rangeIndex]);
 
+    React.useEffect(() => {
+      document.querySelectorAll('.ql-picker').forEach((tool) => {
+        tool.addEventListener('mousedown', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        });
+      });
+    }, []);
 
     const handleClickOpen = () => setOpen(true);
     const handleClickClose = () => {
@@ -112,6 +120,7 @@ export const QuillEditor = React.memo<Props>(
           modules={{
             toolbar,
           }}
+          scrollingContainer={document.documentElement}
         />
         <ModalUpload
           onConfirm={handleConfirm}

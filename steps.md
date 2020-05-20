@@ -33,8 +33,7 @@
 - [x] fetch by 6 blogs for main page
 - [x] thumbnail img for guest previews
 - [x] optimize resave session
-~~- [ ] select img for preview with uploader and also choose thumbnail~~
-- [ ] fix jumping editor
+- [x] fix jumping editor
 - [ ] quizz pages
 - [ ] blog tags
 - [ ] notify queue for new comments
