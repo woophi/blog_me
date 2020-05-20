@@ -79,7 +79,7 @@ const AddCommentPC = React.memo<Props>(
               message: '',
               name: userName
             }}
-            render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+            render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
               <>
                 <Snakbars variant="error" message={submitError} />
                 <form
@@ -144,6 +144,7 @@ const AddCommentPC = React.memo<Props>(
                     both
                     onCancel={form.reset}
                     submitLabel={'common:buttons.add'}
+                    invalid={invalid}
                   />
                 </form>
               </>

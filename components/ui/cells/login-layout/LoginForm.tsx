@@ -34,7 +34,7 @@ const onSubmit = async (data: LoginForm) => {
     store.dispatch({ type: 'SET_USER_TOKEN', payload: token });
     await ensureAuthorized();
   } catch (error) {
-    return { [FORM_ERROR]: error.error };
+    return { [FORM_ERROR]: JSON.stringify(error.error) };
   }
 };
 
@@ -45,7 +45,7 @@ export const LoginForm: React.FC = () => {
     <Form
       onSubmit={onSubmit}
       validate={(v: LoginForm) => validate(v, t)}
-      render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+      render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
             onSubmit={async event => {
@@ -106,6 +106,7 @@ export const LoginForm: React.FC = () => {
               both
               onCancel={form.reset}
               submitLabel={'common:buttons.login'}
+              invalid={invalid}
             />
           </form>
         </>

@@ -101,7 +101,6 @@ export const userUnsub = async (req: Request, res: Response, next: NextFunction)
     await Link.remove();
   } catch (error) {
     Logger.error('error to update SubscriberModel', error);
-  } finally {
-    return res.sendStatus(HTTPStatus.OK);
   }
+  return res.sendStatus(HTTPStatus.OK);
 };

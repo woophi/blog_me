@@ -54,7 +54,7 @@ export function router(
   app.post('/api/guest/password/reset', rateLimiterMiddleware, controllers.resetPassword);
   app.patch('/api/guest/password/update', controllers.updatePassword);
   // unsub
-  app.get('/api/app/user/unsub/state', identity.authorizedForApp, controllers.getUnsubLinkState);
+  app.get('/api/app/user/unsub/state', fetchingLimiterMiddleware, controllers.getUnsubLinkState);
   app.put('/api/app/user/unsub', identity.authorizedForApp, controllers.userUnsub);
 
   // user

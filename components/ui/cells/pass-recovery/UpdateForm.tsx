@@ -30,7 +30,7 @@ const onSubmit = async (data: UpdateForm, linkId: string) => {
       await ensureAuthorized();
     }
   } catch (error) {
-    return { [FORM_ERROR]: error.error };
+    return { [FORM_ERROR]: JSON.stringify(error.error) };
   }
 };
 
@@ -46,7 +46,7 @@ export const UpdateForm: React.FC<Props> = ({ linkId }) => {
     <Form
       onSubmit={(d: UpdateForm) => onSubmit(d, linkId)}
       validate={(v: UpdateForm) => validate(v, t)}
-      render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+      render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
             onSubmit={async event => {
@@ -99,6 +99,7 @@ export const UpdateForm: React.FC<Props> = ({ linkId }) => {
               both
               onCancel={form.reset}
               submitLabel={'common:buttons.send'}
+              invalid={invalid}
             />
           </form>
         </>

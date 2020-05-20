@@ -24,7 +24,9 @@ export const PassUpdateLayout = React.memo<Props>(({ linkId }) => {
 
   return (
     <>
-      <H1 upperCase>{'Обновление пароля'}</H1>
+      <Box display="flex" justifyContent="center">
+        <H1 upperCase>{'Обновление пароля'}</H1>
+      </Box>
 
       <Box display="flex" flexDirection="column" margin="1rem auto">
         {unsubState === LinkState.INVALID && (

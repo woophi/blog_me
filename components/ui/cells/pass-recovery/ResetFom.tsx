@@ -27,7 +27,7 @@ const onSubmit = async (data: ResetForm) => {
   try {
     await resetPassword(data.email);
   } catch (error) {
-    return { [FORM_ERROR]: error.error };
+    return { [FORM_ERROR]: JSON.stringify(error.error) };
   }
 };
 
@@ -39,7 +39,7 @@ export const ResetForm: React.FC = () => {
     <Form
       onSubmit={onSubmit}
       validate={(v: ResetForm) => validate(v, t)}
-      render={({ handleSubmit, pristine, submitting, submitError, form }) => (
+      render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
             onSubmit={async event => {
@@ -92,6 +92,7 @@ export const ResetForm: React.FC = () => {
               both
               onCancel={form.reset}
               submitLabel={'common:buttons.send'}
+              invalid={invalid}
             />
           </form>
         </>

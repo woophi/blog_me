@@ -11,26 +11,22 @@ import config from 'server/config';
 import { Hashing } from 'server/identity';
 import * as formator from 'server/formator';
 
-export const resetPassword = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const resetPassword = async (req: Request, res: Response) => {
   const validate = new kia.Validator(req, res);
 
   const data = {
-    email: req.body.email
+    email: req.body.email,
   };
 
   await validate.check(
     {
-      email: validate.isEmail
+      email: validate.isEmail,
     },
     data
   );
   await formator.formatData(
     {
-      email: formator.formatEmail
+      email: formator.formatEmail,
     },
     data
   );
@@ -56,16 +52,15 @@ export const resetPassword = async (
       '',
       'Администрация сайта',
       {
-        resetUrl: `${config.SITE_URI}password/update/${linkId}`
+        resetUrl: `${config.SITE_URI}password/update/${linkId}`,
       }
     );
 
     mailer.performQueue();
   } catch (error) {
     Logger.error('resetPassword error', error);
-  } finally {
-    return res.sendStatus(HTTPStatus.OK);
   }
+  return res.sendStatus(HTTPStatus.OK);
 };
 
 export const updatePassword = async (
@@ -77,13 +72,13 @@ export const updatePassword = async (
 
   const data = {
     password: req.body.password,
-    linkId: req.body.linkId
+    linkId: req.body.linkId,
   };
 
   await validate.check(
     {
       password: validate.required,
-      linkId: validate.required
+      linkId: validate.required,
     },
     data
   );
@@ -91,7 +86,7 @@ export const updatePassword = async (
   await formator.formatData(
     {
       password: formator.formatString,
-      linkId: formator.formatString
+      linkId: formator.formatString,
     },
     data
   );
@@ -103,7 +98,7 @@ export const updatePassword = async (
       .exec();
     if (!user) return res.sendStatus(HTTPStatus.OK);
     const Link = await LinkModel.findOne({
-      uniqId: data.linkId
+      uniqId: data.linkId,
     }).exec();
 
     const state = checkLinkState(Link);

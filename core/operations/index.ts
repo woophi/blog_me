@@ -14,9 +14,6 @@ export const getCommentById = (commentId: string) =>
     `api/guest/blog/comment?commentId=${commentId}`
   );
 
-export const getUnsubLinkState = (uniqId: string) =>
-  callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
-
 export const guestUnsub = (uniqId: string) =>
   callApi<void>('put', 'api/guest/unsub', { uniqId });
 
@@ -27,7 +24,7 @@ export const updatePassword = (password: string, linkId: string) =>
   callApi<string>('patch', 'api/guest/password/update', { password, linkId });
 
 export const getResetPassLinkState = (uniqId: string) =>
-  callApi<models.LinkState>('get', `api/guest/unsub/state?uniqId=${uniqId}`);
+  callApi<models.LinkState>('get', `api/app/user/unsub/state?uniqId=${uniqId}`);
 
 export const getBLogs = (offset = 0) =>
   callApi<models.BlogGuestItem[]>('get', `api/guest/blogs?offset=${offset}`);

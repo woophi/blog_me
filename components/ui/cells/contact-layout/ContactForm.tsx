@@ -51,7 +51,7 @@ export const ContactForm: React.FC = () => {
         handleSubmit,
         pristine,
         submitting,
-        form,
+        invalid,
         submitError,
         submitSucceeded,
       }) => (
@@ -67,7 +67,9 @@ export const ContactForm: React.FC = () => {
           <Snakbars variant="error" message={submitError} />
           <Snakbars
             variant="success"
-            message={submitSucceeded && !submitError ? 'Сообщение отправилено' : null}
+            message={
+              submitSucceeded && !submitError ? 'Сообщение отправилено' : null
+            }
             timerValue={1000}
           />
           <Field
@@ -124,7 +126,11 @@ export const ContactForm: React.FC = () => {
               />
             )}
           />
-          <ButtonsForm pristine={pristine} submitting={submitting} />
+          <ButtonsForm
+            pristine={pristine}
+            submitting={submitting}
+            invalid={invalid}
+          />
         </form>
       )}
     />

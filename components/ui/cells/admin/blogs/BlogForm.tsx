@@ -124,6 +124,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
           submitError,
           form,
           submitSucceeded,
+          invalid
         }) => (
           <form
             onSubmit={async (event) => {
@@ -338,6 +339,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
               both
               onCancel={form.reset}
               submitLabel={blogId ? 'common:buttons.save' : 'common:buttons.add'}
+              invalid={invalid}
             />
           </form>
         )}

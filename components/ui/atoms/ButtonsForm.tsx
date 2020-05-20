@@ -9,6 +9,7 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 type Props = {
   pristine: boolean;
   submitting: boolean;
+  invalid: boolean;
   both?: boolean;
   onCancel?: () => void;
   submitLabel?: string;
@@ -23,6 +24,7 @@ export const ButtonsForm = React.memo<Props>(
     onCancel,
     submitLabel,
     noMargin = false,
+    invalid
   }) => {
     const classes = useStyles({ noMargin });
     const { t } = useTranslation();
@@ -42,7 +44,7 @@ export const ButtonsForm = React.memo<Props>(
 
         <Button
           type="submit"
-          disabled={pristine || submitting}
+          disabled={pristine || submitting || invalid}
           variant={'contained'}
           color="secondary"
           className={classes.sbm}
