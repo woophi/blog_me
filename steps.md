@@ -34,6 +34,7 @@
 - [x] thumbnail img for guest previews
 - [x] optimize resave session
 - [x] fix jumping editor
+- [ ] renew reset of password
 - [ ] quizz pages
 - [ ] blog tags
 - [ ] notify queue for new comments

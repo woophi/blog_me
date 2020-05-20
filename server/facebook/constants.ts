@@ -1,2 +1,2 @@
-export const FB_API_VERSION = 'v5.0';
+export const FB_API_VERSION = 'v7.0';
 export const authScopes = ['email'];
