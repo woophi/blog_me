@@ -31,6 +31,7 @@ export const generateSiteMap = async () => {
 
     const blogs = await BlogModel.find()
       .where('deleted', null)
+      .where('draft', false)
       .sort('createdAt')
       .exec();
 
