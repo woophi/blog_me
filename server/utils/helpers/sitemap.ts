@@ -17,9 +17,7 @@ export const generateSiteMap = async () => {
       appendFileSync(smDir, '');
     }
 
-    const writeStream = createWriteStream(
-      __dirname + '../../../../assets/sitemap.xml'
-    );
+    const writeStream = createWriteStream(smDir);
 
     smStream.pipe(writeStream);
 
