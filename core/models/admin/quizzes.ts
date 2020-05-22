@@ -20,3 +20,19 @@ export type AdminQuizData = {
   title: string;
   questions: string;
 };
+
+
+export type QuestionData = {
+  quiz?: {
+    shortId: number
+  },
+  _id: string,
+  step: number,
+  question: string;
+}
+
+export type CreateQuestionModel = Pick<QuestionData, 'question' | 'step'>;
+
+export type UpdateQuestionModel = {
+  id: string;
+} & CreateQuestionModel;

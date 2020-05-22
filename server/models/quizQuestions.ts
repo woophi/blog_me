@@ -14,8 +14,7 @@ export const QuizQuestionSchema = new mongoose.Schema(
     },
     quiz: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: SchemaNames.QUIZZES,
-      required: true
+      ref: SchemaNames.QUIZZES
     }
   },
 	{ collection: SchemaNames.QUIZ_QUESTIONS }

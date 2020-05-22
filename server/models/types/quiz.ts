@@ -25,7 +25,7 @@ export type QuizQuestion = Model<QuizQuestionModel>;
 export type QuizQuestionModel = {
   question: string;
   step: number;
-  quiz: Quiz;
+  quiz?: Quiz;
 }
 
 export type QuizParticipant = Model<QuizParticipantModel>;
