@@ -12,6 +12,7 @@ type Props = {
   onBlur: (e: any) => void;
   onFocus: (e: any) => void;
   value: any;
+  ownId?: string;
 };
 
 Quill.register(Image);
@@ -37,7 +38,7 @@ const toolbarOptions = [
 ];
 
 export const QuillEditor = React.memo<Props>(
-  ({ onChange, value, onFocus, onBlur }) => {
+  ({ onChange, value, onFocus, onBlur, ownId = 'fuck-it' }) => {
     const quillRef = React.useRef<ReactQuill>();
     const selectedFile = useSelector(getSelectedFile);
     const [open, setOpen] = React.useState(false);
@@ -111,7 +112,7 @@ export const QuillEditor = React.memo<Props>(
     return (
       <>
         <ReactQuill
-          id="fuck-it"
+          id={ownId}
           ref={(el) => (quillRef.current = el)}
           value={value}
           onChange={handleChange}

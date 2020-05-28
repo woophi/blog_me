@@ -3,7 +3,7 @@ import {
   withStyles,
   makeStyles,
   Theme,
-  createStyles
+  createStyles,
 } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -19,17 +19,17 @@ const StyledBreadcrumb = withStyles((theme: Theme) => ({
     color: theme.palette.grey[800],
     fontWeight: theme.typography.fontWeightRegular,
     '&:active': {
-      boxShadow: theme.shadows[1]
-    }
-  }
+      boxShadow: theme.shadows[1],
+    },
+  },
 }))(Chip) as typeof Chip;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(1),
-      backgroundColor: 'transparent'
-    }
+      backgroundColor: 'transparent',
+    },
   })
 );
 
@@ -37,7 +37,7 @@ export const Bread: React.FC = () => {
   const classes = useStyles({});
 
   const routes = Router.route.split('/');
-  const restRoutes = routes.filter(r => r !== 'admin');
+  const restRoutes = routes.filter((r) => r !== 'admin');
   return (
     <Paper elevation={0} className={classes.root}>
       <Breadcrumbs
@@ -73,6 +73,9 @@ const SpecificRoute: React.FC<SpecificRouteProps> = ({ currentRoute }) => {
   }
   if (currentRoute.indexOf('ban') !== -1) {
     return <StyledBreadcrumb label={'Бан'} onClick={constants.toBans} />;
+  }
+  if (currentRoute.indexOf('quizzes') !== -1) {
+    return <StyledBreadcrumb label={'Quizzes'} onClick={constants.toQuizzes} />;
   }
   return null;
 };

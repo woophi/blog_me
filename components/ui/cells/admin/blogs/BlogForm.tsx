@@ -89,7 +89,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
         <ActionButton
           action={hundleDeletBlog}
           label={'Удалить блог'}
-          backToUrl={'/admin/full'}
+          backToUrl={'/admin/blogs'}
           className={classes.delete}
         />
       )}

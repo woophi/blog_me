@@ -1,1 +1,1 @@
-export const fd = '';
+export * from './AdminQuizzes';

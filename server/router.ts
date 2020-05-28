@@ -132,9 +132,14 @@ export function router(
     appNext.render(req, res, actualPage, queryParams);
   });
 
-  app.get('/admin/blogs/edit/:blogId', identity.authorizedForSuperAdmin, (req, res) => {
+  app.get('/admin/blogs/edit/:blogId', identity.authorizedForAdmin, (req, res) => {
     const actualPage = '/admin/blogs/edit';
     const queryParams = { blogId: req.params.blogId };
+    appNext.render(req, res, actualPage, queryParams);
+  });
+  app.get('/admin/quizzes/edit/:quizId', identity.authorizedForAdmin, (req, res) => {
+    const actualPage = '/admin/quizzes/edit';
+    const queryParams = { quizId: req.params.quizId };
     appNext.render(req, res, actualPage, queryParams);
   });
 

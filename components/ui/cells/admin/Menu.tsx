@@ -33,6 +33,12 @@ export const AdminMenu = React.memo(() => {
           </ListItemIcon>
           <ListItemText primary={'Блоги'} />
         </ListItem>
+        <ListItem button onClick={constants.toQuizzes}>
+          <ListItemIcon>
+            <Wallpaper />
+          </ListItemIcon>
+          <ListItemText primary={'Quizzes'} />
+        </ListItem>
         <ListItem button onClick={constants.toComments}>
           <ListItemIcon>
             <Comment />
@@ -76,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: {
       ...theme.mixins.toolbar,
-      minHeight: '73px !important'
-    }
+      minHeight: '73px !important',
+    },
   })
 );

@@ -1,7 +1,7 @@
-import * as axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { HTTPMethod, HTTPStatus } from 'server/lib/models';
 import { Logger } from 'server/logger';
-export * from './helpers';
+import { IDictionary } from 'server/lib/models';
 
 export const callApi = async (
   method: HTTPMethod,
@@ -13,12 +13,12 @@ export const callApi = async (
 
     const payloadString = payload != null ? JSON.stringify(payload) : null;
 
-    const rc: axios.AxiosRequestConfig = {
+    const rc: AxiosRequestConfig = {
       url,
       headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
-      method
+      method,
     };
 
     if (payloadString) {
@@ -30,9 +30,9 @@ export const callApi = async (
       data?: any;
       status: HTTPStatus;
       error?: any;
-    } = await axios.default(rc).then(
-      r => ({ data: r.data, status: r.status }),
-      e => ({ status: e.response.status, error: e.response.data.error })
+    } = await axios(rc).then(
+      (r) => ({ data: r.data, status: r.status }),
+      (e) => ({ status: e.response.status, error: e.response.data.error })
     );
 
     if (result.status === HTTPStatus.BadRequest) {
@@ -50,3 +50,13 @@ export const callApi = async (
     return {};
   }
 };
+
+export function buildQueryString(items: IDictionary<string>[]) {
+  const joined = items
+    .map((it) => {
+      const key = Object.keys(it)[0];
+      return `${key}=${encodeURI(it[key])}`;
+    })
+    .join('&');
+  return joined.length > 0 ? '?' + joined : '';
+}

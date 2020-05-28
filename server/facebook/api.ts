@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { FB_API_VERSION } from './constants';
 import { Logger } from '../logger';
 import { HTTPMethod, IDictionary, HTTPStatus } from 'server/lib/models';
@@ -11,21 +11,20 @@ export const callFbApi = async (
   payload: object = null
 ) => {
   try {
-
     const url = `https://graph.facebook.com/${FB_API_VERSION}/${action}${buildQueryString(
       parameters
     )}`;
 
-    Logger.debug('FB url ' + url)
+    Logger.debug('FB url ' + url);
 
     const payloadString = payload != null ? JSON.stringify(payload) : null;
 
-    const rc: axios.AxiosRequestConfig = {
+    const rc: AxiosRequestConfig = {
       url,
       headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
-      method
+      method,
     };
 
     if (payloadString) {
@@ -37,12 +36,10 @@ export const callFbApi = async (
       data?: any;
       status: HTTPStatus;
       error?: any;
-    } = await axios
-      .default(rc)
-      .then(
-        r => ({ data: r.data, status: r.status }),
-        e => ({ status: e.response.status, error: e.response.data.error })
-      );
+    } = await axios(rc).then(
+      (r) => ({ data: r.data, status: r.status }),
+      (e) => ({ status: e.response.status, error: e.response.data.error })
+    );
 
     if (result.status === HTTPStatus.BadRequest) {
       const errMessage = result.error.message;

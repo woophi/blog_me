@@ -170,25 +170,11 @@ export const getQuiz = async (req: Request, res: Response) => {
 };
 
 export const getQuizzes = async (req: Request, res: Response) => {
-  const data = {
-    offset: req.body.offset,
-    limit: 50,
-  };
-
-  await formator.formatData(
-    {
-      offset: formator.formatNumber,
-      limit: formator.formatNumber,
-    },
-    data
-  );
 
   const quizzes = await QuizModel.find()
     .where('deleted', null)
     .sort('createdAt')
     .select('shortId status subtitle title quizQuestions quizParticipants -_id')
-    .skip(data.offset)
-    .limit(data.limit)
     .lean();
 
   return res.send(quizzes);

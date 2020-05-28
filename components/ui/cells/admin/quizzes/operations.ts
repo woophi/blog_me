@@ -1,10 +1,8 @@
 import { callUserApi } from 'core/common';
 import * as adminModels from 'core/models/admin';
 
-export const getQuizzes = (offset = 0) =>
-  callUserApi<adminModels.AdminQuizItem[]>('get', `api/admin/quizzes`, {
-    offset,
-  });
+export const getQuizzes = () =>
+  callUserApi<adminModels.AdminQuizItem[]>('get', `api/admin/quizzes`);
 
 export const editQuiz = (data: adminModels.AdminQuizData) =>
   callUserApi('put', 'api/admin/quiz', data);
