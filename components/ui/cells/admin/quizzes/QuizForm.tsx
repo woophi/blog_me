@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { TextField, ButtonsForm, Snakbars, ActionButton, TabPanel } from 'ui/atoms';
+import { ButtonsForm, Snakbars, ActionButton, TabPanel } from 'ui/atoms';
 import { safeTrim, theme } from 'core/lib';
 import { Form, Field } from 'react-final-form';
 import { makeStyles } from '@material-ui/core';
-import { FORM_ERROR } from 'final-form';
+import { FORM_ERROR, FormApi } from 'final-form';
 import arrayMutators from 'final-form-arrays';
 import { goToSpecific } from 'core/common';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -11,23 +11,24 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
-import Switch from '@material-ui/core/Switch';
-import { createNewQuiz, editQuiz, deleteQuiz } from './operations';
-import { AdminQuizData } from 'core/models/admin';
-import { QuillEditor } from 'ui/molecules/quill-editor';
+import { createNewQuiz, editQuiz, deleteQuiz, updateQuestions } from './operations';
+import { QuizzStatus, AdminQuizFormData, SaveQuestionModel } from 'core/models/admin';
+import { QuillEditor, quillPlaceholder } from 'ui/molecules/quill-editor';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import { FieldArray } from 'react-final-form-arrays';
+import Button from '@material-ui/core/Button';
+import { SortableFactory } from 'ui/molecules/sortable';
 
 type Props = {
   quizId?: number;
-  initialValues?: AdminQuizData;
+  initialValues?: AdminQuizFormData;
 };
 
-type QuizForm = AdminQuizData;
+type QuizForm = AdminQuizFormData;
 
 const validate = (values: QuizForm) => {
   const errors: Partial<QuizForm> = {};
@@ -40,10 +41,15 @@ const validate = (values: QuizForm) => {
   return errors;
 };
 
-const onSubmit = async (data: QuizForm, quizId?: number) => {
+const onSubmit = async (data: QuizForm, quizId?: number, f?: FormApi<QuizForm>) => {
   try {
     if (quizId) {
-      await editQuiz({ ...data, quizId });
+      let questions: SaveQuestionModel[] = [];
+      if (data.questions?.length) {
+        questions = await updateQuestions(data.questions);
+      }
+      await editQuiz({ ...data, quizId, questions: questions.map(q => q.id) });
+      f.setConfig('initialValues', { ...f.getState().values, questions });
     } else {
       const { quizId } = await createNewQuiz(data);
       goToSpecific(`/admin/quizzes/edit/${quizId}`);
@@ -55,15 +61,13 @@ const onSubmit = async (data: QuizForm, quizId?: number) => {
 
 const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) => {
   const classes = useStyles({});
+  const [tabValue, setValue] = React.useState(0);
   const inputLabelSLID = React.useRef<any>(null);
   const [labelWidthSLID, setLabelWidthSLID] = React.useState(0);
-  const [tabValue, setValue] = React.useState(0);
 
   React.useEffect(() => {
-    if (!quizId) {
-      setLabelWidthSLID(inputLabelSLID.current?.offsetWidth ?? 0);
-    }
-  }, []);
+    setLabelWidthSLID(inputLabelSLID.current?.offsetWidth ?? 0);
+  }, [inputLabelSLID.current]);
 
   const hundleDeletBlog = () => deleteQuiz(quizId);
 
@@ -82,19 +86,17 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
         />
       )}
       <Form
-        onSubmit={(d: QuizForm) => onSubmit(d, quizId)}
+        onSubmit={(d: QuizForm, f) => onSubmit(d, quizId, f)}
         validate={validate}
         mutators={{
           ...arrayMutators,
         }}
         initialValues={
           quizId
-            ? {
-                ...initialValues,
-              }
+            ? initialValues
             : {
-                title: '<p><br></p>',
-                subtitle: '<p><br></p>',
+                title: quillPlaceholder,
+                subtitle: quillPlaceholder,
               }
         }
         render={({
@@ -145,6 +147,35 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
                 </Tabs>
               </Paper>
             </Box>
+
+            {quizId && (
+              <Field
+                name="status"
+                render={({ input, meta }) => (
+                  <FormControl variant="outlined" className={classes.field}>
+                    <InputLabel
+                      htmlFor="localeId"
+                      ref={inputLabelSLID}
+                      style={{ color: theme.palette.primary.main }}
+                    >
+                      {'Сатус quiza'}
+                    </InputLabel>
+                    <Select
+                      {...input}
+                      input={
+                        <OutlinedInput labelWidth={labelWidthSLID} id="localeId" />
+                      }
+                      error={Boolean(meta.touched && meta.error)}
+                      disabled={submitting}
+                    >
+                      <MenuItem value={QuizzStatus.Open}>{'Открыт'}</MenuItem>
+                      <MenuItem value={QuizzStatus.Closed}>{'Закрыт'}</MenuItem>
+                      <MenuItem value={QuizzStatus.Draft}>{'Черновик'}</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              />
+            )}
 
             <Field
               name="title"
@@ -206,6 +237,52 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
                 </Box>
               )}
             />
+
+            {quizId && (
+              <FieldArray name="questions">
+                {({ fields }) => {
+                  const onSortEnd = ({ oldIndex, newIndex }) => {
+                    fields.move(oldIndex, newIndex);
+                  };
+                  const removeCb = (index: number) => {
+                    fields.remove(index);
+                  };
+                  return (
+                    <div className={classes.field}>
+                      <InputLabel style={{ marginBottom: '.5rem' }}>
+                        {'Вопросы'}
+                      </InputLabel>
+
+                      <SortableFactory
+                        items={fields}
+                        onSortEnd={onSortEnd}
+                        lockAxis="y"
+                        removeCb={removeCb}
+                        lockToContainerEdges
+                        useDragHandle
+                        transitionDuration={200}
+                        tabValue={tabValue}
+                      />
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>
+                          fields.push({
+                            question: quillPlaceholder,
+                            step: fields.length + 1,
+                            id: '',
+                          })
+                        }
+                        disabled={submitting}
+                      >
+                        {'Добавить вопрос'}
+                      </Button>
+                    </div>
+                  );
+                }}
+              </FieldArray>
+            )}
             <ButtonsForm
               pristine={pristine}
               submitting={submitting}

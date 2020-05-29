@@ -13,26 +13,34 @@ export enum QuizzStatus {
   Closed = 'closed',
 }
 
-export type AdminQuizData = {
+type AdminQuizCommonData = {
   quizId: number;
   status: QuizzStatus;
   subtitle: string;
   title: string;
-  questions: string;
 };
 
+export type AdminQuizData = AdminQuizCommonData & {
+  questions: string[];
+};
+
+export type AdminQuizFormData = AdminQuizCommonData & {
+  questions: SaveQuestionModel[];
+};
+
+export type AdminQuizResponseData = AdminQuizCommonData & {
+  questions: SaveQuestionModel[];
+};
 
 export type QuestionData = {
   quiz?: {
-    shortId: number
-  },
-  _id: string,
-  step: number,
+    shortId: number;
+  };
+  _id: string;
+  step: number;
   question: string;
-}
+};
 
-export type CreateQuestionModel = Pick<QuestionData, 'question' | 'step'>;
-
-export type UpdateQuestionModel = {
+export type SaveQuestionModel = {
   id: string;
-} & CreateQuestionModel;
+} & Pick<QuestionData, 'question' | 'step'>;

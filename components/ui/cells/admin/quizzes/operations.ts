@@ -21,13 +21,15 @@ export const deleteQuiz = (quizId: number) =>
   callUserApi('delete', 'api/admin/quiz', { quizId });
 
 export const getQuizData = (quizId: number) =>
-  callUserApi<adminModels.AdminQuizData>('get', `api/admin/quiz?quizId=${quizId}`);
+  callUserApi<adminModels.AdminQuizResponseData>(
+    'get',
+    `api/admin/quiz?quizId=${quizId}`
+  );
 
-export const createQuestions = (data: adminModels.CreateQuestionModel) =>
-  callUserApi('post', 'api/admin/quiz/questions', data);
-
-export const updateQuestions = (data: adminModels.UpdateQuestionModel) =>
-  callUserApi('put', 'api/admin/quiz/questions', data);
+export const updateQuestions = (questions: adminModels.SaveQuestionModel[]) =>
+  callUserApi<adminModels.SaveQuestionModel[]>('put', 'api/admin/quiz/questions', {
+    questions,
+  });
 
 export const getQuestions = () =>
   callUserApi<adminModels.QuestionData[]>('get', 'api/admin/quiz/questions');

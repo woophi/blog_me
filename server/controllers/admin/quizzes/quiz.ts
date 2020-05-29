@@ -156,7 +156,12 @@ export const getQuiz = async (req: Request, res: Response) => {
   const quizId = req.query['quizId'];
   if (!quizId) return res.sendStatus(HTTPStatus.BadRequest);
 
-  const quiz = await QuizModel.findOne({ shortId: quizId, deleted: null }).exec();
+  const quiz = await QuizModel.findOne({ shortId: quizId, deleted: null })
+    .populate({
+      path: 'quizQuestions',
+      options: { sort: { 'step': 'asc' } }
+    })
+    .exec();
 
   if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
 
@@ -165,12 +170,15 @@ export const getQuiz = async (req: Request, res: Response) => {
     status: quiz.status,
     subtitle: quiz.subtitle,
     title: quiz.title,
-    questions: quiz.quizQuestions,
+    questions: quiz.quizQuestions.map((q) => ({
+      id: q.id,
+      step: q.step,
+      question: q.question,
+    })),
   });
 };
 
 export const getQuizzes = async (req: Request, res: Response) => {
-
   const quizzes = await QuizModel.find()
     .where('deleted', null)
     .sort('createdAt')

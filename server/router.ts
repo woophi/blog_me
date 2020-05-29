@@ -102,7 +102,6 @@ export function router(
   
   app.get('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.getQuestions);
   app.get('/api/admin/quiz/question', identity.authorizedForAdmin, controllers.getQuestion);
-  app.post('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.createQuestions);
   app.put('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.updateQuestions);
 
   // facebook connect

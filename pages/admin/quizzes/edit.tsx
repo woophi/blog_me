@@ -2,13 +2,13 @@ import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
-import { AdminQuizData } from 'core/models/admin';
+import { AdminQuizResponseData } from 'core/models/admin';
 import { AdminLayout } from 'ui/cells/admin/layouts';
 import { getQuizData } from 'ui/cells/admin/quizzes/operations';
 import dynamic from 'next/dynamic';
 
 type localState = {
-  quizData: AdminQuizData;
+  quizData: AdminQuizResponseData;
 };
 
 const QuizForm = dynamic(() => import('ui/cells/admin/quizzes/QuizForm'), {
@@ -17,7 +17,7 @@ const QuizForm = dynamic(() => import('ui/cells/admin/quizzes/QuizForm'), {
 
 class EditQuiz extends React.PureComponent<WithRouterProps, localState> {
   state: localState = {
-    quizData: undefined,
+    quizData: undefined
   };
   async componentDidMount() {
     try {

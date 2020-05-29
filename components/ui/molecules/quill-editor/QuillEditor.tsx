@@ -37,6 +37,8 @@ const toolbarOptions = [
   ['clean'], // remove formatting button
 ];
 
+export const quillPlaceholder = '<p><br></p>';
+
 export const QuillEditor = React.memo<Props>(
   ({ onChange, value, onFocus, onBlur, ownId = 'fuck-it' }) => {
     const quillRef = React.useRef<ReactQuill>();
