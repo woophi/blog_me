@@ -2,6 +2,8 @@ import { CommentItem } from './comment';
 import { AuthData } from './auth';
 import { AdminState, FileItem } from './admin';
 import { BlogGuestItem, SearchStatus } from './blog';
+import { QuizGuestData } from './quiz';
+import { Dispatch } from 'redux';
 
 export type AppState = {
   ui: {
@@ -12,6 +14,7 @@ export type AppState = {
     searchResults: BlogGuestItem[];
     searchQuery: string;
     searchStatus: SearchStatus;
+    quiz: QuizGuestData;
   };
 };
 
@@ -19,6 +22,10 @@ export type AppDispatch =
   | SetUserDispatch
   | { type: 'SET_USER_TOKEN'; payload: AppState['ui']['user']['token'] }
   | { type: 'SET_USER_FETCHING'; payload: AppState['ui']['user']['fetching'] }
+  //quiz
+  | { type: 'SET_QUIZ'; payload: QuizGuestData }
+  | { type: 'UPDATE_QUIZ'; payload: Partial<QuizGuestData> }
+  | { type: 'UPDATE_QUIZ_PARTICIPANT'; payload: Partial<QuizGuestData['participationHistory']> }
   //comments
   | { type: 'UPDATE_COMMENTS'; payload: { comment: CommentItem } }
   | {
@@ -62,3 +69,5 @@ export type SetSearchStatusDispatch = {
   type: 'SET_SEARCH_STATUS';
   payload: AppState['ui']['searchStatus'];
 };
+
+export type AppDispatchActions = Dispatch<AppDispatch>;

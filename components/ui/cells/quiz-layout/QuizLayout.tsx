@@ -1,17 +1,28 @@
 import * as React from 'react';
-import { QuizGuestData } from 'core/models';
-import { useSelector } from 'react-redux';
-import { getUserId } from 'core/selectors';
+import { QuizGuestData, QuizzStatus, AppDispatchActions } from 'core/models';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserFetching } from 'core/selectors';
 import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
-import { ModalDialog } from 'ui/atoms';
+import { ModalDialog, Spinner } from 'ui/atoms';
+import Box from '@material-ui/core/Box';
+import { QuizMain } from './QuizMain';
 
 type Props = {
   quizData: QuizGuestData;
-}
+};
 
 export const QuizLayout = React.memo<Props>(({ quizData }) => {
-
+  const userFetching = useSelector(getUserFetching);
   const userId = useSelector(getUserId);
+  const dispatch = useDispatch<AppDispatchActions>();
+
+  React.useEffect(() => {
+    dispatch({ type: 'SET_QUIZ', payload: quizData });
+  }, []);
+
+  if (userFetching) {
+    return <Spinner />;
+  }
 
   if (!userId) {
     return (
@@ -22,8 +33,16 @@ export const QuizLayout = React.memo<Props>(({ quizData }) => {
       >
         <AuthButtons />
       </ModalDialog>
-    )
+    );
   }
 
-  return null;
-})
+  if (quizData.status === QuizzStatus.Closed) {
+    return <Box>Quiz ended</Box>;
+  }
+
+  if (quizData.participationHistory?.finished) {
+    return <Box>Вы уже завершили этот quiz</Box>;
+  }
+
+  return <QuizMain />;
+});

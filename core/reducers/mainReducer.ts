@@ -21,7 +21,8 @@ export const initialState: models.AppState['ui'] = {
   replies: [],
   searchResults: [],
   searchQuery: '',
-  searchStatus: models.SearchStatus.init
+  searchStatus: models.SearchStatus.init,
+  quiz: null
 };
 
 export const reducer = (
@@ -176,6 +177,34 @@ export const reducer = (
         ...state,
         searchStatus: dispatch.payload
       };
+    }
+
+    case 'SET_QUIZ': {
+      return {
+        ...state,
+        quiz: dispatch.payload
+      }
+    }
+    case 'UPDATE_QUIZ': {
+      return {
+        ...state,
+        quiz: {
+          ...state.quiz,
+          ...dispatch.payload
+        }
+      }
+    }
+    case 'UPDATE_QUIZ_PARTICIPANT': {
+      return {
+        ...state,
+        quiz: {
+          ...state.quiz,
+          participationHistory: {
+            ...state.quiz.participationHistory,
+            ...dispatch.payload
+          }
+        }
+      }
     }
 
     default: {

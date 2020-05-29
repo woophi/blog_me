@@ -42,8 +42,7 @@ export function router(
   app.get('/api/guest/blog/comment/replies', fetchingLimiterMiddleware, controllers.getGuestBlogCommentReplies);
 
   // guest quizzes
-  // TODO: create guest quiz controller
-  app.get('/api/guest/quiz', fetchingLimiterMiddleware, controllers.getQuiz);
+  app.get('/api/guest/quiz', fetchingLimiterMiddleware, controllers.getQuizForGuest);
 
   app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
   app.post('/api/guest/blog/view', fetchingLimiterMiddleware, controllers.increaseBlogViews);

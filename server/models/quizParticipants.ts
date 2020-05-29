@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { SchemaNames, QuizQuestion } from './types';
+import { SchemaNames, QuizParticipant } from './types';
 const timestamps = require('mongoose-timestamp');
 
 export const QuizParticipantSchema = new mongoose.Schema(
@@ -29,4 +29,4 @@ export const QuizParticipantSchema = new mongoose.Schema(
 
 QuizParticipantSchema.plugin(timestamps);
 
-export default mongoose.model<QuizQuestion>(SchemaNames.QUIZ_PARTICIPANTS, QuizParticipantSchema);
+export default mongoose.model<QuizParticipant>(SchemaNames.QUIZ_PARTICIPANTS, QuizParticipantSchema);
