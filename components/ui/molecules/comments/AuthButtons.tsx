@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faVk } from '@fortawesome/free-brands-svg-icons';
 
 type Props = {
-  onComplete?: () => void
-}
+  onComplete?: () => void;
+};
 
 type DialogPath = 'fb' | 'google' | 'vk';
 let loginWindow: Window = null;
@@ -24,7 +24,7 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
   const [processing, setProcess] = React.useState(false);
   const uniqRenederId = Date.now();
 
-  const { googleBtn, facebookBtn } = useStyles({});
+  const { googleBtn, facebookBtn, vkBtn } = useStyles({});
 
   useInterval(
     () => {
@@ -99,7 +99,13 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
           <FontAwesomeIcon icon={faFacebook} />
           <Typography>Войти с Facebook</Typography>
         </button>
-        <Button disabled={processing} onClick={authVk}>
+        <Button
+          disabled={processing}
+          onClick={authVk}
+          variant="outlined"
+          color="secondary"
+          className={vkBtn}
+        >
           <FontAwesomeIcon icon={faVk} size="2x" />
         </Button>
         <LinearProgress color="secondary" hidden={!processing} />
@@ -114,36 +120,43 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
   );
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   googleBtn: {
     ...commonStyle(),
+    padding: ' 0 8px 0 1px',
+    height: '40.5px',
     backgroundColor: '#4285F4',
     borderRadius: '2px',
+    margin: theme.spacing(1),
     '&>img': {
       position: 'relative',
-      top: -3,
+      top: 0,
       left: -3,
-      marginRight: '6px'
+      marginRight: '6px',
     },
-    '&>div': {
-      fontSize: '14px',
-      margin: 'auto'
-    }
+    '&>p': {
+      margin: 'auto',
+    },
   },
   facebookBtn: {
     ...commonStyle(),
     backgroundColor: '#1877f2',
     borderRadius: '4px',
+    margin: theme.spacing(1),
     '&>svg': {
       fontSize: 28,
       marginRight: '8px',
-      marginLeft: '.5rem'
+      marginLeft: '.5rem',
     },
-    '&>div': {
+    '&>p': {
       lineHeight: '1.4rem',
-      margin: 'auto'
-    }
-  }
+      margin: 'auto',
+    },
+  },
+  vkBtn: {
+    margin: theme.spacing(1),
+    color: '#fff'
+  },
 }));
 
 const commonStyle = () => ({
@@ -153,7 +166,6 @@ const commonStyle = () => ({
   color: '#fff',
   display: 'flex',
   alignItems: 'center',
-  marginBottom: '.5rem',
   cursor: 'pointer',
   boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.24), 0px 0px 1px rgba(0, 0, 0, 0.12)',
   transform: 'translateY(0)',
@@ -162,12 +174,12 @@ const commonStyle = () => ({
   border: 'none',
   '&:active:not(:disabled)': {
     boxShadow: 'unset',
-    transform: 'translateY(1px)'
+    transform: 'translateY(1px)',
   },
   '&:hover': {
-    boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.4)'
+    boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.4)',
   },
   '&:disabled': {
-    cursor: 'not-allowed'
-  }
+    cursor: 'not-allowed',
+  },
 });

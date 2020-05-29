@@ -41,6 +41,10 @@ export function router(
   app.get('/api/guest/blog/comments', fetchingLimiterMiddleware, controllers.getGuestBlogComments);
   app.get('/api/guest/blog/comment/replies', fetchingLimiterMiddleware, controllers.getGuestBlogCommentReplies);
 
+  // guest quizzes
+  // TODO: create guest quiz controller
+  app.get('/api/guest/quiz', fetchingLimiterMiddleware, controllers.getQuiz);
+
   app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
   app.post('/api/guest/blog/view', fetchingLimiterMiddleware, controllers.increaseBlogViews);
 
@@ -125,6 +129,17 @@ export function router(
     const getBlogId = req.params.blogId?.split('-').pop();
     const queryParams = { blogId: getBlogId };
     if (isNaN(Number(getBlogId))) {
+      res.status(HTTPStatus.NotFound);
+      return appNext.render(req, res, actualPage, queryParams);
+    }
+    appNext.render(req, res, actualPage, queryParams);
+  });
+
+  app.get('/quiz/:quizId', (req, res) => {
+    const actualPage = '/quiz';
+    const getQuizId = req.params.quizId;
+    const queryParams = { quizId: getQuizId };
+    if (isNaN(Number(getQuizId))) {
       res.status(HTTPStatus.NotFound);
       return appNext.render(req, res, actualPage, queryParams);
     }

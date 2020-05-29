@@ -31,6 +31,9 @@ export const getBLogs = (offset = 0) =>
 export const getBLog = (blogId: number) =>
   callApi<models.BlogGuest>('get', `api/guest/blog?blogId=${blogId}`);
 
+export const getQuiz = (quizId: number) =>
+  callApi<models.QuizGuestData>('get', `api/guest/quiz?quizId=${quizId}`);
+
 export const getBlogComments = (blogId: number, offset = 0) =>
   callApi<models.CommentItem[]>(
     'get',

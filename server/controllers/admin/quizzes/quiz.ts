@@ -153,29 +153,50 @@ export const deleteQuiz = async (req: Request, res: Response) => {
 };
 
 export const getQuiz = async (req: Request, res: Response) => {
-  const quizId = req.query['quizId'];
-  if (!quizId) return res.sendStatus(HTTPStatus.BadRequest);
+  try {
+    const data = {
+      quizId: req.query.quizId,
+    };
+    const validator = new Validator(req, res);
 
-  const quiz = await QuizModel.findOne({ shortId: quizId, deleted: null })
-    .populate({
-      path: 'quizQuestions',
-      options: { sort: { 'step': 'asc' } }
-    })
-    .exec();
+    await validator.check(
+      {
+        quizId: validator.typeOfNumber,
+      },
+      data
+    );
 
-  if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
+    await formator.formatData(
+      {
+        quizId: formator.formatNumber,
+      },
+      data
+    );
 
-  return res.send({
-    quizId: quiz.shortId,
-    status: quiz.status,
-    subtitle: quiz.subtitle,
-    title: quiz.title,
-    questions: quiz.quizQuestions.map((q) => ({
-      id: q.id,
-      step: q.step,
-      question: q.question,
-    })),
-  });
+    const quiz = await QuizModel.findOne({ shortId: data.quizId, deleted: null })
+      .populate({
+        path: 'quizQuestions',
+        options: { sort: { step: 'asc' } },
+      })
+      .exec();
+
+    if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
+
+    return res.send({
+      quizId: quiz.shortId,
+      status: quiz.status,
+      subtitle: quiz.subtitle,
+      title: quiz.title,
+      questions: quiz.quizQuestions.map((q) => ({
+        id: q.id,
+        step: q.step,
+        question: q.question,
+      })),
+    });
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.ServerError);
+  }
 };
 
 export const getQuizzes = async (req: Request, res: Response) => {

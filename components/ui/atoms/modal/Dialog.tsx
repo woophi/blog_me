@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 type Props = {
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   onConfirm?: () => void;
   title: React.ReactNode;
   confirmTitle?: string;

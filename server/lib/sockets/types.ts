@@ -1,6 +1,7 @@
 export enum NameSpaces {
   BLOGS = '/blogs',
-  ADMIN = '/admin'
+  ADMIN = '/admin',
+  QUIZ = '/quiz'
 }
 
 export enum EmitEvents {
