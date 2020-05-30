@@ -98,13 +98,10 @@ export function router(
 
   app.post('/api/admin/quiz', identity.authorizedForAdmin, controllers.createNewQuiz);
   app.put('/api/admin/quiz', identity.authorizedForAdmin, controllers.updateQuiz);
-  app.patch('/api/admin/quiz', identity.authorizedForAdmin, controllers.updateQuizWithQuestions);
   app.delete('/api/admin/quiz', identity.authorizedForAdmin, controllers.deleteQuiz);
   app.get('/api/admin/quiz', identity.authorizedForAdmin, controllers.getQuiz);
   app.get('/api/admin/quizzes', identity.authorizedForAdmin, controllers.getQuizzes);
   
-  app.get('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.getQuestions);
-  app.get('/api/admin/quiz/question', identity.authorizedForAdmin, controllers.getQuestion);
   app.put('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.updateQuestions);
 
   // facebook connect

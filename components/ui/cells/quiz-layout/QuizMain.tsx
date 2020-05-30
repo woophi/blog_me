@@ -19,9 +19,18 @@ export const QuizMain = React.memo(() => {
     }
   }, [participationHistory]);
 
+  const handleStartQuiz = React.useCallback(() => {
+    setStarted(true);
+  }, []);
+
   if (!started) {
     return (
-      <Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Box minWidth="50vw" padding="1rem" maxWidth="720px">
           <Typography component="div" gutterBottom>
             <div className="quill ">
@@ -46,7 +55,9 @@ export const QuizMain = React.memo(() => {
             </div>
           </Typography>
         </Box>
-        <Button onClick={() => setStarted(true)}>start</Button>
+        <Button color="primary" variant="contained" onClick={handleStartQuiz}>
+          Начать опрос
+        </Button>
       </Box>
     );
   }

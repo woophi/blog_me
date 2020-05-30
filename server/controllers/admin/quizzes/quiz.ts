@@ -1,6 +1,4 @@
 import QuizModel from 'server/models/quizzes';
-import QuizQuestionModel from 'server/models/quizQuestions';
-import QuizParticipantModel from 'server/models/quizParticipants';
 import * as models from 'server/models/types';
 import { Request, Response } from 'express-serve-static-core';
 import * as formator from 'server/formator';
@@ -9,7 +7,6 @@ import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
 import { generateRandomNumbers } from 'server/utils/prgn';
 import moment from 'moment';
-import async from 'async';
 
 export const createNewQuiz = async (req: Request, res: Response) => {
   try {
@@ -191,6 +188,7 @@ export const getQuiz = async (req: Request, res: Response) => {
         id: q.id,
         step: q.step,
         question: q.question,
+        type: q.type,
       })),
     });
   } catch (error) {
@@ -207,53 +205,4 @@ export const getQuizzes = async (req: Request, res: Response) => {
     .lean();
 
   return res.send(quizzes);
-};
-
-export const updateQuizWithQuestions = async (req: Request, res: Response) => {
-  try {
-    const validator = new Validator(req, res);
-    const data = {
-      shortId: req.body.quizId,
-      questionIds: req.body.questionIds as string[],
-    };
-    await validator.check(
-      {
-        shortId: validator.required,
-        quesstionIds: validator.required,
-      },
-      data
-    );
-    await formator.formatData(
-      {
-        shortId: formator.formatNumber,
-      },
-      data
-    );
-
-    const quizz = await QuizModel.findOne({
-      shortId: data.shortId,
-      deleted: null,
-    }).exec();
-
-    if (!quizz) {
-      return res.sendStatus(HTTPStatus.NotFound);
-    }
-
-    await quizz
-      .set({
-        quizQuestions: data.questionIds,
-      })
-      .save();
-
-    async.forEach(data.questionIds, (questionId) => {
-      QuizQuestionModel.findByIdAndUpdate(questionId, {
-        quiz: quizz.id,
-      });
-    });
-
-    return res.sendStatus(HTTPStatus.OK);
-  } catch (error) {
-    Logger.error(error);
-    return res.sendStatus(HTTPStatus.ServerError);
-  }
 };

@@ -39,8 +39,14 @@ export type QuestionData = {
   _id: string;
   step: number;
   question: string;
+  type: QuizQuestionType;
 };
 
 export type SaveQuestionModel = {
   id: string;
-} & Pick<QuestionData, 'question' | 'step'>;
+} & Omit<QuestionData, '_id' | 'quiz'>;
+
+export enum QuizQuestionType {
+  SIMPLE = 'simple',
+  NOTE = 'note',
+}

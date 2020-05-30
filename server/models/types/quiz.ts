@@ -12,12 +12,12 @@ export type QuizModel = {
 
   quizQuestions: QuizQuestion[];
   quizParticipants: QuizParticipant[];
-}
+};
 
 export enum QuizzStatus {
   Draft = 'draft',
   Open = 'open',
-  Closed = 'closed'
+  Closed = 'closed',
 }
 
 export type QuizQuestion = Model<QuizQuestionModel>;
@@ -25,7 +25,13 @@ export type QuizQuestion = Model<QuizQuestionModel>;
 export type QuizQuestionModel = {
   question: string;
   step: number;
+  type: QuizQuestionType;
   quiz?: Quiz;
+};
+
+export enum QuizQuestionType {
+  SIMPLE = 'simple',
+  NOTE = 'note',
 }
 
 export type QuizParticipant = Model<QuizParticipantModel>;
@@ -37,5 +43,5 @@ export type QuizParticipantModel = {
   quiz: Quiz;
   answers: {
     [step: number]: string;
-  },
-}
+  };
+};

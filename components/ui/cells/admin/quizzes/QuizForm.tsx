@@ -13,7 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import { createNewQuiz, editQuiz, deleteQuiz, updateQuestions } from './operations';
-import { QuizzStatus, AdminQuizFormData, SaveQuestionModel } from 'core/models/admin';
+import { QuizzStatus, AdminQuizFormData, SaveQuestionModel, QuizQuestionType } from 'core/models/admin';
 import { QuillEditor, quillPlaceholder } from 'ui/molecules/quill-editor';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -272,6 +272,7 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
                             question: quillPlaceholder,
                             step: fields.length + 1,
                             id: '',
+                            type: QuizQuestionType.SIMPLE
                           })
                         }
                         disabled={submitting}

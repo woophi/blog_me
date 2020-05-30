@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { SchemaNames, QuizQuestion } from './types';
+import { SchemaNames, QuizQuestion, QuizQuestionType } from './types';
 const timestamps = require('mongoose-timestamp');
 
 export const QuizQuestionSchema = new mongoose.Schema(
@@ -11,6 +11,11 @@ export const QuizQuestionSchema = new mongoose.Schema(
     step: {
       type: Number,
       required: true
+    },
+    type: {
+      type: String,
+      enum: ['simple', 'note'],
+      default: QuizQuestionType.SIMPLE
     },
     quiz: {
       type: mongoose.Schema.Types.ObjectId,

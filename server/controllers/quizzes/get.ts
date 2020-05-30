@@ -58,6 +58,7 @@ export const getQuizForGuest = async (req: Request, res: Response) => {
         id: q.id,
         step: q.step,
         question: q.question,
+        type: q.type,
       })),
       participationHistory: quiz.quizParticipants[0]
         ? {

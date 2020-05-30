@@ -5,12 +5,11 @@ import { Validator } from 'server/validator';
 import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
 import async from 'async';
-import * as formator from 'server/formator';
 import sortBy from 'ramda/src/sortBy';
 
 type SaveType = {
   id?: string;
-} & Pick<models.QuizQuestionModel, 'question' | 'step'>;
+} & Pick<models.QuizQuestionModel, 'question' | 'step' | 'type'>;
 
 export const updateQuestions = async (req: Request, res: Response) => {
   try {
@@ -35,6 +34,7 @@ export const updateQuestions = async (req: Request, res: Response) => {
       await QuizQuestionModel.findByIdAndUpdate(questionObj.id, {
         step: questionObj.step,
         question: questionObj.question,
+        type: questionObj.type
       });
       questionsResponse.push(questionObj);
     });
@@ -43,6 +43,7 @@ export const updateQuestions = async (req: Request, res: Response) => {
       const newQuestion = await new QuizQuestionModel({
         question: questionObj.question,
         step: questionObj.step,
+        type: questionObj.type
       }).save();
       questionsResponse.push({
         ...questionObj,
@@ -51,56 +52,6 @@ export const updateQuestions = async (req: Request, res: Response) => {
     });
 
     return res.send(sortBy((q) => q.step, questionsResponse));
-  } catch (error) {
-    Logger.error(error);
-    return res.sendStatus(HTTPStatus.ServerError);
-  }
-};
-
-export const getQuestions = async (req: Request, res: Response) => {
-  try {
-    const questions = QuizQuestionModel.find()
-      .populate({
-        path: 'quiz',
-        select: 'shortId -_id',
-      })
-      .select('quiz step question')
-      .lean();
-
-    return res.send(questions).status(HTTPStatus.OK);
-  } catch (error) {
-    Logger.error(error);
-    return res.sendStatus(HTTPStatus.ServerError);
-  }
-};
-
-export const getQuestion = async (req: Request, res: Response) => {
-  try {
-    const data = {
-      questionId: req.query['id'],
-    };
-    const validator = new Validator(req, res);
-    await validator.check(
-      {
-        questionId: validator.notMongooseObject,
-      },
-      data
-    );
-    await formator.formatData(
-      {
-        questionId: formator.formatString,
-      },
-      data
-    );
-    const questionData = QuizQuestionModel.findById(data.questionId)
-      .populate({
-        path: 'quiz',
-        select: 'shortId -_id',
-      })
-      .select('quiz step question')
-      .lean();
-
-    return res.send(questionData).status(HTTPStatus.OK);
   } catch (error) {
     Logger.error(error);
     return res.sendStatus(HTTPStatus.ServerError);
