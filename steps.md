@@ -37,5 +37,6 @@
 - [x] renew reset of password
 - [ ] quizz pages
 - [ ] quizz title make simple one without html or parse on back
+- [ ] route history
 - [ ] blog tags
 - [ ] notify queue for new comments

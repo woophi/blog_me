@@ -6,7 +6,6 @@ import { EventBus, BusEvents } from '../events';
 import * as storageTypes from 'server/storage/types';
 import { NameSpaces, EmitEvents } from './types';
 import { registerAgendaEvents } from '../agenda';
-import { verifyToken } from 'server/identity';
 
 export const registerSocket = (server: Server) => {
   const IO = socket(server);
@@ -72,37 +71,4 @@ export const registerSocket = (server: Server) => {
     EventBus.on(storageTypes.FStorageEvents.UPLOADED_FILE_SUCCESS, fileSuc);
     EventBus.on(storageTypes.FStorageEvents.UPLOADED_FILE_ERROR, fileErr);
   });
-
-  const nspQuiz = IO.of(NameSpaces.QUIZ);
-  nspQuiz.use((socket, next) => {
-    const token = socket.handshake.query?.token;
-    const { verificaitionError } = verifyToken(token);
-    if (verificaitionError) {
-      next(new Error('Authentication error'));
-    } else {
-      next();
-    }
-  });
-
-  nspQuiz.on('connection', async socket => {
-    Logger.info('nspQuiz connected');
-    const token = socket.handshake.query?.token;
-
-    socket.on('joinQuizRoom', quizRoomId => {
-      socket.join(quizRoomId);
-      Logger.info('joined quiz room', quizRoomId);
-    });
-
-    socket.on('leaveQuizRoom', quizRoomId => {
-      socket.leave(quizRoomId);
-      Logger.info('left quiz room', quizRoomId);
-    });
-
-    socket.on('disconnect', () => {
-      Logger.info('nspQuiz disconnected');
-      socket.leaveAll();
-      Logger.info(JSON.stringify(socket.rooms), 'socket rooms')
-    });
-  });
-
 };

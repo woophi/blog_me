@@ -21,7 +21,9 @@ export type QuizQuestionGuestData = {
 export type ParticipationHistory = {
   finished: boolean;
   lastStep: number;
-  answers: {
-    [step: number]: string;
-  };
+  answers: ParticipationAnswers;
+};
+
+export type ParticipationAnswers = {
+  [step: number]: string;
 };

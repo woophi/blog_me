@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { getQuizDataState, getUserId, getUserToken } from 'core/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { getQuizDataState } from 'core/selectors';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -14,33 +14,34 @@ import 'ui/molecules/quill-editor/quill.css';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { TextField } from 'ui/atoms';
-import { QuizQuestionType } from 'core/models';
-import { joinQuizRoom, connectSocketQuiz, leaveQuizRoom } from 'core/socket/quiz';
+import { QuizQuestionType, AppDispatchActions } from 'core/models';
 
 export const QuizSteps = React.memo(() => {
   const { questions, participationHistory, quizId } = useSelector(getQuizDataState);
-  const userId = useSelector(getUserId);
-  const token = useSelector(getUserToken);
-
+  const dispatch = useDispatch<AppDispatchActions>();
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(
     participationHistory?.lastStep - 1 || 0
   );
 
-  React.useEffect(() => {
-    if (quizId && userId) {
-      connectSocketQuiz(token);
-      joinQuizRoom(quizId, userId);
-    }
-  }, [quizId, userId, token]);
-
-  React.useEffect(() => {
-    return () => {
-      if (quizId && userId) {
-        leaveQuizRoom(quizId, userId);
-      }
-    };
-  }, []);
+  const answers = participationHistory?.answers ?? {};
+  const handleChangeAnswer = React.useCallback(
+    (
+      e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+      qNumber: number
+    ) => {
+      dispatch({
+        type: 'UPDATE_QUIZ_PARTICIPANT',
+        payload: {
+          answers: {
+            ...answers,
+            [qNumber]: e.target.value,
+          },
+        },
+      });
+    },
+    [answers]
+  );
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -57,7 +58,7 @@ export const QuizSteps = React.memo(() => {
         orientation="vertical"
         className={classes.steperContent}
       >
-        {questions.map((questionObj, index) => (
+        {questions.map((questionObj) => (
           <Step key={questionObj.id}>
             <StepLabel>Вопрос № {questionObj.step}</StepLabel>
             <StepContent className={classes.stepContent}>
@@ -78,6 +79,8 @@ export const QuizSteps = React.memo(() => {
                     type="textarea"
                     multiline
                     className={classes.answerInput}
+                    onChange={(e) => handleChangeAnswer(e, questionObj.step)}
+                    value={answers[questionObj.step] ?? ''}
                   />
                 )}
               </Box>
