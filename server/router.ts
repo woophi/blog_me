@@ -72,6 +72,9 @@ export function router(
   app.post('/api/app/user/comment', identity.authorizedForApp, controllers.createBlogComment);
   app.put('/api/app/user/comment', identity.authorizedForApp, controllers.rateBlogComment);
 
+  app.post('/api/app/user/quiz', identity.authorizedForApp, controllers.startQuiz);
+  app.get('/api/app/user/quiz/participation', identity.authorizedForApp, controllers.getQuizParticipationInfo);
+
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);
 

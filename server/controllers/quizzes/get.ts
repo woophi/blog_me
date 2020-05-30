@@ -12,7 +12,6 @@ export const getQuizForGuest = async (req: Request, res: Response) => {
   try {
     const data = {
       quizId: req.query.quizId,
-      userId: req.session.userId ?? null,
     };
     const validator = new Validator(req, res);
 
@@ -38,13 +37,6 @@ export const getQuizForGuest = async (req: Request, res: Response) => {
         options: { sort: { step: 'asc' } },
       });
 
-    if (data.userId) {
-      q = q.populate({
-        path: 'quizParticipants',
-        match: { user: data.userId },
-      });
-    }
-
     const quiz = await q.exec();
 
     if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
@@ -60,13 +52,54 @@ export const getQuizForGuest = async (req: Request, res: Response) => {
         question: q.question,
         type: q.type,
       })),
-      participationHistory: quiz.quizParticipants[0]
-        ? {
-            finished: quiz.quizParticipants[0].finished,
-            lastStep: quiz.quizParticipants[0].lastStep,
-            answers: quiz.quizParticipants[0].answers,
-          }
-        : null,
+      participationHistory: null,
+    });
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.ServerError);
+  }
+};
+
+export const getQuizParticipationInfo = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      quizId: req.query.quizId,
+      userId: req.session.userId,
+    };
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        quizId: validator.typeOfNumber,
+        userId: validator.notMongooseObject,
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        quizId: formator.formatNumber,
+        userId: formator.formatString,
+      },
+      data
+    );
+
+    let q = QuizModel.findOne({ shortId: data.quizId, deleted: null })
+      .where('status')
+      .ne(QuizzStatus.Draft)
+      .populate({
+        path: 'quizParticipants',
+        match: { user: data.userId },
+      });
+
+    const quiz = await q.exec();
+
+    if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
+
+    return res.send({
+      finished: quiz.quizParticipants[0]?.finished,
+      lastStep: quiz.quizParticipants[0]?.lastStep,
+      answers: quiz.quizParticipants[0]?.answers,
     });
   } catch (error) {
     Logger.error(error);

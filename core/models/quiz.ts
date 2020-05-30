@@ -1,6 +1,6 @@
-import { QuizzStatus } from './admin';
+import { QuizzStatus, QuizQuestionType } from './admin';
 
-export { QuizzStatus } from './admin';
+export { QuizzStatus, QuizQuestionType } from './admin';
 
 export type QuizGuestData = {
   quizId: number;
@@ -15,6 +15,7 @@ export type QuizQuestionGuestData = {
   id: string;
   step: number;
   question: string;
+  type: QuizQuestionType;
 };
 
 export type ParticipationHistory = {
@@ -22,5 +23,5 @@ export type ParticipationHistory = {
   lastStep: number;
   answers: {
     [step: number]: string;
-  }
-}
+  };
+};

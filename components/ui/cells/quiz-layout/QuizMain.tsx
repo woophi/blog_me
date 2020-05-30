@@ -8,9 +8,12 @@ import 'ui/molecules/quill-editor/quill.css';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { QuizSteps } from './QuizSteps';
+import { setNewParticipantToQuiz } from './operations';
 
 export const QuizMain = React.memo(() => {
-  const { participationHistory, subtitle, title } = useSelector(getQuizDataState);
+  const { participationHistory, subtitle, title, quizId } = useSelector(
+    getQuizDataState
+  );
   const [started, setStarted] = React.useState(false);
 
   React.useEffect(() => {
@@ -21,7 +24,8 @@ export const QuizMain = React.memo(() => {
 
   const handleStartQuiz = React.useCallback(() => {
     setStarted(true);
-  }, []);
+    setNewParticipantToQuiz(quizId);
+  }, [quizId]);
 
   if (!started) {
     return (

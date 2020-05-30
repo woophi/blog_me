@@ -11,7 +11,6 @@ import { QuizLayout } from 'ui/cells';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import Error from './_error';
-import { connectSocketQuiz, joinRoom, leaveRoom } from 'core/socket/quiz';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
@@ -21,7 +20,6 @@ type Props = {
 class Quiz extends React.Component<Props> {
   static async getInitialProps(context: NextPageContext) {
     try {
-      console.debug(context.pathname, 'hui')
       const quiz = await getQuiz(Number(context.query.quizId));
       return { quiz };
     } catch (error) {
@@ -39,16 +37,10 @@ class Quiz extends React.Component<Props> {
   };
 
   async componentDidMount() {
-    connectSocketQuiz();
-    joinRoom(String(this.props.router.query.quizId));
     if (or(isEmpty(this.props.quiz), isNil(this.props.quiz))) {
       const quiz = await getQuiz(Number(this.props.router.query.quizId));
       this.setState({ quiz });
     }
-  }
-
-  componentWillUnmount() {
-    leaveRoom(String(this.props.router.query.blogId));
   }
 
   render() {

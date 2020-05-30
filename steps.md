@@ -36,5 +36,6 @@
 - [x] fix jumping editor
 - [x] renew reset of password
 - [ ] quizz pages
+- [ ] quizz title make simple one without html or parse on back
 - [ ] blog tags
 - [ ] notify queue for new comments

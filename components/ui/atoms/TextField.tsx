@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
   input: (props: { textArea: boolean }) => ({
     marginLeft: '1rem',
     marginRight: '1rem',
-    minHeight: props.textArea ? '8rem' : '4rem',
     '&>label': {
       color: theme.palette.secondary.main
     },
