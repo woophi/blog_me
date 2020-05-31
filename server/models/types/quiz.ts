@@ -6,6 +6,7 @@ export type Quiz = Model<QuizModel>;
 export type QuizModel = {
   shortId: number;
   title: string;
+  plainTitle: string;
   subtitle: string;
   status: QuizzStatus;
   deleted?: Date;

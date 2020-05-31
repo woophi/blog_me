@@ -1,6 +1,4 @@
 import QuizModel from 'server/models/quizzes';
-import QuizQuestionModel from 'server/models/quizQuestions';
-import QuizParticipantModel from 'server/models/quizParticipants';
 import { Request, Response } from 'express-serve-static-core';
 import * as formator from 'server/formator';
 import { Validator } from 'server/validator';
@@ -53,6 +51,7 @@ export const getQuizForGuest = async (req: Request, res: Response) => {
         type: q.type,
       })),
       participationHistory: null,
+      plainTitle: quiz.plainTitle
     });
   } catch (error) {
     Logger.error(error);

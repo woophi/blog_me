@@ -7,6 +7,7 @@ export type QuizGuestData = {
   status: QuizzStatus;
   subtitle: string;
   title: string;
+  plainTitle: string;
   questions: QuizQuestionGuestData[];
   participationHistory: ParticipationHistory | null;
 };

@@ -98,13 +98,19 @@ export const setParticipantActions = async (req: Request, res: Response) => {
       return res.sendStatus(HTTPStatus.NotFound);
     }
 
+    const answers = data.actions.answers || {};
+
+    for (const answerK in answers) {
+      answers[answerK] = formator.formatHtml(answers[answerK]);
+    }
+
     await quizParticipant
       .set({
         finished: data.actions.finished || quizParticipant.finished,
         lastStep: data.actions.lastStep || quizParticipant.lastStep,
         answers: {
           ...quizParticipant.answers,
-          ...(data.actions.answers || {}),
+          ...answers,
         },
       })
       .save();

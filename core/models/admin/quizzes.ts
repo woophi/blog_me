@@ -19,6 +19,7 @@ type AdminQuizCommonData = {
   subtitle: string;
   title: string;
   id: string;
+  plainTitle: string;
 };
 
 export type AdminQuizData = AdminQuizCommonData & {

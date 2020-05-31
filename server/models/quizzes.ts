@@ -14,6 +14,9 @@ export const QuizzesSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    plainTitle: {
+      type: String
+    },
     subtitle: {
       type: String,
       required: true

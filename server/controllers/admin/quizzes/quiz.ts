@@ -36,6 +36,7 @@ export const createNewQuiz = async (req: Request, res: Response) => {
       title: data.title,
       subtitle: data.subtitle,
       shortId,
+      plainTitle: formator.formatHtml(data.title),
     } as Partial<models.QuizModel>).save();
 
     return res.send({ quizId: newQuizz.shortId }).status(HTTPStatus.OK);
@@ -98,6 +99,7 @@ export const updateQuiz = async (req: Request, res: Response) => {
         subtitle: data.subtitle,
         quizQuestions: data.questions,
         status: data.status,
+        plainTitle: formator.formatHtml(data.title),
       })
       .save();
 
@@ -190,7 +192,8 @@ export const getQuiz = async (req: Request, res: Response) => {
         question: q.question,
         type: q.type,
       })),
-      id: quiz.id
+      id: quiz.id,
+      plainTitle: quiz.plainTitle
     });
   } catch (error) {
     Logger.error(error);

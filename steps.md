@@ -36,9 +36,9 @@
 - [x] fix jumping editor
 - [x] renew reset of password
 - [x] quiz pages
-- [ ] control quiz relation assignments
-- [ ] quiz title make simple one without html or parse on back
-- [ ] route history
-- [ ] profile data
+- [x] control quiz relation assignments
+- [x] quiz title make simple one without html or parse on back
 - [ ] blog tags
+- [ ] profile data
 - [ ] notify queue for new comments
+- [ ] route history

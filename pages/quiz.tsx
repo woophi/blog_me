@@ -52,16 +52,16 @@ class Quiz extends React.Component<Props> {
       return <Error statusCode={404} err={''} />;
     }
 
-    const { title, quizId, subtitle } = quiz;
+    const { quizId, plainTitle } = quiz;
+    const title = `Опрос на тему: ${plainTitle}`;
     return (
       <>
         <Head>
           <meta property="og:url" content={`${SITE_URL}quiz/${quizId}`} />
-          <meta property="og:type" content="article" />
+          <meta property="og:type" content="quiz" />
           <meta property="og:title" content={title} />
-          <meta property="og:description" content={subtitle} />
         </Head>
-        <GeneralLayout>
+        <GeneralLayout title={title}>
           <QuizLayout quizData={quiz} />
         </GeneralLayout>
       </>

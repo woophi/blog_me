@@ -1,6 +1,11 @@
 import { Epic, ofType } from 'redux-observable';
 import { AppDispatch, AppState, AuthData, ParticipationHistory } from 'core/models';
-import { mergeMap, filter, debounceTime, ignoreElements } from 'rxjs/operators';
+import {
+  mergeMap,
+  filter,
+  ignoreElements,
+  throttleTime,
+} from 'rxjs/operators';
 import {
   getQuizParticipantionInfo,
   patchQuizParticipation,
@@ -9,7 +14,7 @@ import { getQuizId } from 'core/selectors';
 import anyPass from 'ramda/src/anyPass';
 import propEq from 'ramda/src/propEq';
 
-const SAVING_DEBOUNCE = 250;
+const SAVING_DEBOUNCE = 1000;
 
 export const quizParticipationEpic: Epic<AppDispatch, AppDispatch, AppState> = (
   action$,
@@ -41,7 +46,7 @@ export const quizParticipationAnswersEpic: Epic<
 > = (action$, state$) =>
   action$.pipe(
     ofType('UPDATE_QUIZ_PARTICIPANT'),
-    debounceTime(SAVING_DEBOUNCE),
+    throttleTime(SAVING_DEBOUNCE),
     filter(({ payload }) => {
       const action = payload as ParticipationHistory;
 

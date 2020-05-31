@@ -1,5 +1,5 @@
 export enum FormatType {
-    String = 'string',
-    Boolean = 'boolean',
-    Number = 'number'
+  String = 'string',
+  Boolean = 'boolean',
+  Number = 'number',
 }
