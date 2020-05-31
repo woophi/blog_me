@@ -124,13 +124,13 @@ const useStyles = makeStyles((theme) => ({
   googleBtn: {
     ...commonStyle(),
     padding: ' 0 8px 0 1px',
-    height: '40.5px',
+    height: '43px',
     backgroundColor: '#4285F4',
     borderRadius: '2px',
     margin: theme.spacing(1),
     '&>img': {
       position: 'relative',
-      top: 0,
+      top: -1,
       left: -3,
       marginRight: '6px',
     },
