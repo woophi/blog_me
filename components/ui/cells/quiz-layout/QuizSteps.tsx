@@ -17,7 +17,7 @@ import { TextField } from 'ui/atoms';
 import { QuizQuestionType, AppDispatchActions } from 'core/models';
 
 export const QuizSteps = React.memo(() => {
-  const { questions, participationHistory, quizId } = useSelector(getQuizDataState);
+  const { questions, participationHistory } = useSelector(getQuizDataState);
   const dispatch = useDispatch<AppDispatchActions>();
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(
@@ -25,6 +25,7 @@ export const QuizSteps = React.memo(() => {
   );
 
   const answers = participationHistory?.answers ?? {};
+  const lastStep = participationHistory?.lastStep ?? 1;
   const handleChangeAnswer = React.useCallback(
     (
       e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -45,10 +46,31 @@ export const QuizSteps = React.memo(() => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === questions.length - 1) {
+      dispatch({
+        type: 'UPDATE_QUIZ_PARTICIPANT',
+        payload: {
+          finished: true,
+        },
+      });
+    } else {
+      dispatch({
+        type: 'UPDATE_QUIZ_PARTICIPANT',
+        payload: {
+          lastStep: lastStep + 1,
+        },
+      });
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    dispatch({
+      type: 'UPDATE_QUIZ_PARTICIPANT',
+      payload: {
+        lastStep: lastStep - 1,
+      },
+    });
   };
 
   return (

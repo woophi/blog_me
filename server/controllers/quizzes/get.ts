@@ -84,22 +84,23 @@ export const getQuizParticipationInfo = async (req: Request, res: Response) => {
       data
     );
 
-    let q = QuizModel.findOne({ shortId: data.quizId, deleted: null })
+    const quiz = await QuizModel.findOne({ shortId: data.quizId, deleted: null })
       .where('status')
       .ne(QuizzStatus.Draft)
       .populate({
         path: 'quizParticipants',
         match: { user: data.userId },
-      });
+      })
+      .exec();
 
-    const quiz = await q.exec();
-
-    if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
+    if (!quiz || !quiz.quizParticipants[0]) {
+      return res.sendStatus(HTTPStatus.NotFound);
+    }
 
     return res.send({
-      finished: quiz.quizParticipants[0]?.finished,
-      lastStep: quiz.quizParticipants[0]?.lastStep,
-      answers: quiz.quizParticipants[0]?.answers,
+      finished: quiz.quizParticipants[0].finished,
+      lastStep: quiz.quizParticipants[0].lastStep,
+      answers: quiz.quizParticipants[0].answers,
     });
   } catch (error) {
     Logger.error(error);

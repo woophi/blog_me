@@ -5,7 +5,7 @@ import * as formator from 'server/formator';
 import { Validator } from 'server/validator';
 import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
-import { QuizzStatus } from 'server/models/types';
+import { QuizzStatus, ParticipationHistory } from 'server/models/types';
 
 export const startQuiz = async (req: Request, res: Response) => {
   try {
@@ -58,12 +58,12 @@ export const startQuiz = async (req: Request, res: Response) => {
     return res.sendStatus(HTTPStatus.ServerError);
   }
 };
-export const setParticipantAnswers = async (req: Request, res: Response) => {
+export const setParticipantActions = async (req: Request, res: Response) => {
   try {
     const data = {
       quizId: req.body.quizId,
       userId: req.session.userId,
-      answers: req.body.answers
+      actions: req.body.actions as Partial<ParticipationHistory>,
     };
     const validator = new Validator(req, res);
 
@@ -71,7 +71,7 @@ export const setParticipantAnswers = async (req: Request, res: Response) => {
       {
         quizId: validator.typeOfNumber,
         userId: validator.notMongooseObject,
-        answers: validator.notIsEmpty
+        actions: validator.notIsEmpty,
       },
       data
     );
@@ -80,7 +80,6 @@ export const setParticipantAnswers = async (req: Request, res: Response) => {
       {
         quizId: formator.formatNumber,
         userId: formator.formatString,
-        answers: formator.formatObject(formator.FormatType.String)
       },
       data
     );
@@ -101,10 +100,12 @@ export const setParticipantAnswers = async (req: Request, res: Response) => {
 
     await quizParticipant
       .set({
+        finished: data.actions.finished || quizParticipant.finished,
+        lastStep: data.actions.lastStep || quizParticipant.lastStep,
         answers: {
           ...quizParticipant.answers,
-          ...data.answers
-        }
+          ...(data.actions.answers || {}),
+        },
       })
       .save();
 

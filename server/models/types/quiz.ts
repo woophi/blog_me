@@ -37,11 +37,16 @@ export enum QuizQuestionType {
 export type QuizParticipant = Model<QuizParticipantModel>;
 
 export type QuizParticipantModel = {
-  lastStep: number;
-  finished: boolean;
   user: User;
   quiz: Quiz;
-  answers: {
-    [step: number]: string;
-  };
+} & ParticipationHistory;
+
+export type ParticipationHistory = {
+  finished: boolean;
+  lastStep: number;
+  answers: ParticipationAnswers;
+};
+
+export type ParticipationAnswers = {
+  [step: number]: string;
 };

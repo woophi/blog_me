@@ -1,5 +1,5 @@
 import { callUserApi } from 'core/common';
-import { ParticipationHistory, ParticipationAnswers } from 'core/models';
+import { ParticipationHistory } from 'core/models';
 
 export const getQuizParticipantionInfo = (quizId: number) =>
   callUserApi<ParticipationHistory>(
@@ -7,8 +7,8 @@ export const getQuizParticipantionInfo = (quizId: number) =>
     `api/app/user/quiz/participation?quizId=${quizId}`
   );
 
-export const patchQuizAnswers = (quizId: number, answers: ParticipationAnswers) =>
-  callUserApi('patch', 'api/app/user/quiz/answers', {
+export const patchQuizParticipation = (quizId: number, actions: Partial<ParticipationHistory>) =>
+  callUserApi('patch', 'api/app/user/quiz/participation', {
     quizId,
-    answers,
+    actions,
   });

@@ -17,7 +17,7 @@ export const QuizMain = React.memo(() => {
   const [started, setStarted] = React.useState(false);
 
   React.useEffect(() => {
-    if (!!participationHistory?.lastStep) {
+    if (!!participationHistory?.lastStep && !participationHistory?.finished) {
       setStarted(true);
     }
   }, [participationHistory]);
@@ -26,6 +26,10 @@ export const QuizMain = React.memo(() => {
     setStarted(true);
     setNewParticipantToQuiz(quizId);
   }, [quizId]);
+
+  if (participationHistory?.finished) {
+    return null;
+  }
 
   if (!started) {
     return (

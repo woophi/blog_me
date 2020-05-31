@@ -3,9 +3,11 @@ import { AppDispatch, AppState, AuthData, ParticipationHistory } from 'core/mode
 import { mergeMap, filter, debounceTime, ignoreElements } from 'rxjs/operators';
 import {
   getQuizParticipantionInfo,
-  patchQuizAnswers,
+  patchQuizParticipation,
 } from 'core/operations/quizParticipants';
 import { getQuizId } from 'core/selectors';
+import anyPass from 'ramda/src/anyPass';
+import propEq from 'ramda/src/propEq';
 
 const SAVING_DEBOUNCE = 250;
 
@@ -16,7 +18,7 @@ export const quizParticipationEpic: Epic<AppDispatch, AppDispatch, AppState> = (
   action$.pipe(
     ofType('SET_USER'),
     filter(({ payload }) => !!(payload as AuthData).userId),
-    mergeMap(async (action) => {
+    mergeMap(async () => {
       const quizId = getQuizId(state$.value);
       const payload = await getQuizParticipantionInfo(quizId);
       return {
@@ -34,13 +36,18 @@ export const quizParticipationAnswersEpic: Epic<
   action$.pipe(
     ofType('UPDATE_QUIZ_PARTICIPANT'),
     debounceTime(SAVING_DEBOUNCE),
-    filter(({ payload }) => !!(payload as ParticipationHistory).answers),
+    filter(({ payload }) => {
+      const action = payload as ParticipationHistory;
+
+      return anyPass<ParticipationHistory>([
+        propEq('answers', undefined),
+        propEq('finished', undefined),
+        propEq('lastStep', undefined),
+      ])(action);
+    }),
     mergeMap(async (action) => {
       const quizId = getQuizId(state$.value);
-      await patchQuizAnswers(
-        quizId,
-        (action.payload as ParticipationHistory).answers
-      );
+      await patchQuizParticipation(quizId, action.payload as ParticipationHistory);
     }),
     ignoreElements()
   );

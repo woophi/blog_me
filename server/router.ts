@@ -74,7 +74,7 @@ export function router(
 
   app.post('/api/app/user/quiz', identity.authorizedForApp, controllers.startQuiz);
   app.get('/api/app/user/quiz/participation', identity.authorizedForApp, controllers.getQuizParticipationInfo);
-  app.patch('/api/app/user/quiz/answers', identity.authorizedForApp, controllers.setParticipantAnswers);
+  app.patch('/api/app/user/quiz/participation', identity.authorizedForApp, controllers.setParticipantActions);
 
   // admin
   app.post('/api/admin/create/link', identity.authorizedForSuperAdmin, controllers.generateNewShortLink);

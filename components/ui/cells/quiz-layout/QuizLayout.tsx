@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { QuizGuestData, QuizzStatus, AppDispatchActions } from 'core/models';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserId, getUserFetching } from 'core/selectors';
+import { getUserId, getUserFetching, getQuizDataState } from 'core/selectors';
 import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
 import { ModalDialog, Spinner } from 'ui/atoms';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { QuizMain } from './QuizMain';
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 export const QuizLayout = React.memo<Props>(({ quizData }) => {
   const userFetching = useSelector(getUserFetching);
   const userId = useSelector(getUserId);
+  const { participationHistory } = useSelector(getQuizDataState);
   const dispatch = useDispatch<AppDispatchActions>();
 
   React.useEffect(() => {
@@ -37,11 +39,23 @@ export const QuizLayout = React.memo<Props>(({ quizData }) => {
   }
 
   if (quizData.status === QuizzStatus.Closed) {
-    return <Box>Quiz ended</Box>;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" padding="1rem">
+        <Typography variant="h1" component="h2" gutterBottom>
+          Опрос закрыт.
+        </Typography>
+      </Box>
+    );
   }
 
-  if (quizData.participationHistory?.finished) {
-    return <Box>Вы уже завершили этот quiz</Box>;
+  if (participationHistory?.finished) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" padding="1rem">
+        <Typography variant="h1" component="h2" gutterBottom>
+          Спасибо за участие в опросе!
+        </Typography>
+      </Box>
+    );
   }
 
   return <QuizMain />;
