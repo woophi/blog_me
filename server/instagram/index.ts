@@ -45,7 +45,7 @@ export const postToInstagram = async ({ blogId, done }: NewBlogEventParams) => {
       Logger.debug('got post link');
       await ig.publish.photo({
         file: buffData,
-        caption: `${title} ${shortText} Ссылка в описании профиля. #IT #web #JustJavaScript #вайти #webdev`
+        caption: `${title} ${shortText} Ссылка в описании профиля. #IT #web #JustJavaScript #вайти #webdev #новичкипрограммисты #программист #js`
       });
       Logger.debug('ig photo published');
 
