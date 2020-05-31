@@ -2,9 +2,9 @@ export type AdminQuizItem = {
   shortId: number;
   status: QuizzStatus;
   subtitle: string;
-  title: string;
   quizQuestions: string[];
   quizParticipants: string[];
+  plainTitle: string;
 };
 
 export enum QuizzStatus {

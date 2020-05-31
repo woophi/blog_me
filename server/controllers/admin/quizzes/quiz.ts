@@ -205,7 +205,7 @@ export const getQuizzes = async (req: Request, res: Response) => {
   const quizzes = await QuizModel.find()
     .where('deleted', null)
     .sort('createdAt')
-    .select('shortId status subtitle title quizQuestions quizParticipants -_id')
+    .select('shortId status quizQuestions quizParticipants plainTitle -_id')
     .lean();
 
   return res.send(quizzes);

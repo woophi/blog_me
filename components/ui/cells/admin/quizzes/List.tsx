@@ -22,9 +22,8 @@ const Row = (props: ListChildComponentProps) => {
         primaryTypographyProps={{ noWrap: true }}
         style={styleTruncate}
         onClick={() => goToDeep(`edit/${quzzies[index].shortId}`)}
-      >
-        <div dangerouslySetInnerHTML={{ __html: quzzies[index].title }} />
-      </ListItemText>
+        primary={quzzies[index].plainTitle}
+      />
     </ListItem>
   );
 };
@@ -36,7 +35,7 @@ export const QuizzesList: React.FC<Props> = ({ quzzies }) => {
   const getList = () =>
     quzzies.filter(
       (f) =>
-        f.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        f.plainTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
         f.shortId.toString().toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
 
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: '.5rem',
       margin: '1rem',
       height: '100%',
-      minHeight: '320px'
+      minHeight: '320px',
     },
   })
 );
