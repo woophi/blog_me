@@ -16,11 +16,13 @@ export const updateQuestions = async (req: Request, res: Response) => {
     const validator = new Validator(req, res);
     const data = {
       questions: req.body.questions as SaveType[],
+      quizId: req.body.id,
     };
 
     await validator.check(
       {
         questions: validator.required,
+        quizId: validator.notMongooseObject,
       },
       data
     );
@@ -34,7 +36,8 @@ export const updateQuestions = async (req: Request, res: Response) => {
       await QuizQuestionModel.findByIdAndUpdate(questionObj.id, {
         step: questionObj.step,
         question: questionObj.question,
-        type: questionObj.type
+        type: questionObj.type,
+        quiz: data.quizId,
       });
       questionsResponse.push(questionObj);
     });
@@ -43,7 +46,8 @@ export const updateQuestions = async (req: Request, res: Response) => {
       const newQuestion = await new QuizQuestionModel({
         question: questionObj.question,
         step: questionObj.step,
-        type: questionObj.type
+        type: questionObj.type,
+        quiz: data.quizId,
       }).save();
       questionsResponse.push({
         ...questionObj,

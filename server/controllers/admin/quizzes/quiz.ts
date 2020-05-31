@@ -190,6 +190,7 @@ export const getQuiz = async (req: Request, res: Response) => {
         question: q.question,
         type: q.type,
       })),
+      id: quiz.id
     });
   } catch (error) {
     Logger.error(error);

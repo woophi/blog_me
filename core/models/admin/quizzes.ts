@@ -18,6 +18,7 @@ type AdminQuizCommonData = {
   status: QuizzStatus;
   subtitle: string;
   title: string;
+  id: string;
 };
 
 export type AdminQuizData = AdminQuizCommonData & {

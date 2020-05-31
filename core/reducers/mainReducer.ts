@@ -7,7 +7,7 @@ export const initialState: models.AppState['ui'] = {
     roles: [],
     token: '',
     userId: '',
-    fetching: true
+    fetching: true,
   },
   admin: {
     section: admin.Section.Albums,
@@ -15,14 +15,14 @@ export const initialState: models.AppState['ui'] = {
     selectedFile: null,
     uploadingFile: false,
     facebookActive: false,
-    uploadFailed: false
+    uploadFailed: false,
   },
   comments: [],
   replies: [],
   searchResults: [],
   searchQuery: '',
   searchStatus: models.SearchStatus.init,
-  quiz: null
+  quiz: null,
 };
 
 export const reducer = (
@@ -33,56 +33,56 @@ export const reducer = (
     case 'SET_USER': {
       return {
         ...state,
-        user: dispatch.payload
+        user: dispatch.payload,
       };
     }
     case 'SET_COMMENTS': {
       return {
         ...state,
-        comments: dispatch.payload.comments
+        comments: dispatch.payload.comments,
       };
     }
     case 'LOAD_MORE_COMMENTS': {
       return {
         ...state,
-        comments: [...state.comments, ...dispatch.payload.comments]
+        comments: [...state.comments, ...dispatch.payload.comments],
       };
     }
     case 'UPDATE_COMMENTS': {
       return {
         ...state,
-        comments: [...state.comments, dispatch.payload.comment]
+        comments: [...state.comments, dispatch.payload.comment],
       };
     }
     case 'UPDATE_COMMENT_REPLIES': {
       return {
         ...state,
-        comments: state.comments.map(c =>
+        comments: state.comments.map((c) =>
           c._id == dispatch.payload.commentId
             ? {
                 ...c,
-                replies: [...c.replies, ...dispatch.payload.replies]
+                replies: [...c.replies, ...dispatch.payload.replies],
               }
             : c
-        )
+        ),
       };
     }
     case 'SET_REPLIES': {
       return {
         ...state,
-        replies: dispatch.payload.replies
+        replies: dispatch.payload.replies,
       };
     }
     case 'LOAD_MORE_REPLIES': {
       return {
         ...state,
-        replies: [...state.replies, ...dispatch.payload.replies]
+        replies: [...state.replies, ...dispatch.payload.replies],
       };
     }
     case 'UPDATE_REPLIES': {
       return {
         ...state,
-        replies: [...state.replies, dispatch.payload.reply]
+        replies: [...state.replies, dispatch.payload.reply],
       };
     }
 
@@ -91,8 +91,8 @@ export const reducer = (
         ...state,
         user: {
           ...state.user,
-          token: dispatch.payload
-        }
+          token: dispatch.payload,
+        },
       };
     }
     case 'SET_USER_FETCHING': {
@@ -100,8 +100,8 @@ export const reducer = (
         ...state,
         user: {
           ...state.user,
-          fetching: dispatch.payload
-        }
+          fetching: dispatch.payload,
+        },
       };
     }
     case 'FETCH_FILES': {
@@ -109,8 +109,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          files: dispatch.payload
-        }
+          files: dispatch.payload,
+        },
       };
     }
     case 'UPDATE_FILES': {
@@ -118,8 +118,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          files: [dispatch.payload, ...state.admin.files]
-        }
+          files: [dispatch.payload, ...state.admin.files],
+        },
       };
     }
     case 'SELECT_FILE': {
@@ -127,8 +127,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          selectedFile: dispatch.payload
-        }
+          selectedFile: dispatch.payload,
+        },
       };
     }
     case 'UPLOADING_FILE': {
@@ -136,8 +136,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          uploadingFile: dispatch.payload
-        }
+          uploadingFile: dispatch.payload,
+        },
       };
     }
     case 'UPLOAD_FAILED': {
@@ -145,8 +145,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          uploadFailed: dispatch.payload
-        }
+          uploadFailed: dispatch.payload,
+        },
       };
     }
     case 'UPDATE_FACEBOOK_ACTIVE': {
@@ -154,8 +154,8 @@ export const reducer = (
         ...state,
         admin: {
           ...state.admin,
-          facebookActive: dispatch.payload
-        }
+          facebookActive: dispatch.payload,
+        },
       };
     }
 
@@ -163,48 +163,53 @@ export const reducer = (
       return {
         ...state,
         searchResults: dispatch.payload,
-        searchStatus: models.SearchStatus.init
+        searchStatus: models.SearchStatus.init,
       };
     }
     case 'SET_SEARCH_QUERY': {
       return {
         ...state,
-        searchQuery: dispatch.payload
+        searchQuery: dispatch.payload,
       };
     }
     case 'SET_SEARCH_STATUS': {
       return {
         ...state,
-        searchStatus: dispatch.payload
+        searchStatus: dispatch.payload,
       };
     }
 
     case 'SET_QUIZ': {
       return {
         ...state,
-        quiz: dispatch.payload
-      }
+        quiz: dispatch.payload,
+      };
     }
     case 'UPDATE_QUIZ': {
       return {
         ...state,
         quiz: {
           ...state.quiz,
-          ...dispatch.payload
-        }
-      }
+          ...dispatch.payload,
+        },
+      };
     }
     case 'UPDATE_QUIZ_PARTICIPANT': {
+      if (dispatch.payload === null) {
+        return {
+          ...state,
+        };
+      }
       return {
         ...state,
         quiz: {
           ...state.quiz,
           participationHistory: {
             ...state.quiz.participationHistory,
-            ...dispatch.payload
-          }
-        }
-      }
+            ...dispatch.payload,
+          },
+        },
+      };
     }
 
     default: {

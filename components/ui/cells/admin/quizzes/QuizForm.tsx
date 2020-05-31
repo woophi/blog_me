@@ -13,7 +13,12 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Box from '@material-ui/core/Box';
 import { createNewQuiz, editQuiz, deleteQuiz, updateQuestions } from './operations';
-import { QuizzStatus, AdminQuizFormData, SaveQuestionModel, QuizQuestionType } from 'core/models/admin';
+import {
+  QuizzStatus,
+  AdminQuizFormData,
+  SaveQuestionModel,
+  QuizQuestionType,
+} from 'core/models/admin';
 import { QuillEditor, quillPlaceholder } from 'ui/molecules/quill-editor';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -46,9 +51,9 @@ const onSubmit = async (data: QuizForm, quizId?: number, f?: FormApi<QuizForm>) 
     if (quizId) {
       let questions: SaveQuestionModel[] = [];
       if (data.questions?.length) {
-        questions = await updateQuestions(data.questions);
+        questions = await updateQuestions(data.questions, data.id);
       }
-      await editQuiz({ ...data, quizId, questions: questions.map(q => q.id) });
+      await editQuiz({ ...data, quizId, questions: questions.map((q) => q.id) });
       f.setConfig('initialValues', { ...f.getState().values, questions });
     } else {
       const { quizId } = await createNewQuiz(data);
@@ -272,7 +277,7 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
                             question: quillPlaceholder,
                             step: fields.length + 1,
                             id: '',
-                            type: QuizQuestionType.SIMPLE
+                            type: QuizQuestionType.SIMPLE,
                           })
                         }
                         disabled={submitting}

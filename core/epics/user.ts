@@ -20,10 +20,16 @@ export const quizParticipationEpic: Epic<AppDispatch, AppDispatch, AppState> = (
     filter(({ payload }) => !!(payload as AuthData).userId),
     mergeMap(async () => {
       const quizId = getQuizId(state$.value);
-      const payload = await getQuizParticipantionInfo(quizId);
+      if (quizId) {
+        const payload = await getQuizParticipantionInfo(quizId);
+        return {
+          type: 'UPDATE_QUIZ_PARTICIPANT',
+          payload,
+        } as AppDispatch;
+      }
       return {
         type: 'UPDATE_QUIZ_PARTICIPANT',
-        payload,
+        payload: null,
       } as AppDispatch;
     })
   );
