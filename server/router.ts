@@ -107,6 +107,7 @@ export function router(
   app.get('/api/admin/quizzes', identity.authorizedForAdmin, controllers.getQuizzes);
   
   app.put('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.updateQuestions);
+  app.get('/api/admin/quiz/participants', identity.authorizedForAdmin, controllers.getQuizParticipants);
 
   // facebook connect
   app.get('/setup/fb', controllers.fbLogin);
@@ -153,6 +154,12 @@ export function router(
   });
   app.get('/admin/quizzes/edit/:quizId', identity.authorizedForAdmin, (req, res) => {
     const actualPage = '/admin/quizzes/edit';
+    const queryParams = { quizId: req.params.quizId };
+    appNext.render(req, res, actualPage, queryParams);
+  });
+
+  app.get('/admin/quizzes/participants/:quizId', identity.authorizedForAdmin, (req, res) => {
+    const actualPage = '/admin/quizzes/participants';
     const queryParams = { quizId: req.params.quizId };
     appNext.render(req, res, actualPage, queryParams);
   });

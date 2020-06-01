@@ -52,3 +52,15 @@ export enum QuizQuestionType {
   SIMPLE = 'simple',
   NOTE = 'note',
 }
+
+export type AdminQuizParticipantData = {
+  finished: boolean;
+  lastStep: number;
+  answers: AdminQuizParticipationAnswers;
+  userName: string;
+  userId: string;
+};
+
+export type AdminQuizParticipationAnswers = {
+  [step: number]: string;
+};

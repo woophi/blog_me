@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
+import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { InputSearch, styleTruncate } from 'ui/atoms';
 import { AdminQuizItem } from 'core/models/admin';
 import { goToDeep } from 'core/common';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 type Props = {
   quzzies: AdminQuizItem[];
@@ -24,6 +26,10 @@ const Row = (props: ListChildComponentProps) => {
         onClick={() => goToDeep(`edit/${quzzies[index].shortId}`)}
         primary={quzzies[index].plainTitle}
       />
+      <IconButton onClick={() => goToDeep(`participants/${quzzies[index].shortId}`)}>
+        <PeopleAltIcon />
+        {quzzies[index].quizParticipants.length}
+      </IconButton>
     </ListItem>
   );
 };

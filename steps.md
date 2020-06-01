@@ -38,6 +38,7 @@
 - [x] quiz pages
 - [x] control quiz relation assignments
 - [x] quiz title make simple one without html or parse on back
+- [x] quiz info (participants, their answers)
 - [ ] blog tags
 - [ ] profile data
 - [ ] notify queue for new comments

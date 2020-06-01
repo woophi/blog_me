@@ -11,7 +11,7 @@ export const rootEpic: Epic = (action$, store$, dependencies) =>
     quizParticipationAnswersEpic
   )(action$, store$, dependencies).pipe(
     catchError((error, source) => {
-      console.error(JSON.stringify(error));
+      console.error(error);
       return source;
     })
   );

@@ -50,7 +50,7 @@ export const quizParticipationAnswersEpic: Epic<
     filter(({ payload }) => {
       const action = payload as ParticipationHistory;
 
-      return anyPass<ParticipationHistory>([
+      return !!action && anyPass<ParticipationHistory>([
         propEq('answers', undefined),
         propEq('finished', undefined),
         propEq('lastStep', undefined),

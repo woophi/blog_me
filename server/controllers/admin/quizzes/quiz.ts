@@ -193,7 +193,7 @@ export const getQuiz = async (req: Request, res: Response) => {
         type: q.type,
       })),
       id: quiz.id,
-      plainTitle: quiz.plainTitle
+      plainTitle: quiz.plainTitle,
     });
   } catch (error) {
     Logger.error(error);
@@ -209,4 +209,52 @@ export const getQuizzes = async (req: Request, res: Response) => {
     .lean();
 
   return res.send(quizzes);
+};
+
+export const getQuizParticipants = async (req: Request, res: Response) => {
+  try {
+    const data = {
+      quizId: req.query.quizId,
+    };
+    const validator = new Validator(req, res);
+
+    await validator.check(
+      {
+        quizId: validator.typeOfNumber,
+      },
+      data
+    );
+
+    await formator.formatData(
+      {
+        quizId: formator.formatNumber,
+      },
+      data
+    );
+
+    const quiz = await QuizModel.findOne({ shortId: data.quizId, deleted: null })
+      .populate({
+        path: 'quizParticipants',
+        populate: {
+          path: 'user',
+          select: 'name id',
+        },
+      })
+      .exec();
+
+    if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
+
+    return res.send(
+      quiz.quizParticipants.map((qp) => ({
+        finished: qp.finished,
+        lastStep: qp.lastStep,
+        answers: qp.answers,
+        userName: qp.user.name,
+        userId: qp.user.id
+      }))
+    );
+  } catch (error) {
+    Logger.error(error);
+    return res.sendStatus(HTTPStatus.ServerError);
+  }
 };

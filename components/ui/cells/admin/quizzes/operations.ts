@@ -20,6 +20,12 @@ export const getQuizData = (quizId: number) =>
     `api/admin/quiz?quizId=${quizId}`
   );
 
+export const getQuizParticipantsData = (quizId: number) =>
+  callUserApi<adminModels.AdminQuizParticipantData[]>(
+    'get',
+    `api/admin/quiz/participants?quizId=${quizId}`
+  );
+
 export const updateQuestions = (questions: adminModels.SaveQuestionModel[], id: string) =>
   callUserApi<adminModels.SaveQuestionModel[]>('put', 'api/admin/quiz/questions', {
     questions,
