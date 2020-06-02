@@ -24,7 +24,7 @@ export const ButtonsForm = React.memo<Props>(
     onCancel,
     submitLabel,
     noMargin = false,
-    invalid
+    invalid,
   }) => {
     const classes = useStyles({ noMargin });
     const { t } = useTranslation();
@@ -53,7 +53,7 @@ export const ButtonsForm = React.memo<Props>(
             <Icon
               color="action"
               style={{
-                display: 'flex'
+                display: 'flex',
               }}
             >
               <FontAwesomeIcon icon={faCircleNotch} spin />
@@ -71,6 +71,8 @@ const useStyles = makeStyles((theme) => ({
   button: (props: any) => ({
     margin: props.noMargin ? undefined : '0 auto 1rem',
     color: theme.palette.text.secondary,
+    position: 'sticky',
+    bottom: 10,
   }),
   sbm: {
     color: theme.palette.text.secondary,
