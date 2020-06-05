@@ -13,7 +13,7 @@ export const vKAuthFirstStep = (req: Request, res: Response) => {
     { redirect_uri: config.SITE_URI + 'login/vk/complete' },
     { response_type: 'code' },
     { scope: scopes.join('+') },
-    { state: '{}' }
+    { state: '{}' },
   ])}`;
   res.redirect(url);
 };
@@ -45,13 +45,13 @@ const getAccessToken = async (code: string) => {
       { code: code },
       { client_id: config.VK_CLIENT_ID },
       { client_secret: config.VK_CLIENT_SECRET },
-      { redirect_uri: config.SITE_URI + 'login/vk/complete' }
+      { redirect_uri: config.SITE_URI + 'login/vk/complete' },
     ])}`
   );
   return {
     email,
     access_token,
-    user_id
+    user_id,
   };
 };
 
@@ -60,12 +60,12 @@ const getUserInfo = async (accessToken: string) => {
     'post',
     `https://api.vk.com/method/users.get${buildQueryString([
       { access_token: accessToken },
-      { fields: ['screen_name', 'nickname'].join(',') }
+      { fields: ['screen_name', 'nickname'].join(',') },
     ])}&v=5.103`
   );
   const { id, first_name, last_name, screen_name, nickname } = data.response[0];
   return {
     id: id,
-    name: nickname || screen_name || first_name + ' ' + last_name
+    name: nickname || screen_name || first_name + ' ' + last_name,
   };
 };

@@ -5,13 +5,11 @@ import * as cl from 'server/storage/cloudinary';
 import { EventBus, BusEvents } from '../events';
 import * as storageTypes from 'server/storage/types';
 import { NameSpaces, EmitEvents } from './types';
-import { registerAgendaEvents } from '../agenda';
 
 export const registerSocket = (server: Server) => {
   const IO = socket(server);
   Logger.debug('Storage register events');
   cl.registerCloudinaryEvents();
-  registerAgendaEvents();
 
   const nspBlogs = IO.of(NameSpaces.BLOGS);
 

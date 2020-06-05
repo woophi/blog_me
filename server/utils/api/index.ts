@@ -9,8 +9,6 @@ export const callApi = async (
   payload: object = null
 ) => {
   try {
-    Logger.debug('Api url ' + url);
-
     const payloadString = payload != null ? JSON.stringify(payload) : null;
 
     const rc: AxiosRequestConfig = {
@@ -43,7 +41,6 @@ export const callApi = async (
       }
       return {};
     }
-    Logger.info(result?.status);
     return result?.data;
   } catch (error) {
     Logger.error('fetch api error', error);

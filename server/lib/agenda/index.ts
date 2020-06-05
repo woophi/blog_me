@@ -14,9 +14,9 @@ export const agenda: Agenda = new Agenda(
       address: databaseUri,
       collection: SchemaNames.JOBS,
       options: {
-        useNewUrlParser: true
-      }
-    }
+        useNewUrlParser: true,
+      },
+    },
   },
   () => agenda.start().then(() => redefineAllJobs())
 );
@@ -36,12 +36,18 @@ const schedulePost = async ({ blogId, fbPageId }: NewBlogEventParams) => {
     j.schedule(blog.publishedDate);
     await j.save();
   } else {
-    schedulePostJob(task);
+    scheduleBlogPostJob(task);
     await agenda.schedule(blog.publishedDate, task, { blogId });
   }
 };
 
-agenda.on('start', job => {
+agenda.on('ready', function () {
+  registerAgendaEvents();
+  agenda.every('1 minute', 'fetchHaudiPosts');
+  agenda.every('1 minute', 'checkVkPostToNotify');
+});
+
+agenda.on('start', (job) => {
   Logger.debug('Job starting', job.attrs.name);
 });
 
@@ -50,14 +56,20 @@ agenda.on('fail', (err, job) => {
 });
 
 const redefineAllJobs = async () => {
-  const jobs = await agenda.jobs({ lastFinishedAt: undefined });
-  jobs.forEach(j => {
+  const jobs = await agenda.jobs({
+    lastFinishedAt: undefined,
+    $and: [
+      { name: { $ne: 'fetchHaudiPosts' } },
+      { name: { $ne: 'checkVkPostToNotify' } },
+    ],
+  });
+  jobs.forEach((j) => {
     Logger.debug('redefined job', j.attrs.name);
-    schedulePostJob(j.attrs.name);
+    scheduleBlogPostJob(j.attrs.name);
   });
 };
 
-const schedulePostJob = (taskName: string) => {
+const scheduleBlogPostJob = (taskName: string) => {
   agenda.define<{ blogId: number }>(
     taskName,
     { priority: 'high', concurrency: 10 },

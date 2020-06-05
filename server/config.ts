@@ -34,5 +34,6 @@ export default {
 
   // vk
   VK_CLIENT_ID: process.env.VK_CLIENT_ID,
-  VK_CLIENT_SECRET: process.env.VK_CLIENT_SECRET
+  VK_CLIENT_SECRET: process.env.VK_CLIENT_SECRET,
+  VK_SERVICE: process.env.VK_SERVICE
 };

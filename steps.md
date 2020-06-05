@@ -40,6 +40,7 @@
 - [x] quiz title make simple one without html or parse on back
 - [x] quiz info (participants, their answers)
 - [ ] quiz info display questions that got answers
+- [ ] wisely redefine jobs
 - [ ] blog tags
 - [ ] profile data
 - [ ] notify queue for new comments

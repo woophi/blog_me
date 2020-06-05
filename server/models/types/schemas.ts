@@ -12,6 +12,8 @@ export enum SchemaNames {
   QUIZ_QUESTIONS = 'quiz_questions',
   QUIZ_PARTICIPANTS = 'quiz_participants',
 
+  VK_GROUP_POSTS = 'vk_group_posts',
+
   GDPR = 'gdprs',
 
   SHORT_LINKS = 'short_links',

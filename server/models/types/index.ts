@@ -12,3 +12,4 @@ export * from './gdpr';
 export * from './shortLinks';
 export * from './blogs';
 export * from './quiz';
+export * from './vkGroupPosts';
