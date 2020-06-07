@@ -6,7 +6,7 @@ import async from 'async';
 import VkGroupPostM from 'server/models/vkGroupPosts';
 import { sendeNotificationEmailAboutHaudiPost } from './operations';
 
-agenda.define('fetchHaudiPosts', async (job) => {
+agenda.define('fetchHaudiPosts', async () => {
   const posts = await getHaydiGroupPosts(config.VK_SERVICE);
 
   Logger.info('[VkWorker] I got haudi posts!');
@@ -16,7 +16,7 @@ agenda.define('fetchHaudiPosts', async (job) => {
       (await VkGroupPostM.findOne({ postId: post.id }).countDocuments()) > 0;
 
     if (!existingPost) {
-      const shouldNotify = checkPostTextForNeededInfo(post.text);
+      const shouldNotify = checkPostTextForNeededInfo(post.text || '');
       await new VkGroupPostM({
         postId: post.id,
         postUrl: post.link,
@@ -100,13 +100,5 @@ const words = [
 ];
 
 const checkPostTextForNeededInfo = (text: string) => {
-  const matched = words.reduce((result, nextWord) => {
-    if (text.indexOf(nextWord) !== -1) {
-      result = true;
-      return result;
-    }
-    return result;
-  }, false);
-
-  return matched;
+  return words.find((word) => text.toLowerCase().indexOf(word.toLowerCase()) !== -1);
 };
