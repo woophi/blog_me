@@ -100,5 +100,5 @@ const words = [
 ];
 
 const checkPostTextForNeededInfo = (text: string) => {
-  return words.find((word) => text.toLowerCase().indexOf(word.toLowerCase()) !== -1);
+  return !!words.find((word) => text.toLowerCase().indexOf(word.toLowerCase()) !== -1);
 };
