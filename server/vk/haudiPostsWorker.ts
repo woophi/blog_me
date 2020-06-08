@@ -1,6 +1,5 @@
 import { agenda } from 'server/lib/agenda';
 import { callApi, buildQueryString } from 'server/utils/api';
-import { Logger } from 'server/logger';
 import config from 'server/config';
 import async from 'async';
 import VkGroupPostM from 'server/models/vkGroupPosts';
@@ -8,8 +7,6 @@ import { sendeNotificationEmailAboutHaudiPost } from './operations';
 
 agenda.define('fetchHaudiPosts', async () => {
   const posts = await getHaydiGroupPosts(config.VK_SERVICE);
-
-  Logger.info('[VkWorker] I got haudi posts!');
 
   await async.forEach(posts, async (post) => {
     const existingPost =
@@ -25,12 +22,9 @@ agenda.define('fetchHaudiPosts', async () => {
       }).save();
     }
   });
-  Logger.info('[VkWorker] fetchHaudiPosts finished!');
 });
 
 agenda.define('checkVkPostToNotify', async () => {
-  Logger.info('[VkPostWorker] Start to check');
-
   const postsToNotify = await VkGroupPostM.find({
     needToBeNotified: true,
     notified: false,
@@ -39,8 +33,6 @@ agenda.define('checkVkPostToNotify', async () => {
   await async.forEach(postsToNotify, async (post) => {
     await sendeNotificationEmailAboutHaudiPost(post.postId);
   });
-
-  Logger.info('[VkPostWorker] checkVkPostToNotify finished');
 });
 
 type PostItem = {
@@ -100,5 +92,7 @@ const words = [
 ];
 
 const checkPostTextForNeededInfo = (text: string) => {
-  return !!words.find((word) => text.toLowerCase().indexOf(word.toLowerCase()) !== -1);
+  return !!words.find(
+    (word) => text.toLowerCase().indexOf(word.toLowerCase()) !== -1
+  );
 };

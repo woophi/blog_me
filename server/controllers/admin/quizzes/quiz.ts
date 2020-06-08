@@ -240,6 +240,9 @@ export const getQuizParticipants = async (req: Request, res: Response) => {
           select: 'name id',
         },
       })
+      .populate({
+        path: 'quizQuestions'
+      })
       .exec();
 
     if (!quiz) return res.sendStatus(HTTPStatus.NotFound);
@@ -250,7 +253,11 @@ export const getQuizParticipants = async (req: Request, res: Response) => {
         lastStep: qp.lastStep,
         answers: qp.answers,
         userName: qp.user.name,
-        userId: qp.user.id
+        userId: qp.user.id,
+        questions: quiz.quizQuestions.map(q => ({
+          step: q.step,
+          question: q.question
+        }))
       }))
     );
   } catch (error) {

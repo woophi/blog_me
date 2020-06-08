@@ -48,6 +48,26 @@ export const AdminQuzParticipants = React.memo<Props>(({ quizId }) => {
                       <Box marginLeft=".25rem">{objKey}</Box>
                     </Box>
                     <Box padding=".25rem" display="flex">
+                      <Typography color="secondary">{'Вопрос: '}</Typography>
+                      <Box minWidth="50vw" padding="1rem" maxWidth="720px">
+                        <Typography component="div" gutterBottom>
+                          <div className="quill ">
+                            <div className="ql-snow">
+                              <div
+                                className="ql-editor"
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    p.questions.find(
+                                      (q) => q.step === Number(objKey)
+                                    )?.question ?? '',
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box padding=".25rem" display="flex">
                       <Typography color="secondary">{'Ответ: '}</Typography>
                       <Box marginLeft=".25rem">{p.answers[objKey]}</Box>
                     </Box>

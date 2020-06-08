@@ -59,6 +59,10 @@ export type AdminQuizParticipantData = {
   answers: AdminQuizParticipationAnswers;
   userName: string;
   userId: string;
+  questions: {
+    step: number;
+    question: string;
+  }[];
 };
 
 export type AdminQuizParticipationAnswers = {
