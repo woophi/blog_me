@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
 import { GeneralLayout } from 'ui/index';
+import { MeMainLayout } from 'ui/cells/me-layout';
 
 class Me extends React.PureComponent {
   async componentDidMount() {
@@ -12,7 +13,11 @@ class Me extends React.PureComponent {
   }
 
   render() {
-    return <GeneralLayout>kek</GeneralLayout>;
+    return (
+      <GeneralLayout>
+        <MeMainLayout />
+      </GeneralLayout>
+    );
   }
 }
 

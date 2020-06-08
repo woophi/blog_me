@@ -9,3 +9,4 @@ export * from './unsub';
 export * from './visitor';
 export * from './blog';
 export * from './quiz';
+export * from './profile';
