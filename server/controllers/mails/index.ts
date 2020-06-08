@@ -10,6 +10,7 @@ import { ROLES } from 'server/identity';
 import { HTTPStatus } from 'server/lib/models';
 import { checkLinkState } from 'server/mails';
 import * as formator from 'server/formator';
+import { AgendaJobName } from 'server/lib/agenda/constants';
 
 export const sendMailToAdmins = async (
   req: Request,
@@ -47,7 +48,7 @@ export const sendMailToAdmins = async (
     .exec();
   const addresses = admins.map(ue => ue.email);
   const mailer = new mails.Mailer(
-    'message to admins from guest',
+    AgendaJobName.messageToAdminsFromGuest + Date.now(),
     EmailTemplate.contactEmail,
     addresses,
     `новое сообщение от посетителя ${message.name}`,

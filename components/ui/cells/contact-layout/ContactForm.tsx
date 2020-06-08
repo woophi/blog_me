@@ -68,7 +68,7 @@ export const ContactForm: React.FC = () => {
           <Snakbars
             variant="success"
             message={
-              submitSucceeded && !submitError ? 'Сообщение отправилено' : null
+              submitSucceeded && !submitError ? 'Сообщение отправлено' : null
             }
             timerValue={1000}
           />

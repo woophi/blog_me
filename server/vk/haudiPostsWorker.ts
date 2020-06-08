@@ -4,8 +4,9 @@ import config from 'server/config';
 import async from 'async';
 import VkGroupPostM from 'server/models/vkGroupPosts';
 import { sendeNotificationEmailAboutHaudiPost } from './operations';
+import { AgendaJobName } from 'server/lib/agenda/constants';
 
-agenda.define('fetchHaudiPosts', async () => {
+agenda.define(AgendaJobName.fetchHaudiPosts, async () => {
   const posts = await getHaydiGroupPosts(config.VK_SERVICE);
 
   await async.forEach(posts, async (post) => {
@@ -24,7 +25,7 @@ agenda.define('fetchHaudiPosts', async () => {
   });
 });
 
-agenda.define('checkVkPostToNotify', async () => {
+agenda.define(AgendaJobName.checkVkPostToNotify, async () => {
   const postsToNotify = await VkGroupPostM.find({
     needToBeNotified: true,
     notified: false,

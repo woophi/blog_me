@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Logger } from 'server/logger';
 import { UnsubState } from './types';
 import { agenda } from 'server/lib/agenda';
+import { AgendaJobName } from 'server/lib/agenda/constants';
 
 const rofl = 'kek';
 export const createUniqLink = async (email: string) => {
@@ -51,7 +52,7 @@ export const checkLinkState = (link: models.Links) => {
 };
 
 const queueLinkScheduler = async (uniqId: string, execDate: Date) => {
-  const task = `queueLinkScheduler id ${uniqId}`;
+  const task = AgendaJobName.queueLinkSchedulerIdToDelete + uniqId;
   const jobs = await agenda.jobs({ name: task });
   if (jobs.length) {
     const j = jobs[0];
@@ -64,6 +65,6 @@ const queueLinkScheduler = async (uniqId: string, execDate: Date) => {
         done();
       }
     });
-    await agenda.schedule(execDate, task);
+    await agenda.schedule(execDate, task, { uniqId });
   }
 };

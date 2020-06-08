@@ -10,6 +10,7 @@ import { createUniqLink, checkLinkState } from 'server/mails';
 import config from 'server/config';
 import { Hashing } from 'server/identity';
 import * as formator from 'server/formator';
+import { AgendaJobName } from 'server/lib/agenda/constants';
 
 export const resetPassword = async (req: Request, res: Response) => {
   const validate = new kia.Validator(req, res);
@@ -45,7 +46,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     await user.set({ resetId: linkId }).save();
 
     const mailer = new mails.Mailer(
-      'message to admin reset password',
+      AgendaJobName.messageToAdminResetPassword + Date.now(),
       EmailTemplate.resetPass,
       [data.email],
       `Сброс пароля`,

@@ -5,7 +5,9 @@ import { databaseUri, generalMgOptions } from '../db';
 import { Logger } from 'server/logger';
 import { EventBus, BusEvents, NewBlogEventParams } from '../events';
 import BlogModel from 'server/models/blogs';
+import LinksModel from 'server/models/links';
 import { postToInstagram } from 'server/instagram';
+import { AgendaJobName } from './constants';
 
 export const agenda: Agenda = new Agenda(
   {
@@ -26,10 +28,10 @@ export const registerAgendaEvents = () => {
   EventBus.on(BusEvents.NEW_BLOG, schedulePost);
 };
 
-const schedulePost = async ({ blogId, fbPageId }: NewBlogEventParams) => {
+const schedulePost = async ({ blogId }: NewBlogEventParams) => {
   const blog = await BlogModel.findOne({ blogId }).lean();
   if (!blog) return;
-  const task = `new blog scheduler id ${blogId}`;
+  const task = AgendaJobName.newBlogSchedulerToPublish + blogId;
   const jobs = await agenda.jobs({ name: task });
   if (jobs.length) {
     const j = jobs[0];
@@ -43,8 +45,8 @@ const schedulePost = async ({ blogId, fbPageId }: NewBlogEventParams) => {
 
 agenda.on('ready', function () {
   registerAgendaEvents();
-  agenda.every('1 minute', 'fetchHaudiPosts');
-  agenda.every('1 minute', 'checkVkPostToNotify');
+  agenda.every('1 minute', AgendaJobName.fetchHaudiPosts);
+  agenda.every('1 minute', AgendaJobName.checkVkPostToNotify);
 });
 
 agenda.on('start', (job) => {
@@ -58,14 +60,16 @@ agenda.on('fail', (err, job) => {
 const redefineAllJobs = async () => {
   const jobs = await agenda.jobs({
     lastFinishedAt: undefined,
-    $and: [
-      { name: { $ne: 'fetchHaudiPosts' } },
-      { name: { $ne: 'checkVkPostToNotify' } },
-    ],
+    name: { $in: [/new blog scheduler id/, /queueLinkScheduler id/] },
   });
   jobs.forEach((j) => {
-    Logger.debug('redefined job', j.attrs.name);
-    scheduleBlogPostJob(j.attrs.name);
+    if (j.attrs.name.includes(AgendaJobName.newBlogSchedulerToPublish)) {
+      Logger.debug('redefined blog', j.attrs.name);
+      scheduleBlogPostJob(j.attrs.name);
+    } else if (j.attrs.name.includes(AgendaJobName.queueLinkSchedulerIdToDelete)) {
+      Logger.debug('redefined link', j.attrs.name);
+      scheduleLinkToDeleteJob(j.attrs.name);
+    }
   });
 };
 
@@ -76,6 +80,18 @@ const scheduleBlogPostJob = (taskName: string) => {
     async (job, done: (err?: Error) => void) => {
       Logger.debug('Runnig post to social media task', job.attrs.data.blogId);
       await postToInstagram({ blogId: job.attrs.data.blogId, done });
+    }
+  );
+};
+const scheduleLinkToDeleteJob = (taskName: string) => {
+  agenda.define<{ uniqId: string }>(
+    taskName,
+    async (job, done: (err?: Error) => void) => {
+      Logger.debug('Runnig delete link', job.attrs.data.uniqId);
+      await LinksModel.deleteOne({ uniqId: job.attrs.data.uniqId });
+      if (done) {
+        done();
+      }
     }
   );
 };
