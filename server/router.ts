@@ -166,6 +166,8 @@ export function router(
 
   app.use('/admin/*', identity.authorizedForAdmin);
   app.use('/admin', identity.authorizedForAdmin);
+  app.use('/me/*', identity.authorizedForApp);
+  app.use('/me', identity.authorizedForApp);
 
   app.get('*', (req, res) => {
     return handle(req, res);

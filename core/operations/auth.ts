@@ -1,7 +1,7 @@
 import { store } from 'core/store';
-import { isUserGod } from 'core/selectors';
+import { isUserGod, getUserId } from 'core/selectors';
 import Router from 'next/router';
-import { callApi, getWindow } from 'core/common';
+import { callApi } from 'core/common';
 import * as models from 'core/models';
 import { connectAdminSocket } from 'core/socket/admin';
 
@@ -17,8 +17,8 @@ export const logout = async () => {
       name: '',
       roles: null,
       token: '',
-      userId: ''
-    }
+      userId: '',
+    },
   });
   store.dispatch({ type: 'SET_USER_FETCHING', payload: false });
 };
@@ -37,9 +37,11 @@ export const checkAuth = async () => {
 export const ensureNotAuthorized = async () => {
   await checkAuth();
   const state = store.getState();
-  if (!isUserGod(state)) {
+  if (!getUserId(state)) {
     Router.push('/login');
-  } else {
+    return;
+  }
+  if (isUserGod(state)) {
     connectAdminSocket();
   }
 };

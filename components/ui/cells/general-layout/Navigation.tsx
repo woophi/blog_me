@@ -126,6 +126,9 @@ const NavigationPC = React.memo<NavigationProps>(
     const gotoAgenda = React.useCallback(() => {
       goToSpecific('/dash');
     }, []);
+    const gotoProfile = React.useCallback(() => {
+      goToSpecific('/me');
+    }, []);
 
     return (
       <>
@@ -184,6 +187,7 @@ const NavigationPC = React.memo<NavigationProps>(
                   >
                     {isUserGod && <MenuItem onClick={gotoAdmin}>Админ</MenuItem>}
                     {isUserGod && <MenuItem onClick={gotoAgenda}>Agenda</MenuItem>}
+                    <MenuItem onClick={gotoProfile}>Профиль</MenuItem>
                     <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                   </Menu>
                 </div>

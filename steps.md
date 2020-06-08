@@ -41,7 +41,7 @@
 - [x] quiz info (participants, their answers)
 - [x] quiz info display questions that got answers
 - [x] wisely redefine jobs
-- [ ] blog tags
 - [ ] profile data
 - [ ] notify queue for new comments
 - [ ] route history
+- [ ] blog tags
