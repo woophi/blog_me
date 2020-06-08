@@ -8678,10 +8678,10 @@ ranges-sort@^3.12.0:
   resolved "https://registry.yarnpkg.com/ranges-sort/-/ranges-sort-3.12.0.tgz#411f40c648ba4e274561d00786a9bf764ae71f41"
   integrity sha512-YCFqRd1Bxh5vKyItPtQDXMsbPSsDD33/pI9O7z2Dy2nyOyfGxT969KxMuVvr6/iDWB3hPOd8fhUE85Aw6dX7Cg==
 
-rate-limiter-flexible@^2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/rate-limiter-flexible/-/rate-limiter-flexible-2.1.6.tgz#f81a1d43da4bf53bb5304f49fda150e13a595408"
-  integrity sha512-P8o+0PxI19SaMpnxPXOPudygmw+ROGeg3yt+vI8UZlpx1V+NoZqtSMyRiHQGKk/3tXX/HtcAjD7Tv8vsJqwi+g==
+rate-limiter-flexible@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/rate-limiter-flexible/-/rate-limiter-flexible-2.1.7.tgz#5594818c92abac1229ae512cac6a604b39c96b2b"
+  integrity sha512-oq1fBLuMy8RGzs0klc+8jIB2I6D8MIwewdnkebvXIB/WSt7jWKXAf1rlgaZCYCnLO6q9A2rFFKma+QusDANilA==
 
 raw-body@2.4.0:
   version "2.4.0"
