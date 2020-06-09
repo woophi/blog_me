@@ -3317,11 +3317,12 @@ clone@^2.1.1:
   resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
-cloudinary@^1.21.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.21.0.tgz#9c30935190f49f2e9a0e26a16cd8ade580f675cc"
-  integrity sha512-am8wpHbHl8bcpy9oGSlWrpWLNQ9szkW/jmhcJdEpMjaL23BYt05V1frWyrXDlo8Jt7aCo5NE6EO0CM9Zaynd5g==
+cloudinary@^1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.22.0.tgz#48a36aab98838f910d350300419e2b10e4eb7e6b"
+  integrity sha512-qQhSVqGyOWtGbPc3JrwyUXJEZpdqsEzBFSf5+gTo7gbKbXdzEysLagigoSlp6JYI7YW2oEbz4aeZlgN2ucOkzQ==
   dependencies:
+    core-js "^3.6.5"
     lodash "^4.17.11"
     q "^1.5.1"
 
@@ -3626,6 +3627,11 @@ core-js@^2, core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
   integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
+
+core-js@^3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
