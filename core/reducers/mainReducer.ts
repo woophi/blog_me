@@ -8,6 +8,7 @@ export const initialState: models.AppState['ui'] = {
     token: '',
     userId: '',
     fetching: true,
+    email: ''
   },
   admin: {
     section: admin.Section.Albums,

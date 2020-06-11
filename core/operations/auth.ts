@@ -4,6 +4,7 @@ import Router from 'next/router';
 import { callApi } from 'core/common';
 import * as models from 'core/models';
 import { connectAdminSocket } from 'core/socket/admin';
+import { SetUserDispatch } from 'core/models';
 
 export const login = (email: string, password: string) =>
   callApi<{ token: string }>('post', 'api/app/user/login', { email, password });
@@ -18,6 +19,7 @@ export const logout = async () => {
       roles: null,
       token: '',
       userId: '',
+      email: ''
     },
   });
   store.dispatch({ type: 'SET_USER_FETCHING', payload: false });
