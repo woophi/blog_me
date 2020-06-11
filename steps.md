@@ -42,6 +42,7 @@
 - [x] quiz info display questions that got answers
 - [x] wisely redefine jobs
 - [ ] profile data
+- [ ] admin socket connection check
 - [ ] notify queue for new comments
 - [ ] route history
 - [ ] blog tags

@@ -66,31 +66,33 @@ const getHaydiGroupPosts = async (accessToken: string): Promise<PostItem[]> => {
   return posts;
 };
 
-const words = [
-  'react',
-  'redux',
-  'node',
-  'node.js',
-  'nodejs',
-  'реакт',
-  'помоги',
-  'next',
-  'next.js',
-  'heroku',
-  'cloudflare',
-  'mongodb',
-  'mongoose',
-  'js',
-  'javaScript',
-  'typeScript',
-  'c#',
-  'хелп',
-  'наставник',
-  'ментор',
-  'ts',
-  'sitemap',
-  'деньг',
-];
+const words = config.DEV_MODE
+  ? []
+  : [
+      'react',
+      'redux',
+      'node',
+      'node.js',
+      'nodejs',
+      'реакт',
+      'помоги',
+      'next',
+      'next.js',
+      'heroku',
+      'cloudflare',
+      'mongodb',
+      'mongoose',
+      'js',
+      'javaScript',
+      'typeScript',
+      'c#',
+      'хелп',
+      'наставник',
+      'ментор',
+      'ts',
+      'sitemap',
+      'деньг',
+    ];
 
 const checkPostTextForNeededInfo = (text: string) => {
   return !!words.find(

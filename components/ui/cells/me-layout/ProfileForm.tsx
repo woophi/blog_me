@@ -7,16 +7,11 @@ import { safeTrim, testEmail } from 'core/lib';
 import { FORM_ERROR } from 'final-form';
 import { Form, Field } from 'react-final-form';
 import { Snakbars, TextField, ButtonsForm } from 'ui/atoms';
+import { ProfileFormModel } from './types';
+import { updateUserProfile } from './operations';
 
-type ProfileForm = {
-  name: string;
-  email: string;
-  gravatarPhotoUrl: string;
-  userId: string;
-};
-
-const validate = (values: ProfileForm) => {
-  const errors: Partial<ProfileForm> = {};
+const validate = (values: ProfileFormModel) => {
+  const errors: Partial<ProfileFormModel> = {};
   if (!safeTrim(values.name)) {
     errors.name = 'Обязательно к заполнению';
   }
@@ -29,8 +24,12 @@ const validate = (values: ProfileForm) => {
   return errors;
 };
 
-const onSubmit = async (data: ProfileForm) => {
+const onSubmit = async (data: ProfileFormModel) => {
   try {
+    await updateUserProfile({
+      email: data.email,
+      name: data.name,
+    });
   } catch (error) {
     return { [FORM_ERROR]: JSON.stringify(error.error) };
   }
@@ -43,7 +42,7 @@ export const ProfileForm = React.memo(() => {
     <>
       <Form
         onSubmit={onSubmit}
-        validate={(v: ProfileForm) => validate(v)}
+        validate={(v: ProfileFormModel) => validate(v)}
         initialValues={user}
         render={({
           handleSubmit,
@@ -52,6 +51,7 @@ export const ProfileForm = React.memo(() => {
           submitError,
           form,
           invalid,
+          submitSucceeded,
         }) => (
           <>
             <Box
@@ -60,21 +60,24 @@ export const ProfileForm = React.memo(() => {
                 if (error) {
                   return error;
                 }
-                form.reset();
+                form.setConfig('initialValues', form.getState().values);
               }}
               component="form"
               display="flex"
               flexDirection="column"
               alignItems="center"
             >
+              <Snakbars variant="error" message={submitError} />
               <Snakbars
-                variant="error"
-                message={submitError}
-                style={{
-                  margin: '0 1rem .5rem',
-                }}
+                variant="success"
+                message={submitSucceeded && !submitError ? 'Обновлено' : null}
+                timerValue={1000}
               />
-              <Avatar alt={user.name} src={user.gravatarPhotoUrl} style={{ width: 80, height: 80 }} />
+              <Avatar
+                alt={user.name}
+                src={user.gravatarPhotoUrl}
+                style={{ width: 80, height: 80 }}
+              />
               <Field
                 name="email"
                 render={({ input, meta }) => (
