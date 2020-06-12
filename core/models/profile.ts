@@ -1,20 +1,4 @@
-export type ProfileData = {
-  userId: string;
-  email: string;
-  name: string;
-  gravatarPhotoUrl?: string;
-  comments: ProfileComment[];
-  likes: ProfileLike[];
-  quizzes: ProfileQuiz[];
-};
-
-export type ProfileComment = {
-  blogId: number;
-  blogName: string;
-  comment: string;
-  id: string;
-  date: string;
-};
+import { CommentItem } from './comment';
 
 export type ProfileLike = {
   blogId: number;
@@ -23,4 +7,30 @@ export type ProfileLike = {
 export type ProfileQuiz = {
   quizId: number;
   quizTitle: string;
+};
+
+export type UserComment = Omit<CommentItem, 'blog' | 'parent'> & {
+  blog: {
+    blogId: number;
+    title: string;
+  };
+};
+
+export type UserCommentDict = {
+  [blogId: number]: {
+    comments: UserComment[];
+    blogId: number;
+    blogTitle: string;
+  };
+};
+
+export type ProfileState = {
+  comments: UserCommentDict;
+};
+
+export type ProfileFormModel = {
+  name: string;
+  email: string;
+  gravatarPhotoUrl: string;
+  userId: string;
 };

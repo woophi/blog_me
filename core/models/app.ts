@@ -4,6 +4,7 @@ import { AdminState, FileItem } from './admin';
 import { BlogGuestItem, SearchStatus } from './blog';
 import { QuizGuestData } from './quiz';
 import { Dispatch } from 'redux';
+import { ProfileState } from './profile';
 
 export type AppState = {
   ui: {
@@ -15,6 +16,7 @@ export type AppState = {
     searchQuery: string;
     searchStatus: SearchStatus;
     quiz: QuizGuestData;
+    profile: ProfileState;
   };
 };
 
@@ -39,6 +41,7 @@ export type AppDispatch =
   | { type: 'SET_COMMENTS'; payload: { comments: CommentItem[] } }
   //replies
   | { type: 'UPDATE_REPLIES'; payload: { reply: CommentItem } }
+  | { type: 'NEW_REPLY'; payload: string }
   | {
       type: 'LOAD_MORE_REPLIES';
       payload: { replies: CommentItem[] };
@@ -53,7 +56,8 @@ export type AppDispatch =
   | { type: 'UPDATE_FACEBOOK_ACTIVE'; payload: AdminState['facebookActive'] }
   | SetSearchResultsDispatch
   | SetSearchQueryDispatch
-  | SetSearchStatusDispatch;
+  | SetSearchStatusDispatch
+  | { type: 'UPDATE_USER_PROFILE_COMMENTS', payload: ProfileState['comments']};
 
 export type SetUserDispatch = { type: 'SET_USER'; payload: AppState['ui']['user'] };
 

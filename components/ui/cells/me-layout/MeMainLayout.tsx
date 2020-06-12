@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { TabPanel } from 'ui/index';
 import { Profile } from './Profile';
+import { UserComments } from './UserComments';
 
 export const MeMainLayout = React.memo(() => {
   const [tabValue, setValue] = React.useState(0);
@@ -34,7 +35,7 @@ export const MeMainLayout = React.memo(() => {
             <Profile />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            2
+            <UserComments />
           </TabPanel>
         </Box>
       </Box>

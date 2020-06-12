@@ -16,9 +16,14 @@ export const newComment = async (
   data: NewComment,
   blogId: number,
   parentCommentId?: string
-) =>
-  callUserApi<void>('post', 'api/app/user/comment', {
+) => {
+  await callUserApi<void>('post', 'api/app/user/comment', {
     blogId,
     message: data.message,
-    parentId: parentCommentId
+    parentId: parentCommentId,
   });
+
+  if (parentCommentId) {
+    store.dispatch({ type: 'NEW_REPLY', payload: parentCommentId });
+  }
+};

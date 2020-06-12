@@ -5,28 +5,22 @@ import CommentModel from 'server/models/comment';
 import { Logger } from 'server/logger';
 import { HTTPStatus } from 'server/lib/models';
 
-export const getBlogComments = async (req: Request, res: Response) => {
+export const getUserComments = async (req: Request, res: Response) => {
   try {
     const data = {
-      offset: req.query.offset,
-      limit: 50,
       userId: req.session?.userId
     };
     const validator = new Validator(req, res);
     await validator.check(
       {
-        userId: validator.notMongooseObject,
-        offset: validator.required,
-        limit: validator.required
+        userId: validator.notMongooseObject
       },
       data
     );
 
     await formator.formatData(
       {
-        userId: formator.formatString,
-        offset: formator.formatNumber,
-        limit: formator.formatNumber
+        userId: formator.formatString
       },
       data
     );
@@ -39,10 +33,12 @@ export const getBlogComments = async (req: Request, res: Response) => {
         path: 'user',
         select: 'name gravatarPhotoUrl'
       })
+      .populate({
+        path: 'blog',
+        select: 'blogId title -_id'
+      })
       .sort({ createdAt: -1 })
-      .select('text user replies rate')
-      .skip(data.offset)
-      .limit(data.limit)
+      .select('text user replies rate blog')
       .lean();
 
     return res.send(comments);

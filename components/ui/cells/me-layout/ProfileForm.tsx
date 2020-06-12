@@ -7,8 +7,8 @@ import { safeTrim, testEmail } from 'core/lib';
 import { FORM_ERROR } from 'final-form';
 import { Form, Field } from 'react-final-form';
 import { Snakbars, TextField, ButtonsForm } from 'ui/atoms';
-import { ProfileFormModel } from './types';
-import { updateUserProfile } from './operations';
+import { ProfileFormModel } from 'core/models';
+import { updateUserProfile } from 'core/operations/profile';
 
 const validate = (values: ProfileFormModel) => {
   const errors: Partial<ProfileFormModel> = {};

@@ -8,7 +8,7 @@ export const initialState: models.AppState['ui'] = {
     token: '',
     userId: '',
     fetching: true,
-    email: ''
+    email: '',
   },
   admin: {
     section: admin.Section.Albums,
@@ -24,6 +24,9 @@ export const initialState: models.AppState['ui'] = {
   searchQuery: '',
   searchStatus: models.SearchStatus.init,
   quiz: null,
+  profile: {
+    comments: {},
+  },
 };
 
 export const reducer = (
@@ -35,6 +38,11 @@ export const reducer = (
       return {
         ...state,
         user: dispatch.payload,
+      };
+    }
+    case 'NEW_REPLY': {
+      return {
+        ...state,
       };
     }
     case 'SET_COMMENTS': {
@@ -209,6 +217,16 @@ export const reducer = (
             ...state.quiz.participationHistory,
             ...dispatch.payload,
           },
+        },
+      };
+    }
+
+    case 'UPDATE_USER_PROFILE_COMMENTS': {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          comments: dispatch.payload,
         },
       };
     }

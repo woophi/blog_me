@@ -67,11 +67,11 @@ export function router(
 
   // me
   app.put('/api/app/user/me', identity.authorizedForApp, controllers.updateUserProfile);
+  app.get('/api/app/user/me/comments', identity.authorizedForApp, controllers.getUserComments);
 
   app.get('/api/app/user/like', identity.authorizedForApp, controllers.getUserLike);
   app.delete('/api/app/user/blog/dislike', identity.authorizedForApp, controllers.userDislike);
 
-  app.get('/api/app/user/comments', identity.authorizedForApp, controllers.getBlogComments);
   app.post('/api/app/user/comment', identity.authorizedForApp, controllers.createBlogComment);
   app.put('/api/app/user/comment', identity.authorizedForApp, controllers.rateBlogComment);
 
