@@ -44,7 +44,6 @@ export function router(
   // guest quizzes
   app.get('/api/guest/quiz', fetchingLimiterMiddleware, controllers.getQuizForGuest);
 
-  app.post('/api/guest/blog/like', fetchingLimiterMiddleware, controllers.guestLikeBlog);
   app.post('/api/guest/blog/view', fetchingLimiterMiddleware, controllers.increaseBlogViews);
 
   app.get('/auth/:external/go', auth.externalLogin);
@@ -68,8 +67,10 @@ export function router(
   // me
   app.put('/api/app/user/me', identity.authorizedForApp, controllers.updateUserProfile);
   app.get('/api/app/user/me/comments', identity.authorizedForApp, controllers.getUserComments);
+  app.get('/api/app/user/me/likes', identity.authorizedForApp, controllers.getUserLikes);
 
   app.get('/api/app/user/like', identity.authorizedForApp, controllers.getUserLike);
+  app.put('/api/app/user/like', identity.authorizedForApp, controllers.setUserLike);
   app.delete('/api/app/user/blog/dislike', identity.authorizedForApp, controllers.userDislike);
 
   app.post('/api/app/user/comment', identity.authorizedForApp, controllers.createBlogComment);

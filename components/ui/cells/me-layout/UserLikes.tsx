@@ -1,25 +1,16 @@
 import * as React from 'react';
-import { Comment } from 'ui/molecules/comments/Comment';
+import { ProfileLike } from 'core/models';
+import { getUserLikes } from 'core/operations/profile';
+import { goToSpecific } from 'core/common';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { goToSpecific } from 'core/common';
-import { AppDispatchActions } from 'core/models';
-import { useSelector, useDispatch } from 'react-redux';
-import * as sel from 'core/selectors';
-import { getUserComments, commentsToDict } from 'core/operations/profile';
+import { Like } from 'ui/molecules';
 
-export const UserComments = React.memo(() => {
-  const comments = useSelector(sel.getUserComments);
-  const dispatch = useDispatch<AppDispatchActions>();
-
+export const UserLikes = React.memo(() => {
+  const [likes, setLikes] = React.useState<ProfileLike[]>([]);
   React.useEffect(() => {
-    getUserComments().then((coms) => {
-      dispatch({
-        type: 'UPDATE_USER_PROFILE_COMMENTS',
-        payload: commentsToDict(coms),
-      });
-    });
+    getUserLikes().then(setLikes);
   }, []);
 
   const handleClick = React.useCallback((title: string, blogId: number) => {
@@ -27,7 +18,7 @@ export const UserComments = React.memo(() => {
     goToSpecific(`/post/${mapTitle}-${blogId}`);
   }, []);
 
-  if (!Object.values(comments).length) {
+  if (!likes.length) {
     return (
       <Box
         display="flex"
@@ -37,7 +28,7 @@ export const UserComments = React.memo(() => {
       >
         <Box>
           <Typography color="secondary">
-            Вы пока не оставили ни одного комментария
+            Вы пока не оставили ни одного лайка
           </Typography>
         </Box>
       </Box>
@@ -45,32 +36,32 @@ export const UserComments = React.memo(() => {
   }
 
   return (
-    <div>
-      {Object.values(comments).map((uc, i) => (
+    <>
+      {likes.map((l, i) => (
         <Box key={i}>
           <Box
             display="flex"
             justifyContent="center"
-            margin="1rem"
+            marginBottom="1rem"
             flexWrap="wrap"
             alignItems="center"
           >
+            <Box>
+              <Like blogId={l.blog.blogId} />
+            </Box>
             <Box marginRight="1rem">
-              <Typography color="secondary">Блог: {uc.blogTitle}</Typography>
+              <Typography color="secondary">Блог: {l.blog.title}</Typography>
             </Box>
             <Button
               color="primary"
               variant="contained"
-              onClick={() => handleClick(uc.blogTitle, uc.blogId)}
+              onClick={() => handleClick(l.blog.title, l.blog.blogId)}
             >
               Перейти к блогу
             </Button>
           </Box>
-          {uc.comments.map((c, i) => (
-            <Comment {...c} key={i} />
-          ))}
         </Box>
       ))}
-    </div>
+    </>
   );
 });

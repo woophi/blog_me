@@ -1,8 +1,11 @@
 import { CommentItem } from './comment';
 
 export type ProfileLike = {
-  blogId: number;
-  blogName: string;
+  _id: string;
+  blog: {
+    blogId: number;
+    title: string;
+  };
 };
 export type ProfileQuiz = {
   quizId: number;

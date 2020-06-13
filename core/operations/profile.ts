@@ -1,8 +1,11 @@
 import { callUserApi } from 'core/common';
-import { UserComment, ProfileFormModel, UserCommentDict } from 'core/models';
+import { UserComment, ProfileFormModel, UserCommentDict, ProfileLike } from 'core/models';
 
 export const getUserComments = () =>
   callUserApi<UserComment[]>('get', 'api/app/user/me/comments');
+
+export const getUserLikes = () =>
+  callUserApi<ProfileLike[]>('get', 'api/app/user/me/likes');
   
 export const updateUserProfile = (
   data: Omit<ProfileFormModel, 'gravatarPhotoUrl' | 'userId'>
