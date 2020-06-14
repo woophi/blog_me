@@ -7,6 +7,7 @@ import { TabPanel } from 'ui/index';
 import { Profile } from './Profile';
 import { UserComments } from './UserComments';
 import { UserLikes } from './UserLikes';
+import { UserQuizzes } from './UserQuizzes';
 
 export const MeMainLayout = React.memo(() => {
   const [tabValue, setValue] = React.useState(0);
@@ -40,6 +41,9 @@ export const MeMainLayout = React.memo(() => {
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
             <UserLikes />
+          </TabPanel>
+          <TabPanel value={tabValue} index={3}>
+            <UserQuizzes />
           </TabPanel>
         </Box>
       </Box>

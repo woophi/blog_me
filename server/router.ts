@@ -68,6 +68,7 @@ export function router(
   app.put('/api/app/user/me', identity.authorizedForApp, controllers.updateUserProfile);
   app.get('/api/app/user/me/comments', identity.authorizedForApp, controllers.getUserComments);
   app.get('/api/app/user/me/likes', identity.authorizedForApp, controllers.getUserLikes);
+  app.get('/api/app/user/me/quizzes', identity.authorizedForApp, controllers.getUserQuizzes);
 
   app.get('/api/app/user/like', identity.authorizedForApp, controllers.getUserLike);
   app.put('/api/app/user/like', identity.authorizedForApp, controllers.setUserLike);

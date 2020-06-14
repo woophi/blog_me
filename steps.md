@@ -41,7 +41,9 @@
 - [x] quiz info (participants, their answers)
 - [x] quiz info display questions that got answers
 - [x] wisely redefine jobs
-- [ ] profile data
+- [x] profile data
+- [ ] delete unused code, make imports stricter
+- [ ] profile data more actions
 - [ ] admin socket connection check
 - [ ] notify queue for new comments
 - [ ] route history

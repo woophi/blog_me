@@ -3,11 +3,11 @@ import { Comment } from 'ui/molecules/comments/Comment';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { goToSpecific } from 'core/common';
 import { AppDispatchActions } from 'core/models';
 import { useSelector, useDispatch } from 'react-redux';
 import * as sel from 'core/selectors';
 import { getUserComments, commentsToDict } from 'core/operations/profile';
+import { openBlog } from './actions';
 
 export const UserComments = React.memo(() => {
   const comments = useSelector(sel.getUserComments);
@@ -20,11 +20,6 @@ export const UserComments = React.memo(() => {
         payload: commentsToDict(coms),
       });
     });
-  }, []);
-
-  const handleClick = React.useCallback((title: string, blogId: number) => {
-    const mapTitle = title.toLowerCase().split(' ').join('-');
-    goToSpecific(`/post/${mapTitle}-${blogId}`);
   }, []);
 
   if (!Object.values(comments).length) {
@@ -61,7 +56,7 @@ export const UserComments = React.memo(() => {
             <Button
               color="primary"
               variant="contained"
-              onClick={() => handleClick(uc.blogTitle, uc.blogId)}
+              onClick={() => openBlog(uc.blogTitle, uc.blogId)}
             >
               Перейти к блогу
             </Button>

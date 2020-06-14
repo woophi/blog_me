@@ -1,21 +1,16 @@
 import * as React from 'react';
 import { ProfileLike } from 'core/models';
 import { getUserLikes } from 'core/operations/profile';
-import { goToSpecific } from 'core/common';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Like } from 'ui/molecules';
+import { openBlog } from './actions';
 
 export const UserLikes = React.memo(() => {
   const [likes, setLikes] = React.useState<ProfileLike[]>([]);
   React.useEffect(() => {
     getUserLikes().then(setLikes);
-  }, []);
-
-  const handleClick = React.useCallback((title: string, blogId: number) => {
-    const mapTitle = title.toLowerCase().split(' ').join('-');
-    goToSpecific(`/post/${mapTitle}-${blogId}`);
   }, []);
 
   if (!likes.length) {
@@ -55,7 +50,7 @@ export const UserLikes = React.memo(() => {
             <Button
               color="primary"
               variant="contained"
-              onClick={() => handleClick(l.blog.title, l.blog.blogId)}
+              onClick={() => openBlog(l.blog.title, l.blog.blogId)}
             >
               Перейти к блогу
             </Button>

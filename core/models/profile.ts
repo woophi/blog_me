@@ -8,8 +8,17 @@ export type ProfileLike = {
   };
 };
 export type ProfileQuiz = {
+  quizName: string;
   quizId: number;
-  quizTitle: string;
+  finished: boolean;
+  lastStep: number;
+  answers: {
+    [step: number]: string;
+  };
+  questions: {
+    step: number;
+    question: string;
+  }[];
 };
 
 export type UserComment = Omit<CommentItem, 'blog' | 'parent'> & {
