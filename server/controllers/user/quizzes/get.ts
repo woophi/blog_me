@@ -40,13 +40,9 @@ export const getUserQuizzes = async (req: Request, res: Response) => {
       quizzes.map((quiz) => ({
         quizName: quiz.plainTitle,
         quizId: quiz.shortId,
-        finished:
-          quiz.quizParticipants.find((qp) => qp.user === data.userId)?.finished ??
-          false,
-        lastStep:
-          quiz.quizParticipants.find((qp) => qp.user === data.userId)?.lastStep ?? 0,
-        answers:
-          quiz.quizParticipants.find((qp) => qp.user === data.userId)?.answers ?? {},
+        finished: quiz.quizParticipants[0]?.finished ?? false,
+        lastStep: quiz.quizParticipants[0]?.lastStep ?? 0,
+        answers: quiz.quizParticipants[0]?.answers ?? {},
         questions: quiz.quizQuestions.map((q) => ({
           step: q.step,
           question: q.question,
