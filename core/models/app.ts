@@ -53,7 +53,6 @@ export type AppDispatch =
   | { type: 'SELECT_FILE'; payload: FileItem }
   | { type: 'UPLOADING_FILE'; payload: AdminState['uploadingFile'] }
   | { type: 'UPLOAD_FAILED'; payload: AdminState['uploadFailed'] }
-  | { type: 'UPDATE_FACEBOOK_ACTIVE'; payload: AdminState['facebookActive'] }
   | SetSearchResultsDispatch
   | SetSearchQueryDispatch
   | SetSearchStatusDispatch

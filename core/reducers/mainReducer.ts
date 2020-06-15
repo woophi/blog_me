@@ -15,7 +15,6 @@ export const initialState: models.AppState['ui'] = {
     files: [],
     selectedFile: null,
     uploadingFile: false,
-    facebookActive: false,
     uploadFailed: false,
   },
   comments: [],
@@ -158,16 +157,6 @@ export const reducer = (
         },
       };
     }
-    case 'UPDATE_FACEBOOK_ACTIVE': {
-      return {
-        ...state,
-        admin: {
-          ...state.admin,
-          facebookActive: dispatch.payload,
-        },
-      };
-    }
-
     case 'SET_SEARCH_RESULTS': {
       return {
         ...state,

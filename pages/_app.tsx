@@ -9,7 +9,7 @@ import { theme } from 'core/lib';
 import { getCookie } from 'core/cookieManager';
 import { VisitorCookie } from 'core/models';
 import { RouterProgress } from 'ui/atoms/RouterProgress';
-import('core/fire-callbacks');
+import 'core/fire-callbacks';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -26,7 +26,7 @@ class MyApp extends App {
       ? await Component.getInitialProps(ctx)
       : {};
     return {
-      pageProps
+      pageProps,
     };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -58,4 +58,3 @@ class MyApp extends App {
 }
 
 export default wrapper.withRedux(appWithTranslation(MyApp));
-

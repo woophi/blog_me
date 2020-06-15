@@ -6,7 +6,6 @@ export type AdminState = {
   selectedFile: FileItem;
   uploadingFile: boolean;
   uploadFailed: boolean;
-  facebookActive: boolean;
 };
 
 export enum Section {

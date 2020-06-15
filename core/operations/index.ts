@@ -2,9 +2,6 @@ import { callApi } from 'core/common';
 import * as models from 'core/models';
 import { store } from 'core/store';
 
-export const subscribe = (email: string) =>
-  callApi<models.ResultSubscribe>('post', 'api/guest/subscribe', { email });
-
 export const sendMessage = (data: models.MessageModel) =>
   callApi<void>('post', `api/guest/send/message`, data);
 
@@ -13,9 +10,6 @@ export const getCommentById = (commentId: string) =>
     'get',
     `api/guest/blog/comment?commentId=${commentId}`
   );
-
-export const guestUnsub = (uniqId: string) =>
-  callApi<void>('put', 'api/guest/unsub', { uniqId });
 
 export const resetPassword = (email: string) =>
   callApi<void>('post', 'api/guest/password/reset', { email });
@@ -56,11 +50,12 @@ export const searchBlogs = async (query: string) => {
   } catch {
     store.dispatch({
       type: 'SET_SEARCH_STATUS',
-      payload: models.SearchStatus.error
+      payload: models.SearchStatus.error,
     });
   }
 };
 
-export const viewBlog = (blogId: number) => callApi('post', 'api/guest/blog/view', {
-  blogId
-});
+export const viewBlog = (blogId: number) =>
+  callApi('post', 'api/guest/blog/view', {
+    blogId,
+  });

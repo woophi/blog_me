@@ -65,9 +65,6 @@ const SpecificRoute: React.FC<SpecificRouteProps> = ({ currentRoute }) => {
   if (currentRoute.indexOf('comment') !== -1) {
     return <StyledBreadcrumb label={'Комментарии'} onClick={constants.toComments} />;
   }
-  if (currentRoute.indexOf('facebook') !== -1) {
-    return <StyledBreadcrumb label={'Facebook'} onClick={constants.toFacebook} />;
-  }
   if (currentRoute.indexOf('user') !== -1) {
     return <StyledBreadcrumb label={'Пользователи'} onClick={constants.toUsers} />;
   }

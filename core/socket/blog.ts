@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { initCallbacks } from '.';
+import { initCallbacks } from './callbacks';
 
 let socketBlogConnected = false;
 

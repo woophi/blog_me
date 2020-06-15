@@ -3,7 +3,6 @@ import Divider from '@material-ui/core/Divider';
 import Wallpaper from '@material-ui/icons/Wallpaper';
 import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import Block from '@material-ui/icons/Block';
-import ThumbUp from '@material-ui/icons/ThumbUp';
 import Files from '@material-ui/icons/FileCopy';
 import Comment from '@material-ui/icons/Comment';
 import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
@@ -44,12 +43,6 @@ export const AdminMenu = React.memo(() => {
             <Comment />
           </ListItemIcon>
           <ListItemText primary={'Комментарии'} />
-        </ListItem>
-        <ListItem button onClick={constants.toFacebook}>
-          <ListItemIcon>
-            <ThumbUp />
-          </ListItemIcon>
-          <ListItemText primary={'Facebook'} />
         </ListItem>
         <ListItem button onClick={constants.toInstagram}>
           <ListItemIcon>

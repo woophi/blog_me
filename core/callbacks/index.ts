@@ -1,4 +1,4 @@
-import { clientPerformCallback } from 'core/socket';
+import { clientPerformCallback } from 'core/socket/callbacks';
 
 export const client = clientPerformCallback(m => ({
   upload_done: m<(fileName: string, fileId: string, url: string, format: string) => void>(),

@@ -11,7 +11,6 @@ export const toBlogs = () => goToSpecific('/admin/blogs');
 export const toQuizzes = () => goToSpecific('/admin/quizzes');
 export const toBans = () => goToSpecific('/admin/bans');
 export const toComments = () => goToSpecific('/admin/comments');
-export const toFacebook = () => goToSpecific('/admin/facebook');
 export const toInstagram = () => goToSpecific('/admin/instagram');
 export const toUsers = () => goToSpecific('/admin/users');
 export const toAdmin = () => goToSpecific('/admin');
