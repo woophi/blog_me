@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ErrorLayout } from 'ui/index';
+import { ErrorLayout } from 'ui/cells/ErrorLayout';
 
 type Props = {
   statusCode: number;

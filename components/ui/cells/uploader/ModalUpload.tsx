@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ModalDialog } from 'ui/atoms';
+import { ModalDialog } from 'ui/atoms/modal';
 import { PaperDropzone } from './Uploader';
 import Box from '@material-ui/core/Box';
 import { FilesList } from './FileList';

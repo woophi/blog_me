@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import { makeStyles } from '@material-ui/core';
-import { ScrollButton } from 'ui/atoms';
+import { ScrollButton } from 'ui/atoms/ScrollToTop';
 import { Navigation } from './Navigation';
 import { Footer } from 'ui/atoms/Footer';
 

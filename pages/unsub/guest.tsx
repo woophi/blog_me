@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { UnsubLayout } from 'ui/index';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
+import { UnsubLayout } from 'ui/cells/unsub-layout';
 
 class UnsubGuest extends React.PureComponent<WithRouterProps> {
   render() {

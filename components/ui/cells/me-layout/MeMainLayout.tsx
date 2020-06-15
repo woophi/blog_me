@@ -3,11 +3,11 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { TabPanel } from 'ui/index';
 import { Profile } from './Profile';
 import { UserComments } from './UserComments';
 import { UserLikes } from './UserLikes';
 import { UserQuizzes } from './UserQuizzes';
+import { TabPanel } from 'ui/atoms/TabPanel';
 
 export const MeMainLayout = React.memo(() => {
   const [tabValue, setValue] = React.useState(0);

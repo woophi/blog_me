@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TextField, ButtonsForm, Snakbars } from 'ui/atoms';
 import { useTranslation } from 'server/lib/i18n';
 import { safeTrim } from 'core/lib';
 import { newComment } from './operations';
@@ -14,6 +13,9 @@ import { canUserComment, getUserName } from 'core/selectors';
 import { AuthButtons } from './AuthButtons';
 import { checkAuth } from 'core/operations/auth';
 import { MenuComment } from './Menu';
+import { TextField } from 'ui/atoms/TextField';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 type OwnProps = {
   blogId: number;

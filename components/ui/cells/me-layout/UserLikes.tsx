@@ -4,7 +4,7 @@ import { getUserLikes } from 'core/operations/profile';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Like } from 'ui/molecules';
+import { Like } from 'ui/molecules/likes';
 import { openBlog } from './actions';
 
 export const UserLikes = React.memo(() => {

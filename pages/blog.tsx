@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { GeneralLayout } from 'ui/index';
 import { getBLog } from 'core/operations';
 import { BlogGuest } from 'core/models';
 import withRouter, { WithRouterProps } from 'next/dist/client/with-router';
@@ -7,11 +6,12 @@ import isEmpty from 'ramda/src/isEmpty';
 import or from 'ramda/src/or';
 import isNil from 'ramda/src/isNil';
 import { NextPageContext } from 'next';
-import { BlogLayout } from 'ui/cells';
 import { connectSocketBlog, joinRoom, leaveRoom } from 'core/socket/blog';
 import Head from 'next/head';
 import getConfig from 'next/config';
 import Error from './_error';
+import { GeneralLayout } from 'ui/cells/general-layout';
+import { BlogLayout } from 'ui/cells/blog-layout';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 

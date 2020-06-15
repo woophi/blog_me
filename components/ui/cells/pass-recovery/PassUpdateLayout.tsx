@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { H1, Spinner } from 'ui/atoms';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { LinkState } from 'core/models';
 import { getResetPassLinkState } from 'core/operations';
 import { UpdateForm } from './UpdateForm';
 import { useTranslation } from 'server/lib/i18n';
+import { H1 } from 'ui/atoms/H1';
+import { Spinner } from 'ui/atoms/spinner';
 
 type Props = {
   linkId: string;

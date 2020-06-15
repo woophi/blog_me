@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LinkButton } from 'ui/atoms';
+import { LinkButton } from 'ui/atoms/Links';
 import { LoginForm } from './LoginForm';
 import Box from '@material-ui/core/Box';
 

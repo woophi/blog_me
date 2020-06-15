@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PassResetLayout } from 'ui/index';
+import { PassResetLayout } from 'ui/cells/pass-recovery';
 
 class PassReset extends React.PureComponent {
   render() {

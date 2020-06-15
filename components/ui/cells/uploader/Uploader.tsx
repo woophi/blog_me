@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { AppState } from 'core/models';
 import { getSelectedFile, getAdminState, getFailedState } from 'core/selectors';
-import { Spinner, Snakbars, TabPanel, TextField } from 'ui/atoms';
 import { uploadFile, failedFalse, uploadFileUrl } from './operations';
 import Button from '@material-ui/core/Button';
 import { theme } from 'core/lib';
@@ -14,6 +13,10 @@ import Box from '@material-ui/core/Box';
 import { FileItem } from 'core/models/admin';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { TextField } from 'ui/atoms/TextField';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { TabPanel } from 'ui/atoms/TabPanel';
+import { Spinner } from 'ui/atoms/spinner';
 
 type Props = {
   file: FileItem;

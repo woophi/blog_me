@@ -3,7 +3,7 @@ import { Button, LinearProgress, Typography, makeStyles } from '@material-ui/cor
 import { getWindow } from 'core/common';
 import { checkAuth } from 'core/operations/auth';
 import { useInterval } from 'core/lib';
-import { LinkButton } from 'ui/atoms';
+import { LinkButton } from 'ui/atoms/Links';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faVk } from '@fortawesome/free-brands-svg-icons';
 

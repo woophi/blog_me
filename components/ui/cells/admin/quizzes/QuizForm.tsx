@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ButtonsForm, Snakbars, ActionButton, TabPanel } from 'ui/atoms';
 import { safeTrim, theme } from 'core/lib';
 import { Form, Field } from 'react-final-form';
 import { makeStyles } from '@material-ui/core';
@@ -27,6 +26,10 @@ import Typography from '@material-ui/core/Typography';
 import { FieldArray } from 'react-final-form-arrays';
 import Button from '@material-ui/core/Button';
 import { SortableFactory } from 'ui/molecules/sortable';
+import { ActionButton } from 'ui/atoms/ActionButton';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { TabPanel } from 'ui/atoms/TabPanel';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 type Props = {
   quizId?: number;

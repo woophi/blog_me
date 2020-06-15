@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { PassUpdateLayout } from 'ui/index';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
+import { PassUpdateLayout } from 'ui/cells/pass-recovery';
 
 class UpdatePass extends React.PureComponent<WithRouterProps> {
   render() {

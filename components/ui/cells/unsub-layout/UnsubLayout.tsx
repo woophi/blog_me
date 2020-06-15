@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { H1, Spinner, ActionButton } from 'ui/atoms';
 import { useTranslation } from 'server/lib/i18n';
 import { guestUnsub } from 'core/operations';
 import { LinkState } from 'core/models';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { H1 } from 'ui/atoms/H1';
+import { ActionButton } from 'ui/atoms/ActionButton';
+import { Spinner } from 'ui/atoms/spinner';
 
 type Props = {
   uniqId: string;
@@ -17,9 +19,6 @@ export const UnsubLayout = React.memo<Props>(({ uniqId }) => {
 
   React.useEffect(() => {
     setUnsubState(LinkState.FETCHING);
-    // getUnsubLinkState(uniqId)
-    //   .then(setUnsubState)
-    //   .catch(setUnsubState);
   }, [uniqId]);
 
   const unsub = React.useCallback(

@@ -17,7 +17,7 @@ export const Footer = React.memo(() => {
       padding="2rem"
     >
       <Typography color="textSecondary" gutterBottom>
-        Copyright © {new Date().getFullYear()} Red eyes blog
+        Copyright © 2019-{new Date().getFullYear()} Red eyes blog
       </Typography>
       <SocialButtons />
     </Box>

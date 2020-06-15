@@ -5,10 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { InputSearch, styleTruncate } from 'ui/atoms';
 import { AdminQuizItem } from 'core/models/admin';
 import { goToDeep } from 'core/common';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import { styleTruncate } from 'ui/atoms/constants';
+import { InputSearch } from 'ui/atoms/InputSearch';
 
 type Props = {
   quzzies: AdminQuizItem[];

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { H1 } from 'ui/atoms';
+import { H1 } from 'ui/atoms/H1';
 import { ResetForm } from './ResetFom';
 import Box from '@material-ui/core/Box';
 

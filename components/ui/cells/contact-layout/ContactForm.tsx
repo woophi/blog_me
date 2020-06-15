@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, ButtonsForm, Snakbars } from 'ui/atoms';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
 import { sendMessage } from 'core/operations';
 import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { TextField } from 'ui/atoms/TextField';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 type ContactForm = {
   name: string;
@@ -67,9 +69,7 @@ export const ContactForm: React.FC = () => {
           <Snakbars variant="error" message={submitError} />
           <Snakbars
             variant="success"
-            message={
-              submitSucceeded && !submitError ? 'Сообщение отправлено' : null
-            }
+            message={submitSucceeded && !submitError ? 'Сообщение отправлено' : null}
             timerValue={1000}
           />
           <Field

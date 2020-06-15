@@ -5,11 +5,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { selectFile, fetchFiles } from './operations';
-import { Spinner, Snakbars, InputSearch, styleTruncate } from 'ui/atoms';
 import { connect as redux } from 'react-redux';
 import { AppState } from 'core/models';
 import { getSelectedFile } from 'core/selectors';
 import { FileItem } from 'core/models/admin';
+import { styleTruncate } from 'ui/atoms/constants';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { InputSearch } from 'ui/atoms/InputSearch';
+import { Spinner } from 'ui/atoms/spinner';
 
 type Props = {
   files: FileItem[];

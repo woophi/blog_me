@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ContactLayout, GeneralLayout } from 'ui/index';
+import { GeneralLayout } from 'ui/cells/general-layout';
+import { ContactLayout } from 'ui/cells/contact-layout';
 
 class Contact extends React.PureComponent {
   render() {

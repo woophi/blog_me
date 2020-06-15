@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { getComments } from 'ui/molecules';
+import { getComments } from 'ui/molecules/comments';
 import { AppState } from 'core/models';
 import { connect as redux } from 'react-redux';
 

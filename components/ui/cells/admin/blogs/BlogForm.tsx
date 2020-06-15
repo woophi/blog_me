@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TextField, ButtonsForm, Snakbars, ActionButton, TabPanel } from 'ui/atoms';
 import { safeTrim, theme } from 'core/lib';
 import { Form, Field } from 'react-final-form';
 import { makeStyles } from '@material-ui/core';
@@ -16,17 +15,21 @@ import Box from '@material-ui/core/Box';
 import Switch from '@material-ui/core/Switch';
 import moment from 'moment';
 import { editBlog, createNewBlog, deleteBlog } from './operations';
-import { BlogData, FacebookPageItem } from 'core/models/admin';
+import { BlogData } from 'core/models/admin';
 import { QuillEditor } from 'ui/molecules/quill-editor';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import { ActionButton } from 'ui/atoms/ActionButton';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { TabPanel } from 'ui/atoms/TabPanel';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
+import { TextField } from 'ui/atoms/TextField';
 
 type Props = {
   blogId?: number;
   initialValues?: BlogData;
-  facebookPages: FacebookPageItem[];
 };
 
 type BlogForm = BlogData;

@@ -3,10 +3,11 @@ import { QuizGuestData, QuizzStatus, AppDispatchActions } from 'core/models';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserId, getUserFetching, getQuizDataState } from 'core/selectors';
 import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
-import { ModalDialog, Spinner } from 'ui/atoms';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { QuizMain } from './QuizMain';
+import { Spinner } from 'ui/atoms/spinner';
+import { ModalDialog } from 'ui/atoms/modal';
 
 type Props = {
   quizData: QuizGuestData;

@@ -3,11 +3,13 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { askIgLogin, sendIgCode } from './operations';
-import { ArrowTooltip, Spinner, TextField } from 'ui/atoms';
 import Fade from '@material-ui/core/Fade';
 import { theme } from 'core/lib';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { ArrowTooltip } from 'ui/atoms/HtmlTooltip';
+import { Spinner } from 'ui/atoms/spinner';
+import { TextField } from 'ui/atoms/TextField';
 
 export const AdminInstagram = React.memo(() => {
   const [open, setOpen] = React.useState(false);

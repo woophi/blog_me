@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, ButtonsForm, Snakbars } from 'ui/atoms';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
 import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
 import { store } from 'core/store';
 import { login, ensureAuthorized } from 'core/operations/auth';
+import { TextField } from 'ui/atoms/TextField';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 type LoginForm = {
   email: string;

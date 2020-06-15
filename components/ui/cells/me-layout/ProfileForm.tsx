@@ -6,9 +6,11 @@ import Avatar from '@material-ui/core/Avatar';
 import { safeTrim, testEmail } from 'core/lib';
 import { FORM_ERROR } from 'final-form';
 import { Form, Field } from 'react-final-form';
-import { Snakbars, TextField, ButtonsForm } from 'ui/atoms';
 import { ProfileFormModel } from 'core/models';
 import { updateUserProfile } from 'core/operations/profile';
+import { TextField } from 'ui/atoms/TextField';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 const validate = (values: ProfileFormModel) => {
   const errors: Partial<ProfileFormModel> = {};

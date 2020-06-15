@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, ButtonsForm, Snakbars } from 'ui/atoms';
 import { Form, Field } from 'react-final-form';
 import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
 import { updatePassword } from 'core/operations';
 import { login, ensureAuthorized } from 'core/operations/auth';
 import { store } from 'core/store';
+import { TextField } from 'ui/atoms/TextField';
+import { Snakbars } from 'ui/atoms/Snakbars';
+import { ButtonsForm } from 'ui/atoms/ButtonsForm';
 
 type UpdateForm = {
   password: string;

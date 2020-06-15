@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { H1, LinkButton } from 'ui/atoms';
 import { useTranslation } from 'server/lib/i18n';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { H1 } from 'ui/atoms/H1';
+import { LinkButton } from 'ui/atoms/Links';
 
 type Props = {
   statusCode: number;

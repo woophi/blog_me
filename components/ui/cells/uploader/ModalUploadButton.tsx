@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import { ArrowTooltip } from 'ui/atoms';
+import { ArrowTooltip } from 'ui/atoms/HtmlTooltip';
 import { FieldInputProps } from 'react-final-form';
 import Paper from '@material-ui/core/Paper';
 import { deselectFile, getChosenFile } from './operations';

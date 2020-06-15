@@ -11,9 +11,11 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 import { connect as redux } from 'react-redux';
 import { AppState } from 'core/models';
 import { getUserFetching, getUserId } from 'core/selectors';
-import { Spinner, Bread, ScrollButton } from 'ui/atoms';
 import { drawerWidth } from '../constants';
 import { AdminMenu } from '../Menu';
+import { Spinner } from 'ui/atoms/spinner';
+import { Bread } from 'ui/atoms/Bread';
+import { ScrollButton } from 'ui/atoms/ScrollToTop';
 
 type Props = {
   fetching: boolean;

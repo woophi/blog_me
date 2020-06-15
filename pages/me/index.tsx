@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
-import { GeneralLayout } from 'ui/index';
 import { MeMainLayout } from 'ui/cells/me-layout';
+import { GeneralLayout } from 'ui/cells/general-layout';
 
 class Me extends React.PureComponent {
   async componentDidMount() {

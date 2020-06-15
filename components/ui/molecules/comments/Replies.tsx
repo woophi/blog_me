@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { TransitionSlide } from 'ui/atoms';
+import { TransitionSlide } from 'ui/atoms/TransitionSlide';
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,7 +25,7 @@ type OwnProps = {
 };
 
 const mapState = (state: AppState, _: OwnProps) => ({
-  replies: getReplies(state)
+  replies: getReplies(state),
 });
 
 const mapDispatch = (dispatch: Dispatch<AppDispatch>, props: OwnProps) => ({
@@ -40,7 +40,7 @@ const mapDispatch = (dispatch: Dispatch<AppDispatch>, props: OwnProps) => ({
       return true;
     }
     return false;
-  }
+  },
 });
 
 type Props = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch> & OwnProps;
@@ -68,7 +68,7 @@ const RepliesPC = React.memo<Props>(
       setLoading(true);
       const newOffset = offset + INCREASE_OFFSET;
       loadMoreReplies(newOffset)
-        .then(r => (r ? setOffset(newOffset) : setHidden(true)))
+        .then((r) => (r ? setOffset(newOffset) : setHidden(true)))
         .finally(() => setLoading(false));
     }, [offset]);
 
@@ -102,7 +102,7 @@ const RepliesPC = React.memo<Props>(
             </Toolbar>
           </AppBar>
           <Box paddingTop="5rem">
-            {replies.map(r => (
+            {replies.map((r) => (
               <Comment key={r._id} {...r} />
             ))}
           </Box>
@@ -127,11 +127,11 @@ const RepliesPC = React.memo<Props>(
 
 export const Replies = redux(mapState, mapDispatch)(RepliesPC);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   butn: {
-    marginTop: '2rem'
-  }
+    marginTop: '2rem',
+  },
 }));

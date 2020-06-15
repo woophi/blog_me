@@ -3,7 +3,6 @@ import { BlogGuest, AppState } from 'core/models';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
-import { Like, Shares } from 'ui/molecules';
 import { LoadComments } from './LoadComments';
 import { getWindow } from 'core/common';
 import { PopUp } from 'ui/molecules/blog-info-pop';
@@ -14,6 +13,8 @@ import 'ui/molecules/quill-editor/quill.css';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { increaseBlogView } from './operations';
+import { Like } from 'ui/molecules/likes';
+import { Shares } from 'ui/molecules/shares';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 

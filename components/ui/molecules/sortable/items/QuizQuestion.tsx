@@ -2,7 +2,7 @@ import { SortableElementProps } from 'react-sortable-hoc';
 import * as React from 'react';
 import { Field } from 'react-final-form';
 import Box from '@material-ui/core/Box';
-import { TabPanel } from 'ui/atoms';
+import { TabPanel } from 'ui/atoms/TabPanel';
 import { QuillEditor } from '../../quill-editor';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';

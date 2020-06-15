@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { IndexLayout, GeneralLayout } from 'ui/index';
 import { getBLogs } from 'core/operations';
 import { BlogGuestItem } from 'core/models';
+import { GeneralLayout } from 'ui/cells/general-layout';
+import { IndexLayout } from 'ui/cells/index-layout';
 
 type Props = {
   blogs: BlogGuestItem[];

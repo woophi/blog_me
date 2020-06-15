@@ -24,7 +24,7 @@ import Button from '@material-ui/core/Button';
 import { getUserProfileUrl, getUserId, isUserGod } from 'core/selectors';
 import Avatar from '@material-ui/core/Avatar';
 import { logout, checkAuth } from 'core/operations/auth';
-import { ModalDialog } from 'ui/atoms';
+import { ModalDialog } from 'ui/atoms/modal';
 import { AuthButtons } from 'ui/molecules/comments/AuthButtons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
