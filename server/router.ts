@@ -114,6 +114,8 @@ export function router(
   app.put('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.updateQuestions);
   app.get('/api/admin/quiz/participants', identity.authorizedForAdmin, controllers.getQuizParticipants);
 
+  app.get('/api/test/route', controllers.getTestSleep);
+
   // facebook connect
   app.get('/setup/fb', controllers.fbLogin);
   app.get('/processLogin/fb/at', controllers.processLogin);

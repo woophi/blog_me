@@ -265,3 +265,14 @@ export const getQuizParticipants = async (req: Request, res: Response) => {
     return res.sendStatus(HTTPStatus.ServerError);
   }
 };
+
+export const getTestSleep = async (req: Request, res: Response) => {
+  const reds = await new Promise(resolve => {
+    setTimeout(() => {
+      Logger.info('SLEPT WELL');
+      resolve('GTFO');
+    }, 10000);
+  });
+
+  return res.send(reds);
+};
