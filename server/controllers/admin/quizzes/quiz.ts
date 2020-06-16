@@ -267,12 +267,14 @@ export const getQuizParticipants = async (req: Request, res: Response) => {
 };
 
 export const getTestSleep = async (req: Request, res: Response) => {
+  Logger.info('before sleep');
   const reds = await new Promise(resolve => {
     setTimeout(() => {
       Logger.info('SLEPT WELL');
       resolve('GTFO');
     }, 10000);
   });
+  Logger.info('after sleep');
 
   return res.send(reds);
 };
