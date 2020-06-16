@@ -1,4 +1,3 @@
-import thunk from 'redux-thunk';
 import {
   applyMiddleware,
   combineReducers,
@@ -15,7 +14,7 @@ import { MakeStore, Context, createWrapper } from 'next-redux-wrapper';
 
 const epicMiddleware = createEpicMiddleware();
 
-const middleware = applyMiddleware(thunk, epicMiddleware);
+const middleware = applyMiddleware(epicMiddleware);
 
 const rootReducerMap: ReducersMapObject<AppState, AppDispatch> = {
   ui: uiReducer
