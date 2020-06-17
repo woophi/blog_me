@@ -1,10 +1,9 @@
 import { store } from 'core/store';
-import { isUserGod, getUserId } from 'core/selectors';
+import { isUserGod, getUserId, getUserToken } from 'core/selectors';
 import Router from 'next/router';
 import { callApi } from 'core/common';
 import * as models from 'core/models';
 import { connectAdminSocket } from 'core/socket/admin';
-import { SetUserDispatch } from 'core/models';
 
 export const login = (email: string, password: string) =>
   callApi<{ token: string }>('post', 'api/app/user/login', { email, password });
@@ -19,7 +18,7 @@ export const logout = async () => {
       roles: null,
       token: '',
       userId: '',
-      email: ''
+      email: '',
     },
   });
   store.dispatch({ type: 'SET_USER_FETCHING', payload: false });
@@ -44,14 +43,14 @@ export const ensureNotAuthorized = async () => {
     return;
   }
   if (isUserGod(state)) {
-    connectAdminSocket();
+    connectAdminSocket(getUserToken(state));
   }
 };
 export const ensureAuthorized = async () => {
   await checkAuth();
   const state = store.getState();
   if (isUserGod(state)) {
-    connectAdminSocket();
+    connectAdminSocket(getUserToken(state));
     Router.push('/admin');
   }
 };

@@ -44,8 +44,8 @@
 - [x] profile data
 - [x] delete unused code, make imports stricter
 - [x] delete all fb code that makes publish pages
+- [x] admin socket connection check
 - [ ] profile data more actions
-- [ ] admin socket connection check
 - [ ] notify queue for new comments
 - [ ] route history
 - [ ] blog tags
