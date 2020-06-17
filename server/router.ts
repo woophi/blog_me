@@ -97,10 +97,6 @@ export function router(
   app.get('/api/admin/files', identity.authorizedForAdmin, controllers.getAllFiles);
   app.post('/api/admin/file', identity.authorizedForAdmin, storage.startUploadUrl);
 
-  app.get('/api/admin/fb/pages', identity.authorizedForAdmin, controllers.getFBPIds);
-  app.get('/api/admin/fb/pages/full', identity.authorizedForAdmin, controllers.getFBPages);
-  app.patch('/api/admin/fb/check/token', identity.authorizedForAdmin, controllers.checkTokenValidation);
-
   app.patch('/api/admin/ig/check', identity.authorizedForAdmin, controllers.checkLoginInstagram);
   app.patch('/api/admin/ig/login', identity.authorizedForAdmin, controllers.verrifyLoginInstagram);
   app.patch('/api/admin/ig/code', identity.authorizedForAdmin, controllers.sendCodeInstagram);
@@ -113,10 +109,6 @@ export function router(
   
   app.put('/api/admin/quiz/questions', identity.authorizedForAdmin, controllers.updateQuestions);
   app.get('/api/admin/quiz/participants', identity.authorizedForAdmin, controllers.getQuizParticipants);
-
-  // facebook connect
-  app.get('/setup/fb', controllers.fbLogin);
-  app.get('/processLogin/fb/at', controllers.processLogin);
 
   app.get('/unsub/:id', (req, res) => {
     const actualPage = '/unsub/guest'

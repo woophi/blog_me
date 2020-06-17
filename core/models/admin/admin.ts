@@ -18,7 +18,6 @@ export enum Section {
   BlackList = 'BlackList',
   Youtube = 'Youtube',
   Comments = 'Comments',
-  Facebook = 'Facebook',
   Likes = 'Likes',
   Sketch = 'Sketch',
   Followers = 'Followers',

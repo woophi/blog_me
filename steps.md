@@ -43,7 +43,7 @@
 - [x] wisely redefine jobs
 - [x] profile data
 - [x] delete unused code, make imports stricter
-- [ ] delete all fb code that makes publish pages
+- [x] delete all fb code that makes publish pages
 - [ ] profile data more actions
 - [ ] admin socket connection check
 - [ ] notify queue for new comments

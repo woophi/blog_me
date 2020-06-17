@@ -17,8 +17,3 @@ export type BlogData = {
   language?: string;
   time?: string;
 };
-
-export type FacebookPageItem = {
-  pageId: number;
-  pageName: string;
-}

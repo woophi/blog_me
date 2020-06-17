@@ -1,6 +1,5 @@
 export * from './mongoModel';
 export * from './user';
-export * from './facebookPage';
 export * from './comment';
 export * from './language';
 export * from './schemas';
