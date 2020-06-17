@@ -34,6 +34,7 @@ import next from 'next';
 import { connection } from './lib/db';
 import { agenda } from './lib/agenda';
 import { generateSiteMap } from './utils/helpers/sitemap';
+import { setReleaseVersion } from './heroku';
 import('./views');
 
 const appNext = next({ dev: config.DEV_MODE });
@@ -81,6 +82,7 @@ appNext.prepare().then(async () => {
 
   applyMigration();
   generateSiteMap();
+  setReleaseVersion();
   server.listen(config.PORT_CORE, () => {
     console.log(`> Ready on http://localhost:${config.PORT_CORE}`);
   });

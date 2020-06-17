@@ -35,5 +35,9 @@ export default {
   // vk
   VK_CLIENT_ID: process.env.VK_CLIENT_ID,
   VK_CLIENT_SECRET: process.env.VK_CLIENT_SECRET,
-  VK_SERVICE: process.env.VK_SERVICE
+  VK_SERVICE: process.env.VK_SERVICE,
+
+  // hk
+  HEROKU_TOKEN: process.env.HEROKU_TOKEN,
+  HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
 };

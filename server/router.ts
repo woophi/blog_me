@@ -11,6 +11,7 @@ const Agendash = require('agendash');
 import { UrlWithParsedQuery } from 'url';
 import Server from 'next/dist/next-server/server/next-server';
 import { agenda } from './lib/agenda';
+import { get, GlobalCache } from './options';
 const options = {
   root: join(__dirname, '../assets')
 };
@@ -32,6 +33,8 @@ export function router(
   app.get('/sitemap.xml', (_, res) => res.status(HTTPStatus.OK).sendFile('sitemap.xml', options));
   
   app.get('/contact.html', (_, res) => res.redirect('/contact'));
+
+  app.get('/release/v', (_, res) => res.send(get(GlobalCache.ReleaseVersion)));
 
   // guest blogs
   app.get('/api/guest/blogs', fetchingLimiterMiddleware, controllers.getGuestBlogs);
