@@ -67,7 +67,7 @@
     "next": "^9.4.4",
     "next-i18next": "^4.4.2",
     "next-redux-wrapper": "^6.0.2",
-    "nodemailer": "^6.4.8",
+    "nodemailer": "^6.4.10",
     "nodemailer-express-handlebars": "^4.0.0",
     "nprogress": "^0.2.0",
     "ramda": "^0.27.0",
