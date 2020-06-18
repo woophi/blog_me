@@ -1717,16 +1717,7 @@
     "@types/express" "*"
     "@types/node" "*"
 
-"@types/express@*":
-  version "4.17.2"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.2.tgz#a0fb7a23d8855bac31bc01d5a58cadd9b2173e6c"
-  integrity sha512-5mHFNyavtLoJmnusB8OKJ5bshSzw+qkMIBAobLrIM48HJvunFva9mOa6aBwh64lBFyNwBbs0xiEFuj4eU/NjCA==
-  dependencies:
-    "@types/body-parser" "*"
-    "@types/express-serve-static-core" "*"
-    "@types/serve-static" "*"
-
-"@types/express@^4.17.6":
+"@types/express@*", "@types/express@^4.16.1", "@types/express@^4.17.6":
   version "4.17.6"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.6.tgz#6bce49e49570507b86ea1b07b806f04697fac45e"
   integrity sha512-n/mr9tZI83kd4azlPG5y997C/M4DNABK9yErhFM6hKdym4kkmd9j0vtsJyjFIwfRBxtrxZtAfGZCNRIBMFLK5w==
@@ -7154,11 +7145,12 @@ neo-async@2.6.1, neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-next-i18next@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-4.4.2.tgz#ba7ed45d93b9123baa6f06abc29c784e06e2c088"
-  integrity sha512-J7A0x4MFqDw2O2nJGId98pmeSTNwRpMHTSNboi4xeQsvl4PN5T3MrA/LZN0GJCa8rsRWR63dkNVYN8fx5OOg1A==
+next-i18next@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-4.5.0.tgz#ebcdbd84c8c4c149c0768a6eb91e6b4cdf01cd34"
+  integrity sha512-H6temTPUHDC4Mc3TcVub0hPUGgCv3suN0WudJMArupLjAKcdl8845gduooRf+S5KVcija5M3UCFAcXImm2MYgg==
   dependencies:
+    "@types/express" "^4.16.1"
     core-js "^2"
     detect-node "^2.0.4"
     hoist-non-react-statics "^3.2.0"
