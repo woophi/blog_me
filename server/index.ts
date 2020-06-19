@@ -35,6 +35,7 @@ import { connection } from './lib/db';
 import { agenda } from './lib/agenda';
 import { generateSiteMap } from './utils/helpers/sitemap';
 import { setReleaseVersion } from './heroku';
+import { NextHandleFunction } from './lib/models';
 import('./views');
 
 const appNext = next({ dev: config.DEV_MODE });
@@ -43,20 +44,20 @@ const handle = appNext.getRequestHandler();
 appNext.prepare().then(async () => {
   await connection;
   const appExpress = express();
-  appExpress.use(compression({ filter: shouldCompress }));
+  appExpress.use(compression({ filter: shouldCompress }) as NextHandleFunction);
   appExpress.use(bodyParser.urlencoded({ extended: true }));
   appExpress.use(bodyParser.json());
-  appExpress.use(fileUpload());
+  appExpress.use(fileUpload() as NextHandleFunction);
   if (config.DEV_MODE) {
-    appExpress.use(logger('dev'));
+    appExpress.use(logger('dev') as NextHandleFunction);
   } else {
-    appExpress.use(helmet());
+    appExpress.use(helmet() as NextHandleFunction);
     appExpress.disable('x-powered-by');
-    appExpress.use(logger('tiny'));
+    appExpress.use(logger('tiny') as NextHandleFunction);
     appExpress.set('trust proxy', 1);
   }
-  appExpress.use(cookieParser(config.COOKIE_SECRET));
-  appExpress.use(initExpressSession());
+  appExpress.use(cookieParser(config.COOKIE_SECRET) as NextHandleFunction);
+  appExpress.use(initExpressSession() as NextHandleFunction);
   appExpress.use(nextI18NextMiddleware(nextI18next));
 
   appExpress.engine(
