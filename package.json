@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@types/bluebird": "^3.5.32",
     "@types/next-redux-wrapper": "^3.0.0",
-    "@types/semver": "^7.2.0",
+    "@types/semver": "^7.3.1",
     "@zeit/next-css": "^1.0.1",
     "agenda": "^3.1.0",
     "agendash": "^1.0.0",
