@@ -87,7 +87,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-observable": "^1.2.0",
     "reselect": "^4.0.0",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.0",
     "semver": "^7.3.2",
     "sitemap": "^6.1.6",
     "socket.io": "^2.3.0",
