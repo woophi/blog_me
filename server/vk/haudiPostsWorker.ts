@@ -90,6 +90,10 @@ const words = config.DEV_MODE
       'ts',
       'sitemap',
       'деньг',
+      'вк мини апп',
+      'vk mini app',
+      'nestjs',
+      'digitalocean',
     ];
 
 const checkPostTextForNeededInfo = (text: string) => {

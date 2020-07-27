@@ -45,6 +45,7 @@
 - [x] delete unused code, make imports stricter
 - [x] delete all fb code that makes publish pages
 - [x] admin socket connection check
+- [ ] delete old posts and save that should be notified
 - [ ] profile data more actions
 - [ ] notify queue for new comments
 - [ ] route history
