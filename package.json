@@ -94,7 +94,7 @@
     "socket.io-client": "^2.3.0",
     "string-strip-html": "^4.5.0",
     "ts-node": "^8.10.2",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
