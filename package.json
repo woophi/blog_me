@@ -51,7 +51,7 @@
     "express-fileupload": "^1.1.9",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
-    "final-form": "^4.20.0",
+    "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
     "helmet": "^3.23.2",
     "instagram-private-api": "^1.40.1",
