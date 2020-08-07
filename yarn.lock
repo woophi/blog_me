@@ -2692,12 +2692,7 @@ bluebird@3.5.1:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
   integrity sha512-MKiLiV+I1AA596t9w1sQJ8jkiSr5+ZKi0WKrYGUn6d1Fx+Ij4tIj+m2WMQSGczs5jZVxV339chE8iwk6F64wjA==
 
-bluebird@^3.5.0, bluebird@^3.5.5, bluebird@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
-  integrity sha512-DdmyoGCleJnkbp3nkbxTLJ18rjDsE4yCggEwKNXkeV123sPNfOCYeDoeuOY+F2FrSjO1YXcTU+dsy96KMy+gcg==
-
-bluebird@^3.7.2:
+bluebird@^3.5.0, bluebird@^3.5.5, bluebird@^3.7.1, bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -5546,10 +5541,10 @@ ini@^1.3.5, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
 
-instagram-private-api@^1.40.1:
-  version "1.40.1"
-  resolved "https://registry.yarnpkg.com/instagram-private-api/-/instagram-private-api-1.40.1.tgz#1f6f6b36aa0debd261b993ac92b111095bbe9842"
-  integrity sha512-rNUqYHa00GcW0aWC/qmVlVNa6I/fnAlHSBphIUOZiZAS5/M0F1EGv3qNNskE75z6HWmA0gzxJTZVZMJKsQc0Cg==
+instagram-private-api@^1.41.0:
+  version "1.41.0"
+  resolved "https://registry.yarnpkg.com/instagram-private-api/-/instagram-private-api-1.41.0.tgz#5fe523db7296e17e5e001a69b074f9a69037c7cb"
+  integrity sha512-z45r3sCsaYsmqXydwpBbP4tcAPR8sJicF9x4sl4LQJuXsvAfd3WCexg+FYvkCMncsCCkTEJp6JsD8QbR+uyM3w==
   dependencies:
     "@lifeomic/attempt" "^3.0.0"
     "@types/chance" "^1.0.2"
