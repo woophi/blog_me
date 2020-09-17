@@ -51,7 +51,11 @@ appNext.prepare().then(async () => {
   if (config.DEV_MODE) {
     appExpress.use(logger('dev') as NextHandleFunction);
   } else {
-    appExpress.use(helmet() as NextHandleFunction);
+    appExpress.use(
+      helmet({
+        contentSecurityPolicy: false,
+      }) as NextHandleFunction
+    );
     appExpress.disable('x-powered-by');
     appExpress.use(logger('tiny') as NextHandleFunction);
     appExpress.set('trust proxy', 1);

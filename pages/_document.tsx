@@ -11,10 +11,6 @@ class MyDocument extends Document {
       <html lang="en" dir="ltr">
         <Head>
           <meta charSet="utf-8" />
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *"
-          />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
             name="viewport"
