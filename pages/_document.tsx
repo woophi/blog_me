@@ -47,24 +47,6 @@ class MyDocument extends Document {
               gtag('config', 'AW-973953037');
             `}
           </Script>
-          <Script>
-            {`
-              (function () {
-                var scr = document.createElement('script');
-                scr.type = 'text/javascript';
-                scr.charset = 'UTF-8';
-                scr.async = true;
-                scr.src = '//apptest.mluvii.com/widget/OOWidget.js';
-                scr.$owidgetOnLoad = function (owidget) {
-                  if (!owidget.isSupported) { return; }
-                  owidget.init("295b1064-cf5b-4a5d-9e05-e7a74f86ae5e", null);
-                  owidget.connectToServer();
-                };
-                var ffs = document.getElementsByTagName('script')[0];
-                ffs.parentNode.insertBefore(scr, ffs);
-              })();
-            `}
-          </Script>
         </Head>
         <body>
           <Main />
