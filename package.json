@@ -74,7 +74,7 @@
     "rate-limiter-flexible": "^2.1.10",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-dropzone": "^11.0.2",
+    "react-dropzone": "^11.2.3",
     "react-final-form": "^6.5.1",
     "react-final-form-arrays": "^3.1.2",
     "react-jss": "^10.3.0",
