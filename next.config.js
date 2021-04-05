@@ -21,6 +21,6 @@ module.exports = withCSS({
     return config;
   },
   publicRuntimeConfig: {
-    SITE_URL: process.env.SITE_URI
+    SITE_URL: process.env.SITE_URI,
   }
 });

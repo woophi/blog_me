@@ -15,8 +15,7 @@
     "url": "https://github.com/woophi/blog_me"
   },
   "engines": {
-    "node": "12.13.0",
-    "yarn": "1.22.4"
+    "yarn": "1.22.x"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",

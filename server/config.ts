@@ -40,4 +40,8 @@ export default {
   // hk
   HEROKU_TOKEN: process.env.HEROKU_TOKEN,
   HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
+
+  // testfriendship
+  FRIENDS_URL: process.env.FRIENDS_URL,
+  FRIENDS_API_KEY: process.env.FRIENDS_API_KEY
 };

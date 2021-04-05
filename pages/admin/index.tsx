@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ensureNotAuthorized } from 'core/operations/auth';
 import { AdminLayout } from 'ui/cells/admin';
+import { BanList } from 'ui/cells/admin/friendship/BanList';
 
 class Admin extends React.PureComponent {
   async componentDidMount() {
@@ -12,7 +13,11 @@ class Admin extends React.PureComponent {
   }
 
   render() {
-    return <AdminLayout>kekw</AdminLayout>;
+    return (
+      <AdminLayout>
+        <BanList />
+      </AdminLayout>
+    );
   }
 }
 

@@ -1,7 +1,7 @@
 export enum ROLES {
 	GODLIKE = 'Godlike',
   ADMIN = 'Admin',
-  COMMENT = 'Comment',
+  COMMENT = 'Comment'
 };
 
 export type Claims = {
