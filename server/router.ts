@@ -284,6 +284,11 @@ export function router(
     identity.authorizedForAdmin,
     controllers.testfriendship.getTopCoinsList
   );
+  app.get(
+    '/api/admin-f/top-quizzies',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.getTopQuizzesList
+  );
   // friends api end
 
   app.get('/unsub/:id', (req, res) => {

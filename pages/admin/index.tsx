@@ -2,7 +2,7 @@ import { Divider } from '@material-ui/core';
 import { ensureNotAuthorized } from 'core/operations/auth';
 import * as React from 'react';
 import { AdminLayout } from 'ui/cells/admin';
-import { BanList, DelationList, TopCoinsList } from 'ui/cells/admin/friendship';
+import { BanList, DelationList, TopCoinsList, TopQuizziesList } from 'ui/cells/admin/friendship';
 
 class Admin extends React.PureComponent {
   async componentDidMount() {
@@ -21,6 +21,8 @@ class Admin extends React.PureComponent {
         <DelationList />
         <Divider />
         <TopCoinsList />
+        <Divider />
+        <TopQuizziesList />
         <Divider />
       </AdminLayout>
     );

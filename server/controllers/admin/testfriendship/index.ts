@@ -24,9 +24,17 @@ const getTopCoinsList = async (req: Request, res: Response) => {
   const list = result?.data ?? [];
   return res.send(list).status(HTTPStatus.OK);
 };
+const getTopQuizzesList = async (req: Request, res: Response) => {
+  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/top-quizzies`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
+  const list = result?.data ?? [];
+  return res.send(list).status(HTTPStatus.OK);
+};
 
 export const testfriendship = {
   getBlackList,
   getDelationList,
-  getTopCoinsList
+  getTopCoinsList,
+  getTopQuizzesList
 };

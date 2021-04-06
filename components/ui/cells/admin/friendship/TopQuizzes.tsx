@@ -8,16 +8,16 @@ import {
   Typography,
 } from '@material-ui/core';
 import { ChevronRight, Refresh } from '@material-ui/icons';
-import { TopCoinItem } from 'core/models/admin';
+import { PopularQuizItem } from 'core/models/admin';
 import { memo, useCallback, useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
-import { getTopCoinsList } from './operations';
+import { getTopQuizzesList } from './operations';
 
-export const TopCoinsList = memo(() => {
-  const [banList, setList] = useState<TopCoinItem[]>([]);
-  const loadList = useCallback(() => getTopCoinsList().then(setList), []);
+export const TopQuizziesList = memo(() => {
+  const [banList, setList] = useState<PopularQuizItem[]>([]);
+  const loadList = useCallback(() => getTopQuizzesList().then(setList), []);
   useEffect(() => {
     loadList();
   }, []);
@@ -25,7 +25,7 @@ export const TopCoinsList = memo(() => {
     <Box width="100%">
       <Box marginLeft="1rem" display="flex" alignItems="center">
         <Typography variant="subtitle1" gutterBottom>
-          Топ монет
+          Популярные тесты
         </Typography>
         <IconButton onClick={loadList}>
           <Refresh />
@@ -55,7 +55,7 @@ export const TopCoinsList = memo(() => {
   );
 });
 type Props = {
-  list: TopCoinItem[];
+  list: PopularQuizItem[];
 };
 
 const Row = (props: ListChildComponentProps) => {
@@ -71,7 +71,7 @@ const Row = (props: ListChildComponentProps) => {
         primaryTypographyProps={{ noWrap: true }}
         style={styleTruncate}
         primary={list[index].name}
-        secondary={`Кол монет - ${list[index].coins}`}
+        secondary={`Кол людей которые прошли тест - ${list[index].amountOfFriends}`}
       />
       <IconButton>
         <ChevronRight />
