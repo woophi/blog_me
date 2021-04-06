@@ -44,7 +44,6 @@ const getUserDetail = async (req: Request, res: Response) => {
     }
   );
   const detail = result?.data ?? {};
-
   return res.send(detail).status(HTTPStatus.OK);
 };
 

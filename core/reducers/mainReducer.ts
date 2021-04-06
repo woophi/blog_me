@@ -15,8 +15,7 @@ export const initialState: models.AppState['ui'] = {
     files: [],
     selectedFile: null,
     uploadingFile: false,
-    uploadFailed: false,
-    selectedVkUser: {},
+    uploadFailed: false
   },
   comments: [],
   replies: [],
@@ -217,15 +216,6 @@ export const reducer = (
         profile: {
           ...state.profile,
           comments: dispatch.payload,
-        },
-      };
-    }
-    case 'SELECT_VK_USER': {
-      return {
-        ...state,
-        admin: {
-          ...state.admin,
-          selectedVkUser: dispatch.payload,
         },
       };
     }

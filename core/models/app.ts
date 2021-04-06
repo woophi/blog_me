@@ -1,10 +1,10 @@
-import { CommentItem } from './comment';
-import { AuthData } from './auth';
-import { AdminState, FileItem, GeneralVkUser } from './admin';
-import { BlogGuestItem, SearchStatus } from './blog';
-import { QuizGuestData } from './quiz';
 import { Dispatch } from 'redux';
+import { AdminState, FileItem } from './admin';
+import { AuthData } from './auth';
+import { BlogGuestItem, SearchStatus } from './blog';
+import { CommentItem } from './comment';
 import { ProfileState } from './profile';
+import { QuizGuestData } from './quiz';
 
 export type AppState = {
   ui: {
@@ -59,8 +59,7 @@ export type AppDispatch =
   | SetSearchResultsDispatch
   | SetSearchQueryDispatch
   | SetSearchStatusDispatch
-  | { type: 'UPDATE_USER_PROFILE_COMMENTS'; payload: ProfileState['comments'] }
-  | { type: 'SELECT_VK_USER'; payload: GeneralVkUser };
+  | { type: 'UPDATE_USER_PROFILE_COMMENTS'; payload: ProfileState['comments'] };
 
 export type SetUserDispatch = { type: 'SET_USER'; payload: AppState['ui']['user'] };
 

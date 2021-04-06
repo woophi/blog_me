@@ -25,3 +25,31 @@ export const setReasonLabel = (reason: admin.DelationReason) => {
       return 'Оскорбления';
   }
 };
+export const setUnbanReasonLabel = (reason: admin.UnbanReason) => {
+  switch (reason) {
+    case admin.UnbanReason.Expired:
+      return 'Истек срок';
+    case admin.UnbanReason.Payment:
+      return 'Выкуп';
+    default:
+      return '';
+  }
+};
+export const setLeagueTypeLabel = (reason: admin.LeagueType) => {
+  switch (reason) {
+    case admin.LeagueType.Bronze:
+      return 'Бронза';
+    case admin.LeagueType.Diamond:
+      return 'Алмаз';
+    case admin.LeagueType.Gold:
+      return 'Золото';
+    case admin.LeagueType.Platinum:
+      return 'Платина';
+    case admin.LeagueType.Silver:
+      return 'Серебро';
+    case admin.LeagueType.TheBest:
+      return 'Топчик';
+    default:
+      return '';
+  }
+};

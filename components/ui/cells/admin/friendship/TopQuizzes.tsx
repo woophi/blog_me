@@ -65,19 +65,7 @@ const Row = (props: ListChildComponentProps) => {
   const { index, style, data } = props;
   const { list } = data as Props;
 
-  const dispatch = useDispatch<AppDispatchActions>();
-
   const handleClick = () => {
-    dispatch({
-      type: 'SELECT_VK_USER',
-      payload: {
-        avatar: list[index].avatar,
-        firstName: list[index].firstName,
-        lastName: list[index].lastName,
-        name: list[index].name,
-        userId: list[index].userId,
-      },
-    });
     goToDeep(`friend/${list[index].vkUserId}`);
   };
 

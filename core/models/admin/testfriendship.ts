@@ -51,6 +51,7 @@ export type PopularQuizItem = GeneralVkUser & {
 };
 
 export type UserDetail = {
+  userInfo: GeneralVkUser,
   userDelations: {
     amountOfReasons: string;
     reason: DelationReason;
@@ -82,14 +83,15 @@ export type UserDetail = {
       id: number;
       name: string;
       participantsCount: number;
-      globalLeague: {
-        id: number;
-        leagueType: LeagueType;
-      };
+      
     };
     leagueGroup: {
       id: number;
       groupOrder: LeagueGroupOrder;
+      globalLeague: {
+        id: number;
+        leagueType: LeagueType;
+      };
     };
   } | null;
 };

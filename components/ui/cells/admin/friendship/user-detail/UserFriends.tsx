@@ -5,44 +5,33 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography
+  Typography,
 } from '@material-ui/core';
-import { ChevronRight, Refresh } from '@material-ui/icons';
-import { goToDeep } from 'core/common';
-import { DelationItem } from 'core/models/admin';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { QuizFriendType, VkFriendItem } from 'core/models/admin';
+import { memo } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
-import { getDelationList } from './operations';
 
-export const DelationList = memo(() => {
-  const [banList, setList] = useState<DelationItem[]>([]);
-  const loadList = useCallback(() => getDelationList().then(setList), []);
-  useEffect(() => {
-    loadList();
-  }, []);
+export const UserFriendsList = memo<{ list: VkFriendItem[] }>(({ list = [] }) => {
   return (
-    <Box width="100%">
+    <Box width="100%" marginTop="2rem">
       <Box marginLeft="1rem" display="flex" alignItems="center">
         <Typography variant="subtitle1" gutterBottom>
-          Доносы
+          Друзья
         </Typography>
-        <IconButton onClick={loadList}>
-          <Refresh />
-        </IconButton>
       </Box>
       <Box width="100%" height="300px">
         <AutoSizer>
           {({ height, width }) => (
             <FixedSizeList
               itemData={{
-                list: banList,
+                list,
               }}
               height={height}
               width={width}
               itemSize={46}
-              itemCount={banList.length}
+              itemCount={list.length}
               style={{
                 overflowX: 'hidden',
               }}
@@ -56,30 +45,28 @@ export const DelationList = memo(() => {
   );
 });
 type Props = {
-  list: DelationItem[];
+  list: VkFriendItem[];
 };
 
 const Row = (props: ListChildComponentProps) => {
   const { index, style, data } = props;
   const { list } = data as Props;
 
-  const handleClick = () => {
-    goToDeep(`friend/${list[index].userId}`);
-  };
-
   return (
-    <ListItem button style={style} key={index} onClick={handleClick}>
+    <ListItem button style={style} key={index}>
       <ListItemAvatar>
         <Avatar src={list[index].avatar} />
       </ListItemAvatar>
       <ListItemText
         primaryTypographyProps={{ noWrap: true }}
         style={styleTruncate}
-        primary={list[index].name}
-        secondary={`Кол жалоб - ${list[index].amountDelations}`}
+        primary={list[index].firstName ?? '' + list[index].lastName ?? ''}
+        secondary={
+          list[index].friendType === QuizFriendType.Anon ? 'прошел анонимно' : ''
+        }
       />
       <IconButton>
-        <ChevronRight />
+        {list[index].rightsNumber} из {list[index].questionsNumber}
       </IconButton>
     </ListItem>
   );
