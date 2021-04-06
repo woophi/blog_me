@@ -7,58 +7,62 @@ export const UsersSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     name: {
       type: String,
-      default: null
+      default: null,
+    },
+    vkUserId: {
+      type: Number,
+      default: null,
     },
     roles: [],
     password: {
       type: String,
-      default: null
+      default: null,
     },
     refreshToken: {
       type: String,
-      default: null
+      default: null,
     },
     resetId: {
       type: String,
-      default: null
+      default: null,
     },
     notifications: {
       email: {
         type: Boolean,
-        default: true
-      }
+        default: true,
+      },
     },
     gravatarPhotoUrl: {
       type: String,
-      default: null
+      default: null,
     },
     language: {
       type: mongoose.Schema.Types.ObjectId,
       ref: SchemaNames.LANGUAGE,
-      required: true
+      required: true,
     },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: SchemaNames.COMMENT
-      }
+        ref: SchemaNames.COMMENT,
+      },
     ],
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: SchemaNames.LIKES
-      }
+        ref: SchemaNames.LIKES,
+      },
     ],
     rates: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: SchemaNames.COMMENT
-      }
-    ]
+        ref: SchemaNames.COMMENT,
+      },
+    ],
   },
   { collection: SchemaNames.USERS }
 );

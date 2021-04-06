@@ -7,7 +7,7 @@ import { getLanguageIdByLocaleId } from './locales';
 import crypto from 'crypto';
 
 const hashing = new identity.Hashing();
-export const registerExternalUser = async (email: string, name: string) => {
+export const registerExternalUser = async (email: string, name: string, vkUserId?: number) => {
   const user = (await UserModel.findOne({ email }).lean()) as User;
 
   if (user) return user;
@@ -26,7 +26,8 @@ export const registerExternalUser = async (email: string, name: string) => {
     password,
     roles: [ROLES.COMMENT],
     language,
-    gravatarPhotoUrl
+    gravatarPhotoUrl,
+    vkUserId
   }).save();
   return newUser;
 };

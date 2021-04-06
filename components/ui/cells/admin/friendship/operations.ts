@@ -14,6 +14,10 @@ export const getFriendUserDetail = (vkUserId: number) =>
     'get',
     `api/admin-f/user-detail?vkUserId=${vkUserId}`
   );
+export const banUser = (payload: admin.BanPayload) =>
+  callUserApi('post', `api/admin-f/user-ban`, payload);
+export const unbanUser = (payload: admin.UnBanPayload) =>
+  callUserApi('delete', `api/admin-f/user-unban`, payload);
 
 export const setReasonLabel = (reason: admin.DelationReason) => {
   switch (reason) {

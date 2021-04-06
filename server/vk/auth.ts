@@ -33,7 +33,7 @@ export const processVKLogin = async (req: Request, res: Response) => {
 
   const userInfo = await getUserInfo(data.access_token);
 
-  const user = await registerExternalUser(data.email ?? userInfo.id, userInfo.name);
+  const user = await registerExternalUser(data.email ?? userInfo.id, userInfo.name, userInfo.id);
 
   return await authUser(req, res, user.email, user.password, onSuccess, onFail);
 };

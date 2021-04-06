@@ -294,6 +294,16 @@ export function router(
     identity.authorizedForAdmin,
     controllers.testfriendship.getUserDetail
   );
+  app.post(
+    '/api/admin-f/user-ban',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.banUser
+  );
+  app.delete(
+    '/api/admin-f/user-unban',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.unbanUser
+  );
   // friends api end
 
   app.get('/unsub/:id', (req, res) => {

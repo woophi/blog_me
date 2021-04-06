@@ -6,6 +6,7 @@ import { Likes } from './likes';
 
 export type UserGeneralModel = {
   email: string;
+  vkUserId?: number;
   roles?: ROLES[];
   password?: string;
   name?: string;

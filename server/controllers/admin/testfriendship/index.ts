@@ -47,10 +47,38 @@ const getUserDetail = async (req: Request, res: Response) => {
   return res.send(detail).status(HTTPStatus.OK);
 };
 
+const banUser = async (req: Request, res: Response) => {
+  await callApi(
+    'post',
+    `${config.FRIENDS_URL}api/admin/ban?vk_user_id=${req.session.vkUserId}`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+      vkUserId: req.body.vkUserId,
+      reason: req.body.reason,
+      until: req.body.until,
+    }
+  );
+  return res.sendStatus(HTTPStatus.OK);
+};
+const unbanUser = async (req: Request, res: Response) => {
+  await callApi(
+    'delete',
+    `${config.FRIENDS_URL}api/admin/ban`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+      vkUserId: req.body.vkUserId,
+      reason: req.body.reason
+    }
+  );
+  return res.sendStatus(HTTPStatus.OK);
+};
+
 export const testfriendship = {
   getBlackList,
   getDelationList,
   getTopCoinsList,
   getTopQuizzesList,
   getUserDetail,
+  banUser,
+  unbanUser
 };

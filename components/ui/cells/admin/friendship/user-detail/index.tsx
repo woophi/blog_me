@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { DelationReason, UserDetail } from 'core/models/admin';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   setReasonLabel,
   setUnbanReasonLabel,
@@ -21,15 +21,23 @@ import { ModalDialog } from 'ui/atoms/modal';
 import { UserFriendsList } from './UserFriends';
 
 export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
-  const {
-    banInfo,
-    userInfo = {},
-    donations = [],
-    quizInfo,
-    friends,
-    rank,
-    userDelations = [],
-  } = props.data ?? {};
+  const [
+    {
+      banInfo,
+      userInfo = {},
+      donations = [],
+      quizInfo,
+      friends,
+      rank,
+      userDelations = [],
+    },
+    setUserData,
+  ] = useState<UserDetail>(props.data ?? ({} as UserDetail));
+
+  useEffect(() => {
+    if (props.data) setUserData(props.data);
+  }, [props.data]);
+
   const classes = useStyles();
   const [openQuizModal, setOpen] = useState(false);
   const questionsMap = Object.values(quizInfo?.questions ?? {});

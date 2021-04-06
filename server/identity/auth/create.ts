@@ -118,6 +118,7 @@ export class Auth extends Hashing {
         req.session.cookie.maxAge = tenDaysInMS;
         req.session.user = user;
         req.session.userId = user.id;
+        req.session.vkUserId = user.vkUserId;
         req.session.accessToken = payload.accessToken;
         if (!config.DEV_MODE) {
           req.session.cookie.httpOnly = true;
