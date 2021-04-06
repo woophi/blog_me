@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { Divider } from '@material-ui/core';
 import { ensureNotAuthorized } from 'core/operations/auth';
+import * as React from 'react';
 import { AdminLayout } from 'ui/cells/admin';
-import { BanList, DelationList } from 'ui/cells/admin/friendship';
-import { Box, Divider, Typography } from '@material-ui/core';
+import { BanList, DelationList, TopCoinsList } from 'ui/cells/admin/friendship';
 
 class Admin extends React.PureComponent {
   async componentDidMount() {
@@ -16,23 +16,11 @@ class Admin extends React.PureComponent {
   render() {
     return (
       <AdminLayout>
-        <Box width="100%" height="300px">
-          <Box marginLeft="1rem">
-            <Typography variant="subtitle1" gutterBottom>
-              Забанены
-            </Typography>
-          </Box>
-          <BanList />
-        </Box>
+        <BanList />
         <Divider />
-        <Box width="100%" height="350px">
-          <Box marginLeft="1rem">
-            <Typography variant="subtitle1" gutterBottom>
-              Доносы
-            </Typography>
-          </Box>
-          <DelationList />
-        </Box>
+        <DelationList />
+        <Divider />
+        <TopCoinsList />
         <Divider />
       </AdminLayout>
     );

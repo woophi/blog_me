@@ -279,6 +279,11 @@ export function router(
     identity.authorizedForAdmin,
     controllers.testfriendship.getDelationList
   );
+  app.get(
+    '/api/admin-f/top-coins',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.getTopCoinsList
+  );
   // friends api end
 
   app.get('/unsub/:id', (req, res) => {

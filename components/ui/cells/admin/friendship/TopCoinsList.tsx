@@ -8,16 +8,16 @@ import {
   Typography,
 } from '@material-ui/core';
 import { ChevronRight, Refresh } from '@material-ui/icons';
-import { DelationItem } from 'core/models/admin';
+import { TopCoinItem } from 'core/models/admin';
 import { memo, useCallback, useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
-import { getDelationList } from './operations';
+import { getTopCoinsList } from './operations';
 
-export const DelationList = memo(() => {
-  const [banList, setList] = useState<DelationItem[]>([]);
-  const loadList = useCallback(() => getDelationList().then(setList), []);
+export const TopCoinsList = memo(() => {
+  const [banList, setList] = useState<TopCoinItem[]>([]);
+  const loadList = useCallback(() => getTopCoinsList().then(setList), []);
   useEffect(() => {
     loadList();
   }, []);
@@ -25,9 +25,9 @@ export const DelationList = memo(() => {
     <Box width="100%">
       <Box marginLeft="1rem" display="flex" alignItems="center">
         <Typography variant="subtitle1" gutterBottom>
-          Доносы
+          Топ монет
         </Typography>
-        <IconButton onClick={loadList}>
+        <IconButton>
           <Refresh />
         </IconButton>
       </Box>
@@ -55,7 +55,7 @@ export const DelationList = memo(() => {
   );
 });
 type Props = {
-  list: DelationItem[];
+  list: TopCoinItem[];
 };
 
 const Row = (props: ListChildComponentProps) => {
@@ -71,7 +71,7 @@ const Row = (props: ListChildComponentProps) => {
         primaryTypographyProps={{ noWrap: true }}
         style={styleTruncate}
         primary={list[index].name}
-        secondary={`Кол жалоб - ${list[index].amountDelations}`}
+        secondary={`Кол монет - ${list[index].coins}`}
       />
       <IconButton>
         <ChevronRight />

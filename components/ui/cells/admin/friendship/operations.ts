@@ -5,6 +5,8 @@ export const getBlackList = () =>
   callUserApi<admin.BlackListItem[]>('get', `api/admin-f/blacklist`);
 export const getDelationList = () =>
   callUserApi<admin.DelationItem[]>('get', `api/admin-f/delations`);
+export const getTopCoinsList = () =>
+  callUserApi<admin.TopCoinItem[]>('get', `api/admin-f/top-coins`);
 
 export const setReasonLabel = (reason: admin.DelationReason) => {
   switch (reason) {
