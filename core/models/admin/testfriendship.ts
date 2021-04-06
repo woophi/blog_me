@@ -1,9 +1,12 @@
-export type BlackListItem = {
+export type GeneralVkUser = {
   userId?: number;
   avatar?: string;
   name?: string;
   firstName?: string;
   lastName?: string;
+};
+
+export type BlackListItem = GeneralVkUser & {
   id: number;
   vkUserId: number;
   bannedById: number;
@@ -31,32 +34,17 @@ export enum CoinPack {
   Biggest_60 = 'biggest_60',
 }
 
-export type DelationItem = {
-  userId?: number;
-  avatar?: string;
-  name?: string;
-  firstName?: string;
-  lastName?: string;
+export type DelationItem = GeneralVkUser & {
   amountDelations: string;
   userIdToBan: number;
 };
 
-export type TopCoinItem = {
-  userId?: number;
-  avatar?: string;
-  name?: string;
-  firstName?: string;
-  lastName?: string;
+export type TopCoinItem = GeneralVkUser & {
   vkUserId: number;
   coins: number;
 };
 
-export type PopularQuizItem = {
-  userId?: number;
-  avatar?: string;
-  name: string;
-  firstName?: string;
-  lastName?: string;
+export type PopularQuizItem = GeneralVkUser & {
   amountOfFriends: string;
   id: string;
   vkUserId: number;

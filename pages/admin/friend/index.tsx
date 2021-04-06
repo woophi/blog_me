@@ -5,6 +5,7 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 import { UserDetail } from 'core/models/admin';
 import { AdminLayout } from 'ui/cells/admin/layouts';
 import { getFriendUserDetail } from 'ui/cells/admin/friendship/operations';
+import { SelectedUserDetail } from 'ui/cells/admin/friendship';
 
 type localState = {
   userDetail: UserDetail;
@@ -27,7 +28,11 @@ class FriendDetail extends React.PureComponent<WithRouterProps, localState> {
   }
 
   render() {
-    return <AdminLayout>{console.log(this.state.userDetail)}</AdminLayout>;
+    return (
+      <AdminLayout>
+        <SelectedUserDetail data={this.state.userDetail} />
+      </AdminLayout>
+    );
   }
 }
 

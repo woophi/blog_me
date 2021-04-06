@@ -1,4 +1,5 @@
 import { FileItem } from './files';
+import { GeneralVkUser } from './testfriendship';
 
 export type AdminState = {
   section: Section;
@@ -6,6 +7,7 @@ export type AdminState = {
   selectedFile: FileItem;
   uploadingFile: boolean;
   uploadFailed: boolean;
+  selectedVkUser: GeneralVkUser;
 };
 
 export enum Section {

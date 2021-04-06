@@ -9,8 +9,10 @@ import {
 } from '@material-ui/core';
 import { ChevronRight, Refresh } from '@material-ui/icons';
 import { goToDeep } from 'core/common';
+import { AppDispatchActions } from 'core/models';
 import { TopCoinItem } from 'core/models/admin';
 import { memo, useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
@@ -63,8 +65,24 @@ const Row = (props: ListChildComponentProps) => {
   const { index, style, data } = props;
   const { list } = data as Props;
 
+  const dispatch = useDispatch<AppDispatchActions>();
+
+  const handleClick = () => {
+    dispatch({
+      type: 'SELECT_VK_USER',
+      payload: {
+        avatar: list[index].avatar,
+        firstName: list[index].firstName,
+        lastName: list[index].lastName,
+        name: list[index].name,
+        userId: list[index].userId,
+      },
+    });
+    goToDeep(`friend/${list[index].vkUserId}`);
+  };
+
   return (
-    <ListItem button style={style} key={index} onClick={() => goToDeep(`friend/${list[index].vkUserId}`)}>
+    <ListItem button style={style} key={index} onClick={handleClick}>
       <ListItemAvatar>
         <Avatar src={list[index].avatar} />
       </ListItemAvatar>

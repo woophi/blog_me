@@ -1,6 +1,6 @@
 import { CommentItem } from './comment';
 import { AuthData } from './auth';
-import { AdminState, FileItem } from './admin';
+import { AdminState, FileItem, GeneralVkUser } from './admin';
 import { BlogGuestItem, SearchStatus } from './blog';
 import { QuizGuestData } from './quiz';
 import { Dispatch } from 'redux';
@@ -27,7 +27,10 @@ export type AppDispatch =
   //quiz
   | { type: 'SET_QUIZ'; payload: QuizGuestData }
   | { type: 'UPDATE_QUIZ'; payload: Partial<QuizGuestData> }
-  | { type: 'UPDATE_QUIZ_PARTICIPANT'; payload: Partial<QuizGuestData['participationHistory']> }
+  | {
+      type: 'UPDATE_QUIZ_PARTICIPANT';
+      payload: Partial<QuizGuestData['participationHistory']>;
+    }
   //comments
   | { type: 'UPDATE_COMMENTS'; payload: { comment: CommentItem } }
   | {
@@ -56,7 +59,8 @@ export type AppDispatch =
   | SetSearchResultsDispatch
   | SetSearchQueryDispatch
   | SetSearchStatusDispatch
-  | { type: 'UPDATE_USER_PROFILE_COMMENTS', payload: ProfileState['comments']};
+  | { type: 'UPDATE_USER_PROFILE_COMMENTS'; payload: ProfileState['comments'] }
+  | { type: 'SELECT_VK_USER'; payload: GeneralVkUser };
 
 export type SetUserDispatch = { type: 'SET_USER'; payload: AppState['ui']['user'] };
 
