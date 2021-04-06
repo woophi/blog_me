@@ -4,7 +4,6 @@ import { getQuizDataState } from 'core/selectors';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import 'ui/molecules/quill-editor/quill.css';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { QuizSteps } from './QuizSteps';

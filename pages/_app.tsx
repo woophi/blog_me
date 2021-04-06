@@ -9,6 +9,8 @@ import { theme } from 'core/lib';
 import { getCookie } from 'core/cookieManager';
 import { VisitorCookie } from 'core/models';
 import { RouterProgress } from 'ui/atoms/RouterProgress';
+import 'ui/atoms/spinner/spinner.css';
+import 'ui/molecules/quill-editor/quill.css';
 import 'core/fire-callbacks';
 
 class MyApp extends App {

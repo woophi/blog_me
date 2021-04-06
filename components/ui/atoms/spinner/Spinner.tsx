@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './spinner.css';
 
 type Props = {
   isShow?: boolean;

@@ -9,9 +9,9 @@ import { NextPageContext } from 'next';
 import { connectSocketBlog, joinRoom, leaveRoom } from 'core/socket/blog';
 import Head from 'next/head';
 import getConfig from 'next/config';
-import Error from './_error';
 import { GeneralLayout } from 'ui/cells/general-layout';
 import { BlogLayout } from 'ui/cells/blog-layout';
+import { ErrorLayout } from 'ui/cells/ErrorLayout';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
@@ -56,7 +56,7 @@ class Blog extends React.Component<Props> {
       : this.props.blog;
 
     if (or(isEmpty(blog), isNil(blog))) {
-      return <Error statusCode={404} err={''} />
+      return <ErrorLayout statusCode={404} err={''} />
     }
 
     const { title, shortText, coverPhotoUrl, blogId } = blog;

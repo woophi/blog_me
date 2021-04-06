@@ -9,7 +9,6 @@ import { PopUp } from 'ui/molecules/blog-info-pop';
 import getConfig from 'next/config';
 import { connect } from 'react-redux';
 import { getUserId } from 'core/selectors';
-import 'ui/molecules/quill-editor/quill.css';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import { increaseBlogView } from './operations';

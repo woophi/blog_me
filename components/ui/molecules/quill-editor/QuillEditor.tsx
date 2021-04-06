@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './quill.css';
 import ReactQuill, { Quill } from 'react-quill';
 import { Image, ImageValue } from './Image';
 import { ModalUpload } from 'ui/cells/uploader';

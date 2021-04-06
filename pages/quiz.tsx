@@ -8,9 +8,9 @@ import isNil from 'ramda/src/isNil';
 import { NextPageContext } from 'next';
 import Head from 'next/head';
 import getConfig from 'next/config';
-import Error from './_error';
 import { GeneralLayout } from 'ui/cells/general-layout';
 import { QuizLayout } from 'ui/cells/quiz-layout';
+import { ErrorLayout } from 'ui/cells/ErrorLayout';
 const { publicRuntimeConfig } = getConfig();
 const { SITE_URL } = publicRuntimeConfig;
 
@@ -49,7 +49,7 @@ class Quiz extends React.Component<Props> {
       : this.props.quiz;
 
     if (or(isEmpty(quiz), isNil(quiz))) {
-      return <Error statusCode={404} err={''} />;
+      return <ErrorLayout statusCode={404} err={''} />;
     }
 
     const { quizId, plainTitle } = quiz;
