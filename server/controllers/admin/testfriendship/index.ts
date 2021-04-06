@@ -10,7 +10,15 @@ const getBlackList = async (req: Request, res: Response) => {
   const list = result?.data ?? [];
   return res.send(list).status(HTTPStatus.OK);
 };
+const getDelationList = async (req: Request, res: Response) => {
+  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/delations`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
+  const list = result?.data ?? [];
+  return res.send(list).status(HTTPStatus.OK);
+};
 
 export const testfriendship = {
   getBlackList,
+  getDelationList
 };

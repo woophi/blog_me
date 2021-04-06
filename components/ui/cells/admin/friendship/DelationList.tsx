@@ -6,18 +6,17 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { ChevronRight } from '@material-ui/icons';
-import { BlackListItem } from 'core/models/admin';
+import { DelationItem } from 'core/models/admin';
 import { memo, useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
-import { getBlackList, setReasonLabel } from './operations';
-import moment from 'moment';
+import { getDelationList } from './operations';
 
-export const BanList = memo(() => {
-  const [banList, setList] = useState<BlackListItem[]>([]);
+export const DelationList = memo(() => {
+  const [banList, setList] = useState<DelationItem[]>([]);
   useEffect(() => {
-    getBlackList().then(setList);
+    getDelationList().then(setList);
   }, []);
   return (
     <AutoSizer>
@@ -41,7 +40,7 @@ export const BanList = memo(() => {
   );
 });
 type Props = {
-  list: BlackListItem[];
+  list: DelationItem[];
 };
 
 const Row = (props: ListChildComponentProps) => {
@@ -57,7 +56,7 @@ const Row = (props: ListChildComponentProps) => {
         primaryTypographyProps={{ noWrap: true }}
         style={styleTruncate}
         primary={list[index].name}
-        secondary={`Забанен за ${setReasonLabel(list[index].reason)} до ${moment(list[index].until).format()}`}
+        secondary={`Кол жалоб - ${list[index].amountDelations}`}
       />
       <IconButton>
         <ChevronRight />

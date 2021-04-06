@@ -268,11 +268,18 @@ export function router(
     controllers.getQuizParticipants
   );
 
+  // friends api start
   app.get(
     '/api/admin-f/blacklist',
     identity.authorizedForAdmin,
     controllers.testfriendship.getBlackList
   );
+  app.get(
+    '/api/admin-f/delations',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.getDelationList
+  );
+  // friends api end
 
   app.get('/unsub/:id', (req, res) => {
     const actualPage = '/unsub/guest';
