@@ -15,6 +15,7 @@ import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { styleTruncate } from 'ui/atoms/constants';
 import { getBlackList, setReasonLabel } from './operations';
 import moment from 'moment';
+import { goToDeep } from 'core/common';
 
 export const BanList = memo(() => {
   const [banList, setList] = useState<BlackListItem[]>([]);
@@ -64,7 +65,12 @@ const Row = (props: ListChildComponentProps) => {
   const { list } = data as Props;
 
   return (
-    <ListItem button style={style} key={index}>
+    <ListItem
+      button
+      style={style}
+      key={index}
+      onClick={() => goToDeep(`friend/${list[index].vkUserId}`)}
+    >
       <ListItemAvatar>
         <Avatar src={list[index].avatar} />
       </ListItemAvatar>

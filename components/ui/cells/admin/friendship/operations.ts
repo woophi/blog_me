@@ -9,6 +9,11 @@ export const getTopCoinsList = () =>
   callUserApi<admin.TopCoinItem[]>('get', `api/admin-f/top-coins`);
 export const getTopQuizzesList = () =>
   callUserApi<admin.PopularQuizItem[]>('get', `api/admin-f/top-quizzies`);
+export const getFriendUserDetail = (vkUserId: number) =>
+  callUserApi<admin.UserDetail>(
+    'get',
+    `api/admin-f/user-detail?vkUserId=${vkUserId}`
+  );
 
 export const setReasonLabel = (reason: admin.DelationReason) => {
   switch (reason) {

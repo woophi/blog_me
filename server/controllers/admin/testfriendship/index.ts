@@ -25,16 +25,33 @@ const getTopCoinsList = async (req: Request, res: Response) => {
   return res.send(list).status(HTTPStatus.OK);
 };
 const getTopQuizzesList = async (req: Request, res: Response) => {
-  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/top-quizzies`, {
-    apiKey: config.FRIENDS_API_KEY,
-  });
+  const result = await callApi(
+    'get',
+    `${config.FRIENDS_URL}api/admin/top-quizzies`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+    }
+  );
   const list = result?.data ?? [];
   return res.send(list).status(HTTPStatus.OK);
+};
+const getUserDetail = async (req: Request, res: Response) => {
+  const result = await callApi(
+    'get',
+    `${config.FRIENDS_URL}api/admin/detail?userId=${req.query.vkUserId}`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+    }
+  );
+  const detail = result?.data ?? {};
+
+  return res.send(detail).status(HTTPStatus.OK);
 };
 
 export const testfriendship = {
   getBlackList,
   getDelationList,
   getTopCoinsList,
-  getTopQuizzesList
+  getTopQuizzesList,
+  getUserDetail,
 };

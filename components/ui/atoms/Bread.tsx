@@ -74,5 +74,8 @@ const SpecificRoute: React.FC<SpecificRouteProps> = ({ currentRoute }) => {
   if (currentRoute.indexOf('quizzes') !== -1) {
     return <StyledBreadcrumb label={'Quizzes'} onClick={constants.toQuizzes} />;
   }
+  if (currentRoute.indexOf('friend') !== -1) {
+    return <StyledBreadcrumb label={'Пользователь'} />;
+  }
   return null;
 };

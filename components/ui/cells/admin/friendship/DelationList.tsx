@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { ChevronRight, Refresh } from '@material-ui/icons';
+import { goToDeep } from 'core/common';
 import { DelationItem } from 'core/models/admin';
 import { memo, useCallback, useEffect, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
@@ -63,7 +64,7 @@ const Row = (props: ListChildComponentProps) => {
   const { list } = data as Props;
 
   return (
-    <ListItem button style={style} key={index}>
+    <ListItem button style={style} key={index} onClick={() => goToDeep(`friend/${list[index].userId}`)}>
       <ListItemAvatar>
         <Avatar src={list[index].avatar} />
       </ListItemAvatar>
