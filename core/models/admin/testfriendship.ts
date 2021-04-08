@@ -51,7 +51,7 @@ export type PopularQuizItem = GeneralVkUser & {
 };
 
 export type UserDetail = {
-  userInfo: GeneralVkUser,
+  userInfo: GeneralVkUser;
   userDelations: {
     amountOfReasons: string;
     reason: DelationReason;
@@ -83,7 +83,6 @@ export type UserDetail = {
       id: number;
       name: string;
       participantsCount: number;
-      
     };
     leagueGroup: {
       id: number;
@@ -158,4 +157,12 @@ export type BanPayload = {
 export type UnBanPayload = {
   vkUserId: number;
   reason: UnbanReason;
+};
+
+export type SeasonInfo = {
+  run: boolean;
+  seasonId: number;
+  seasonOrder: number;
+  participantsCount: number;
+  allQuizCount: number
 };

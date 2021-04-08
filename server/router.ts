@@ -304,6 +304,26 @@ export function router(
     identity.authorizedForAdmin,
     controllers.testfriendship.unbanUser
   );
+  app.post(
+    '/api/admin-f/season',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.startSeason
+  );
+  app.delete(
+    '/api/admin-f/season',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.stopSeason
+  );
+  app.get(
+    '/api/admin-f/season',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.getSeason
+  );
+  app.put(
+    '/api/admin-f/season',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.putSeasonParticipants
+  );
   // friends api end
 
   app.get('/unsub/:id', (req, res) => {
@@ -369,15 +389,11 @@ export function router(
     }
   );
 
-  app.get(
-    '/admin/friend/:vkUserId',
-    identity.authorizedForAdmin,
-    (req, res) => {
-      const actualPage = '/admin/friend';
-      const queryParams = { vkUserId: req.params.vkUserId };
-      appNext.render(req, res, actualPage, queryParams);
-    }
-  );
+  app.get('/admin/friend/:vkUserId', identity.authorizedForAdmin, (req, res) => {
+    const actualPage = '/admin/friend';
+    const queryParams = { vkUserId: req.params.vkUserId };
+    appNext.render(req, res, actualPage, queryParams);
+  });
 
   app.use('/admin/*', identity.authorizedForAdmin);
   app.use('/admin', identity.authorizedForAdmin);

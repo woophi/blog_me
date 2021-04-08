@@ -61,15 +61,37 @@ const banUser = async (req: Request, res: Response) => {
   return res.sendStatus(HTTPStatus.OK);
 };
 const unbanUser = async (req: Request, res: Response) => {
-  await callApi(
-    'delete',
-    `${config.FRIENDS_URL}api/admin/ban`,
-    {
-      apiKey: config.FRIENDS_API_KEY,
-      vkUserId: req.body.vkUserId,
-      reason: req.body.reason
-    }
-  );
+  await callApi('delete', `${config.FRIENDS_URL}api/admin/ban`, {
+    apiKey: config.FRIENDS_API_KEY,
+    vkUserId: req.body.vkUserId,
+    reason: req.body.reason,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
+
+const startSeason = async (req: Request, res: Response) => {
+  await callApi('post', `${config.FRIENDS_URL}api/admin/season`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
+const stopSeason = async (req: Request, res: Response) => {
+  await callApi('delete', `${config.FRIENDS_URL}api/admin/season`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
+const getSeason = async (req: Request, res: Response) => {
+  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/season`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
+  const detail = result?.data ?? {};
+  return res.send(detail).status(HTTPStatus.OK);
+};
+const putSeasonParticipants = async (req: Request, res: Response) => {
+  await callApi('put', `${config.FRIENDS_URL}api/admin/season`, {
+    apiKey: config.FRIENDS_API_KEY,
+  });
   return res.sendStatus(HTTPStatus.OK);
 };
 
@@ -80,5 +102,9 @@ export const testfriendship = {
   getTopQuizzesList,
   getUserDetail,
   banUser,
-  unbanUser
+  unbanUser,
+  startSeason,
+  stopSeason,
+  getSeason,
+  putSeasonParticipants
 };

@@ -77,5 +77,8 @@ const SpecificRoute: React.FC<SpecificRouteProps> = ({ currentRoute }) => {
   if (currentRoute.indexOf('friend') !== -1) {
     return <StyledBreadcrumb label={'Пользователь'} />;
   }
+  if (currentRoute.indexOf('season') !== -1) {
+    return <StyledBreadcrumb label={'Сезон'} />;
+  }
   return null;
 };
