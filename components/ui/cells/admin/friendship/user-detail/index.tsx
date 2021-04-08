@@ -7,20 +7,32 @@ import {
   CardMedia,
   Divider,
   makeStyles,
+  NativeSelect,
   Typography,
 } from '@material-ui/core';
-import { DelationReason, UserDetail } from 'core/models/admin';
-import { FC, useEffect, useState } from 'react';
+import {
+  DelationReason,
+  ExpectedActionPayload,
+  UnbanReason,
+  UserDetail,
+} from 'core/models/admin';
+import { FC, useCallback, useEffect, useState } from 'react';
 import {
   setReasonLabel,
   setUnbanReasonLabel,
   setLeagueTypeLabel,
+  unbanUser,
+  banUser,
+  getFriendUserDetail,
 } from '../operations';
 import moment from 'moment';
 import { ModalDialog } from 'ui/atoms/modal';
 import { UserFriendsList } from './UserFriends';
+import { ActionButton } from 'ui/atoms/ActionButton';
 
 export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
+  const [selectedReason, setReason] = useState(DelationReason.Swearing);
+  const [selectedDuration, setDuration] = useState(ExpectedActionPayload.BanW);
   const [
     {
       banInfo,
@@ -38,6 +50,9 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
     if (props.data) setUserData(props.data);
   }, [props.data]);
 
+  const reloadData = useCallback((vkUserId: number) => {
+    getFriendUserDetail(vkUserId).then(setUserData);
+  }, []);
   const classes = useStyles();
   const [openQuizModal, setOpen] = useState(false);
   const questionsMap = Object.values(quizInfo?.questions ?? {});
@@ -135,9 +150,48 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
           </CardContent>
           <CardActions>
             {banInfo?.until ? (
-              <Button size="small">разбанить</Button>
+              <ActionButton
+                label={'разбанить'}
+                action={() =>
+                  unbanUser({
+                    vkUserId: userInfo.userId,
+                    reason: UnbanReason.Expired,
+                  }).then(() => reloadData(userInfo.userId))
+                }
+              />
             ) : (
-              <Button size="small">забанить</Button>
+              <>
+                <ActionButton
+                  label={'забанить'}
+                  action={() =>
+                    banUser({
+                      vkUserId: userInfo.userId,
+                      reason: selectedReason,
+                      until: selectedDuration,
+                    }).then(() => reloadData(userInfo.userId))
+                  }
+                />
+                <NativeSelect
+                  value={selectedReason}
+                  onChange={(e) =>
+                    setReason(Number(e.target.value) as DelationReason)
+                  }
+                >
+                  <option value={DelationReason.Insult}>Insult</option>
+                  <option value={DelationReason.Violence}>Violence</option>
+                  <option value={DelationReason.Swearing}>Mat</option>
+                </NativeSelect>
+                <NativeSelect
+                  value={selectedDuration}
+                  onChange={(e) =>
+                    setDuration(e.target.value as ExpectedActionPayload)
+                  }
+                >
+                  <option value={ExpectedActionPayload.BanW}>week</option>
+                  <option value={ExpectedActionPayload.BanM}>month</option>
+                  <option value={ExpectedActionPayload.BanYears}>100let</option>
+                </NativeSelect>
+              </>
             )}
           </CardActions>
         </Card>
