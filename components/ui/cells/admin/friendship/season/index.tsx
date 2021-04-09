@@ -18,19 +18,21 @@ export const SeasonDetail: FC<{ seasonInfo?: SeasonInfo }> = ({
             : startSeason().then(() => Router.reload())
         }
       />
-      <Typography color="secondary" gutterBottom>
-        Цифры
-      </Typography>
-      <Typography color="textSecondary" gutterBottom>
-        Всего участников сезона - {seasonInfo.participantsCount}
-      </Typography>
-      <Typography color="textSecondary" gutterBottom>
-        Всего опросов - {seasonInfo.allQuizCount}
-      </Typography>
-      <ActionButton
-        label={'положить участников'}
-        action={() => putSeasonParticipants().then(() => Router.reload())}
-      />
+      <Box marginTop="1rem">
+        <Typography color="secondary" gutterBottom>
+          Цифры
+        </Typography>
+        <Typography color="textSecondary" gutterBottom>
+          Всего участников сезона - {seasonInfo.participantsCount}
+        </Typography>
+        <Typography color="textSecondary" gutterBottom>
+          Всего опросов - {seasonInfo.allQuizCount}
+        </Typography>
+        <ActionButton
+          label={'положить участников'}
+          action={() => putSeasonParticipants().then(() => Router.reload())}
+        />
+      </Box>
     </Box>
   );
 };

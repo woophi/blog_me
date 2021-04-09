@@ -5,34 +5,24 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
 } from '@material-ui/core';
-import { ChevronRight, Refresh } from '@material-ui/icons';
+import { ChevronRight } from '@material-ui/icons';
 import { goToDeep } from 'core/common';
-import { AppDispatchActions } from 'core/models';
 import { PopularQuizItem } from 'core/models/admin';
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { memo, useCallback, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { ActionButton } from 'ui/atoms/ActionButton';
 import { styleTruncate } from 'ui/atoms/constants';
 import { getTopQuizzesList } from './operations';
 
 export const TopQuizziesList = memo(() => {
   const [banList, setList] = useState<PopularQuizItem[]>([]);
   const loadList = useCallback(() => getTopQuizzesList().then(setList), []);
-  useEffect(() => {
-    loadList();
-  }, []);
   return (
     <Box width="100%">
-      <Box marginLeft="1rem" display="flex" alignItems="center">
-        <Typography variant="subtitle1" gutterBottom>
-          Популярные тесты
-        </Typography>
-        <IconButton onClick={loadList}>
-          <Refresh />
-        </IconButton>
+      <Box margin="1rem">
+        <ActionButton label={'Популярные тесты'} action={loadList} fetchOnMount />
       </Box>
       <Box width="100%" height="300px">
         <AutoSizer>

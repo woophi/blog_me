@@ -4,34 +4,26 @@ import {
   IconButton,
   ListItem,
   ListItemAvatar,
-  ListItemText,
-  Typography
+  ListItemText
 } from '@material-ui/core';
-import { ChevronRight, Refresh } from '@material-ui/icons';
+import { ChevronRight } from '@material-ui/icons';
 import { goToDeep } from 'core/common';
 import { BlackListItem } from 'core/models/admin';
 import moment from 'moment';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { ActionButton } from 'ui/atoms/ActionButton';
 import { styleTruncate } from 'ui/atoms/constants';
 import { getBlackList, setReasonLabel } from './operations';
 
 export const BanList = memo(() => {
   const [banList, setList] = useState<BlackListItem[]>([]);
   const loadList = useCallback(() => getBlackList().then(setList), []);
-  useEffect(() => {
-    loadList();
-  }, []);
   return (
     <Box width="100%">
-      <Box marginLeft="1rem" display="flex" alignItems="center">
-        <Typography variant="subtitle1" gutterBottom>
-          Забанены
-        </Typography>
-        <IconButton onClick={loadList}>
-          <Refresh />
-        </IconButton>
+      <Box margin="1rem">
+        <ActionButton label={'Забанены'} action={loadList} fetchOnMount />
       </Box>
       <Box width="100%" height="300px">
         <AutoSizer>

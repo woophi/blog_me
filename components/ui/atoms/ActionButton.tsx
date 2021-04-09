@@ -14,10 +14,11 @@ type Props = {
   label: string;
   className?: string;
   backToUrl?: string;
+  fetchOnMount?: boolean;
 };
 
 export const ActionButton = React.memo<Props>(
-  ({ className = '', label, action, backToUrl = '' }) => {
+  ({ className = '', label, action, backToUrl = '', fetchOnMount = false }) => {
     const [working, setWorking] = React.useState(false);
     const [error, setError] = React.useState(false);
 
@@ -31,6 +32,10 @@ export const ActionButton = React.memo<Props>(
           setWorking(false);
         });
     }, [action]);
+
+    React.useEffect(() => {
+      if (fetchOnMount) handleClick();
+    }, []);
 
     return (
       <Button

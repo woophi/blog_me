@@ -94,6 +94,14 @@ const putSeasonParticipants = async (req: Request, res: Response) => {
   });
   return res.sendStatus(HTTPStatus.OK);
 };
+const updateUserCoins = async (req: Request, res: Response) => {
+  await callApi('post', `${config.FRIENDS_URL}api/admin/coins`, {
+    apiKey: config.FRIENDS_API_KEY,
+    vkUserId: req.body.vkUserId,
+    coins: req.body.coins,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
 
 export const testfriendship = {
   getBlackList,
@@ -106,5 +114,6 @@ export const testfriendship = {
   startSeason,
   stopSeason,
   getSeason,
-  putSeasonParticipants
+  putSeasonParticipants,
+  updateUserCoins
 };

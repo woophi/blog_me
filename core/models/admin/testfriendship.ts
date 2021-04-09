@@ -93,6 +93,7 @@ export type UserDetail = {
       };
     };
   } | null;
+  coins: number;
 };
 
 export enum LeagueType {
@@ -164,5 +165,5 @@ export type SeasonInfo = {
   seasonId: number;
   seasonOrder: number;
   participantsCount: number;
-  allQuizCount: number
+  allQuizCount: number;
 };

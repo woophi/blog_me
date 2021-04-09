@@ -324,6 +324,11 @@ export function router(
     identity.authorizedForAdmin,
     controllers.testfriendship.putSeasonParticipants
   );
+  app.post(
+    '/api/admin-f/coins',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.updateUserCoins
+  );
   // friends api end
 
   app.get('/unsub/:id', (req, res) => {

@@ -8,6 +8,7 @@ import {
   Divider,
   makeStyles,
   NativeSelect,
+  TextField,
   Typography,
 } from '@material-ui/core';
 import {
@@ -24,6 +25,7 @@ import {
   unbanUser,
   banUser,
   getFriendUserDetail,
+  updateUserCoins,
 } from '../operations';
 import moment from 'moment';
 import { ModalDialog } from 'ui/atoms/modal';
@@ -33,6 +35,7 @@ import { ActionButton } from 'ui/atoms/ActionButton';
 export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
   const [selectedReason, setReason] = useState(DelationReason.Swearing);
   const [selectedDuration, setDuration] = useState(ExpectedActionPayload.BanW);
+  const [coinsToUpdate, setCoins] = useState(0);
   const [
     {
       banInfo,
@@ -42,6 +45,7 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
       friends,
       rank,
       userDelations = [],
+      coins = 0,
     },
     setUserData,
   ] = useState<UserDetail>(props.data ?? ({} as UserDetail));
@@ -76,6 +80,9 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
             <Typography color="textSecondary" gutterBottom>
               Сумма за все время -{' '}
               {donations.reduce((sum, next) => (sum += next.amount), 0)}
+            </Typography>
+            <Typography color="textSecondary" gutterBottom>
+              Количество монет - {coins}
             </Typography>
             <Divider />
 
@@ -149,50 +156,73 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
             <Divider />
           </CardContent>
           <CardActions>
-            {banInfo?.until ? (
-              <ActionButton
-                label={'разбанить'}
-                action={() =>
-                  unbanUser({
-                    vkUserId: userInfo.userId,
-                    reason: UnbanReason.Expired,
-                  }).then(() => reloadData(userInfo.userId))
-                }
-              />
-            ) : (
-              <>
+            <Box display="flex" flexDirection="column">
+              <Box margin="1rem">
+                {banInfo?.until ? (
+                  <ActionButton
+                    label={'разбанить'}
+                    action={() =>
+                      unbanUser({
+                        vkUserId: userInfo.userId,
+                        reason: UnbanReason.Expired,
+                      }).then(() => reloadData(userInfo.userId))
+                    }
+                  />
+                ) : (
+                  <>
+                    <ActionButton
+                      label={'забанить'}
+                      action={() =>
+                        banUser({
+                          vkUserId: userInfo.userId,
+                          reason: selectedReason,
+                          until: selectedDuration,
+                        }).then(() => reloadData(userInfo.userId))
+                      }
+                    />
+                    <NativeSelect
+                      value={selectedReason}
+                      onChange={(e) =>
+                        setReason(Number(e.target.value) as DelationReason)
+                      }
+                    >
+                      <option value={DelationReason.Insult}>Insult</option>
+                      <option value={DelationReason.Violence}>Violence</option>
+                      <option value={DelationReason.Swearing}>Mat</option>
+                    </NativeSelect>
+                    <NativeSelect
+                      value={selectedDuration}
+                      onChange={(e) =>
+                        setDuration(e.target.value as ExpectedActionPayload)
+                      }
+                    >
+                      <option value={ExpectedActionPayload.BanW}>week</option>
+                      <option value={ExpectedActionPayload.BanM}>month</option>
+                      <option value={ExpectedActionPayload.BanYears}>100let</option>
+                    </NativeSelect>
+                  </>
+                )}
+              </Box>
+              <Divider />
+              <Box margin="1rem">
                 <ActionButton
-                  label={'забанить'}
+                  label={`Обновить монеты на -> ${coinsToUpdate}`}
                   action={() =>
-                    banUser({
-                      vkUserId: userInfo.userId,
-                      reason: selectedReason,
-                      until: selectedDuration,
-                    }).then(() => reloadData(userInfo.userId))
+                    updateUserCoins(userInfo.userId, coinsToUpdate).then(() =>
+                      reloadData(userInfo.userId)
+                    )
                   }
                 />
-                <NativeSelect
-                  value={selectedReason}
-                  onChange={(e) =>
-                    setReason(Number(e.target.value) as DelationReason)
-                  }
-                >
-                  <option value={DelationReason.Insult}>Insult</option>
-                  <option value={DelationReason.Violence}>Violence</option>
-                  <option value={DelationReason.Swearing}>Mat</option>
-                </NativeSelect>
-                <NativeSelect
-                  value={selectedDuration}
-                  onChange={(e) =>
-                    setDuration(e.target.value as ExpectedActionPayload)
-                  }
-                >
-                  <option value={ExpectedActionPayload.BanW}>week</option>
-                  <option value={ExpectedActionPayload.BanM}>month</option>
-                  <option value={ExpectedActionPayload.BanYears}>100let</option>
-                </NativeSelect>
-              </>
-            )}
+                <TextField
+                  label="Монеты"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={(e) => setCoins(Number(e.target.value))}
+                />
+              </Box>
+            </Box>
           </CardActions>
         </Card>
         <ModalDialog

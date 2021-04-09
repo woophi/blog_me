@@ -23,6 +23,8 @@ export const stopSeason = () => callUserApi('delete', `api/admin-f/season`);
 export const putSeasonParticipants = () => callUserApi('put', `api/admin-f/season`);
 export const getSeasonInfo = () =>
   callUserApi<admin.SeasonInfo>('get', `api/admin-f/season`);
+export const updateUserCoins = (vkUserId: number, coins: number) =>
+  callUserApi('post', `api/admin-f/coins`, { vkUserId, coins });
 
 export const setReasonLabel = (reason: admin.DelationReason) => {
   switch (reason) {
