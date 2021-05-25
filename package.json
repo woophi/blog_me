@@ -124,7 +124,7 @@
     "@types/react-window": "^1.8.2",
     "@types/socket.io": "^2.1.10",
     "@types/socket.io-client": "^1.4.33",
-    "@types/string-strip-html": "^4.3.0",
+    "@types/string-strip-html": "^5.0.1",
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^8.3.0",
     "cross-env": "^7.0.2",
