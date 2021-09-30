@@ -1,3 +1,5 @@
+
+
 export default {
   PORT_CORE: parseInt(process.env.PORT || '3000', 10),
   SITE_URI: process.env.SITE_URI,
@@ -17,6 +19,14 @@ export default {
   FS_CLOUD_NAME: process.env.FS_CLOUD_NAME,
   FS_API_KEY: process.env.FS_API_KEY,
   FS_API_SECRET: process.env.FS_API_SECRET,
+
+  // instagram
+  IG_USERNAME: process.env.IG_USERNAME,
+  IG_PASSWORD: process.env.IG_PASSWORD,
+
+  //faceebook
+  FB_APP_ID: process.env.FB_APP_ID,
+  FB_APP_SECRET: process.env.FB_APP_SECRET,
 
   // google
   G_CLIENT_ID: process.env.G_CLIENT_ID,

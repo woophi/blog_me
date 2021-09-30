@@ -219,6 +219,22 @@ export function router(
     storage.startUploadUrl
   );
 
+  app.patch(
+    '/api/admin/ig/check',
+    identity.authorizedForSuperAdmin,
+    controllers.checkLoginInstagram
+  );
+  app.patch(
+    '/api/admin/ig/login',
+    identity.authorizedForSuperAdmin,
+    controllers.verrifyLoginInstagram
+  );
+  app.patch(
+    '/api/admin/ig/code',
+    identity.authorizedForSuperAdmin,
+    controllers.sendCodeInstagram
+  );
+
   app.post(
     '/api/admin/quiz',
     identity.authorizedForSuperAdmin,
