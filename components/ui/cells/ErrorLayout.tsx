@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { H1 } from 'ui/atoms/H1';
@@ -31,10 +31,7 @@ const StatusCodes: React.FC<Props> = ({ statusCode }) => {
 export const ErrorLayout = React.memo<Props>(({ err, statusCode }) => {
   const { t } = useTranslation();
   return (
-    <Paper
-      elevation={3}
-      style={{ margin: '1rem', display: 'flex', flexDirection: 'column' }}
-    >
+    <Paper elevation={3} style={{ margin: '1rem', display: 'flex', flexDirection: 'column' }}>
       <StatusCodes statusCode={statusCode} />
       <LinkButton
         variant={'contained'}

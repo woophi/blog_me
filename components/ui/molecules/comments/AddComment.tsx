@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { safeTrim } from 'core/lib';
 import { newComment } from './operations';
 import { Form, Field } from 'react-final-form';
@@ -47,11 +47,7 @@ const validate = (values: CommentForm, t: (s: string) => string) => {
   return errors;
 };
 
-const onSubmit = async (
-  data: CommentForm,
-  blogId: number,
-  parentCommentId?: string
-) => {
+const onSubmit = async (data: CommentForm, blogId: number, parentCommentId?: string) => {
   try {
     await newComment(data, blogId, parentCommentId);
   } catch (error) {
@@ -59,104 +55,97 @@ const onSubmit = async (
   }
 };
 
-const AddCommentPC = React.memo<Props>(
-  ({ blogId, canAccess, userName, parentCommentId }) => {
-    React.useLayoutEffect(() => {
-      checkAuth();
-    }, []);
-    const { t } = useTranslation();
-    const classes = useStyles({});
+const AddCommentPC = React.memo<Props>(({ blogId, canAccess, userName, parentCommentId }) => {
+  React.useLayoutEffect(() => {
+    checkAuth();
+  }, []);
+  const { t } = useTranslation();
+  const classes = useStyles({});
 
-    return (
-      <Paper elevation={4} className={classes.paper}>
-        <Typography gutterBottom variant="body1">
-          {t('gallery.addComments')}
-        </Typography>
-        {!canAccess && <AuthButtons />}
-        {canAccess && (
-          <Form
-            onSubmit={(d: CommentForm) => onSubmit(d, blogId, parentCommentId)}
-            validate={(v: CommentForm) => validate(v, t)}
-            initialValues={{
-              message: '',
-              name: userName
-            }}
-            render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
-              <>
-                <Snakbars variant="error" message={submitError} />
-                <form
-                  onSubmit={async event => {
-                    const error = await handleSubmit(event);
-                    if (error) {
-                      return error;
-                    }
-                    form.reset();
-                  }}
-                  className={classes.form}
-                >
-                  <Field
-                    name="name"
-                    render={({ input, meta }) => (
-                      <TextField
-                        id="outlined-name-input"
-                        label={t('common:forms.name')}
-                        type="text"
-                        name="name"
-                        fullWidth
-                        required
-                        className={classes.field}
-                        {...input}
-                        error={Boolean(meta.touched && meta.error)}
-                        helperText={
-                          (meta.touched && meta.error) || `${input.value.length}/256`
-                        }
-                        disabled={submitting}
-                        inputProps={{
-                          maxLength: 256
-                        }}
-                      />
-                    )}
-                  />
-                  <Field
-                    name="message"
-                    render={({ input, meta }) => (
-                      <TextField
-                        id="outlined-message-static"
-                        label={t('common:typeHere')}
-                        multiline
-                        rows="4"
-                        fullWidth
-                        className={classes.field}
-                        {...input}
-                        error={Boolean(meta.touched && meta.error)}
-                        helperText={
-                          (meta.touched && meta.error) ||
-                          `${input.value.length}/2000`
-                        }
-                        disabled={submitting}
-                        inputProps={{
-                          maxLength: 2000
-                        }}
-                      />
-                    )}
-                  />
-                  <ButtonsForm
-                    pristine={pristine}
-                    submitting={submitting}
-                    both
-                    onCancel={form.reset}
-                    submitLabel={'common:buttons.add'}
-                    invalid={invalid}
-                  />
-                </form>
-              </>
-            )}
-          />
-        )}
-      </Paper>
-    );
-  }
-);
+  return (
+    <Paper elevation={4} className={classes.paper}>
+      <Typography gutterBottom variant="body1">
+        {t('gallery.addComments')}
+      </Typography>
+      {!canAccess && <AuthButtons />}
+      {canAccess && (
+        <Form
+          onSubmit={(d: CommentForm) => onSubmit(d, blogId, parentCommentId)}
+          validate={(v: CommentForm) => validate(v, t)}
+          initialValues={{
+            message: '',
+            name: userName
+          }}
+          render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
+            <>
+              <Snakbars variant="error" message={submitError} />
+              <form
+                onSubmit={async event => {
+                  const error = await handleSubmit(event);
+                  if (error) {
+                    return error;
+                  }
+                  form.reset();
+                }}
+                className={classes.form}
+              >
+                <Field
+                  name="name"
+                  render={({ input, meta }) => (
+                    <TextField
+                      id="outlined-name-input"
+                      label={t('common:forms.name')}
+                      type="text"
+                      name="name"
+                      fullWidth
+                      required
+                      className={classes.field}
+                      {...input}
+                      error={Boolean(meta.touched && meta.error)}
+                      helperText={(meta.touched && meta.error) || `${input.value.length}/256`}
+                      disabled={submitting}
+                      inputProps={{
+                        maxLength: 256
+                      }}
+                    />
+                  )}
+                />
+                <Field
+                  name="message"
+                  render={({ input, meta }) => (
+                    <TextField
+                      id="outlined-message-static"
+                      label={t('common:typeHere')}
+                      multiline
+                      rows="4"
+                      fullWidth
+                      className={classes.field}
+                      {...input}
+                      error={Boolean(meta.touched && meta.error)}
+                      helperText={(meta.touched && meta.error) || `${input.value.length}/2000`}
+                      disabled={submitting}
+                      inputProps={{
+                        maxLength: 2000
+                      }}
+                    />
+                  )}
+                />
+                <ButtonsForm
+                  pristine={pristine}
+                  submitting={submitting}
+                  both
+                  onCancel={form.reset}
+                  submitLabel={'common:buttons.add'}
+                  invalid={invalid}
+                />
+              </form>
+            </>
+          )}
+        />
+      )}
+    </Paper>
+  );
+});
 
 export const AddComment = connect(mapState)(AddCommentPC);
 

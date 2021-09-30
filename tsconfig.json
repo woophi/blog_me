@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "target": "esnext",
     "module": "esnext",
     "jsx": "react-jsx",
@@ -28,12 +29,14 @@
         "./server/*"
       ]
     },
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "useUnknownInCatchVariables": false,
+    "importHelpers": true
   },
   "exclude": [
     "*.js",

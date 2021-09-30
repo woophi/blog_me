@@ -13,7 +13,7 @@ import { generateRandomString } from 'server/utils/prgn';
 cloudinary.v2.config({
   cloud_name: config.FS_CLOUD_NAME,
   api_key: config.FS_API_KEY,
-  api_secret: config.FS_API_SECRET,
+  api_secret: config.FS_API_SECRET
 });
 
 const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
@@ -25,17 +25,14 @@ const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
 
     if (image.height > 400) {
       const indexOfUpload = image.secure_url.indexOf('upload/') + 7;
-      thumbnail =
-        image.secure_url.substr(0, indexOfUpload) +
-        'h_400/' +
-        image.secure_url.substr(indexOfUpload);
+      thumbnail = image.secure_url.substr(0, indexOfUpload) + 'h_400/' + image.secure_url.substr(indexOfUpload);
     }
 
     const newFile: models.FilesModel = {
       name: image.original_filename ?? generateRandomString(8),
       url: image.secure_url,
       thumbnail: thumbnail ? thumbnail : image.secure_url,
-      format: image.format.indexOf('.') !== -1 ? image.format : `.${image.format}`,
+      format: image.format.indexOf('.') !== -1 ? image.format : `.${image.format}`
     };
     const createFile = await new FilesModel(newFile).save();
     Logger.debug('new file saved');
@@ -43,7 +40,7 @@ const uploadUrl = async (url: string, done: FileUrlEventParams['done']) => {
       fileId: createFile._id,
       fileName: createFile.name,
       url: createFile.url,
-      format: createFile.format,
+      format: createFile.format
     });
   } catch (error) {
     Logger.error('err to save new file ', error);
@@ -62,25 +59,25 @@ export const upload_stream = (fileName: string, done: FileEventParams['done']) =
       Logger.error(err);
       return done();
     }
+    if (!image) {
+      Logger.error('No image');
+      return done();
+    }
     Logger.debug('* Same image, uploaded via stream');
     async.series(
       [
-        (cb) => {
+        cb => {
           let thumbnail = '';
           if (image.height > 400) {
             const indexOfUpload = image.secure_url.indexOf('upload/') + 7;
-            thumbnail =
-              image.secure_url.substr(0, indexOfUpload) +
-              'h_400/' +
-              image.secure_url.substr(indexOfUpload);
+            thumbnail = image.secure_url.substr(0, indexOfUpload) + 'h_400/' + image.secure_url.substr(indexOfUpload);
           }
 
           const newFile: models.FilesModel = {
             name: fileName,
             url: image.secure_url,
             thumbnail: thumbnail ? thumbnail : image.secure_url,
-            format:
-              image.format.indexOf('.') !== -1 ? image.format : `.${image.format}`,
+            format: image.format.indexOf('.') !== -1 ? image.format : `.${image.format}`
           };
 
           const createFile = new FilesModel(newFile);
@@ -95,11 +92,11 @@ export const upload_stream = (fileName: string, done: FileEventParams['done']) =
               fileId: file._id,
               fileName,
               url: newFile.url,
-              format: newFile.format,
+              format: newFile.format
             });
             return cb();
           });
-        },
+        }
       ],
       () => {
         EventBus.emit(FStorageEvents.DELETE_TEMP_FILE, { fileName, done });
@@ -110,34 +107,25 @@ export const upload_stream = (fileName: string, done: FileEventParams['done']) =
 export const registerCloudinaryEvents = () => {
   Logger.debug('Register Cloudinary Events');
 
-  EventBus.on(
-    FStorageEvents.CLOUDINARY_ASK_STREAM,
-    ({ fileName, done }: FileEventParams) => {
-      fs.createReadStream(getFilePath(fileName)).pipe(upload_stream(fileName, done));
-    }
-  );
-  EventBus.on(
-    FStorageEvents.CLOUDINARY_ASK_URL,
-    ({ fileUrl, done }: FileUrlEventParams) => {
-      uploadUrl(fileUrl, done);
-    }
-  );
+  EventBus.on(FStorageEvents.CLOUDINARY_ASK_STREAM, ({ fileName, done }: FileEventParams) => {
+    fs.createReadStream(getFilePath(fileName)).pipe(upload_stream(fileName, done));
+  });
+  EventBus.on(FStorageEvents.CLOUDINARY_ASK_URL, ({ fileUrl, done }: FileUrlEventParams) => {
+    uploadUrl(fileUrl, done);
+  });
 
-  EventBus.on(
-    FStorageEvents.DELETE_TEMP_FILE,
-    ({ fileName, done }: FileEventParams) => {
-      const path = getFilePath(fileName);
-      if (!fs.existsSync(path)) {
-        Logger.error('File not found ' + fileName);
-        return done();
-      }
-      fs.unlink(path, (err) => {
-        Logger.debug('delete file ' + fileName);
-        if (err) {
-          Logger.error('delete file err ' + err);
-        }
-        done(err);
-      });
+  EventBus.on(FStorageEvents.DELETE_TEMP_FILE, ({ fileName, done }: FileEventParams) => {
+    const path = getFilePath(fileName);
+    if (!fs.existsSync(path)) {
+      Logger.error('File not found ' + fileName);
+      return done();
     }
-  );
+    fs.unlink(path, err => {
+      Logger.debug('delete file ' + fileName);
+      if (err) {
+        Logger.error('delete file err ' + err);
+      }
+      done(err);
+    });
+  });
 };

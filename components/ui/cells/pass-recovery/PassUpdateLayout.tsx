@@ -4,13 +4,13 @@ import Typography from '@material-ui/core/Typography';
 import { LinkState } from 'core/models';
 import { getResetPassLinkState } from 'core/operations';
 import { UpdateForm } from './UpdateForm';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { H1 } from 'ui/atoms/H1';
 import { Spinner } from 'ui/atoms/spinner';
 
 type Props = {
   linkId: string;
-}
+};
 
 export const PassUpdateLayout = React.memo<Props>(({ linkId }) => {
   const [unsubState, setUnsubState] = React.useState(LinkState.FETCHING);
@@ -18,9 +18,7 @@ export const PassUpdateLayout = React.memo<Props>(({ linkId }) => {
 
   React.useEffect(() => {
     setUnsubState(LinkState.FETCHING);
-    getResetPassLinkState(linkId)
-      .then(setUnsubState)
-      .catch(setUnsubState);
+    getResetPassLinkState(linkId).then(setUnsubState).catch(setUnsubState);
   }, [linkId]);
 
   return (
@@ -35,9 +33,7 @@ export const PassUpdateLayout = React.memo<Props>(({ linkId }) => {
             {t('common:unsub.invalid')}
           </Typography>
         )}
-        {unsubState === LinkState.VALID && (
-          <UpdateForm linkId={linkId} />
-        )}
+        {unsubState === LinkState.VALID && <UpdateForm linkId={linkId} />}
       </Box>
       <Spinner isShow={unsubState === LinkState.FETCHING} />
     </>

@@ -9,11 +9,11 @@ export enum FStorageEvents {
 export type FileEventParams = {
   fileName: string;
   blogId: string;
-  done: (err?: Error) => void;
+  done: (err?: Error | NodeJS.ErrnoException | null) => void;
 };
 export type FileUrlEventParams = {
   fileUrl: string;
-  done: (err?: Error) => void;
+  done: (err?: Error | NodeJS.ErrnoException | null) => void;
 };
 
 export type FileCompleteParams = {
@@ -21,4 +21,4 @@ export type FileCompleteParams = {
   fileId: string;
   url: string;
   format: string;
-}
+};

@@ -2,23 +2,19 @@ import mongoose from 'mongoose';
 import config from 'server/config';
 import { Logger } from 'server/logger';
 mongoose.set('useCreateIndex', true);
-export const databaseUri = config.PORT_MONGO;
+export const databaseUri = config.MONGO;
 export const generalMgOptions = {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true
-}
-Logger.info('connecting to mongo db')
+};
+Logger.info('connecting to mongo db');
 export const connection = mongoose.connect(databaseUri, generalMgOptions);
 Logger.info('connecting to mongo db started');
 
 connection
   .then(db => {
-    Logger.info(
-      `Successfully connected to ${databaseUri} MongoDB cluster in ${
-        config.DEV_MODE ? 'dev' : 'prod'
-      } mode.`
-    );
+    Logger.info(`Successfully connected to ${databaseUri} MongoDB cluster in ${config.DEV_MODE ? 'dev' : 'prod'} mode.`);
     return db;
   })
   .catch(err => {
@@ -30,4 +26,3 @@ connection
       Logger.error(err);
     }
   });
-

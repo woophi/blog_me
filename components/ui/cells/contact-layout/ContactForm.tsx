@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
 import { sendMessage } from 'core/operations';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { FORM_ERROR } from 'final-form';
 import { Snakbars } from 'ui/atoms/Snakbars';
 import { TextField } from 'ui/atoms/TextField';
@@ -49,17 +49,10 @@ export const ContactForm: React.FC = () => {
     <Form
       onSubmit={onSubmit}
       validate={(v: ContactForm) => validate(v, t)}
-      render={({
-        handleSubmit,
-        pristine,
-        submitting,
-        invalid,
-        submitError,
-        submitSucceeded,
-      }) => (
+      render={({ handleSubmit, pristine, submitting, invalid, submitError, submitSucceeded }) => (
         <form
           className={classes.form}
-          onSubmit={async (event) => {
+          onSubmit={async event => {
             const error = await handleSubmit(event);
             if (error) {
               return error;
@@ -126,24 +119,20 @@ export const ContactForm: React.FC = () => {
               />
             )}
           />
-          <ButtonsForm
-            pristine={pristine}
-            submitting={submitting}
-            invalid={invalid}
-          />
+          <ButtonsForm pristine={pristine} submitting={submitting} invalid={invalid} />
         </form>
       )}
     />
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     margin: '2rem auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     minWidth: '320px',
-    maxWidth: '50%',
-  },
+    maxWidth: '50%'
+  }
 }));

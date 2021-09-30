@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { FORM_ERROR } from 'final-form';
 import { store } from 'core/store';
 import { login, ensureAuthorized } from 'core/operations/auth';
@@ -52,7 +52,9 @@ export const LoginForm: React.FC = () => {
           <form
             onSubmit={async event => {
               const error = await handleSubmit(event);
-              if (error) { return error; }
+              if (error) {
+                return error;
+              }
               form.reset();
             }}
             className={classes.form}

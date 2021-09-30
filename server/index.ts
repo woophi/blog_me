@@ -21,9 +21,6 @@ import helmet from 'helmet';
 import { createServer } from 'http';
 import compression from 'compression';
 
-const nextI18NextMiddleware = require('next-i18next/middleware').default;
-
-import nextI18next from './lib/i18n';
 import { registerSocket } from './lib/sockets';
 import { router } from './router';
 import { initExpressSession } from './identity';
@@ -53,7 +50,7 @@ appNext.prepare().then(async () => {
   } else {
     appExpress.use(
       helmet({
-        contentSecurityPolicy: false,
+        contentSecurityPolicy: false
       }) as NextHandleFunction
     );
     appExpress.disable('x-powered-by');
@@ -62,7 +59,6 @@ appNext.prepare().then(async () => {
   }
   appExpress.use(cookieParser(config.COOKIE_SECRET) as NextHandleFunction);
   appExpress.use(initExpressSession() as NextHandleFunction);
-  appExpress.use(nextI18NextMiddleware(nextI18next));
 
   appExpress.engine(
     '.hbs',
@@ -70,7 +66,7 @@ appNext.prepare().then(async () => {
       defaultLayout: 'main',
       extname: '.hbs',
       layoutsDir: 'server/views/layouts',
-      partialsDir: 'server/views/partials',
+      partialsDir: 'server/views/partials'
     })
   );
   appExpress.set('views', join(__dirname, 'views'));
@@ -94,7 +90,7 @@ appNext.prepare().then(async () => {
 
   server.on('listening', () => {
     const addr = server.address();
-    const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+    const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr?.port}`;
 
     console.log(`Listening on ${bind}`);
   });
@@ -102,10 +98,7 @@ appNext.prepare().then(async () => {
   server.on('error', (err: any) => {
     if (err.syscall !== 'listen') throw err;
 
-    const bind =
-      typeof config.PORT_CORE === 'string'
-        ? `Pipe ${config.PORT_CORE}`
-        : `Port ${config.PORT_CORE}`;
+    const bind = typeof config.PORT_CORE === 'string' ? `Pipe ${config.PORT_CORE}` : `Port ${config.PORT_CORE}`;
 
     switch (err.code) {
       case 'EACCES':
@@ -120,17 +113,17 @@ appNext.prepare().then(async () => {
   });
 });
 
-process.on('uncaughtException', async (err) => {
+process.on('uncaughtException', async err => {
   console.error(err);
   await agenda.stop();
   process.exit(1);
 });
 
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   console.error(err);
 });
 
-function shouldCompress(req, res) {
+const shouldCompress: compression.CompressionFilter = (req: any, res) => {
   if (req.headers['x-no-compression']) {
     // don't compress responses with this request header
     return false;
@@ -138,4 +131,4 @@ function shouldCompress(req, res) {
 
   // fallback to standard filter function
   return compression.filter(req, res);
-}
+};

@@ -10,10 +10,7 @@ import { SessionCookie } from '../session';
 
 const decrypt = new Encryption().decrypt;
 
-export const validateTokenAndCreateNewAccessToken = async (
-  signedCookie: string,
-  userSession: Request['session']
-) => {
+export const validateTokenAndCreateNewAccessToken = async (signedCookie: string, userSession: Request['session']) => {
   if (!userSession.user || !signedCookie) {
     Logger.info('Connot validate token -> empty params');
     return false;
@@ -32,11 +29,7 @@ export const validateTokenAndCreateNewAccessToken = async (
   try {
     const sessionId = await decrypt(encryptedData, userSession.user.password);
     if (sessionId !== userSession.id) {
-      Logger.info(
-        'Connot validate token -> different sessionIds',
-        sessionId,
-        userSession.id
-      );
+      Logger.info('Connot validate token -> different sessionIds', sessionId, userSession.id);
       return false;
     }
 
@@ -52,15 +45,12 @@ export const validateTokenAndCreateNewAccessToken = async (
     const { verificaitionError } = verifyToken(accessToken);
 
     if (verificaitionError) {
-      Logger.info(
-        'Connot validate access token -> verifyToken.verificaitionError',
-        JSON.stringify(verificaitionError)
-      );
+      Logger.info('Connot validate access token -> verifyToken.verificaitionError', JSON.stringify(verificaitionError));
       Logger.info('---');
       Logger.info('Setup new access token');
       accessToken = setAccessToken({
         id: userId,
-        roles: userSession.user.roles,
+        roles: userSession.user.roles ?? []
       });
       userSession.accessToken = accessToken;
       userSession.cookie.expires = new Date(Date.now() + tenDaysInMS);
@@ -74,72 +64,45 @@ export const validateTokenAndCreateNewAccessToken = async (
   }
 };
 
-export const authorizedForApp = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const authorizedForApp = async (req: Request, res: Response, next: NextFunction) => {
   if (!requireUser(req, res)) return;
   const cookie = req.signedCookies[SessionCookie.SesId];
 
-  const validateTokenResult = await validateTokenAndCreateNewAccessToken(
-    cookie,
-    req.session
-  );
+  const validateTokenResult = await validateTokenAndCreateNewAccessToken(cookie, req.session);
 
   if (!validateTokenResult) {
-    return res
-      .status(HTTPStatus.Unauthorized)
-      .send({ error: 'Authentication failed' });
+    return res.status(HTTPStatus.Unauthorized).send({ error: 'Authentication failed' });
   }
   next();
 };
 
-export const authorizedForAdmin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const authorizedForAdmin = async (req: Request, res: Response, next: NextFunction) => {
   if (!requireUser(req, res)) return;
   const cookie = req.signedCookies[SessionCookie.SesId];
 
-  const validateTokenResult = await validateTokenAndCreateNewAccessToken(
-    cookie,
-    req.session
-  );
+  const validateTokenResult = await validateTokenAndCreateNewAccessToken(cookie, req.session);
 
   if (!validateTokenResult) {
-    return res
-      .status(HTTPStatus.Unauthorized)
-      .send({ error: 'Authentication failed' });
+    return res.status(HTTPStatus.Unauthorized).send({ error: 'Authentication failed' });
   }
 
-  if (!req.session.user?.roles.find((r) => r === ROLES.GODLIKE || r === ROLES.ADMIN))
+  if (!req.session.user?.roles.find(r => r === ROLES.GODLIKE || r === ROLES.ADMIN))
     return res.status(HTTPStatus.Forbidden).send({ error: 'Unable to get data' });
 
   next();
 };
 
-export const authorizedForSuperAdmin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const authorizedForSuperAdmin = async (req: Request, res: Response, next: NextFunction) => {
   if (!requireUser(req, res)) return;
   const cookie = req.signedCookies[SessionCookie.SesId];
 
-  const validateTokenResult = await validateTokenAndCreateNewAccessToken(
-    cookie,
-    req.session
-  );
+  const validateTokenResult = await validateTokenAndCreateNewAccessToken(cookie, req.session);
 
   if (!validateTokenResult) {
-    return res
-      .status(HTTPStatus.Unauthorized)
-      .send({ error: 'Authentication failed' });
+    return res.status(HTTPStatus.Unauthorized).send({ error: 'Authentication failed' });
   }
 
-  if (!req.session.user?.roles.find((r) => r === ROLES.GODLIKE))
+  if (!req.session.user?.roles.find(r => r === ROLES.GODLIKE))
     return res.status(HTTPStatus.BadRequest).send({ error: 'Unable to get data' });
   next();
 };

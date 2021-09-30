@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import App from 'next/app';
 import { wrapper, store } from 'core/store';
 import * as React from 'react';
-import { appWithTranslation, i18next } from 'server/lib/i18n';
+import { appWithTranslation } from 'next-i18next';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from 'core/lib';
@@ -15,20 +15,16 @@ import 'core/fire-callbacks';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    const lang = ctx.req
-      ? ctx.req.cookies[VisitorCookie.Lang]
-      : getCookie(VisitorCookie.Lang) || 'en';
-    const curLang = (ctx.req && ctx.req.language) || i18next.language;
-    const i18n = (ctx.req && ctx.req.i18n) || i18next;
+    const lang = ctx.req ? ctx.req.cookies[VisitorCookie.Lang] : getCookie(VisitorCookie.Lang) || 'en';
+    const curLang = ctx.req && ctx.req.language;
+    const i18n = ctx.req && ctx.req.i18n;
     if (i18n && i18n.changeLanguage && curLang !== lang) {
       i18n.changeLanguage(lang);
     }
 
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {};
+    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
     return {
-      pageProps,
+      pageProps
     };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -38,7 +34,7 @@ class MyApp extends App {
   componentDidMount() {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
-      jssStyles.parentNode.removeChild(jssStyles);
+      jssStyles.parentNode?.removeChild(jssStyles);
     }
   }
   render() {

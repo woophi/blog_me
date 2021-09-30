@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express-serve-static-core';
+import { Request, Response } from 'express-serve-static-core';
 import { HTTPStatus } from 'server/lib/models';
 import { Types } from 'mongoose';
 
@@ -7,8 +7,8 @@ export class Validator {
     this.req = req;
     this.res = res;
   }
-  req: Request = null;
-  res: Response = null;
+  req?: Request = undefined;
+  res?: Response = undefined;
 
   check = async (
     requires: {
@@ -18,9 +18,9 @@ export class Validator {
       [key: string]: any;
     }
   ) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       const requireKeys = Object.keys(requires);
-      let errors = {};
+      let errors: Record<string, unknown> = {};
       requireKeys.forEach(k => {
         const invalid = requires[k](data[k]);
         if (invalid) errors[k] = invalid;
@@ -52,7 +52,8 @@ export class Validator {
     if (!email || !this.typeOfString(email)) {
       return err;
     }
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(email.toLowerCase())) {
       return err;
     }
@@ -77,7 +78,7 @@ export class Validator {
     }
     if (typeof value === 'object' && !Array.isArray(value)) {
       for (let key in value) {
-        if (value.hasOwnProperty(key)) {
+        if ((value as unknown as object).hasOwnProperty(key)) {
           return;
         }
       }
@@ -107,11 +108,13 @@ export class Validator {
     }
   };
 
-  maxLength = (maxLength: number) => <T>(value: T) => {
-    const required = this.required(value);
-    if (required) return required;
-    if (typeof value === 'string' && value.length > maxLength) {
-      return 'increased allowed length';
-    }
-  };
+  maxLength =
+    (maxLength: number) =>
+    <T>(value: T) => {
+      const required = this.required(value);
+      if (required) return required;
+      if (typeof value === 'string' && value.length > maxLength) {
+        return 'increased allowed length';
+      }
+    };
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
-import { useTranslation } from 'server/lib/i18n';
+import { useTranslation } from 'next-i18next';
 import { FORM_ERROR } from 'final-form';
 import { resetPassword } from 'core/operations';
 import { TextField } from 'ui/atoms/TextField';
@@ -41,17 +41,10 @@ export const ResetForm: React.FC = () => {
     <Form
       onSubmit={onSubmit}
       validate={(v: ResetForm) => validate(v, t)}
-      render={({
-        handleSubmit,
-        pristine,
-        submitting,
-        submitError,
-        form,
-        invalid,
-      }) => (
+      render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
-            onSubmit={async (event) => {
+            onSubmit={async event => {
               const error = await handleSubmit(event);
               if (error) {
                 return error;
@@ -65,7 +58,7 @@ export const ResetForm: React.FC = () => {
               variant="error"
               message={submitError}
               style={{
-                margin: '0 1rem .5rem',
+                margin: '0 1rem .5rem'
               }}
             />
             <Snakbars
@@ -73,7 +66,7 @@ export const ResetForm: React.FC = () => {
               message={done ? 'На Вашу почту должно придти письмо' : ''}
               onClose={() => setDone(false)}
               style={{
-                margin: '0 1rem .5rem',
+                margin: '0 1rem .5rem'
               }}
             />
             <Field
@@ -110,13 +103,13 @@ export const ResetForm: React.FC = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     margin: '0 auto 2rem',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     minWidth: '320px',
-    maxWidth: '50%',
-  },
+    maxWidth: '50%'
+  }
 }));

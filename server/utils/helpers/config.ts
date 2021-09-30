@@ -1,5 +1,5 @@
 export const checkConfiguration = (config: { [key: string]: any }) => {
-  const missingConfigs = [];
+  const missingConfigs: string[] = [];
   Object.keys(config).forEach(key => {
     if (config[key] === undefined) {
       missingConfigs.push(key);

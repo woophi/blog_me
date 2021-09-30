@@ -8,7 +8,7 @@ export type UserGeneralModel = {
   email: string;
   vkUserId?: number;
   roles?: ROLES[];
-  password?: string;
+  password: string;
   name?: string;
   refreshToken?: string;
   resetId?: string;
@@ -26,4 +26,3 @@ export type UserModel = UserGeneralModel & {
 };
 
 export type User = Model<UserModel>;
-

@@ -8,7 +8,7 @@ import { NameSpaces, EmitEvents } from './types';
 import { verifyToken, ROLES } from 'server/identity';
 
 export const registerSocket = (server: Server) => {
-  const IO = socket(server);
+  const IO = new socket.Server(server);
   Logger.debug('Storage register events');
   cl.registerCloudinaryEvents();
 
@@ -21,17 +21,17 @@ export const registerSocket = (server: Server) => {
 
   EventBus.on(BusEvents.NEW_COMMENT, newComment);
 
-  nspBlogs.on('connection', (socket) => {
+  nspBlogs.on('connection', socket => {
     Logger.info('nspBlogs connected');
 
-    socket.on('joinRoom', (blogId) => {
+    socket.on('joinRoom', blogId => {
       if (!!blogId) {
         socket.join(blogId);
       }
       Logger.info('joined room ' + blogId);
     });
 
-    socket.on('leaveRoom', (blogId) => {
+    socket.on('leaveRoom', blogId => {
       if (!!blogId) {
         socket.leave(blogId);
       }
@@ -40,17 +40,14 @@ export const registerSocket = (server: Server) => {
 
     socket.on('disconnect', () => {
       Logger.info('nspBlogs disconnected');
-      socket.leaveAll();
     });
   });
 
   const nspAdmin = IO.of(NameSpaces.ADMIN);
   nspAdmin.use((socket, next) => {
-    const token = socket.handshake.query?.token;
-    const { verificaitionError, claims } = verifyToken(token);
-    const isAdmin = claims.roles.some(
-      (r) => r === ROLES.GODLIKE || r === ROLES.ADMIN
-    );
+    const token = socket.handshake.query?.token ?? '';
+    const { verificaitionError, claims } = verifyToken(token as string);
+    const isAdmin = claims.roles.some(r => r === ROLES.GODLIKE || r === ROLES.ADMIN);
     if (verificaitionError || !isAdmin) {
       next(new Error('Authentication error'));
     } else {
@@ -58,14 +55,9 @@ export const registerSocket = (server: Server) => {
     }
   });
 
-  nspAdmin.on('connection', (socket) => {
+  nspAdmin.on('connection', socket => {
     Logger.debug('admin connected ' + socket.id);
-    const fileSuc = ({
-      fileName,
-      fileId,
-      url,
-      format,
-    }: storageTypes.FileCompleteParams) => {
+    const fileSuc = ({ fileName, fileId, url, format }: storageTypes.FileCompleteParams) => {
       socket.emit(EmitEvents.upload_done, fileName, fileId, url, format);
     };
 
@@ -75,14 +67,8 @@ export const registerSocket = (server: Server) => {
 
     socket.on('disconnect', () => {
       Logger.info('admin disconnected');
-      EventBus.removeListener(
-        storageTypes.FStorageEvents.UPLOADED_FILE_SUCCESS,
-        fileSuc
-      );
-      EventBus.removeListener(
-        storageTypes.FStorageEvents.UPLOADED_FILE_ERROR,
-        fileErr
-      );
+      EventBus.removeListener(storageTypes.FStorageEvents.UPLOADED_FILE_SUCCESS, fileSuc);
+      EventBus.removeListener(storageTypes.FStorageEvents.UPLOADED_FILE_ERROR, fileErr);
     });
 
     EventBus.on(storageTypes.FStorageEvents.UPLOADED_FILE_SUCCESS, fileSuc);
