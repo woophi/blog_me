@@ -17,7 +17,7 @@ const api = <T>(
   auth?: string
 ): Promise<T> => {
   const rc: AxiosRequestConfig = {
-    url: siteUrl + url,
+    url: '/' + url,
     headers: {
       Accept: 'application/json',
     },
@@ -69,7 +69,7 @@ export const uploadFiles = (files: File[]) => {
     const formData = new FormData();
     files.forEach((f) => formData.append(f.name, f));
 
-    const url = `${SITE_URL}storage/upload`;
+    const url = `/storage/upload`;
 
     const request = new XMLHttpRequest();
     request.onload = () => {
