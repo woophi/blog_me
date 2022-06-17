@@ -25,7 +25,6 @@ import {
   unbanUser,
   banUser,
   getFriendUserDetail,
-  updateUserCoins,
 } from '../operations';
 import moment from 'moment';
 import { ModalDialog } from 'ui/atoms/modal';
@@ -205,14 +204,6 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
               </Box>
               <Divider />
               <Box margin="1rem">
-                <ActionButton
-                  label={`Обновить монеты на -> ${coinsToUpdate}`}
-                  action={() =>
-                    updateUserCoins(userInfo.userId, coinsToUpdate).then(() =>
-                      reloadData(userInfo.userId)
-                    )
-                  }
-                />
                 <TextField
                   label="Монеты"
                   type="number"

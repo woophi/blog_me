@@ -17,8 +17,8 @@ const getDelationList = async (req: Request, res: Response) => {
   const list = result?.data ?? [];
   return res.send(list).status(HTTPStatus.OK);
 };
-const getTopCoinsList = async (req: Request, res: Response) => {
-  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/top-coins`, {
+const getPublicApis = async (req: Request, res: Response) => {
+  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/public-tokens`, {
     apiKey: config.FRIENDS_API_KEY,
   });
   const list = result?.data ?? [];
@@ -94,11 +94,19 @@ const putSeasonParticipants = async (req: Request, res: Response) => {
   });
   return res.sendStatus(HTTPStatus.OK);
 };
-const updateUserCoins = async (req: Request, res: Response) => {
-  await callApi('post', `${config.FRIENDS_URL}api/admin/coins`, {
+const createPublicApi = async (req: Request, res: Response) => {
+  await callApi('post', `${config.FRIENDS_URL}api/admin/public-token`, {
     apiKey: config.FRIENDS_API_KEY,
-    vkUserId: req.body.vkUserId,
-    coins: req.body.coins,
+    appId: req.body.appId,
+    name: req.body.name,
+    scope: req.body.scope,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
+
+const deletePublicApi = async (req: Request, res: Response) => {
+  await callApi('delete', `${config.FRIENDS_URL}api/admin/public-token/${req.body.appId}`, {
+    apiKey: config.FRIENDS_API_KEY,
   });
   return res.sendStatus(HTTPStatus.OK);
 };
@@ -106,7 +114,7 @@ const updateUserCoins = async (req: Request, res: Response) => {
 export const testfriendship = {
   getBlackList,
   getDelationList,
-  getTopCoinsList,
+  getPublicApis,
   getTopQuizzesList,
   getUserDetail,
   banUser,
@@ -115,5 +123,6 @@ export const testfriendship = {
   stopSeason,
   getSeason,
   putSeasonParticipants,
-  updateUserCoins
+  createPublicApi,
+  deletePublicApi
 };

@@ -280,9 +280,9 @@ export function router(
     controllers.testfriendship.getDelationList
   );
   app.get(
-    '/api/admin-f/top-coins',
+    '/api/admin-f/public-apis',
     identity.authorizedForAdmin,
-    controllers.testfriendship.getTopCoinsList
+    controllers.testfriendship.getPublicApis
   );
   app.get(
     '/api/admin-f/top-quizzies',
@@ -325,9 +325,14 @@ export function router(
     controllers.testfriendship.putSeasonParticipants
   );
   app.post(
-    '/api/admin-f/coins',
+    '/api/admin-f/public-api',
     identity.authorizedForAdmin,
-    controllers.testfriendship.updateUserCoins
+    controllers.testfriendship.createPublicApi
+  );
+  app.delete(
+    '/api/admin-f/public-api',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.deletePublicApi
   );
   // friends api end
 

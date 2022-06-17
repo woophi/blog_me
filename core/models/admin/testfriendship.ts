@@ -39,10 +39,16 @@ export type DelationItem = GeneralVkUser & {
   userIdToBan: number;
 };
 
-export type TopCoinItem = GeneralVkUser & {
-  vkUserId: number;
-  coins: number;
-};
+export type PublicApiItem = {
+  id: number;
+  appId: number;
+  name: string;
+  scope: string;
+  token: string;
+  created: Date;
+  lastUsed: Date;
+  deleted: Date | null
+}
 
 export type PopularQuizItem = GeneralVkUser & {
   amountOfFriends: string;
@@ -167,3 +173,14 @@ export type SeasonInfo = {
   participantsCount: number;
   allQuizCount: number;
 };
+
+export enum PublicApiScope {
+  PaidSub = 'paid_sub',
+}
+
+
+export type PublicApiPayload = {
+  appId: number;
+  name: string;
+  scope: PublicApiScope;
+}

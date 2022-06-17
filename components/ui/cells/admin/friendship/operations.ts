@@ -5,8 +5,8 @@ export const getBlackList = () =>
   callUserApi<admin.BlackListItem[]>('get', `api/admin-f/blacklist`);
 export const getDelationList = () =>
   callUserApi<admin.DelationItem[]>('get', `api/admin-f/delations`);
-export const getTopCoinsList = () =>
-  callUserApi<admin.TopCoinItem[]>('get', `api/admin-f/top-coins`);
+export const getPublicApiList = () =>
+  callUserApi<admin.PublicApiItem[]>('get', `api/admin-f/public-apis`);
 export const getTopQuizzesList = () =>
   callUserApi<admin.PopularQuizItem[]>('get', `api/admin-f/top-quizzies`);
 export const getFriendUserDetail = (vkUserId: number) =>
@@ -14,6 +14,10 @@ export const getFriendUserDetail = (vkUserId: number) =>
     'get',
     `api/admin-f/user-detail?vkUserId=${vkUserId}`
   );
+export const createPublicApi = (payload: admin.PublicApiPayload) =>
+  callUserApi('post', `api/admin-f/public-api`, payload);
+export const deletePublicApi = (appId: number) =>
+  callUserApi('delete', `api/admin-f/public-api`, { appId });
 export const banUser = (payload: admin.BanPayload) =>
   callUserApi('post', `api/admin-f/user-ban`, payload);
 export const unbanUser = (payload: admin.UnBanPayload) =>
@@ -23,8 +27,6 @@ export const stopSeason = () => callUserApi('delete', `api/admin-f/season`);
 export const putSeasonParticipants = () => callUserApi('put', `api/admin-f/season`);
 export const getSeasonInfo = () =>
   callUserApi<admin.SeasonInfo>('get', `api/admin-f/season`);
-export const updateUserCoins = (vkUserId: number, coins: number) =>
-  callUserApi('post', `api/admin-f/coins`, { vkUserId, coins });
 
 export const setReasonLabel = (reason: admin.DelationReason) => {
   switch (reason) {
@@ -64,3 +66,4 @@ export const setLeagueTypeLabel = (reason: admin.LeagueType) => {
       return '';
   }
 };
+
