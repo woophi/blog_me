@@ -11,7 +11,7 @@ import { ChevronRight } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { PublicApiItem, PublicApiPayload, PublicApiScope } from 'core/models/admin';
 import moment from 'moment';
-import { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { ActionButton } from 'ui/atoms/ActionButton';
@@ -40,6 +40,12 @@ export const PublicApiList = memo(() => {
   };
   const handleCloseModal = () => {
     setOpen(false);
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData((d) => ({
+      ...d,
+      [e.target.name]: e.target.value,
+    }));
   };
   return (
     <Box width="100%">
@@ -80,24 +86,23 @@ export const PublicApiList = memo(() => {
           <TextField
             label="App Id"
             value={data.appId}
+            name="appId"
             type="number"
-            onChange={(e) =>
-              setData((d) => ({ ...d, appId: Number(e.target.value) }))
-            }
+            onChange={handleChange}
             variant="outlined"
           />
           <TextField
             label="Name"
             value={data.name}
-            onChange={(e) => setData((d) => ({ ...d, name: e.target.value }))}
+            name="name"
+            onChange={handleChange}
             variant="outlined"
           />
           <TextField
             label="Scope"
             value={data.scope}
-            onChange={(e) =>
-              setData((d) => ({ ...d, scope: e.target.value as PublicApiScope }))
-            }
+            name="scope"
+            onChange={handleChange}
             variant="outlined"
           />
         </form>
