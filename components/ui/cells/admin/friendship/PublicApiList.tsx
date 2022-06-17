@@ -42,9 +42,11 @@ export const PublicApiList = memo(() => {
     setOpen(false);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
     setData((d) => ({
       ...d,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
   return (
