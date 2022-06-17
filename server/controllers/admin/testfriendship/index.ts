@@ -97,7 +97,7 @@ const putSeasonParticipants = async (req: Request, res: Response) => {
 const createPublicApi = async (req: Request, res: Response) => {
   await callApi('post', `${config.FRIENDS_URL}api/admin/public-token`, {
     apiKey: config.FRIENDS_API_KEY,
-    appId: req.body.appId,
+    appId: Number(req.body.appId),
     name: req.body.name,
     scope: req.body.scope,
   });
