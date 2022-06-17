@@ -11,7 +11,7 @@ import { ChevronRight } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { PublicApiItem, PublicApiPayload, PublicApiScope } from 'core/models/admin';
 import moment from 'moment';
-import React, { memo, useCallback, useState } from 'react';
+import React, { Fragment, memo, useCallback, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { ActionButton } from 'ui/atoms/ActionButton';
@@ -132,23 +132,25 @@ const Row = (props: ListChildComponentProps) => {
   const dataItem = list[index];
 
   return (
-    <ListItem button style={style} key={index}>
-      <ListItemText
-        primaryTypographyProps={{ noWrap: true }}
-        style={styleTruncate}
-        primary={dataItem.name}
-        secondary={`App id - ${dataItem.appId} & Last Used - ${moment(
-          dataItem.lastUsed
-        ).format('DD MM YYYY HH:mm')} & Deleted - ${
-          dataItem.deleted ? 'yes' : 'no'
-        }`}
-      />
-      <IconButton onClick={handleOpenModal}>
-        <ChevronRight />
-      </IconButton>
-      <IconButton onClick={() => handleDelete(dataItem.appId)}>
-        <DeleteIcon />
-      </IconButton>
+    <Fragment key={index}>
+      <ListItem button style={style}>
+        <ListItemText
+          primaryTypographyProps={{ noWrap: true }}
+          style={styleTruncate}
+          primary={dataItem.name}
+          secondary={`App id - ${dataItem.appId} & Last Used - ${moment(
+            dataItem.lastUsed
+          ).format('DD MM YYYY HH:mm')} & Deleted - ${
+            dataItem.deleted ? 'yes' : 'no'
+          }`}
+        />
+        <IconButton onClick={handleOpenModal}>
+          <ChevronRight />
+        </IconButton>
+        <IconButton onClick={() => handleDelete(dataItem.appId)}>
+          <DeleteIcon />
+        </IconButton>
+      </ListItem>
       <ModalDialog
         open={open}
         onClose={handleCloseModal}
@@ -158,11 +160,15 @@ const Row = (props: ListChildComponentProps) => {
         <Typography color="textSecondary" gutterBottom>
           {dataItem.name}
         </Typography>
-        <Typography color="textSecondary" gutterBottom>
+        <Typography
+          color="textSecondary"
+          gutterBottom
+          style={{ wordBreak: 'break-all' }}
+        >
           {dataItem.token}
         </Typography>
       </ModalDialog>
-    </ListItem>
+    </Fragment>
   );
 };
 
