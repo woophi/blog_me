@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { Button, LinearProgress, Typography, makeStyles } from '@material-ui/core';
-import { getWindow } from 'core/common';
-import { checkAuth } from 'core/operations/auth';
-import { useInterval } from 'core/lib';
-import { LinkButton } from 'ui/atoms/Links';
+import { faVk } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faVk } from '@fortawesome/free-brands-svg-icons';
+import { Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
+import { getWindow } from 'core/common';
+import { useInterval } from 'core/lib';
+import { checkAuth } from 'core/operations/auth';
+import * as React from 'react';
+import { LinkButton } from 'ui/atoms/Links';
 
 type Props = {
   onComplete?: () => void;
 };
 
-type DialogPath = 'fb' | 'google' | 'vk';
+type DialogPath = 'google' | 'vk';
 let loginWindow: Window = null;
 
 type GuestIdentificationWindow = {
@@ -24,7 +24,7 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
   const [processing, setProcess] = React.useState(false);
   const uniqRenederId = Date.now();
 
-  const { googleBtn, facebookBtn, vkBtn } = useStyles({});
+  const { googleBtn, vkBtn } = useStyles({});
 
   useInterval(
     () => {
@@ -73,13 +73,6 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
     },
     []
   );
-  const authFb = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      event.preventDefault();
-      openDialog('fb');
-    },
-    []
-  );
   const authVk = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.preventDefault();
@@ -94,10 +87,6 @@ export const AuthButtons = React.memo<Props>(({ onComplete }) => {
         <button className={googleBtn} disabled={processing} onClick={authGoogle}>
           <img src="/img/google.svg" />
           <Typography gutterBottom>Войти с Google</Typography>
-        </button>
-        <button className={facebookBtn} disabled={processing} onClick={authFb}>
-          <FontAwesomeIcon icon={faFacebook} />
-          <Typography>Войти с Facebook</Typography>
         </button>
         <Button
           disabled={processing}
@@ -135,21 +124,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: '6px',
     },
     '&>p': {
-      margin: 'auto',
-    },
-  },
-  facebookBtn: {
-    ...commonStyle(),
-    backgroundColor: '#1877f2',
-    borderRadius: '4px',
-    margin: theme.spacing(1),
-    '&>svg': {
-      fontSize: 28,
-      marginRight: '8px',
-      marginLeft: '.5rem',
-    },
-    '&>p': {
-      lineHeight: '1.4rem',
       margin: 'auto',
     },
   },
