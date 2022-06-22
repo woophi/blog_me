@@ -10,7 +10,7 @@ class PrivacyPolicy extends React.PureComponent {
           <p>Effective date: December 26, 2019</p>
           <p>
             Красноглазый блог ("us", "we", or "our") operates the
-            https://km-webstudio.xyz/ website (hereinafter referred to as the
+            https://kms.guru/ website (hereinafter referred to as the
             "Service").
           </p>
           <p>
@@ -28,7 +28,7 @@ class PrivacyPolicy extends React.PureComponent {
             Service, you agree to the collection and use of information in accordance
             with this policy. Unless otherwise defined in this Privacy Policy, the
             terms used in this Privacy Policy have the same meanings as in our Terms
-            and Conditions, accessible from https://km-webstudio.xyz/
+            and Conditions, accessible from https://kms.guru/
           </p>
           <h2>Definitions</h2>
           <ul>
@@ -37,7 +37,7 @@ class PrivacyPolicy extends React.PureComponent {
                 <strong>Service</strong>
               </p>
               <p>
-                Service is the https://km-webstudio.xyz/ website operated by
+                Service is the https://kms.guru/ website operated by
                 Красноглазый блог
               </p>
             </li>
