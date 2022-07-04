@@ -41,7 +41,7 @@ export const AdminQuzParticipants = React.memo<Props>(({ quizId }) => {
             <Box padding=".25rem" display="flex">
               <Typography color="secondary">{'Answers: '}</Typography>
               <Box marginLeft=".25rem">
-                {Object.keys(p.answers).map((objKey) => (
+                {Object.keys(p.answers ?? {}).map((objKey) => (
                   <Box key={objKey} display="flex" flexDirection="column">
                     <Box padding=".25rem" display="flex">
                       <Typography color="secondary">{'Номер вопроса: '}</Typography>
