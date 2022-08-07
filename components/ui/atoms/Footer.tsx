@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-export const Footer = React.memo<{ version: string }>(({ version }) => {
+export const Footer = React.memo<{ version?: string }>(({ version = '666' }) => {
   const { footer } = useStyles({});
 
   const showVersion = version ? `v${version}` : null;

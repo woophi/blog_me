@@ -1,10 +1,9 @@
-import * as React from 'react';
-import Head from 'next/head';
 import { makeStyles } from '@material-ui/core';
+import Head from 'next/head';
+import * as React from 'react';
+import { Footer } from 'ui/atoms/Footer';
 import { ScrollButton } from 'ui/atoms/ScrollToTop';
 import { Navigation } from './Navigation';
-import { Footer } from 'ui/atoms/Footer';
-import { getReleaseVersion } from 'core/operations';
 
 type Props = {
   title?: string;
@@ -15,11 +14,6 @@ export const GeneralLayout = React.memo<Props>(
   ({ title = 'Красноглазый блог', children }) => {
     const classes = useStyles({});
 
-    const [version, setVersion] = React.useState('');
-
-    React.useEffect(() => {
-      getReleaseVersion().then(setVersion);
-    }, []);
 
     return (
       <>
@@ -34,7 +28,7 @@ export const GeneralLayout = React.memo<Props>(
         <Navigation />
         <div className={classes.content}>{children}</div>
         <ScrollButton />
-        <Footer version={version} />
+        <Footer  />
       </>
     );
   }

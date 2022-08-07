@@ -59,6 +59,3 @@ export const viewBlog = (blogId: number) =>
   callApi('post', 'api/guest/blog/view', {
     blogId,
   });
-
-export const getReleaseVersion = () =>
-  callApi<string>('get', `release/v`);
