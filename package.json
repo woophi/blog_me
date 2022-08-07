@@ -33,7 +33,7 @@
     "agenda": "^3.1.0",
     "agendash": "^1.0.0",
     "async": "^3.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.7.2",
