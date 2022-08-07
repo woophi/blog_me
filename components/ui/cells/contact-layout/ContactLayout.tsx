@@ -5,23 +5,21 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Icon from '@material-ui/core/Icon';
 import { ContactForm } from './ContactForm';
-import { useTranslation } from 'server/lib/i18n';
 import Box from '@material-ui/core/Box';
 
 export const ContactLayout: React.FC = React.memo(() => {
   const classes = useStyles({});
-  const { t } = useTranslation();
   return (
     <>
       <Box display="flex" flexDirection="column">
-        <H1 upperCase>{t('common:contact.title')}</H1>
+        <H1 upperCase>Contact form</H1>
         <Typography
           className={classes.m}
           variant="button"
           display="block"
           gutterBottom
         >
-          {t('common:contact.orders')}
+          Your orders
         </Typography>
         <Link
           component="a"

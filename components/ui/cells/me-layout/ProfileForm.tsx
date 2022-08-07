@@ -122,7 +122,7 @@ export const ProfileForm = React.memo(() => {
                 submitting={submitting}
                 both
                 onCancel={form.reset}
-                submitLabel={'common:buttons.save'}
+                submitLabel={'сохранить'}
                 invalid={invalid}
               />
             </Box>

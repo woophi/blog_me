@@ -297,7 +297,7 @@ const QuizForm: React.FC<Props> = React.memo(({ quizId, initialValues = {} }) =>
               submitting={submitting}
               both
               onCancel={form.reset}
-              submitLabel={quizId ? 'common:buttons.save' : 'common:buttons.add'}
+              submitLabel={quizId ? 'сохранить' : 'добавить'}
               invalid={invalid}
             />
           </form>

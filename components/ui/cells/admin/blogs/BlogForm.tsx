@@ -341,7 +341,7 @@ const BlogForm: React.FC<Props> = React.memo(({ blogId, initialValues = {} }) =>
               submitting={submitting}
               both
               onCancel={form.reset}
-              submitLabel={blogId ? 'common:buttons.save' : 'common:buttons.add'}
+              submitLabel={blogId ? 'сохранить' : 'добавить'}
               invalid={invalid}
             />
           </form>

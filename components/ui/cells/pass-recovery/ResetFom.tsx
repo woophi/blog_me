@@ -2,7 +2,6 @@ import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
-import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
 import { resetPassword } from 'core/operations';
 import { TextField } from 'ui/atoms/TextField';
@@ -13,14 +12,14 @@ type ResetForm = {
   email: string;
 };
 
-const validate = (values: ResetForm, t: (s: string) => string) => {
+const validate = (values: ResetForm ) => {
   const errors: Partial<ResetForm> = {};
 
   if (!values.email) {
-    errors.email = t('common:forms.field.required');
+    errors.email = 'Пожалуйста, заполните это поле';
   }
   if (values.email && !testEmail.test(values.email.toLowerCase())) {
-    errors.email = t('common:forms.field.invalid');
+    errors.email = 'Введенные данные неверные';
   }
   return errors;
 };
@@ -36,11 +35,10 @@ const onSubmit = async (data: ResetForm) => {
 export const ResetForm: React.FC = () => {
   const classes = useStyles({});
   const [done, setDone] = React.useState(false);
-  const { t } = useTranslation();
   return (
     <Form
       onSubmit={onSubmit}
-      validate={(v: ResetForm) => validate(v, t)}
+      validate={validate}
       render={({
         handleSubmit,
         pristine,
@@ -82,7 +80,7 @@ export const ResetForm: React.FC = () => {
                 <TextField
                   {...input}
                   id="outlined-email-input"
-                  label={t('common:forms.email')}
+                  label="E-mail"
                   type="text"
                   name="email"
                   margin="normal"

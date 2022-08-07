@@ -21,9 +21,6 @@ import helmet from 'helmet';
 import { createServer } from 'http';
 import compression from 'compression';
 
-const nextI18NextMiddleware = require('next-i18next/middleware').default;
-
-import nextI18next from './lib/i18n';
 import { registerSocket } from './lib/sockets';
 import { router } from './router';
 import { initExpressSession } from './identity';
@@ -62,7 +59,6 @@ appNext.prepare().then(async () => {
   }
   appExpress.use(cookieParser(config.COOKIE_SECRET) as NextHandleFunction);
   appExpress.use(initExpressSession() as NextHandleFunction);
-  appExpress.use(nextI18NextMiddleware(nextI18next));
 
   appExpress.engine(
     '.hbs',

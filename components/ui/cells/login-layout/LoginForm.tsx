@@ -2,7 +2,6 @@ import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
 import { testEmail } from 'core/lib';
-import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
 import { store } from 'core/store';
 import { login, ensureAuthorized } from 'core/operations/auth';
@@ -15,17 +14,17 @@ type LoginForm = {
   password: string;
 };
 
-const validate = (values: LoginForm, t: (s: string) => string) => {
+const validate = (values: LoginForm) => {
   const errors: Partial<LoginForm> = {};
 
   if (!values.email) {
-    errors.email = t('common:forms.field.required');
+    errors.email = 'Пожалуйста, заполните это поле';
   }
   if (values.email && !testEmail.test(values.email.toLowerCase())) {
-    errors.email = t('common:forms.field.invalid');
+    errors.email = 'Введенные данные неверные';
   }
   if (!values.password) {
-    errors.password = t('common:forms.field.required');
+    errors.password = 'Пожалуйста, заполните это поле';
   }
   return errors;
 };
@@ -42,11 +41,10 @@ const onSubmit = async (data: LoginForm) => {
 
 export const LoginForm: React.FC = () => {
   const classes = useStyles({});
-  const { t } = useTranslation();
   return (
     <Form
       onSubmit={onSubmit}
-      validate={(v: LoginForm) => validate(v, t)}
+      validate={validate}
       render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
@@ -70,7 +68,7 @@ export const LoginForm: React.FC = () => {
                 <TextField
                   {...input}
                   id="outlined-email-input"
-                  label={t('common:forms.email')}
+                  label="E-mail"
                   type="text"
                   name="email"
                   margin="normal"
@@ -89,7 +87,7 @@ export const LoginForm: React.FC = () => {
                 <TextField
                   {...input}
                   id="outlined-password-input"
-                  label={t('common:forms.password')}
+                  label="Пароль"
                   type="password"
                   name="password"
                   autoComplete="password"

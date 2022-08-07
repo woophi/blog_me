@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Field } from 'react-final-form';
-import { useTranslation } from 'server/lib/i18n';
 import { FORM_ERROR } from 'final-form';
 import { updatePassword } from 'core/operations';
 import { login, ensureAuthorized } from 'core/operations/auth';
@@ -14,11 +13,11 @@ type UpdateForm = {
   password: string;
 };
 
-const validate = (values: UpdateForm, t: (s: string) => string) => {
+const validate = (values: UpdateForm ) => {
   const errors: Partial<UpdateForm> = {};
 
   if (!values.password) {
-    errors.password = t('common:forms.field.required');
+    errors.password = 'Пожалуйста, заполните это поле';
   }
   return errors;
 };
@@ -43,11 +42,10 @@ type Props = {
 export const UpdateForm: React.FC<Props> = ({ linkId }) => {
   const classes = useStyles({});
   const [done, setDone] = React.useState(false);
-  const { t } = useTranslation();
   return (
     <Form
       onSubmit={(d: UpdateForm) => onSubmit(d, linkId)}
-      validate={(v: UpdateForm) => validate(v, t)}
+      validate={validate}
       render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
         <>
           <form
@@ -82,7 +80,7 @@ export const UpdateForm: React.FC<Props> = ({ linkId }) => {
                 <TextField
                   {...input}
                   id="outlined-password-input"
-                  label={t('common:forms.password')}
+                  label="Пароль"
                   type="password"
                   name="password"
                   autoComplete="password"

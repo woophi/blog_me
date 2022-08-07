@@ -1,8 +1,6 @@
-// @ts-nocheck
 import * as React from 'react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
-import flush from 'styled-jsx/server';
 import { theme } from 'core/lib/theme';
 import { Script } from 'ui/atoms/Script';
 class MyDocument extends Document {
@@ -19,18 +17,7 @@ class MyDocument extends Document {
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
 
-          <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
-            as="style"
-            onLoad="this.onload=null;this.rel='stylesheet'"
-          />
-          <noscript>
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
-            />
-          </noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
           {/* <!-- Global site tag (gtag.js) - Google Ads: 973953037 --> */}
@@ -96,7 +83,6 @@ MyDocument.getInitialProps = async (ctx) => {
     styles: (
       <React.Fragment>
         {sheets.getStyleElement()}
-        {flush() || null}
       </React.Fragment>
     ),
   };

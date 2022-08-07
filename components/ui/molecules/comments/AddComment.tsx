@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTranslation } from 'server/lib/i18n';
 import { safeTrim } from 'core/lib';
 import { newComment } from './operations';
 import { Form, Field } from 'react-final-form';
@@ -24,7 +23,7 @@ type OwnProps = {
 
 const mapState = (state: AppState, _: OwnProps) => ({
   canAccess: canUserComment(state),
-  userName: getUserName(state)
+  userName: getUserName(state),
 });
 
 type Props = ReturnType<typeof mapState> & OwnProps;
@@ -34,14 +33,14 @@ type CommentForm = {
   message: string;
 };
 
-const validate = (values: CommentForm, t: (s: string) => string) => {
+const validate = (values: CommentForm) => {
   const errors: Partial<CommentForm> = {};
 
   if (!values.message || !safeTrim(values.message)) {
-    errors.message = t('common:forms.field.required');
+    errors.message = 'Пожалуйста, заполните это поле';
   }
   if (!values.name || !safeTrim(values.name)) {
-    errors.name = t('common:forms.field.required');
+    errors.name = 'Пожалуйста, заполните это поле';
   }
 
   return errors;
@@ -64,28 +63,34 @@ const AddCommentPC = React.memo<Props>(
     React.useLayoutEffect(() => {
       checkAuth();
     }, []);
-    const { t } = useTranslation();
     const classes = useStyles({});
 
     return (
       <Paper elevation={4} className={classes.paper}>
         <Typography gutterBottom variant="body1">
-          {t('gallery.addComments')}
+          Добавить комментарий
         </Typography>
         {!canAccess && <AuthButtons />}
         {canAccess && (
           <Form
             onSubmit={(d: CommentForm) => onSubmit(d, blogId, parentCommentId)}
-            validate={(v: CommentForm) => validate(v, t)}
+            validate={validate}
             initialValues={{
               message: '',
-              name: userName
+              name: userName,
             }}
-            render={({ handleSubmit, pristine, submitting, submitError, form, invalid }) => (
+            render={({
+              handleSubmit,
+              pristine,
+              submitting,
+              submitError,
+              form,
+              invalid,
+            }) => (
               <>
                 <Snakbars variant="error" message={submitError} />
                 <form
-                  onSubmit={async event => {
+                  onSubmit={async (event) => {
                     const error = await handleSubmit(event);
                     if (error) {
                       return error;
@@ -99,7 +104,7 @@ const AddCommentPC = React.memo<Props>(
                     render={({ input, meta }) => (
                       <TextField
                         id="outlined-name-input"
-                        label={t('common:forms.name')}
+                        label="Имя"
                         type="text"
                         name="name"
                         fullWidth
@@ -112,7 +117,7 @@ const AddCommentPC = React.memo<Props>(
                         }
                         disabled={submitting}
                         inputProps={{
-                          maxLength: 256
+                          maxLength: 256,
                         }}
                       />
                     )}
@@ -122,7 +127,7 @@ const AddCommentPC = React.memo<Props>(
                     render={({ input, meta }) => (
                       <TextField
                         id="outlined-message-static"
-                        label={t('common:typeHere')}
+                        label="Пиши тут"
                         multiline
                         rows="4"
                         fullWidth
@@ -135,7 +140,7 @@ const AddCommentPC = React.memo<Props>(
                         }
                         disabled={submitting}
                         inputProps={{
-                          maxLength: 2000
+                          maxLength: 2000,
                         }}
                       />
                     )}
@@ -145,7 +150,7 @@ const AddCommentPC = React.memo<Props>(
                     submitting={submitting}
                     both
                     onCancel={form.reset}
-                    submitLabel={'common:buttons.add'}
+                    submitLabel={'добавить'}
                     invalid={invalid}
                   />
                 </form>
@@ -160,22 +165,22 @@ const AddCommentPC = React.memo<Props>(
 
 export const AddComment = connect(mapState)(AddCommentPC);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '1rem'
+    marginTop: '1rem',
   },
   paper: {
     margin: '0 auto .5rem',
     padding: '1rem',
     maxWidth: '600px',
-    width: '100%'
+    width: '100%',
   },
   wrap: {
-    position: 'relative'
+    position: 'relative',
   },
   field: {
-    margin: 0
-  }
+    margin: 0,
+  },
 }));
