@@ -18,11 +18,15 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
   const [allBlogs, setBlogs] = React.useState(blogs);
   const [fetching, setFetching] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
-  const lessThan750px = useMediaQuery('(max-width: 750px)');
+  const lessThan750px = useMediaQuery('screen and (max-width: 750px)');
+  const [lessThanV, setLessThan750px] = React.useState(false);
 
   React.useEffect(() => {
     setBlogs(blogs);
   }, [blogs]);
+  React.useEffect(() => {
+    setLessThan750px(lessThan750px)
+  }, [lessThan750px]);
 
   const loadMore = React.useCallback(() => {
     setFetching(true);
@@ -46,7 +50,7 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
     <>
       <Box
         display="grid"
-        gridTemplateColumns={lessThan750px ? '1fr' : "repeat(2, 1fr)"}
+        gridTemplateColumns={lessThanV ? '1fr' : "repeat(2, 1fr)"}
         gridColumnGap="1rem"
         gridRowGap="3rem"
         padding="1rem"
