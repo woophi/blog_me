@@ -102,6 +102,16 @@ const BlogLayoutPC = React.memo<Props>(({ blog, userId }) => {
             Обновлено: {moment(blog.updatedAt).format('DD MMMM YYYY HH:MM')}
           </Typography>
         ) : null}
+        {blog.views ? (
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            color="textSecondary"
+          >
+            Прочтений: {blog.views}
+          </Typography>
+        ) : null}
       </Box>
       <picture>
         <source type="image/webp" data-srcset={blog.coverPhotoUrl + '.webp'} />
