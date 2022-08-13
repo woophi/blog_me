@@ -16,6 +16,7 @@ import { UrlWithParsedQuery } from 'url';
 import { agenda } from './lib/agenda';
 import { get, GlobalCache } from './options';
 import { NextServer } from 'next/dist/server/next';
+import axios from 'axios';
 const options = {
   root: join(__dirname, '../assets'),
 };
@@ -45,6 +46,20 @@ export function router(
   app.get('/contact.html', (_, res) => res.redirect('/contact'));
 
   app.get('/release/v', (_, res) => res.send(get(GlobalCache.ReleaseVersion)));
+
+  app.get('/api/show-time/proxy/img', async (req, res) => {
+    if (!req.query.imgPath) {
+      return res.sendStatus(HTTPStatus.BadRequest);
+    }
+    const { data } = await axios.get(req.query.imgPath, {
+      responseType: 'arraybuffer',
+    });
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.setHeader('cross-origin-embedder-policy', 'unsafe-none');
+    res.setHeader('cross-origin-opener-policy', 'unsafe-none');
+    res.setHeader('cross-origin-resource-policy', 'cross-origin');
+    res.send(data);
+  });
 
   // guest blogs
   app.get('/api/guest/blogs', fetchingLimiterMiddleware, controllers.getGuestBlogs);
