@@ -1,13 +1,13 @@
-import * as React from 'react';
-import 'lazysizes';
-import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import { BlogGuestItem } from 'core/models';
-import { BlogPreview } from './BlogPreview';
-import { getBLogs } from 'core/operations';
 import { INCREASE_BLOG_OFFSET } from 'core/constants';
-import { useMediaQuery } from '@material-ui/core';
+import { BlogGuestItem } from 'core/models';
+import { getBLogs } from 'core/operations';
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+import * as React from 'react';
+import { BlogPreview } from './BlogPreview';
 
 type Props = {
   blogs: BlogGuestItem[];
@@ -18,15 +18,12 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
   const [allBlogs, setBlogs] = React.useState(blogs);
   const [fetching, setFetching] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
-  const lessThan750px = useMediaQuery('screen and (max-width: 750px)');
-  const [lessThanV, setLessThan750px] = React.useState(false);
+
+  const classes = useStyles();
 
   React.useEffect(() => {
     setBlogs(blogs);
   }, [blogs]);
-  React.useEffect(() => {
-    setLessThan750px(lessThan750px)
-  }, [lessThan750px]);
 
   const loadMore = React.useCallback(() => {
     setFetching(true);
@@ -50,10 +47,10 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
     <>
       <Box
         display="grid"
-        gridTemplateColumns={lessThanV ? '1fr' : "repeat(2, 1fr)"}
         gridColumnGap="1rem"
         gridRowGap="3rem"
         padding="1rem"
+        className={classes.content}
       >
         {allBlogs.length
           ? allBlogs.map((b) => <BlogPreview key={b.blogId} {...b} />)
@@ -81,3 +78,12 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
     </>
   );
 });
+
+const useStyles = makeStyles((theme) => ({
+  content: {
+    gridTemplateColumns: '1fr',
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
+}));
