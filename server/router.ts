@@ -54,6 +54,7 @@ export function router(
     const { data } = await axios.get(req.query.imgPath, {
       responseType: 'arraybuffer',
     });
+    res.setHeader('access-control-allow-origin', '*');
     res.setHeader('Content-Type', 'image/jpeg');
     res.setHeader('cross-origin-embedder-policy', 'unsafe-none');
     res.setHeader('cross-origin-opener-policy', 'unsafe-none');
