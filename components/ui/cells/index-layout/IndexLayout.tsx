@@ -2,11 +2,12 @@ import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { INCREASE_BLOG_OFFSET } from 'core/constants';
-import { BlogGuestItem } from 'core/models';
+import { AppState, BlogGuestItem } from 'core/models';
 import { getBLogs } from 'core/operations';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { BlogPreview } from './BlogPreview';
 
 type Props = {
@@ -18,6 +19,8 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
   const [allBlogs, setBlogs] = React.useState(blogs);
   const [fetching, setFetching] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
+  const searchResults = useSelector((state: AppState) => state.ui.searchResults);
+  const searchQ = useSelector((state: AppState) => state.ui.searchQuery);
 
   const classes = useStyles();
 
@@ -52,7 +55,9 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
         padding="1rem"
         className={classes.content}
       >
-        {allBlogs.length
+        {searchQ && searchResults.length
+          ? searchResults.map((b) => <BlogPreview key={b.blogId} {...b} />)
+          : allBlogs.length
           ? allBlogs.map((b) => <BlogPreview key={b.blogId} {...b} />)
           : 'nothing here yet'}
       </Box>
@@ -82,8 +87,14 @@ export const IndexLayout = React.memo<Props>(({ blogs = [] }) => {
 const useStyles = makeStyles((theme) => ({
   content: {
     gridTemplateColumns: '1fr',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    [theme.breakpoints.up('xl')]: {
+      gridTemplateColumns: 'repeat(4, 1fr)',
     },
   },
 }));

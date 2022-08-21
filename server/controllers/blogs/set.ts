@@ -36,9 +36,9 @@ export const searchBlogs = async (req: Request, res: Response) => {
       .where('publishedDate')
       .lte(moment().toDate())
       .sort({ score: { $meta: 'textScore' } })
-      .select('title publishedDate blogId shortText -_id')
+      .select('title coverPhotoUrl publishedDate blogId shortText views -_id')
       .skip(0)
-      .limit(5)
+      .limit(40)
       .lean();
     return res.send(blogs);
   } catch (error) {
@@ -76,27 +76,12 @@ export const increaseBlogViews = async (req: Request, res: Response) => {
 
     if (!blog) return res.sendStatus(HTTPStatus.NotFound);
 
-    const cookieViews = req.cookies[VisitorCookie.View] || '';
-
-    const blogIds = cookieViews?.split(',');
-
-    if (blogIds.some(id => Number(id) === data.blogId)) {
-      return res.sendStatus(HTTPStatus.Conflict);
-    }
-
     await blog
       .set({
         views: blog.views + 1
       })
       .save();
 
-    res.cookie(
-      VisitorCookie.View,
-      cookieViews ? `${cookieViews},${data.blogId}` : `${data.blogId}`,
-      {
-        maxAge: 30 * 60 * 1000
-      }
-    );
     return res.sendStatus(HTTPStatus.OK);
   } catch (error) {
     Logger.error(error);

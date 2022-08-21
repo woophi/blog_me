@@ -13,7 +13,6 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles, createStyles, fade } from '@material-ui/core';
-import { SearchResults } from './SearchResults';
 import { Dispatch, compose } from 'redux';
 import { AppDispatch, AppState, SearchStatus } from 'core/models';
 import { connect } from 'react-redux';
@@ -200,7 +199,6 @@ const NavigationPC = React.memo<NavigationProps>(
           </AppBar>
         </HideOnScroll>
         <Toolbar />
-        <SearchResults show={show} />
         <ModalDialog
           withActions={false}
           open={openDialog}

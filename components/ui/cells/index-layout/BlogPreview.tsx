@@ -9,7 +9,7 @@ import * as React from 'react';
 type Props = BlogGuestItem;
 
 export const BlogPreview = React.memo<Props>(
-  ({ blogId, coverPhotoUrl, publishedDate, title }) => {
+  ({ blogId, coverPhotoUrl, publishedDate, title, views }) => {
     
     const loadBlog = React.useCallback(() => {
       const mapTitle = title.toLowerCase().split(' ').join('-');
@@ -56,6 +56,9 @@ export const BlogPreview = React.memo<Props>(
             </Typography>
             <Typography variant="caption" display="block" gutterBottom>
               Опубликовано: {moment(publishedDate).fromNow()}
+            </Typography>
+            <Typography variant="caption" display="block" gutterBottom>
+              Прочтений: {views}
             </Typography>
           </Box>
         </Box>
