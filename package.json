@@ -92,6 +92,7 @@
     "string-strip-html": "^4.5.0",
     "styled-jsx": "^5.0.2",
     "ts-node": "^8.10.2",
+    "twitter-api-client": "^1.6.1",
     "uuid": "^8.3.0"
   },
   "devDependencies": {

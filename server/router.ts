@@ -17,6 +17,8 @@ import { agenda } from './lib/agenda';
 import { get, GlobalCache } from './options';
 import { NextServer } from 'next/dist/server/next';
 import axios from 'axios';
+import { searchTwitts } from './twitter/search.tw';
+
 const options = {
   root: join(__dirname, '../assets'),
 };
@@ -46,6 +48,7 @@ export function router(
   app.get('/contact.html', (_, res) => res.redirect('/contact'));
 
   app.get('/release/v', (_, res) => res.send(get(GlobalCache.ReleaseVersion)));
+  app.get('/api/show-time/twitter', searchTwitts);
 
   app.get('/api/show-time/proxy/img', async (req, res) => {
     if (!req.query.imgPath) {
@@ -430,3 +433,4 @@ export function router(
     return handle(req, res);
   });
 }
+

@@ -1,5 +1,3 @@
-
-
 export default {
   PORT_CORE: parseInt(process.env.PORT || '3000', 10),
   SITE_URI: process.env.SITE_URI,
@@ -43,5 +41,11 @@ export default {
 
   // testfriendship
   FRIENDS_URL: process.env.FRIENDS_URL,
-  FRIENDS_API_KEY: process.env.FRIENDS_API_KEY
+  FRIENDS_API_KEY: process.env.FRIENDS_API_KEY,
+
+  TW_API_KEY: process.env.TW_API_KEY,
+  TW_API_SECRET: process.env.TW_API_SECRET,
+  TW_ACCESS_TOKEN: process.env.TW_ACCESS_TOKEN,
+  TW_ACCESS_TOKEN_SECRET: process.env.TW_ACCESS_TOKEN_SECRET,
 };
+
