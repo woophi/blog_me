@@ -50,7 +50,9 @@ export function router(
   bot.on(FBBot.Events.MESSAGE, function (userId, message) {
     console.log(userId, message);
   });
-  bot.listen(8080);
+  server.listen(8080, () => {
+    console.log('Facebook webhook started on port 8085');
+  });
 
   app.use('/favicon.ico', (_, res) =>
     res.status(HTTPStatus.OK).sendFile('favicon.ico', options)
