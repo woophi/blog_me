@@ -34,7 +34,7 @@ export function router(
 ) {
   app.use('/external/fb/bot/webhook', (req, res) => {
     console.log(JSON.stringify(req.query));
-    res.send('SOSI');
+    res.send(req.query['hub.challenge']);
   });
 
   app.use('/favicon.ico', (_, res) =>
