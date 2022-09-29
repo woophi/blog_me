@@ -18,6 +18,9 @@ import { get, GlobalCache } from './options';
 import { NextServer } from 'next/dist/server/next';
 import axios from 'axios';
 import { searchTwitts } from './twitter/search.tw';
+import * as FBBot from 'facebook-bot-messenger';
+import { Server } from 'http';
+import config from './config';
 
 const options = {
   root: join(__dirname, '../assets'),
@@ -32,6 +35,23 @@ export function router(
   ) => Promise<void>,
   appNext: NextServer
 ) {
+  const server = new Server(app);
+  var bot = FBBot.create(
+    {
+      pageID: '106616012210537',
+      appID: '1034507260555540',
+      appSecret: config.FB_BOT_SECRET,
+      validationToken: config.FB_BOT_TOKEN,
+      pageToken: config.FB_BOT_PAGE_TOKEN,
+    },
+    server
+  );
+  bot.webhook('/external/fb/bot/webhook');
+  bot.on(FBBot.Events.MESSAGE, function (userId, message) {
+    console.log(userId, message);
+  });
+  bot.listen(8080);
+
   app.use('/favicon.ico', (_, res) =>
     res.status(HTTPStatus.OK).sendFile('favicon.ico', options)
   );
@@ -95,6 +115,7 @@ export function router(
   );
 
   app.get('/auth/:external/go', auth.externalLogin);
+  app.get('/login/:external/complete', auth.externalLoginComplete);
   app.get('/login/:external/complete', auth.externalLoginComplete);
 
   // contact message

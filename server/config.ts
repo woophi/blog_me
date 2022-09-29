@@ -26,6 +26,10 @@ export default {
   FB_APP_ID: process.env.FB_APP_ID,
   FB_APP_SECRET: process.env.FB_APP_SECRET,
 
+  FB_BOT_SECRET: process.env.FB_BOT_SECRET,
+  FB_BOT_TOKEN: process.env.FB_BOT_TOKEN,
+  FB_BOT_PAGE_TOKEN: process.env.FB_BOT_PAGE_TOKEN,
+
   // google
   G_CLIENT_ID: process.env.G_CLIENT_ID,
   G_CLIENT_SECRET: process.env.G_CLIENT_SECRET,
