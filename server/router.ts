@@ -46,7 +46,7 @@ export function router(
     },
     server
   );
-  bot.webhook('/external/fb/bot/webhook');
+  app.use(bot.webhook('/external/fb/bot/webhook'));
   bot.on(FBBot.Events.MESSAGE, function (userId, message) {
     console.log(userId, message);
   });
