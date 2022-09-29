@@ -18,9 +18,6 @@ import { get, GlobalCache } from './options';
 import { NextServer } from 'next/dist/server/next';
 import axios from 'axios';
 import { searchTwitts } from './twitter/search.tw';
-import * as FBBot from 'facebook-bot-messenger';
-import { Server } from 'http';
-import config from './config';
 
 const options = {
   root: join(__dirname, '../assets'),
@@ -35,23 +32,9 @@ export function router(
   ) => Promise<void>,
   appNext: NextServer
 ) {
-  const server = new Server(app);
-  var bot = FBBot.create(
-    {
-      pageID: '106616012210537',
-      appID: '1034507260555540',
-      appSecret: config.FB_BOT_SECRET,
-      validationToken: config.FB_BOT_TOKEN,
-      pageToken: config.FB_BOT_PAGE_TOKEN,
-    },
-    server
-  );
-  app.use(bot.webhook('/external/fb/bot/webhook'));
-  bot.on(FBBot.Events.MESSAGE, function (userId, message) {
-    console.log(userId, message);
-  });
-  server.listen(8080, () => {
-    console.log('Facebook webhook started on port 8085');
+  app.use('/external/fb/bot/webhook', (req, res) => {
+    console.log(JSON.stringify(req.query));
+    res.send('SOSI');
   });
 
   app.use('/favicon.ico', (_, res) =>
