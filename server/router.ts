@@ -34,7 +34,11 @@ export function router(
 ) {
   app.use('/external/fb/bot/webhook', (req, res) => {
     console.log(JSON.stringify(req.query));
-    res.send(req.query['hub.challenge']);
+    if (req.query['hub.challenge']) {
+      return res.send(req.query['hub.challenge']);
+    }
+    console.log(JSON.stringify(req.body));
+    res.send('ok');
   });
 
   app.use('/favicon.ico', (_, res) =>
@@ -439,4 +443,3 @@ export function router(
     return handle(req, res);
   });
 }
-
