@@ -6,7 +6,7 @@ export const proxyMovieRequest = async (req: Request, res: Response) => {
   const url = req.body['url'];
 
   const result = await callApi('get', url);
-  const detail = result?.data ?? {};
-  return res.send(detail).status(HTTPStatus.OK);
+  console.debug('result', result);
+  return res.send(result).status(HTTPStatus.OK);
 };
 
