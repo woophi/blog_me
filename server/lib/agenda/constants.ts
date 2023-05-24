@@ -1,6 +1,4 @@
 export enum AgendaJobName {
-  fetchHaudiPosts = 'fetchHaudiPosts',
-  checkVkPostToNotify = 'checkVkPostToNotify',
   newBlogSchedulerToPublish = `new blog scheduler id `,
   queueLinkSchedulerIdToDelete = `queueLinkScheduler id `,
   messageToAdminsFromGuest = 'message to admins from guest ',

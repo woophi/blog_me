@@ -45,8 +45,6 @@ const schedulePost = async ({ blogId }: NewBlogEventParams) => {
 
 agenda.on('ready', function () {
   registerAgendaEvents();
-  agenda.every('1 minute', AgendaJobName.fetchHaudiPosts);
-  agenda.every('1 minute', AgendaJobName.checkVkPostToNotify);
 });
 
 agenda.on('start', (job) => {
