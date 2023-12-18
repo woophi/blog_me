@@ -47,8 +47,8 @@ export type PublicApiItem = {
   token: string;
   created: Date;
   lastUsed: Date;
-  deleted: Date | null
-}
+  deleted: Date | null;
+};
 
 export type PopularQuizItem = GeneralVkUser & {
   amountOfFriends: string;
@@ -70,6 +70,15 @@ export type UserDetail = {
     until: Date | null;
     times: number;
     unbanReason: UnbanReason | null;
+  };
+  sub?: {
+    id: string;
+    vkUserId: number;
+    amount: number;
+    amountWithoutFee: number;
+    created: Date;
+    until: Date;
+    subscriptionType: string;
   };
   donations: {
     id: string;
@@ -165,6 +174,9 @@ export type UnBanPayload = {
   vkUserId: number;
   reason: UnbanReason;
 };
+export type SubscriptionPayload = {
+  vkUserId: number;
+};
 
 export type SeasonInfo = {
   run: boolean;
@@ -178,9 +190,8 @@ export enum PublicApiScope {
   PaidSub = 'paid_sub',
 }
 
-
 export type PublicApiPayload = {
   appId: number;
   name: string;
   scope: PublicApiScope;
-}
+};

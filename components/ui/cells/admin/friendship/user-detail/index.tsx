@@ -25,6 +25,8 @@ import {
   unbanUser,
   banUser,
   getFriendUserDetail,
+  removeSubFromUser,
+  addSubToUser,
 } from '../operations';
 import moment from 'moment';
 import { ModalDialog } from 'ui/atoms/modal';
@@ -38,8 +40,8 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
   const [
     {
       banInfo,
+      sub,
       userInfo = {},
-      donations = [],
       quizInfo,
       friends,
       rank,
@@ -70,19 +72,18 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
               {userInfo.name}
             </Typography>
 
-            <Typography color="secondary" gutterBottom>
-              Донаты
-            </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Количество донатов - {donations.length}
-            </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Сумма за все время -{' '}
-              {donations.reduce((sum, next) => (sum += next.amount), 0)}
-            </Typography>
             <Typography color="textSecondary" gutterBottom>
               Количество монет - {coins}
             </Typography>
+            <Divider />
+            <Typography color="secondary" gutterBottom>
+              Подписка
+            </Typography>
+            {sub ? (
+              <Typography color="textSecondary" gutterBottom>
+                Тип подписки - {sub.subscriptionType} до {moment(sub.until).format()}
+              </Typography>
+            ) : null}
             <Divider />
 
             <Typography color="secondary" gutterBottom>
@@ -199,6 +200,30 @@ export const SelectedUserDetail: FC<{ data?: UserDetail }> = (props) => {
                       <option value={ExpectedActionPayload.BanM}>month</option>
                       <option value={ExpectedActionPayload.BanYears}>100let</option>
                     </NativeSelect>
+                  </>
+                )}
+              </Box>
+              <Divider />
+              <Box margin="1rem">
+                {sub?.until ? (
+                  <ActionButton
+                    label={'удалить подписку'}
+                    action={() =>
+                      removeSubFromUser({
+                        vkUserId: userInfo.userId,
+                      }).then(() => reloadData(userInfo.userId))
+                    }
+                  />
+                ) : (
+                  <>
+                    <ActionButton
+                      label={'добавить подписку'}
+                      action={() =>
+                        addSubToUser({
+                          vkUserId: userInfo.userId,
+                        }).then(() => reloadData(userInfo.userId))
+                      }
+                    />
                   </>
                 )}
               </Box>

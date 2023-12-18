@@ -18,9 +18,13 @@ const getDelationList = async (req: Request, res: Response) => {
   return res.send(list).status(HTTPStatus.OK);
 };
 const getPublicApis = async (req: Request, res: Response) => {
-  const result = await callApi('get', `${config.FRIENDS_URL}api/admin/public-tokens`, {
-    apiKey: config.FRIENDS_API_KEY,
-  });
+  const result = await callApi(
+    'get',
+    `${config.FRIENDS_URL}api/admin/public-tokens`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+    }
+  );
   const list = result?.data ?? [];
   return res.send(list).status(HTTPStatus.OK);
 };
@@ -68,6 +72,20 @@ const unbanUser = async (req: Request, res: Response) => {
   });
   return res.sendStatus(HTTPStatus.OK);
 };
+const addSub = async (req: Request, res: Response) => {
+  await callApi('post', `${config.FRIENDS_URL}api/admin/subscription`, {
+    apiKey: config.FRIENDS_API_KEY,
+    vkUserId: req.body.vkUserId,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
+const deleteSub = async (req: Request, res: Response) => {
+  await callApi('delete', `${config.FRIENDS_URL}api/admin/subscription`, {
+    apiKey: config.FRIENDS_API_KEY,
+    vkUserId: req.body.vkUserId,
+  });
+  return res.sendStatus(HTTPStatus.OK);
+};
 
 const startSeason = async (req: Request, res: Response) => {
   await callApi('post', `${config.FRIENDS_URL}api/admin/season`, {
@@ -105,9 +123,13 @@ const createPublicApi = async (req: Request, res: Response) => {
 };
 
 const deletePublicApi = async (req: Request, res: Response) => {
-  await callApi('delete', `${config.FRIENDS_URL}api/admin/public-token/${req.body.appId}`, {
-    apiKey: config.FRIENDS_API_KEY,
-  });
+  await callApi(
+    'delete',
+    `${config.FRIENDS_URL}api/admin/public-token/${req.body.appId}`,
+    {
+      apiKey: config.FRIENDS_API_KEY,
+    }
+  );
   return res.sendStatus(HTTPStatus.OK);
 };
 
@@ -124,5 +146,7 @@ export const testfriendship = {
   getSeason,
   putSeasonParticipants,
   createPublicApi,
-  deletePublicApi
+  deletePublicApi,
+  addSub,
+  deleteSub,
 };

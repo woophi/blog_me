@@ -336,6 +336,16 @@ export function router(
     controllers.testfriendship.unbanUser
   );
   app.post(
+    '/api/admin-f/user-sub',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.addSub
+  );
+  app.delete(
+    '/api/admin-f/user-sub',
+    identity.authorizedForAdmin,
+    controllers.testfriendship.deleteSub
+  );
+  app.post(
     '/api/admin-f/season',
     identity.authorizedForAdmin,
     controllers.testfriendship.startSeason
@@ -445,4 +455,3 @@ export function router(
     return handle(req, res);
   });
 }
-
